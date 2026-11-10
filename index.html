@@ -242,11 +242,33 @@ h1{font-size:clamp(32px,3.4vw,40px)}
 @media(max-width:760px){.intro{padding-top:28px!important}}
 @media(max-height:600px) and (orientation:landscape){.intro{padding-top:24px!important}}
 .drag-handle{position:relative;z-index:1}
+
+/* Explicit desktop layout correction: two columns only, narrower overall footprint */
+@media(min-width:761px){
+ .intro{padding:34px 22px 22px!important}
+ .content{width:min(100%,1000px)!important}
+ .logo-link{display:block;width:max-content;margin:0 auto 2px;position:relative;z-index:3;text-decoration:none;border-radius:50%}
+ .logo-wrap{width:clamp(132px,12vw,150px)!important;margin:0 auto 3px!important}
+ .logo{width:86%!important;height:86%!important}
+ .directory{width:min(100%,820px)!important;max-width:820px!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;margin-inline:auto}
+ .group{min-width:0}
+}
+.logo-link{display:block;width:max-content;margin-inline:auto;text-decoration:none;border-radius:50%;position:relative;z-index:3}
+.logo-link:focus-visible{outline:2px solid #f0d49c;outline-offset:5px}
+@media(max-width:760px){
+ .logo-link{margin:0 auto 2px}
+ .logo-wrap{width:100px!important}
+ .directory{grid-template-columns:1fr!important;width:min(100%,620px)!important;margin-inline:auto}
+}
+@media(max-height:760px) and (min-width:761px){
+ .intro{padding-top:25px!important}
+ .logo-wrap{width:116px!important}
+}
 </style></head>
 <body><main class="intro" aria-labelledby="holding-title">
 <img class="intro-photo" src="assets/images/introback.webp" alt="" fetchpriority="high"><div class="frame" aria-hidden="true"></div>
 <section class="content">
-<div class="logo-wrap"><img class="logo" src="assets/images/logo.webp" alt="نشان هلدینگ"></div><h1 id="holding-title">هلدینگ</h1><div class="gold-rule" aria-hidden="true"></div>
+<a class="logo-link" href="./index.html" aria-label="بازگشت به صفحه اصلی هلدینگ"><span class="logo-wrap"><img class="logo" src="assets/images/logo.webp" alt="نشان هلدینگ"></span></a><h1 id="holding-title">هلدینگ</h1><div class="gold-rule" aria-hidden="true"></div>
 <nav class="directory" aria-label="درگاه واحدها و مراکز هلدینگ">
 <details class="group" aria-labelledby="group-deputies"><summary class="group-head" id="group-deputies"><span class="group-title">معاونت‌های هلدینگ <span class="group-count">۱۰ معاونت</span></span><span class="drag-handle" draggable="true" tabindex="0" role="button" aria-label="جابجایی این بخش" title="برای جابه‌جایی بکشید؛ با Alt و کلیدهای جهت‌دار نیز می‌توانید جابه‌جا کنید">⠿</span></summary><div class="items group-body">
 <a class="entry primary" href="https://kazemi44468-bot.github.io/khadamatshahr/" target="_blank" rel="noopener"><span class="entry-copy"><span class="entry-name">معاونت ۰۱ | خدمات شهری</span><span class="entry-note">وب‌سایت عملیاتی فعال</span></span><span class="entry-mark">↗</span></a>
