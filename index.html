@@ -40,6 +40,64 @@ a.entry:focus-visible{outline:2px solid #f0d49c;outline-offset:2px}
 @media(max-width:900px){.items{grid-template-columns:repeat(3,minmax(0,1fr))}} @media(max-width:760px){.intro{padding:22px 20px 26px}.content{max-width:720px}.items{grid-template-columns:repeat(2,minmax(0,1fr))}.directory{gap:11px}.group{padding:10px}.group-scroll{max-height:265px}}
 @media(max-width:440px){.intro{align-items:flex-start;padding:25px 17px 30px}.content{margin:auto 0}.logo-wrap{width:74px;margin-bottom:6px}h1{font-size:36px}.gold-rule{margin:8px auto 13px}.items{grid-template-columns:1fr;gap:6px}.entry{min-height:44px;padding:7px 10px}.entry-name{font-size:11.5px}.entry-note{font-size:9.5px}.group-head{font-size:11.5px;margin-bottom:6px}.group-scroll{max-height:250px}.directory{gap:9px}}
 @media(max-height:600px) and (orientation:landscape){.intro{align-items:flex-start;padding:10px 26px 16px}.content{max-width:980px}.logo-wrap{width:55px;margin-bottom:2px}.logo{width:74%;height:74%}h1{font-size:29px}.gold-rule{margin:5px auto 8px}.directory{gap:7px}.group-head{margin-bottom:4px;font-size:10px}.items{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.entry{min-height:37px;padding:5px 8px}.entry-name{font-size:10px}.entry-note{font-size:8px}.entry-mark{width:19px;height:19px;flex-basis:19px;font-size:11px}}
+
+/* Compact glass directory refinement */
+.content{width:min(100%,1180px)}
+.logo-wrap{width:clamp(54px,6vw,68px);margin-bottom:2px}
+h1{font-size:clamp(29px,3.2vw,38px);line-height:1.18}
+.gold-rule{margin:5px auto 9px;width:42px}
+.directory{max-width:1180px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:9px}
+.group{padding:7px 8px 8px;border-radius:12px;background:linear-gradient(135deg,rgba(255,255,255,.23),rgba(255,255,255,.12) 55%,rgba(230,205,165,.13)),repeating-linear-gradient(135deg,rgba(255,255,255,.045) 0 1px,transparent 1px 15px),rgba(13,35,54,.20);border-color:rgba(255,255,255,.37);box-shadow:0 7px 20px rgba(0,0,0,.10),inset 0 1px 0 rgba(255,255,255,.28);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+.group-scroll{max-height:218px}
+.group-head{top:-7px;margin:-1px -1px 5px;padding:1px 2px 5px;font-size:11.5px;line-height:1.5;background:linear-gradient(180deg,rgba(53,73,88,.34),rgba(53,73,88,.16));border-bottom-color:rgba(255,255,255,.28);color:#fffdf8;text-shadow:0 1px 4px rgba(0,0,0,.55)}
+.group-count{font-size:9px;padding:0 6px;color:#fff4dc;border-color:rgba(255,255,255,.38)}
+.items{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+.entry{min-height:43px;padding:5px 7px;gap:5px;border-radius:7px;background:rgba(13,35,54,.24);border-color:rgba(255,255,255,.30);box-shadow:0 2px 8px rgba(0,0,0,.07);backdrop-filter:blur(3px)}
+.entry-name{font-size:10.5px;line-height:1.42;text-shadow:0 1px 4px rgba(0,0,0,.4)}
+.entry-note{font-size:8.7px;line-height:1.3;color:rgba(255,255,255,.83);text-shadow:0 1px 3px rgba(0,0,0,.45)}
+.entry-mark{width:19px;height:19px;flex-basis:19px;font-size:11px;border-color:rgba(255,255,255,.48);color:#fff0cf}
+.entry.pending{background:rgba(255,255,255,.095);border-color:rgba(255,255,255,.24);border-style:solid}
+.entry.pending .entry-note{color:rgba(255,255,255,.75)}
+.entry.pending .entry-mark{color:#fff8e9;border-color:rgba(255,255,255,.32)}
+.entry.primary{background:rgba(221,190,139,.22);border-color:rgba(255,239,208,.62)}
+.entry.primary .entry-note{color:#fff5df}
+.entry.pending .entry-mark{font-size:7.5px;padding:0 4px}
+.group-scroll::-webkit-scrollbar{width:5px}
+.group-scroll::-webkit-scrollbar-track{background:rgba(255,255,255,.10)}
+.group-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.55);border:1px solid rgba(70,83,91,.25)}
+@media(max-width:760px){
+ .intro{padding:13px 14px 18px;align-items:flex-start}
+ .content{max-width:680px;margin:auto 0}
+ .logo-wrap{width:54px}
+ h1{font-size:31px}
+ .directory{grid-template-columns:1fr;gap:8px}
+ .group-scroll{max-height:190px}
+ .items{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .group{padding:7px}
+}
+@media(max-width:520px){
+ .intro{padding:13px 12px 18px}
+ .items{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+ .entry{min-height:41px}
+ .entry-name{font-size:10px}
+ .entry-note{font-size:8.4px}
+ .group-scroll{max-height:180px}
+}
+@media(max-height:760px) and (min-width:761px){
+ .intro{padding:10px 16px}
+ .logo-wrap{width:48px}
+ h1{font-size:27px}
+ .gold-rule{margin:3px auto 6px}
+ .directory{gap:6px}
+ .group-scroll{max-height:175px}
+ .group{padding:5px 7px 6px}
+ .group-head{font-size:10.5px;margin-bottom:4px}
+ .entry{min-height:37px;padding:4px 6px}
+ .entry-name{font-size:9.8px}
+ .entry-note{font-size:8px}
+ .entry-mark{width:17px;height:17px;flex-basis:17px}
+}
+
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}a.entry{transition:none}}
 </style></head>
 <body><main class="intro" aria-labelledby="holding-title">
@@ -62,7 +120,7 @@ a.entry:focus-visible{outline:2px solid #f0d49c;outline-offset:2px}
 <a class="entry primary" href="centers/knowledge/"><span class="entry-copy"><span class="entry-name">مرکز مدیریت دانش، تجربه و انتشارات</span><span class="entry-note">ورود به نسخه اولیه مرکز</span></span><span class="entry-mark">↗</span></a>
 <div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز تعاونی مصرف و حمایت کارکنان و بازنشستگان</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز ارزیابی و کانون ارزیابی</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز رصد و اشراف</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز آموزش و توسعه شایستگی</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز خدمات متمرکز شرکت‌ها</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز سرمایه انسانی و منابع انسانی</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز مالی و مدیریت اعتبارات</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز حقوقی، قراردادها و امور ثبتی</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز اسناد، مکاتبات و بایگانی</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز تدارکات، خرید و پشتیبانی</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز مدیریت دارایی‌ها و اموال</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز مدیریت پروژه و سرمایه‌گذاری</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز فناوری اطلاعات و امنیت</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز جلسات، مصوبات و پیگیری</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز ارتباطات سازمانی</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز رفاهیات و خدمات کارکنان</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز ورزش و نشاط سازمانی</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز توانمندسازی بازنشستگان</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div>
 </div></section>
-<section class="group" aria-labelledby="group-platforms"><h2 class="group-head" id="group-platforms">زیرساخت‌ها، بانک‌های اطلاعاتی و سامانه‌های یکپارچه</h2><div class="items">
+<section class="group group-scroll" aria-labelledby="group-platforms"><h2 class="group-head" id="group-platforms">زیرساخت‌ها، بانک‌های اطلاعاتی و سامانه‌های یکپارچه</h2><div class="items">
 <div class="entry pending"><span class="entry-copy"><span class="entry-name">بانک‌های اطلاعاتی و سامانه‌های عمومی و اختصاصی</span><span class="entry-note">درگاه سامانه‌ای در حال طراحی</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">ماتریس تعاملات و ارتباطات بین‌واحدی</span><span class="entry-note">درگاه سامانه‌ای در حال طراحی</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">داشبورد رئیس هلدینگ و پایش عملکرد</span><span class="entry-note">درگاه سامانه‌ای در حال طراحی</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">سامانه مدیریت راهبرد، کنترل و ارزیابی</span><span class="entry-note">درگاه سامانه‌ای در حال طراحی</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">سامانه منابع انسانی و پرونده کارکنان</span><span class="entry-note">درگاه سامانه‌ای در حال طراحی</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">سامانه مالی، بودجه و اعتبارات</span><span class="entry-note">درگاه سامانه‌ای در حال طراحی</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">سامانه مکاتبات و گردش کار</span><span class="entry-note">درگاه سامانه‌ای در حال طراحی</span></span><span class="entry-mark">آتی</span></div>
 </div></section>
 </nav></section></main></body></html>
