@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#142b43">
+<title>مرکز مدیریت دانش، تجربه و انتشارات | هلدینگ</title>
+<style>
+@font-face{font-family:Vazirmatn;src:url("../../assets/fonts/Vazirmatn-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:Vazirmatn;src:url("../../assets/fonts/Vazirmatn-Medium.woff2") format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:Vazirmatn;src:url("../../assets/fonts/Vazirmatn-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+:root{--navy:#142b43;--navy2:#203d59;--gold:#b89458;--paper:#f5f7fa;--ink:#26384a;--muted:#718092;--line:#dce3ea;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Vazirmatn,Tahoma,sans-serif;line-height:1.8}
+a{color:inherit;text-decoration:none}.top{background:linear-gradient(125deg,#10283f,#244765);color:#fff;padding:22px max(20px,calc((100% - 1160px)/2)) 18px;border-bottom:3px solid var(--gold)}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{display:flex;align-items:center;gap:13px}.mark{width:44px;height:44px;border:1px solid #c9ab78;border-radius:13px;display:grid;place-items:center;color:#e7d1a9;font-size:22px;background:#ffffff0d}.eyebrow{font-size:11px;color:#d8c39f}.top h1{font-size:clamp(21px,3vw,30px);margin:1px 0 0;font-weight:700;line-height:1.5}.back{border:1px solid #ffffff55;border-radius:8px;padding:7px 12px;font-size:12px;white-space:nowrap}.back:hover{background:#ffffff16}
+.nav{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}.navin{max-width:1160px;margin:auto;padding:0 18px;display:flex;gap:5px;overflow:auto}.nav a{font-size:12px;white-space:nowrap;padding:11px 13px;color:#506176;border-bottom:2px solid transparent}.nav a:hover,.nav a.active{color:#173b59;border-color:var(--gold)}
+main{max-width:1160px;margin:26px auto 60px;padding:0 18px}.intro{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:20px}.intro h2{font-size:20px;margin:0 0 4px;color:#1b3853}.intro p{font-size:13px;color:var(--muted);margin:0}.local-note{font-size:11px;color:#866d43;background:#f5eedf;border:1px solid #e7dcc6;border-radius:8px;padding:7px 10px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0 25px}.stat,.panel,.module{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 4px 16px #1c35500a}.stat{padding:13px 15px}.stat small{display:block;color:var(--muted);font-size:11px}.stat strong{font-size:24px;color:#1d405f;font-weight:700}.section{margin:27px 0}.section-title{display:flex;align-items:center;gap:12px;margin:0 0 13px;font-size:16px;color:#1d3c59}.section-title:after{content:"";height:1px;background:var(--line);flex:1}
+.modules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.module{padding:15px;display:flex;gap:12px;align-items:flex-start;min-height:100px}.module .ico{width:36px;height:36px;flex:0 0 36px;border-radius:10px;background:#edf2f7;color:#365a78;display:grid;place-items:center;font-size:17px}.module h3{font-size:13px;margin:0 0 3px;color:#233f5a}.module p{font-size:11px;color:var(--muted);margin:0;line-height:1.7}
+.panel{padding:18px;margin-top:12px}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}label{font-size:12px;color:#526477}input,select,textarea{width:100%;font:inherit;font-size:12px;padding:9px 11px;border:1px solid #d5dee7;border-radius:8px;background:#fff;color:var(--ink);outline:none}input:focus,select:focus,textarea:focus{border-color:#9b7b49;box-shadow:0 0 0 3px #b8945818}textarea{min-height:95px;resize:vertical}.actions{display:flex;gap:8px;align-items:center;margin-top:12px}.btn{border:0;border-radius:8px;padding:9px 17px;background:#1d405f;color:white;font:500 12px Vazirmatn;cursor:pointer}.btn.secondary{background:#edf1f5;color:#42566b}.searchrow{display:flex;gap:8px;margin-bottom:12px}.records{display:grid;gap:9px}.record{padding:12px;border:1px solid var(--line);border-radius:9px;background:#fff}.record h4{font-size:13px;margin:0 0 4px}.record p{font-size:11px;color:var(--muted);margin:0;white-space:pre-wrap}.tag{display:inline-block;font-size:10px;color:#735d3a;background:#f4eedf;border-radius:20px;padding:2px 8px;margin-bottom:5px}.empty{font-size:12px;color:var(--muted);padding:15px;text-align:center;border:1px dashed var(--line);border-radius:9px}
+.footer{border-top:1px solid var(--line);padding:18px;text-align:center;color:#8592a0;font-size:11px}
+@media(max-width:800px){.modules{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.top{padding:16px}.topline{align-items:flex-start}.brand{gap:9px}.mark{width:38px;height:38px}.back{font-size:10px;padding:6px 8px}.intro{display:block}.local-note{display:inline-block;margin-top:10px}.modules{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}main{margin-top:19px}.stats{gap:8px}.stat{padding:10px}.stat strong{font-size:21px}}
+</style></head>
+<body>
+<header class="top"><div class="topline"><div class="brand"><div class="mark">✧</div><div><div class="eyebrow">هلدینگ | مراکز مشترک و تخصصی</div><h1>مرکز مدیریت دانش، تجربه و انتشارات</h1></div></div><a class="back" href="../../">بازگشت به درگاه هلدینگ ←</a></div></header>
+<nav class="nav"><div class="navin"><a href="#overview" class="active">نمای کلی</a><a href="#repository">مخزن دانش</a><a href="#capture">ثبت دانش و تجربه</a><a href="#lessons">درس‌آموخته‌ها</a><a href="#experts">خبرگان</a><a href="#publishing">تألیف و انتشارات</a><a href="#governance">حکمرانی دانش</a></div></nav>
+<main id="overview">
+<div class="intro"><div><h2>درگاه یکپارچه ثبت، نگهداری و به‌کارگیری دانش سازمانی</h2><p>گردآوری دانش ضمنی و مستند، تجربه‌های اجرایی، درس‌آموخته‌ها و تولیدات علمی معاونت‌ها و شرکت‌های هلدینگ.</p></div><span class="local-note">نسخه اولیه · ذخیره اطلاعات در همین مرورگر</span></div>
+<div class="stats"><div class="stat"><small>دانش‌ها و مستندات ثبت‌شده</small><strong id="countAll">۰</strong></div><div class="stat"><small>تجربه‌های اجرایی</small><strong id="countExp">۰</strong></div><div class="stat"><small>درس‌آموخته‌ها</small><strong id="countLesson">۰</strong></div><div class="stat"><small>پیشنهادهای قابل بررسی</small><strong id="countIdea">۰</strong></div></div>
+<section class="section"><h2 class="section-title">حوزه‌های اصلی مرکز</h2><div class="modules">
+<article class="module"><span class="ico">▤</span><div><h3>مخزن دانش و مستندات</h3><p>آرشیو ساختاریافته دستورالعمل‌ها، گزارش‌ها، الگوها، مطالعات و اسناد دانشی.</p></div></article>
+<article class="module"><span class="ico">✎</span><div><h3>ثبت تجربه و دانش ضمنی</h3><p>ثبت تجربه‌های مدیران، کارشناسان، مجریان و متخصصان در جریان فعالیت‌ها.</p></div></article>
+<article class="module"><span class="ico">↗</span><div><h3>درس‌آموخته‌ها و بهبود</h3><p>ثبت موفقیت‌ها، خطاها، ریشه‌یابی، راهکار اصلاحی و قابلیت انتقال تجربه.</p></div></article>
+<article class="module"><span class="ico">◎</span><div><h3>شبکه خبرگان و صاحبان تجربه</h3><p>شناسایی تخصص‌ها، سوابق، حوزه‌های مشاوره و ارتباط میان خبرگان سازمان.</p></div></article>
+<article class="module"><span class="ico">▧</span><div><h3>تألیف، تولید محتوا و انتشارات</h3><p>مدیریت کتاب، نشریه، گزارش تخصصی، محتوای آموزشی و محصولات دانشی.</p></div></article>
+<article class="module"><span class="ico">⌁</span><div><h3>زنجیره دانش و انتقال تجربه</h3><p>اتصال نیاز دانشی به ثبت، ارزیابی، تأیید، انتشار، آموزش و استفاده مجدد.</p></div></article>
+</div></section>
+<section class="section" id="capture"><h2 class="section-title">ثبت دانش، تجربه یا درس‌آموخته</h2><div class="panel">
+<form id="knowledgeForm"><div class="formgrid">
+<div class="field"><label for="kind">نوع ثبت</label><select id="kind" required><option value="دانش و مستند">دانش و مستند</option><option value="تجربه اجرایی">تجربه اجرایی</option><option value="درس‌آموخته">درس‌آموخته</option><option value="پیشنهاد بهبود">پیشنهاد بهبود</option></select></div>
+<div class="field"><label for="unit">معاونت / شرکت / واحد</label><input id="unit" required placeholder="مثلاً معاونت ۰۱ یا شرکت ۰۱"></div>
+<div class="field full"><label for="subject">عنوان</label><input id="subject" required maxlength="140" placeholder="عنوان روشن و قابل جست‌وجو"></div>
+<div class="field full"><label for="summary">شرح، زمینه و نکات کلیدی</label><textarea id="summary" required placeholder="شرح مسئله، تجربه، روش اجرا، نتیجه یا نکته قابل انتقال..."></textarea></div>
+<div class="field"><label for="author">ثبت‌کننده / صاحب تجربه</label><input id="author" placeholder="نام یا عنوان مسئول"></div>
+<div class="field"><label for="keywords">کلیدواژه‌ها</label><input id="keywords" placeholder="با ویرگول جدا کنید"></div>
+</div><div class="actions"><button class="btn" type="submit">ثبت در مخزن محلی</button><button class="btn secondary" type="reset">پاک‌کردن فرم</button></div></form>
+</div></section>
+<section class="section" id="repository"><h2 class="section-title">مخزن ثبت‌های مرکز</h2><div class="panel"><div class="searchrow"><input id="search" placeholder="جست‌وجو در عنوان، شرح، واحد و کلیدواژه‌ها..."><select id="filter" aria-label="فیلتر نوع"><option value="">همه موارد</option><option>دانش و مستند</option><option>تجربه اجرایی</option><option>درس‌آموخته</option><option>پیشنهاد بهبود</option></select></div><div class="records" id="records"><div class="empty">هنوز موردی ثبت نشده است. نخستین دانش یا تجربه را از فرم بالا ثبت کنید.</div></div></div></section>
+<section class="section" id="lessons"><h2 class="section-title">چرخه مدیریت درس‌آموخته</h2><div class="modules">
+<article class="module"><span class="ico">۱</span><div><h3>شناسایی</h3><p>استخراج تجربه از پروژه، خدمت، عملیات، رخداد یا تصمیم سازمانی.</p></div></article>
+<article class="module"><span class="ico">۲</span><div><h3>تحلیل و اعتبارسنجی</h3><p>بررسی شواهد، علت‌ها، پیامدها و قابلیت تعمیم تجربه.</p></div></article>
+<article class="module"><span class="ico">۳</span><div><h3>انتقال و بهره‌برداری</h3><p>تبدیل یافته به اقدام اصلاحی، راهنما، آموزش یا استاندارد اجرایی.</p></div></article>
+</div></section>
+<section class="section" id="experts"><h2 class="section-title">شبکه خبرگان و صاحبان تجربه</h2><div class="panel"><p style="margin:0;font-size:12px;color:#718092">در گام توسعه این بخش، پرونده تخصصی خبرگان، حوزه‌های مهارتی، سوابق پروژه‌ای، آثار و امکان ارجاع درخواست مشاوره به هر خبره ایجاد می‌شود.</p></div></section>
+<section class="section" id="publishing"><h2 class="section-title">استودیوی تألیف و انتشارات</h2><div class="panel"><p style="margin:0;font-size:12px;color:#718092">مدیریت چرخه تولید آثار: پیشنهاد موضوع، تدوین، ارزیابی علمی و تخصصی، ویرایش، تصویب، انتشار و آرشیو نسخه‌ها؛ شامل کتاب، گزارش، نشریه و محتوای چندرسانه‌ای.</p></div></section>
+<section class="section" id="governance"><h2 class="section-title">حکمرانی و چرخه عمر دانش</h2><div class="modules">
+<article class="module"><span class="ico">✓</span><div><h3>مالکیت و مسئولیت</h3><p>تعیین مالک محتوا، ثبت‌کننده، بازبین و مرجع تأیید هر مدرک.</p></div></article>
+<article class="module"><span class="ico">◷</span><div><h3>نسخه‌بندی و اعتبار</h3><p>ثبت تاریخ، نسخه، سطح اعتبار، محرمانگی و زمان بازبینی.</p></div></article>
+<article class="module"><span class="ico">⇄</span><div><h3>تبادل بین واحدها</h3><p>دسترسی کنترل‌شده معاونت‌ها، شرکت‌ها و مدیریت‌های شعب به دانش مشترک.</p></div></article>
+</div></section>
+</main><footer class="footer">هلدینگ · مرکز مدیریت دانش، تجربه و انتشارات</footer>
+<script>
+(()=>{const key="holding_knowledge_records_v1";const $=id=>document.getElementById(id);const fa=n=>String(n).replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d]);let rows=[];try{rows=JSON.parse(localStorage.getItem(key)||"[]")}catch(e){rows=[]}
+function save(){localStorage.setItem(key,JSON.stringify(rows));render()}
+function render(){const q=$("search").value.trim().toLowerCase(),f=$("filter").value;const found=rows.filter(r=>(!f||r.kind===f)&&(!q||[r.subject,r.summary,r.unit,r.author,r.keywords].join(" ").toLowerCase().includes(q)));$("countAll").textContent=fa(rows.length);$("countExp").textContent=fa(rows.filter(r=>r.kind==="تجربه اجرایی").length);$("countLesson").textContent=fa(rows.filter(r=>r.kind==="درس‌آموخته").length);$("countIdea").textContent=fa(rows.filter(r=>r.kind==="پیشنهاد بهبود").length);$("records").innerHTML=found.length?found.slice().reverse().map(r=>'<article class="record"><span class="tag">'+r.kind+'</span><h4>'+esc(r.subject)+'</h4><p>'+esc(r.unit)+(r.author?' · '+esc(r.author):'')+'\n'+esc(r.summary)+(r.keywords?'\nکلیدواژه‌ها: '+esc(r.keywords):'')+'</p></article>').join(""):'<div class="empty">موردی مطابق جست‌وجوی شما پیدا نشد.</div>'}
+function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+$("knowledgeForm").addEventListener("submit",e=>{e.preventDefault();rows.push({kind:$("kind").value,unit:$("unit").value.trim(),subject:$("subject").value.trim(),summary:$("summary").value.trim(),author:$("author").value.trim(),keywords:$("keywords").value.trim(),createdAt:new Date().toISOString()});save();e.target.reset()});
+$("search").addEventListener("input",render);$("filter").addEventListener("change",render);render();
+document.querySelectorAll(".nav a").forEach(a=>a.addEventListener("click",()=>{document.querySelectorAll(".nav a").forEach(x=>x.classList.remove("active"));a.classList.add("active")}));
+})();
+</script></body></html>
