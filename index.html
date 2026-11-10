@@ -201,28 +201,101 @@ h1{font-size:clamp(32px,3.4vw,40px)}
 .entry:focus-visible{outline:2px solid #f0d49c;outline-offset:2px}
 @media(prefers-reduced-motion:reduce){a.entry{transition:none}}
 
+
+/* Collapsible, reorderable portal panels */
+@media(min-width:761px){
+ .content{width:min(100%,1180px)}
+ .logo-wrap{width:clamp(108px,10vw,124px);margin:0 auto 4px}
+ .logo{width:82%;height:82%}
+ .directory{width:min(100%,930px);grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+}
+@media(min-width:761px) and (max-width:1100px){
+ .directory{width:min(100%,850px);grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:760px){
+ .logo-wrap{width:88px}
+ .directory{width:min(100%,620px);margin-inline:auto}
+}
+.group{min-width:0;overflow:hidden;transition:border-color .18s ease,background .18s ease}
+.group[open]{background:linear-gradient(145deg,rgba(255,255,255,.31),rgba(255,255,255,.18) 58%,rgba(230,205,165,.2)),rgba(25,48,65,.18);border-color:rgba(255,239,208,.72)}
+.group-head{position:relative;top:auto!important;display:flex;align-items:center;gap:8px;min-height:42px;margin:0!important;padding:7px 8px!important;cursor:pointer;list-style:none;user-select:none}
+.group-head::-webkit-details-marker{display:none}
+.group-title{min-width:0;flex:1}
+.group-head:after{content:"＋";flex:0 0 19px;width:19px;height:19px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.35);border-radius:50%;font-size:13px;color:#fff0cf;background:rgba(255,255,255,.08)}
+.group[open]>.group-head:after{content:"−"}
+.drag-handle{order:-1;flex:0 0 19px;width:19px;height:23px;display:grid;place-items:center;border-radius:5px;color:#fff1d4;font-size:19px;line-height:1;cursor:grab;opacity:.76;touch-action:none}
+.drag-handle:active{cursor:grabbing}
+.drag-handle:focus-visible{outline:2px solid #f0d49c;outline-offset:2px}
+.group-body{max-height:220px;overflow-y:auto;overscroll-behavior:contain;padding:2px 2px 4px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.55) rgba(255,255,255,.08)}
+.group-body::-webkit-scrollbar{width:5px}
+.group-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.55);border-radius:8px}
+.group.dragging{opacity:.48}
+.group.drop-target{outline:2px dashed rgba(255,239,208,.9);outline-offset:2px}
+@media(max-width:760px){.group-body{max-height:205px}}
+@media(max-width:520px){.group-body{max-height:190px}}
+@media(max-height:760px) and (min-width:761px){.logo-wrap{width:98px}.group-body{max-height:175px}}
+@media(prefers-reduced-motion:reduce){.group{transition:none}}
+
 </style></head>
 <body><main class="intro" aria-labelledby="holding-title">
 <img class="intro-photo" src="assets/images/introback.webp" alt="" fetchpriority="high"><div class="frame" aria-hidden="true"></div>
 <section class="content">
 <div class="logo-wrap"><img class="logo" src="assets/images/logo.webp" alt="نشان هلدینگ"></div><h1 id="holding-title">هلدینگ</h1><div class="gold-rule" aria-hidden="true"></div>
 <nav class="directory" aria-label="درگاه واحدها و مراکز هلدینگ">
-<section class="group group-scroll" aria-labelledby="group-deputies"><h2 class="group-head" id="group-deputies">معاونت‌های هلدینگ <span class="group-count">۱۰ معاونت</span></h2><div class="items">
+<details class="group" aria-labelledby="group-deputies"><summary class="group-head" id="group-deputies"><span class="group-title">معاونت‌های هلدینگ <span class="group-count">۱۰ معاونت</span></span><span class="drag-handle" draggable="true" tabindex="0" role="button" aria-label="جابجایی این بخش" title="برای جابه‌جایی بکشید؛ با Alt و کلیدهای جهت‌دار نیز می‌توانید جابه‌جا کنید">⠿</span></summary><div class="items group-body">
 <a class="entry primary" href="https://kazemi44468-bot.github.io/khadamatshahr/" target="_blank" rel="noopener"><span class="entry-copy"><span class="entry-name">معاونت ۰۱ | خدمات شهری</span><span class="entry-note">وب‌سایت عملیاتی فعال</span></span><span class="entry-mark">↗</span></a>
 <div class="entry pending"><span class="entry-copy"><span class="entry-name">معاونت ۰۲</span><span class="entry-note">عنوان و درگاه در حال تکمیل</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">معاونت ۰۳</span><span class="entry-note">عنوان و درگاه در حال تکمیل</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">معاونت ۰۴</span><span class="entry-note">عنوان و درگاه در حال تکمیل</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">معاونت ۰۵</span><span class="entry-note">عنوان و درگاه در حال تکمیل</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">معاونت ۰۶</span><span class="entry-note">عنوان و درگاه در حال تکمیل</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">معاونت ۰۷</span><span class="entry-note">عنوان و درگاه در حال تکمیل</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">معاونت ۰۸</span><span class="entry-note">عنوان و درگاه در حال تکمیل</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">معاونت ۰۹</span><span class="entry-note">عنوان و درگاه در حال تکمیل</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">معاونت ۱۰</span><span class="entry-note">عنوان و درگاه در حال تکمیل</span></span><span class="entry-mark">آتی</span></div>
-</div></section>
-<section class="group" aria-labelledby="group-companies"><h2 class="group-head" id="group-companies">شرکت‌های تابعه و تخصصی</h2><div class="items">
+</div></details>
+<details class="group" aria-labelledby="group-companies"><summary class="group-head" id="group-companies"><span class="group-title">شرکت‌های تابعه و تخصصی</span><span class="drag-handle" draggable="true" tabindex="0" role="button" aria-label="جابجایی این بخش" title="برای جابه‌جایی بکشید؛ با Alt و کلیدهای جهت‌دار نیز می‌توانید جابه‌جا کنید">⠿</span></summary><div class="items group-body">
 <div class="entry pending"><span class="entry-copy"><span class="entry-name">شرکت ۰۱</span><span class="entry-note">پرونده و وب‌سایت عملیاتی در حال ایجاد</span></span><span class="entry-mark">آتی</span></div>
 <div class="entry pending"><span class="entry-copy"><span class="entry-name">سایر شرکت‌های تابعه</span><span class="entry-note">متناسب با ساختار مصوب هلدینگ</span></span><span class="entry-mark">آتی</span></div>
-</div></section>
-<section class="group" aria-labelledby="group-branches"><h2 class="group-head" id="group-branches">مدیریت شعب استانی <span class="group-count">۳ مدیریت</span></h2><div class="items">
+</div></details>
+<details class="group" aria-labelledby="group-branches"><summary class="group-head" id="group-branches"><span class="group-title">مدیریت شعب استانی <span class="group-count">۳ مدیریت</span></span><span class="drag-handle" draggable="true" tabindex="0" role="button" aria-label="جابجایی این بخش" title="برای جابه‌جایی بکشید؛ با Alt و کلیدهای جهت‌دار نیز می‌توانید جابه‌جا کنید">⠿</span></summary><div class="items group-body">
 <div class="entry pending"><span class="entry-copy"><span class="entry-name">مدیریت شعب استانی ۰۱</span><span class="entry-note">درگاه منطقه‌ای در حال ایجاد</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مدیریت شعب استانی ۰۲</span><span class="entry-note">درگاه منطقه‌ای در حال ایجاد</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مدیریت شعب استانی ۰۳</span><span class="entry-note">درگاه منطقه‌ای در حال ایجاد</span></span><span class="entry-mark">آتی</span></div>
-</div></section>
-<section class="group group-scroll" aria-labelledby="group-centers"><h2 class="group-head" id="group-centers">مراکز مشترک و خدمات متمرکز</h2><div class="items">
+</div></details>
+<details class="group" aria-labelledby="group-centers"><summary class="group-head" id="group-centers"><span class="group-title">مراکز مشترک و خدمات متمرکز</span><span class="drag-handle" draggable="true" tabindex="0" role="button" aria-label="جابجایی این بخش" title="برای جابه‌جایی بکشید؛ با Alt و کلیدهای جهت‌دار نیز می‌توانید جابه‌جا کنید">⠿</span></summary><div class="items group-body">
 <a class="entry primary" href="centers/knowledge/"><span class="entry-copy"><span class="entry-name">مرکز مدیریت دانش، تجربه و انتشارات</span><span class="entry-note">ورود به نسخه اولیه مرکز</span></span><span class="entry-mark">↗</span></a>
 <div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز تعاونی مصرف و حمایت کارکنان و بازنشستگان</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز ارزیابی و کانون ارزیابی</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز رصد و اشراف</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز آموزش و توسعه شایستگی</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز خدمات متمرکز شرکت‌ها</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز سرمایه انسانی و منابع انسانی</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز مالی و مدیریت اعتبارات</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز حقوقی، قراردادها و امور ثبتی</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز اسناد، مکاتبات و بایگانی</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز تدارکات، خرید و پشتیبانی</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز مدیریت دارایی‌ها و اموال</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز مدیریت پروژه و سرمایه‌گذاری</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز فناوری اطلاعات و امنیت</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز جلسات، مصوبات و پیگیری</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز ارتباطات سازمانی</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز رفاهیات و خدمات کارکنان</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز ورزش و نشاط سازمانی</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز توانمندسازی بازنشستگان</span><span class="entry-note">درگاه اختصاصی در برنامه توسعه</span></span><span class="entry-mark">آتی</span></div>
-</div></section>
-<section class="group group-scroll" aria-labelledby="group-platforms"><h2 class="group-head" id="group-platforms">زیرساخت‌ها، بانک‌های اطلاعاتی و سامانه‌های یکپارچه</h2><div class="items">
+</div></details>
+<details class="group" aria-labelledby="group-platforms"><summary class="group-head" id="group-platforms"><span class="group-title">زیرساخت‌ها، بانک‌های اطلاعاتی و سامانه‌های یکپارچه</span><span class="drag-handle" draggable="true" tabindex="0" role="button" aria-label="جابجایی این بخش" title="برای جابه‌جایی بکشید؛ با Alt و کلیدهای جهت‌دار نیز می‌توانید جابه‌جا کنید">⠿</span></summary><div class="items group-body">
 <div class="entry pending"><span class="entry-copy"><span class="entry-name">بانک‌های اطلاعاتی و سامانه‌های عمومی و اختصاصی</span><span class="entry-note">درگاه سامانه‌ای در حال طراحی</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">ماتریس تعاملات و ارتباطات بین‌واحدی</span><span class="entry-note">درگاه سامانه‌ای در حال طراحی</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">داشبورد رئیس هلدینگ و پایش عملکرد</span><span class="entry-note">درگاه سامانه‌ای در حال طراحی</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">سامانه مدیریت راهبرد، کنترل و ارزیابی</span><span class="entry-note">درگاه سامانه‌ای در حال طراحی</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">سامانه منابع انسانی و پرونده کارکنان</span><span class="entry-note">درگاه سامانه‌ای در حال طراحی</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">سامانه مالی، بودجه و اعتبارات</span><span class="entry-note">درگاه سامانه‌ای در حال طراحی</span></span><span class="entry-mark">آتی</span></div><div class="entry pending"><span class="entry-copy"><span class="entry-name">سامانه مکاتبات و گردش کار</span><span class="entry-note">درگاه سامانه‌ای در حال طراحی</span></span><span class="entry-mark">آتی</span></div>
-</div></section>
-</nav></section></main></body></html>
+</div></details>
+</nav></section></main>
+<script>
+(function(){
+ const directory=document.querySelector('.directory');
+ if(!directory)return;
+ const key='holding_portal_group_order_v1';
+ const groups=()=>Array.from(directory.querySelectorAll(':scope > details.group'));
+ try{
+  const saved=JSON.parse(localStorage.getItem(key)||'[]');
+  saved.forEach(id=>{const item=groups().find(g=>g.getAttribute('aria-labelledby')===id);if(item)directory.appendChild(item)});
+ }catch(e){}
+ groups().forEach(g=>{
+  const handle=g.querySelector('.drag-handle');
+  if(!handle)return;
+  handle.addEventListener('keydown',e=>{
+   if(!e.altKey||!['ArrowUp','ArrowDown'].includes(e.key))return;
+   e.preventDefault();
+   const sibling=e.key==='ArrowUp'?g.previousElementSibling:g.nextElementSibling;
+   if(!sibling)return;
+   if(e.key==='ArrowUp')directory.insertBefore(g,sibling);else directory.insertBefore(sibling,g);
+   saveOrder();handle.focus();
+  });
+  handle.addEventListener('dragstart',e=>{
+   e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',g.getAttribute('aria-labelledby'));
+   g.classList.add('dragging');
+  });
+  handle.addEventListener('dragend',()=>{g.classList.remove('dragging');groups().forEach(x=>x.classList.remove('drop-target'));saveOrder()});
+  g.addEventListener('dragover',e=>{if(!document.querySelector('.dragging'))return;e.preventDefault();g.classList.add('drop-target')});
+  g.addEventListener('dragleave',()=>g.classList.remove('drop-target'));
+  g.addEventListener('drop',e=>{
+   e.preventDefault();const moving=document.querySelector('.dragging');g.classList.remove('drop-target');
+   if(!moving||moving===g)return;
+   const rect=g.getBoundingClientRect();directory.insertBefore(moving,e.clientY<rect.top+rect.height/2?g:g.nextElementSibling);saveOrder();
+  });
+ });
+ function saveOrder(){try{localStorage.setItem(key,JSON.stringify(groups().map(g=>g.getAttribute('aria-labelledby'))))}catch(e){}}
+})();
+</script>
+</body></html>
