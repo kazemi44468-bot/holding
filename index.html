@@ -4,180 +4,42 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#142b43">
+  <meta name="description" content="درگاه ورود به مجموعه‌ها و مراکز هلدینگ">
   <title>هلدینگ</title>
   <style>
-    @font-face {
-      font-family: HoldingLocal;
-      src: url("assets/fonts/Vazirmatn-Regular.woff2") format("woff2");
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: HoldingLocal;
-      src: url("assets/fonts/Vazirmatn-Medium.woff2") format("woff2");
-      font-style: normal;
-      font-weight: 500;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: HoldingLocal;
-      src: url("assets/fonts/Vazirmatn-Bold.woff2") format("woff2");
-      font-style: normal;
-      font-weight: 700;
-      font-display: swap;
-    }
-
-    :root {
-      color-scheme: dark;
-      --gold: #d2b27b;
-      --ivory: #fffaf1;
-    }
-
-    * { box-sizing: border-box; }
-
-    html, body {
-      width: 100%;
-      min-height: 100%;
-      margin: 0;
-    }
-
-    body {
-      min-height: 100svh;
-      overflow: hidden;
-      color: var(--ivory);
-      background: #142b43;
-      font-family: HoldingLocal, Tahoma, sans-serif;
-    }
-
-    .intro {
-      position: relative;
-      isolation: isolate;
-      display: grid;
-      min-height: 100svh;
-      min-height: 100dvh;
-      place-items: center;
-      overflow: hidden;
-      padding: clamp(22px, 5vh, 54px) 20px;
-      background: #142b43;
-    }
-
-    .intro-photo {
-      position: absolute;
-      z-index: -2;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-    }
-
-    /* فقط برای خوانایی نوشته؛ تصویر باید کاملاً دیده شود. */
-    .intro::before {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      inset: 0;
-      background:
-        linear-gradient(90deg, rgba(8, 22, 36, .17), rgba(8, 22, 36, .08) 50%, rgba(8, 22, 36, .17)),
-        linear-gradient(0deg, rgba(8, 22, 36, .22), transparent 42%, rgba(8, 22, 36, .10));
-      pointer-events: none;
-    }
-
-    .frame {
-      position: absolute;
-      inset: clamp(12px, 2.2vw, 28px);
-      border: 1px solid rgba(236, 211, 164, .48);
-      pointer-events: none;
-    }
-
-    .frame::before,
-    .frame::after {
-      content: "";
-      position: absolute;
-      width: clamp(28px, 5vw, 58px);
-      height: clamp(28px, 5vw, 58px);
-      border-color: var(--gold);
-      border-style: solid;
-      opacity: .85;
-    }
-
-    .frame::before {
-      top: -1px;
-      right: -1px;
-      border-width: 2px 2px 0 0;
-    }
-
-    .frame::after {
-      bottom: -1px;
-      left: -1px;
-      border-width: 0 0 2px 2px;
-    }
-
-    .content {
-      width: min(100%, 680px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 24px 12px;
-      animation: reveal .8s ease both;
-    }
-
-    .logo {
-      display: block;
-      width: clamp(104px, 14vw, 154px);
-      height: clamp(104px, 14vw, 154px);
-      object-fit: contain;
-      filter: drop-shadow(0 8px 22px rgba(0, 0, 0, .34));
-    }
-
-    .gold-rule {
-      width: clamp(52px, 7vw, 76px);
-      height: 2px;
-      margin: clamp(18px, 3vh, 27px) auto 14px;
-      background: var(--gold);
-      box-shadow: 0 0 12px rgba(210, 178, 123, .35);
-    }
-
-    h1 {
-      margin: 0;
-      color: #fffdf8;
-      font-size: clamp(42px, 7.2vw, 76px);
-      font-weight: 700;
-      line-height: 1.3;
-      letter-spacing: -.035em;
-      text-shadow: 0 3px 18px rgba(0, 0, 0, .42);
-    }
-
-    @keyframes reveal {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 600px) {
-      .intro { padding: 22px 16px; }
-      .frame { inset: 9px; }
-      .content { padding: 16px 8px; }
-      .logo {
-        width: clamp(92px, 27vw, 124px);
-        height: clamp(92px, 27vw, 124px);
-      }
-      .gold-rule { margin-top: 17px; margin-bottom: 11px; }
-      h1 { font-size: clamp(39px, 12vw, 56px); }
-    }
-
-    @media (max-height: 520px) and (orientation: landscape) {
-      .content { padding: 8px; }
-      .logo { width: 76px; height: 76px; }
-      .gold-rule { margin: 10px auto 7px; }
-      h1 { font-size: 38px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .content { animation: none; }
-    }
+    @font-face{font-family:HoldingLocal;src:url("assets/fonts/Vazirmatn-Regular.woff2") format("woff2");font-style:normal;font-weight:400;font-display:swap}
+    @font-face{font-family:HoldingLocal;src:url("assets/fonts/Vazirmatn-Medium.woff2") format("woff2");font-style:normal;font-weight:500;font-display:swap}
+    @font-face{font-family:HoldingLocal;src:url("assets/fonts/Vazirmatn-Bold.woff2") format("woff2");font-style:normal;font-weight:700;font-display:swap}
+    :root{color-scheme:dark;--gold:#d2b27b;--ivory:#fffaf1;--glass:rgba(12,31,49,.58)}
+    *{box-sizing:border-box}
+    html{min-height:100%;scroll-behavior:smooth}
+    body{margin:0;min-height:100vh;min-height:100svh;color:var(--ivory);font-family:HoldingLocal,Tahoma,sans-serif;background:#142b43}
+    .intro{position:relative;isolation:isolate;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:clamp(28px,5vh,54px) 22px clamp(34px,6vh,64px)}
+    .intro-photo{position:fixed;z-index:-2;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+    .intro::before{content:"";position:fixed;z-index:-1;inset:0;background:linear-gradient(90deg,rgba(8,22,36,.14),rgba(8,22,36,.05) 50%,rgba(8,22,36,.14)),linear-gradient(0deg,rgba(8,22,36,.30),rgba(8,22,36,.08) 55%,rgba(8,22,36,.16));pointer-events:none}
+    .frame{position:fixed;inset:clamp(10px,2vw,26px);border:1px solid rgba(236,211,164,.48);pointer-events:none;z-index:2}
+    .frame::before,.frame::after{content:"";position:absolute;width:clamp(28px,5vw,58px);height:clamp(28px,5vw,58px);border-color:var(--gold);border-style:solid;opacity:.9}
+    .frame::before{top:-1px;right:-1px;border-width:2px 2px 0 0}
+    .frame::after{bottom:-1px;left:-1px;border-width:0 0 2px 2px}
+    .content{width:min(100%,1040px);display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:1}
+    .logo-wrap{width:clamp(112px,15vw,164px);aspect-ratio:1;display:grid;place-items:center;margin:0 auto 18px;border:1px solid rgba(220,190,137,.76);border-radius:50%;background:rgba(255,255,255,.10);box-shadow:0 18px 55px rgba(0,0,0,.23),inset 0 0 0 7px rgba(255,255,255,.045),0 0 0 8px rgba(210,178,123,.08);backdrop-filter:blur(5px)}
+    .logo{display:block;width:76%;height:76%;object-fit:contain;filter:drop-shadow(0 6px 14px rgba(0,0,0,.28))}
+    h1{margin:0;color:#fffdf8;font-size:clamp(43px,6.8vw,70px);font-weight:700;line-height:1.3;letter-spacing:-.035em;text-shadow:0 3px 18px rgba(0,0,0,.42)}
+    .gold-rule{width:76px;height:2px;margin:17px auto 25px;background:linear-gradient(90deg,transparent,var(--gold),transparent);box-shadow:0 0 13px rgba(210,178,123,.32)}
+    .portals{width:min(100%,940px);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 auto}
+    .portal{min-height:88px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 16px;border:1px solid rgba(236,224,202,.34);border-radius:13px;background:var(--glass);color:#fffaf1;text-decoration:none;text-align:right;box-shadow:0 8px 24px rgba(0,0,0,.14);backdrop-filter:blur(8px);transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease}
+    .portal:hover{transform:translateY(-3px);border-color:rgba(236,211,164,.8);background:rgba(19,48,72,.78);box-shadow:0 13px 30px rgba(0,0,0,.22)}
+    .portal:focus-visible{outline:2px solid #f0d49c;outline-offset:3px}
+    .portal-copy{min-width:0;display:flex;flex-direction:column;gap:4px}
+    .portal-name{font-size:14px;font-weight:500;line-height:1.7}
+    .portal-type{font-size:11px;color:rgba(255,250,241,.68)}
+    .portal-arrow{flex:0 0 29px;width:29px;height:29px;display:grid;place-items:center;border:1px solid rgba(210,178,123,.5);border-radius:50%;color:#f0d49c;font-size:17px;line-height:1}
+    .primary{grid-column:span 2;border-color:rgba(220,190,137,.72);background:rgba(19,48,72,.72)}
+    .primary .portal-name{font-weight:700}
+    @media(max-width:900px){.portals{grid-template-columns:repeat(2,minmax(0,1fr));max-width:720px}.portal{min-height:82px}}
+    @media(max-width:600px){.intro{justify-content:flex-start;padding:34px 16px 42px}.frame{inset:9px}.logo-wrap{width:clamp(100px,28vw,124px);margin-bottom:14px}h1{font-size:clamp(40px,11vw,54px)}.gold-rule{margin:13px auto 20px}.portals{grid-template-columns:1fr;gap:9px;width:min(100%,420px)}.portal,.primary{grid-column:auto;min-height:70px;padding:12px 14px}.portal-name{font-size:13px}}
+    @media(max-height:540px) and (orientation:landscape){.intro{justify-content:flex-start;padding:16px 28px 24px}.logo-wrap{width:74px;margin-bottom:7px}.logo{width:74%;height:74%}h1{font-size:36px}.gold-rule{margin:8px auto 13px}.portals{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.portal{min-height:64px;padding:9px 10px}.portal-name{font-size:11px}.portal-type{font-size:9px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.portal{transition:none}}
   </style>
 </head>
 <body>
@@ -185,9 +47,38 @@
     <img class="intro-photo" src="assets/images/introback.webp" alt="" fetchpriority="high">
     <div class="frame" aria-hidden="true"></div>
     <section class="content">
-      <img class="logo" src="assets/images/logo.webp" alt="نشان هلدینگ">
-      <div class="gold-rule" aria-hidden="true"></div>
+      <div class="logo-wrap"><img class="logo" src="assets/images/logo.webp" alt="نشان هلدینگ"></div>
       <h1 id="holding-title">هلدینگ</h1>
+      <div class="gold-rule" aria-hidden="true"></div>
+      <nav class="portals" aria-label="درگاه مجموعه‌ها و مراکز">
+        <a class="portal primary" href="https://kazemi44468-bot.github.io/khadamatshahr/" target="_blank" rel="noopener">
+          <span class="portal-copy"><span class="portal-name">معاونت ۰۱ | خدمات شهری</span><span class="portal-type">ورود به سامانه عملیاتی</span></span><span class="portal-arrow" aria-hidden="true">←</span>
+        </a>
+        <a class="portal primary" href="https://kazemi44468-bot.github.io/tarhha/pages/holding-services-deputy.html" target="_blank" rel="noopener">
+          <span class="portal-copy"><span class="portal-name">پرونده معاونت ۰۱</span><span class="portal-type">ساختار و معماری تخصصی</span></span><span class="portal-arrow" aria-hidden="true">←</span>
+        </a>
+        <a class="portal" href="https://kazemi44468-bot.github.io/tarhha/pages/holding-employee-cooperative.html" target="_blank" rel="noopener">
+          <span class="portal-copy"><span class="portal-name">تعاونی مصرف و حمایت کارکنان</span><span class="portal-type">مرکز خدمات مشترک</span></span><span class="portal-arrow" aria-hidden="true">←</span>
+        </a>
+        <a class="portal" href="https://kazemi44468-bot.github.io/tarhha/pages/holding-evaluation-center.html" target="_blank" rel="noopener">
+          <span class="portal-copy"><span class="portal-name">مرکز ارزیابی و کانون ارزیابی</span><span class="portal-type">مرکز تخصصی</span></span><span class="portal-arrow" aria-hidden="true">←</span>
+        </a>
+        <a class="portal" href="https://kazemi44468-bot.github.io/tarhha/pages/holding-knowledge-center.html" target="_blank" rel="noopener">
+          <span class="portal-copy"><span class="portal-name">مرکز مدیریت دانش</span><span class="portal-type">مرکز تخصصی</span></span><span class="portal-arrow" aria-hidden="true">←</span>
+        </a>
+        <a class="portal" href="https://kazemi44468-bot.github.io/tarhha/pages/holding-observatory-center.html" target="_blank" rel="noopener">
+          <span class="portal-copy"><span class="portal-name">مرکز رصد و اشراف</span><span class="portal-type">مرکز پایش و نظارت</span></span><span class="portal-arrow" aria-hidden="true">←</span>
+        </a>
+        <a class="portal" href="https://kazemi44468-bot.github.io/tarhha/pages/holding-integration-matrix.html" target="_blank" rel="noopener">
+          <span class="portal-copy"><span class="portal-name">ماتریس تعاملات</span><span class="portal-type">یکپارچگی بین‌واحدی</span></span><span class="portal-arrow" aria-hidden="true">←</span>
+        </a>
+        <a class="portal" href="https://kazemi44468-bot.github.io/tarhha/pages/holding-systems-data.html" target="_blank" rel="noopener">
+          <span class="portal-copy"><span class="portal-name">بانک‌ها و سامانه‌ها</span><span class="portal-type">داده و زیرساخت مشترک</span></span><span class="portal-arrow" aria-hidden="true">←</span>
+        </a>
+        <a class="portal" href="https://kazemi44468-bot.github.io/tarhha/pages/holding-tarh.html" target="_blank" rel="noopener">
+          <span class="portal-copy"><span class="portal-name">طرح مادر هلدینگ</span><span class="portal-type">سند معماری کلان</span></span><span class="portal-arrow" aria-hidden="true">←</span>
+        </a>
+      </nav>
     </section>
   </main>
 </body>
