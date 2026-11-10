@@ -264,6 +264,11 @@ h1{font-size:clamp(32px,3.4vw,40px)}
  .intro{padding-top:25px!important}
  .logo-wrap{width:116px!important}
 }
+
+/* Final width adjustment: keep two columns while making each panel visibly narrower */
+@media(min-width:761px){
+ .directory{width:min(100%,700px)!important;max-width:700px!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+}
 </style></head>
 <body><main class="intro" aria-labelledby="holding-title">
 <img class="intro-photo" src="assets/images/introback.webp" alt="" fetchpriority="high"><div class="frame" aria-hidden="true"></div>
