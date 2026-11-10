@@ -6,119 +6,189 @@
   <meta name="theme-color" content="#142b43">
   <title>هلدینگ</title>
   <style>
-    @font-face{font-family:HoldingLocal;src:url("assets/fonts/Vazirmatn-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
-    @font-face{font-family:HoldingLocal;src:url("assets/fonts/Vazirmatn-Medium.woff2") format("woff2");font-weight:500;font-display:swap}
-    @font-face{font-family:HoldingLocal;src:url("assets/fonts/Vazirmatn-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
-    :root{--navy:#18344f;--navy2:#244967;--gold:#b99760;--paper:#f5f3ee;--ink:#24384a;--line:#dce2e6}
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth;scroll-padding-top:86px}
-    body{margin:0;background:var(--paper);color:var(--ink);font-family:HoldingLocal,Vazirmatn,Tahoma,sans-serif}
-    a{color:inherit;text-decoration:none}
-    .hero{position:relative;min-height: min(760px,82svh);display:flex;flex-direction:column;overflow:hidden;color:#fff;background:#142b43}
-    .hero-photo{position:absolute;inset:0;width:۱۰0%;height:۱۰0%;object-fit:cover;object-position:center 48%;z-index:0}
-    .hero-shade{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(10,26,42,.10),rgba(10,26,42,.28) 70%),linear-gradient(0deg,rgba(9,25,41,.36),transparent 60%)}
-    .topbar{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px clamp(20px,5vw,72px);border-bottom:1px solid rgba(255,255,255,.22);background:rgba(12,31,49,.14)}
-    .brand{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:700;white-space:nowrap}
-    .brand img{width:42px;height:42px;object-fit:contain}
-    .nav{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
-    .nav a{padding:8px 13px;border:1px solid rgba(255,255,255,.28);border-radius:7px;font-size:13px;color:#fff;background:rgba(12,31,49,.17);transition:.2s}
-    .nav a:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.65)}
-    .hero-center{position:relative;z-index:2;flex:1;display:grid;place-items:center;text-align:center;padding:55px 20px 90px}
-    .hero-mark{width:clamp(۱۰0px,13vw,150px);height:clamp(۱۰0px,13vw,150px);object-fit:contain;filter:drop-shadow(0 8px 24px rgba(0,0,0,.28));margin-bottom:18px}
-    h1{margin:0;font-size:clamp(48px,8vw,88px);line-height:1.25;font-weight:700;letter-spacing:-.۰۴em;text-shadow:0 5px 25px rgba(0,0,0,.38)}
-    .gold-line{width:78px;height:2px;margin:22px auto 0;background:var(--gold)}
-    .directory{max-width:1220px;margin:0 auto;padding:58px 24px 76px}
-    .section{margin:0 0 48px;scroll-margin-top:90px}
-    .section-head{display:flex;align-items:center;gap:14px;margin:0 0 20px}
-    .section-head:after{content:"";height:1px;flex:1;background:var(--line)}
-    h2{margin:0;color:var(--navy);font-size:23px;font-weight:700}
-    .grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:13px}
-    .tile{position:relative;min-height:88px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 17px;border:1px solid var(--line);border-radius:۱۰px;background:#fff;box-shadow:0 5px 18px rgba(27,51,72,.۰۴5);transition:transform .2s,border-color .2s,box-shadow .2s}
-    .tile:hover{transform:translateY(-3px);border-color:#b9c8d2;box-shadow:0 12px 25px rgba(27,51,72,.۰۹)}
-    .tile-name{font-size:15px;font-weight:500;color:var(--navy)}
-    .tile-no{flex:0 0 34px;width:34px;height:34px;display:grid;place-items:center;border-radius:8px;background:#edf1f4;color:#6۰۷88b;font-size:13px;font-weight:700}
-    .tile.feature{border-right:3px solid var(--gold)}
-    .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
-    .grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .group-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-    .group-card{min-height:122px;display:flex;flex-direction:column;justify-content:center;gap:۱۰px;padding:22px;border:1px solid var(--line);border-radius:۱۰px;background:linear-gradient(145deg,#fff,#f9fafb)}
-    .group-card strong{font-size:17px;color:var(--navy)}
-    .group-card span{font-size:12px;color:#718291}
-    footer{height:8px;background:linear-gradient(90deg,var(--navy),#315a76,var(--gold))}
-    @media(max-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.topbar{align-items:flex-start;flex-direction:column}.nav{justify-content:flex-start}}
-    @media(max-width:600px){.hero{min-height:70svh}.topbar{padding:13px 16px;gap:12px}.brand{font-size:16px}.brand img{width:36px;height:36px}.nav{gap:6px}.nav a{font-size:11px;padding:7px 9px}.hero-center{padding:40px 16px 65px}.directory{padding:38px 15px 55px}.section{margin-bottom:36px}h2{font-size:20px}.grid,.grid.three,.grid.two,.group-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.tile{min-height:76px;padding:13px 11px}.tile-name{font-size:13px}.tile-no{width:30px;height:30px;flex-basis:30px}.group-card{min-height:۱۰0px;padding:15px}.group-card strong{font-size:15px}}
-    @media(max-width:360px){.grid,.grid.three,.grid.two,.group-grid{grid-template-columns:1fr}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+    @font-face {
+      font-family: HoldingLocal;
+      src: url("assets/fonts/Vazirmatn-Regular.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: HoldingLocal;
+      src: url("assets/fonts/Vazirmatn-Medium.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: HoldingLocal;
+      src: url("assets/fonts/Vazirmatn-Bold.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+    }
+
+    :root {
+      color-scheme: dark;
+      --gold: #d2b27b;
+      --ivory: #fffaf1;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+    }
+
+    body {
+      min-height: 100svh;
+      overflow: hidden;
+      color: var(--ivory);
+      background: #142b43;
+      font-family: HoldingLocal, Tahoma, sans-serif;
+    }
+
+    .intro {
+      position: relative;
+      isolation: isolate;
+      display: grid;
+      min-height: 100svh;
+      min-height: 100dvh;
+      place-items: center;
+      overflow: hidden;
+      padding: clamp(22px, 5vh, 54px) 20px;
+      background: #142b43;
+    }
+
+    .intro-photo {
+      position: absolute;
+      z-index: -2;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* فقط برای خوانایی نوشته؛ تصویر باید کاملاً دیده شود. */
+    .intro::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(8, 22, 36, .17), rgba(8, 22, 36, .08) 50%, rgba(8, 22, 36, .17)),
+        linear-gradient(0deg, rgba(8, 22, 36, .22), transparent 42%, rgba(8, 22, 36, .10));
+      pointer-events: none;
+    }
+
+    .frame {
+      position: absolute;
+      inset: clamp(12px, 2.2vw, 28px);
+      border: 1px solid rgba(236, 211, 164, .48);
+      pointer-events: none;
+    }
+
+    .frame::before,
+    .frame::after {
+      content: "";
+      position: absolute;
+      width: clamp(28px, 5vw, 58px);
+      height: clamp(28px, 5vw, 58px);
+      border-color: var(--gold);
+      border-style: solid;
+      opacity: .85;
+    }
+
+    .frame::before {
+      top: -1px;
+      right: -1px;
+      border-width: 2px 2px 0 0;
+    }
+
+    .frame::after {
+      bottom: -1px;
+      left: -1px;
+      border-width: 0 0 2px 2px;
+    }
+
+    .content {
+      width: min(100%, 680px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px 12px;
+      animation: reveal .8s ease both;
+    }
+
+    .logo {
+      display: block;
+      width: clamp(104px, 14vw, 154px);
+      height: clamp(104px, 14vw, 154px);
+      object-fit: contain;
+      filter: drop-shadow(0 8px 22px rgba(0, 0, 0, .34));
+    }
+
+    .gold-rule {
+      width: clamp(52px, 7vw, 76px);
+      height: 2px;
+      margin: clamp(18px, 3vh, 27px) auto 14px;
+      background: var(--gold);
+      box-shadow: 0 0 12px rgba(210, 178, 123, .35);
+    }
+
+    h1 {
+      margin: 0;
+      color: #fffdf8;
+      font-size: clamp(42px, 7.2vw, 76px);
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -.035em;
+      text-shadow: 0 3px 18px rgba(0, 0, 0, .42);
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .intro { padding: 22px 16px; }
+      .frame { inset: 9px; }
+      .content { padding: 16px 8px; }
+      .logo {
+        width: clamp(92px, 27vw, 124px);
+        height: clamp(92px, 27vw, 124px);
+      }
+      .gold-rule { margin-top: 17px; margin-bottom: 11px; }
+      h1 { font-size: clamp(39px, 12vw, 56px); }
+    }
+
+    @media (max-height: 520px) and (orientation: landscape) {
+      .content { padding: 8px; }
+      .logo { width: 76px; height: 76px; }
+      .gold-rule { margin: 10px auto 7px; }
+      h1 { font-size: 38px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .content { animation: none; }
+    }
   </style>
 </head>
 <body>
-  <header class="hero">
-    <img class="hero-photo" src="assets/images/introback.webp" alt="" fetchpriority="high">
-    <div class="hero-shade" aria-hidden="true"></div>
-    <div class="topbar">
-      <a class="brand" href="#top" aria-label="هلدینگ">
-        <img src="assets/images/logo.webp" alt="">
-        <span>هلدینگ</span>
-      </a>
-      <nav class="nav" aria-label="بخش‌های هلدینگ">
-        <a href="#subsidiaries">شرکت‌ها</a>
-        <a href="#deputies">معاونت‌ها</a>
-        <a href="#branches">مدیریت‌های استانی</a>
-        <a href="#centers">مراکز</a>
-        <a href="#systems">بانک‌ها و سامانه‌ها</a>
-      </nav>
-    </div>
-    <div class="hero-center" id="top">
-      <div>
-        <img class="hero-mark" src="assets/images/logo.webp" alt="نشان هلدینگ">
-        <h1>هلدینگ</h1>
-        <div class="gold-line" aria-hidden="true"></div>
-      </div>
-    </div>
-  </header>
-
-  <main class="directory">
-    <section class="section" id="deputies">
-      <div class="section-head"><h2>معاونت‌ها</h2></div>
-      <div class="grid">
-        <div class="tile" aria-label="معاونت ۰۱"><span class="tile-name">معاونت ۰۱</span><span class="tile-no">۰۱</span></div><div class="tile" aria-label="معاونت ۰۲"><span class="tile-name">معاونت ۰۲</span><span class="tile-no">۰۲</span></div><div class="tile" aria-label="معاونت ۰۳"><span class="tile-name">معاونت ۰۳</span><span class="tile-no">۰۳</span></div><div class="tile" aria-label="معاونت ۰۴"><span class="tile-name">معاونت ۰۴</span><span class="tile-no">۰۴</span></div><div class="tile" aria-label="معاونت ۰۵"><span class="tile-name">معاونت ۰۵</span><span class="tile-no">۰۵</span></div><div class="tile" aria-label="معاونت ۰۶"><span class="tile-name">معاونت ۰۶</span><span class="tile-no">۰۶</span></div><div class="tile" aria-label="معاونت ۰۷"><span class="tile-name">معاونت ۰۷</span><span class="tile-no">۰۷</span></div><div class="tile" aria-label="معاونت ۰۸"><span class="tile-name">معاونت ۰۸</span><span class="tile-no">۰۸</span></div><div class="tile" aria-label="معاونت ۰۹"><span class="tile-name">معاونت ۰۹</span><span class="tile-no">۰۹</span></div><div class="tile" aria-label="معاونت ۱۰"><span class="tile-name">معاونت ۱۰</span><span class="tile-no">۱۰</span></div>
-      </div>
-    </section>
-
-    <section class="section" id="subsidiaries">
-      <div class="section-head"><h2>شرکت‌های زیرمجموعه</h2></div>
-      <div class="grid three">
-        <div class="tile feature"><span class="tile-name">شرکت ۰۱</span><span class="tile-no">۰۱</span></div>
-      </div>
-    </section>
-
-    <section class="section" id="branches">
-      <div class="section-head"><h2>مدیریت شعب استانی</h2></div>
-      <div class="grid three">
-        <div class="tile"><span class="tile-name">مدیریت شعب استانی ۰۱</span><span class="tile-no">۰۱</span></div>
-        <div class="tile"><span class="tile-name">مدیریت شعب استانی ۰۲</span><span class="tile-no">۰۲</span></div>
-        <div class="tile"><span class="tile-name">مدیریت شعب استانی ۰۳</span><span class="tile-no">۰۳</span></div>
-      </div>
-    </section>
-
-    <section class="section" id="centers">
-      <div class="section-head"><h2>مراکز</h2></div>
-      <div class="group-grid">
-        <div class="group-card"><strong>مرکز ۰۱</strong></div>
-        <div class="group-card"><strong>مرکز ۰۲</strong></div>
-        <div class="group-card"><strong>مرکز ۰۳</strong></div>
-      </div>
-    </section>
-
-    <section class="section" id="systems">
-      <div class="section-head"><h2>بانک‌ها و سامانه‌ها</h2></div>
-      <div class="group-grid">
-        <div class="group-card"><strong>بانک‌های اطلاعاتی</strong></div>
-        <div class="group-card"><strong>سامانه‌های عمومی</strong></div>
-        <div class="group-card"><strong>سامانه‌های اختصاصی</strong></div>
-      </div>
+  <main class="intro" aria-labelledby="holding-title">
+    <img class="intro-photo" src="assets/images/introback.webp" alt="" fetchpriority="high">
+    <div class="frame" aria-hidden="true"></div>
+    <section class="content">
+      <img class="logo" src="assets/images/logo.webp" alt="نشان هلدینگ">
+      <div class="gold-rule" aria-hidden="true"></div>
+      <h1 id="holding-title">هلدینگ</h1>
     </section>
   </main>
-  <footer></footer>
 </body>
 </html>
