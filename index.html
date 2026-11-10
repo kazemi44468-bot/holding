@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#142b43">
+  <meta name="description" content="درگاه مرکزی هلدینگ؛ معماری راهبری، شرکت‌ها، معاونت‌ها و مراکز تخصصی.">
+  <title>هلدینگ | درگاه مرکزی</title>
+  <style>
+    @font-face {
+      font-family: HoldingLocal;
+      src: url("fonts/Vazirmatn.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 100 900;
+      font-display: swap;
+    }
+    :root {
+      color-scheme: dark;
+      --navy: #142b43;
+      --gold: #c9a66b;
+      --ivory: #f6f2e9;
+      --muted: rgba(246,242,233,.78);
+    }
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      min-height: 100svh;
+      color: var(--ivory);
+      background: var(--navy);
+      font-family: HoldingLocal, Vazirmatn, Tahoma, sans-serif;
+      overflow-x: hidden;
+    }
+    .intro {
+      position: relative;
+      isolation: isolate;
+      display: grid;
+      min-height: 100svh;
+      place-items: center;
+      padding: 42px 22px;
+      overflow: hidden;
+      background: #142b43 url("images/introback.webp") center / cover no-repeat;
+    }
+    .intro::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(105deg, rgba(10,25,41,.80), rgba(15,39,60,.66) 48%, rgba(10,24,39,.76)),
+        linear-gradient(0deg, rgba(8,20,33,.46), transparent 55%);
+    }
+    .intro::after {
+      content: "";
+      position: absolute;
+      inset: 22px;
+      z-index: -1;
+      border: 1px solid rgba(220,190,137,.30);
+      pointer-events: none;
+    }
+    .content {
+      width: min(100%, 900px);
+      text-align: center;
+      padding: clamp(28px, 6vw, 66px) 18px;
+      animation: appear .9s ease both;
+    }
+    .logo-wrap {
+      width: clamp(112px, 17vw, 172px);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 25px;
+      border: 1px solid rgba(220,190,137,.65);
+      border-radius: 50%;
+      background: rgba(255,255,255,.075);
+      box-shadow: 0 18px 55px rgba(0,0,0,.20), inset 0 0 0 7px rgba(255,255,255,.035);
+      backdrop-filter: blur(5px);
+    }
+    .logo {
+      display: block;
+      width: 76%;
+      height: 76%;
+      object-fit: contain;
+      filter: drop-shadow(0 5px 12px rgba(0,0,0,.22));
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 13px;
+      color: #e0c18c;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .12em;
+    }
+    .eyebrow::before, .eyebrow::after {
+      content: "";
+      width: 30px;
+      height: 1px;
+      background: currentColor;
+      opacity: .75;
+    }
+    h1 {
+      margin: 0;
+      color: #fffaf0;
+      font-size: clamp(38px, 7vw, 70px);
+      font-weight: 800;
+      line-height: 1.35;
+      letter-spacing: -.035em;
+      text-shadow: 0 4px 24px rgba(0,0,0,.2);
+    }
+    .subtitle {
+      margin: 10px auto 0;
+      color: #e7dfd1;
+      font-size: clamp(15px, 2.1vw, 20px);
+      font-weight: 400;
+    }
+    .rule {
+      width: 74px;
+      height: 2px;
+      margin: 27px auto 22px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .statement {
+      max-width: 690px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: clamp(13px, 1.7vw, 16px);
+      line-height: 2.2;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 34px;
+    }
+    .action {
+      min-width: 190px;
+      min-height: 49px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 22px;
+      border: 1px solid rgba(220,190,137,.75);
+      border-radius: 8px;
+      color: #182d42;
+      background: linear-gradient(135deg, #e0c18c, #c6a16a);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+      box-shadow: 0 9px 24px rgba(0,0,0,.18);
+    }
+    .action:hover { transform: translateY(-3px); box-shadow: 0 13px 30px rgba(0,0,0,.25); }
+    .action.secondary {
+      color: #f6f2e9;
+      background: rgba(255,255,255,.07);
+      border-color: rgba(255,255,255,.42);
+      box-shadow: none;
+      backdrop-filter: blur(4px);
+    }
+    .principle {
+      margin: 39px 0 0;
+      color: rgba(246,242,233,.72);
+      font-size: 12px;
+      letter-spacing: .01em;
+    }
+    .principle strong { color: #e0c18c; font-weight: 600; }
+    .corner {
+      position: absolute;
+      bottom: 35px;
+      right: 42px;
+      color: rgba(246,242,233,.55);
+      font-size: 10px;
+    }
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 600px) {
+      .intro { padding: 28px 16px; }
+      .intro::after { inset: 10px; }
+      .content { padding: 34px 7px 55px; }
+      .logo-wrap { margin-bottom: 20px; }
+      .actions { flex-direction: column; align-items: stretch; width: min(100%, 310px); margin-inline: auto; margin-top: 27px; }
+      .action { width: 100%; }
+      .corner { right: 22px; bottom: 19px; }
+      .principle { margin-top: 28px; line-height: 2; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="intro">
+    <section class="content" aria-labelledby="holding-title">
+      <div class="logo-wrap">
+        <img class="logo" src="images/logo.webp" alt="نشان هلدینگ">
+      </div>
+      <div class="eyebrow">درگاه مرکزی و معماری یکپارچه</div>
+      <h1 id="holding-title">هلدینگ</h1>
+      <p class="subtitle">مجموعه راهبردی ارشد ایرانیان</p>
+      <div class="rule" aria-hidden="true"></div>
+      <p class="statement">
+        بستری یکپارچه برای راهبری راهبردی، توسعه کسب‌وکارها و هم‌افزایی میان شرکت‌ها،
+        معاونت‌ها، مراکز تخصصی و سامانه‌های گروه.
+      </p>
+      <div class="actions">
+        <a class="action" href="pages/holding.html">ورود به فضای هلدینگ</a>
+        <a class="action secondary" href="https://kazemi44468-bot.github.io/tarhha/pages/holding-tarh.html" target="_blank" rel="noopener">مطالعه سند طرح مادر</a>
+      </div>
+      <p class="principle"><strong>استقلال در اجرا</strong>، یکپارچگی در راهبری&nbsp; | &nbsp;استقلال بیرونی، اتصال درونی</p>
+    </section>
+    <div class="corner">درگاه رسمی طرح جامع هلدینگ</div>
+  </main>
+</body>
+</html>
