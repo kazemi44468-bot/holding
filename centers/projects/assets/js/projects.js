@@ -85,7 +85,7 @@ function setHeader(page){
  document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('active',a.dataset.nav===page));
 }
 function empty(title,copy){return '<div class="pc-empty"><strong>'+esc(title)+'</strong>'+esc(copy)+'</div>';}
-function stat(label,value,unit=''){return '<div class="pc-stat"><small>'+esc(label)+'</small><strong>'+fa(value)+'</strong><em>'+esc(unit)+'</em></div>';}
+function stat(label,value,unit=''){const shown=typeof value==='number'?fa(value):esc(value);return '<div class="pc-stat"><small>'+esc(label)+'</small><strong>'+shown+'</strong><em>'+esc(unit)+'</em></div>';}
 function eventList(items){
  if(!items.length)return empty('هنوز رویدادی ثبت نشده است','با ثبت پروژه، وظیفه یا گزارش، تاریخچه اقدامات در این قسمت نمایش داده می‌شود.');
  return '<div class="pc-timeline">'+items.slice(0,9).map(e=>'<div class="pc-event"><time>'+fmtDateTime(e.at)+'</time><div><strong>'+esc(e.title)+'</strong><p>'+esc(e.details||e.action||'')+'</p></div></div>').join('')+'</div>';
