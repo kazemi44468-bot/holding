@@ -19,7 +19,7 @@ window.HOLDING_ORG_REGISTRY = {
       "parent_organization_id": "HOLDING",
       "sequence": 2,
       "name": null,
-      "label": "معاونت 02 ـ عنوان در انتظار ثبت نهایی",
+      "label": "معاونت دوم ـ عنوان در انتظار ثبت نهایی",
       "status": "name_pending"
     },
     {
@@ -28,7 +28,7 @@ window.HOLDING_ORG_REGISTRY = {
       "parent_organization_id": "HOLDING",
       "sequence": 3,
       "name": null,
-      "label": "معاونت 03 ـ عنوان در انتظار ثبت نهایی",
+      "label": "معاونت سوم ـ عنوان در انتظار ثبت نهایی",
       "status": "name_pending"
     },
     {
@@ -37,7 +37,7 @@ window.HOLDING_ORG_REGISTRY = {
       "parent_organization_id": "HOLDING",
       "sequence": 4,
       "name": null,
-      "label": "معاونت 04 ـ عنوان در انتظار ثبت نهایی",
+      "label": "معاونت چهارم ـ عنوان در انتظار ثبت نهایی",
       "status": "name_pending"
     },
     {
@@ -46,7 +46,7 @@ window.HOLDING_ORG_REGISTRY = {
       "parent_organization_id": "HOLDING",
       "sequence": 5,
       "name": null,
-      "label": "معاونت 05 ـ عنوان در انتظار ثبت نهایی",
+      "label": "معاونت پنجم ـ عنوان در انتظار ثبت نهایی",
       "status": "name_pending"
     },
     {
@@ -55,7 +55,7 @@ window.HOLDING_ORG_REGISTRY = {
       "parent_organization_id": "HOLDING",
       "sequence": 6,
       "name": null,
-      "label": "معاونت 06 ـ عنوان در انتظار ثبت نهایی",
+      "label": "معاونت ششم ـ عنوان در انتظار ثبت نهایی",
       "status": "name_pending"
     },
     {
@@ -64,7 +64,7 @@ window.HOLDING_ORG_REGISTRY = {
       "parent_organization_id": "HOLDING",
       "sequence": 7,
       "name": null,
-      "label": "معاونت 07 ـ عنوان در انتظار ثبت نهایی",
+      "label": "معاونت هفتم ـ عنوان در انتظار ثبت نهایی",
       "status": "name_pending"
     },
     {
@@ -73,7 +73,7 @@ window.HOLDING_ORG_REGISTRY = {
       "parent_organization_id": "HOLDING",
       "sequence": 8,
       "name": null,
-      "label": "معاونت 08 ـ عنوان در انتظار ثبت نهایی",
+      "label": "معاونت هشتم ـ عنوان در انتظار ثبت نهایی",
       "status": "name_pending"
     },
     {
@@ -82,7 +82,7 @@ window.HOLDING_ORG_REGISTRY = {
       "parent_organization_id": "HOLDING",
       "sequence": 9,
       "name": null,
-      "label": "معاونت 09 ـ عنوان در انتظار ثبت نهایی",
+      "label": "معاونت نهم ـ عنوان در انتظار ثبت نهایی",
       "status": "name_pending"
     },
     {
@@ -91,7 +91,7 @@ window.HOLDING_ORG_REGISTRY = {
       "parent_organization_id": "HOLDING",
       "sequence": 10,
       "name": null,
-      "label": "معاونت 10 ـ عنوان در انتظار ثبت نهایی",
+      "label": "معاونت دهم ـ عنوان در انتظار ثبت نهایی",
       "status": "name_pending"
     }
   ],
