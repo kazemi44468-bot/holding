@@ -65,6 +65,7 @@ function seedInitialPortfolio(){
   const status=i===19?'در حال برنامه‌ریزی':i===14?'در حال برنامه‌ریزی':'مصوب / در اجرا';
   const p={id,title:d[0],domain:d[1],teamMembers:[d[3],teamNames[i%teamNames.length]],orgId:'HOLDING',priority:i<5?'راهبردی':i%4===0?'بالا':'عادی',sponsor:'مدیریت هلدینگ',manager:d[3],startDate:start,dueDate:end,strategyRef:'',budget:0,objective:d[2],summary:d[2],status,createdAt:now+'T09:00:00.000Z',baselines:[],archived:false,sampleData:true};
   db.projects.push(p);
+  db.events.unshift({id:'EVT-SEED-P-'+fa(i+1),at:now+'T09:00:00.000Z',action:'seed-project',entity:p.id,title:'ایجاد پرونده پروژه: '+p.title,details:'ثبت اولیه پروژه نمونه، تعیین حوزه، مدیر و اعضای تیم و ایجاد برنامه پایه.'});
   const tasks=d[6].map((title,j)=>{
    const from=new Date(start+'T12:00:00');from.setDate(from.getDate()+Math.round((j/5)*((new Date(end+'T12:00:00')-from)/86400000)));
    const to=new Date(start+'T12:00:00');to.setDate(to.getDate()+Math.round(((j+1)/5)*((new Date(end+'T12:00:00')-to)/86400000)));
@@ -73,6 +74,7 @@ function seedInitialPortfolio(){
    const state=pct===100?'تکمیل‌شده':pct>0?'در حال اجرا':'در انتظار شروع';
    const task={id:'TSK-SEED-'+fa(i+1).padStart(2,'۰')+'-'+fa(j+1),title,projectId:id,workPackageId:'WPK-SEED-'+fa(i+1).padStart(2,'۰')+'-'+fa(j+1),orgId:'HOLDING',workType:'بسته کاری پروژه',teamMembers:[teamNames[(i+j)%teamNames.length]],assignee:teamNames[(i+j)%teamNames.length],owner:d[3],startDate:date(from),dueDate:date(to),weight:[3,2,3,2,2][j],estimatedHours:[48,64,80,48,32][j],actualHours:0,priority:j===0?'بالا':'عادی',acceptance:'تحویل مستند و قابل بازبینی مطابق شرح فعالیت',status:state,reportedPercent:pct,approvedPercent:pct,history:[],archived:false,createdAt:now+'T09:00:00.000Z',sampleData:true};
    db.tasks.push(task);
+   db.events.unshift({id:'EVT-SEED-T-'+fa(i+1)+'-'+fa(j+1),at:now+'T09:00:00.000Z',action:'seed-task',entity:task.id,title:'تعریف فعالیت: '+task.title,details:'مسئول اولیه: '+task.assignee+'؛ موعد برنامه‌ای: '+task.dueDate});
    db.workPackages.push({id:task.workPackageId,projectId:id,parentId:'',code:fa(j+1),title,owner:d[3],weight:task.weight,startDate:task.startDate,dueDate:task.dueDate,description:task.acceptance,status:pct===100?'تکمیل‌شده':pct>0?'در حال اجرا':'برنامه‌ریزی‌شده',createdAt:now+'T09:00:00.000Z',sampleData:true});
    return {id:task.id,title:task.title,startDate:task.startDate,dueDate:task.dueDate,weight:task.weight,workPackageId:task.workPackageId};
   });
@@ -185,7 +187,7 @@ function renderControl(){const ps=activeProjects(),opts=ps.map(x=>'<option value
 
 function sampleDataBanner(){return db.samplePortfolioVersion?'<div class="pc-sample-banner"><strong>بانک آغازین نمونه و قابل ویرایش</strong><span>۲۰ پرونده پروژه و وظایف مرتبط برای نمایش امکانات سامانه بارگذاری شده‌اند. وضعیت‌ها و درصدهای اولیه صرفاً داده نمایشی هستند؛ پیش از گزارش رسمی، اطلاعات را با داده‌های واقعی جایگزین و تأیید کنید.</span></div>':'';}
 function portfolioCharts(){
- const ps=activeProjects(),ts=db.tasks.filter(t=>!t.archived),states=['در حال اجرا','در حال برنامه‌ریزی','در انتظار تصویب','متوقف','مختومه'],taskStates=['تکمیل‌شده','در حال اجرا','در انتظار شروع','در انتظار تأیید','متوقف'];
+ const ps=activeProjects(),ts=db.tasks.filter(t=>!t.archived),states=['مصوب / در اجرا','در حال برنامه‌ریزی','در انتظار تصویب','متوقف','مختومه'],taskStates=['تکمیل‌شده','در حال اجرا','در انتظار شروع','در انتظار تأیید','متوقف'];
  const pb=states.map(label=>({label,count:ps.filter(p=>p.status===label).length})).filter(x=>x.count),tb=taskStates.map(label=>({label,count:ts.filter(t=>t.status===label).length})).filter(x=>x.count),mp=Math.max(1,...pb.map(x=>x.count)),mt=Math.max(1,...tb.map(x=>x.count));
  const top=ps.map(p=>({p,m:projectMetrics(p)})).sort((a,b)=>b.m.actual-a.m.actual).slice(0,6),bar=(x,m)=>'<div class="pc-analytics-row"><span>'+esc(x.label)+'</span><div class="pc-analytics-track"><i style="width:'+Math.max(2,x.count/m*100)+'%"></i></div><b>'+fa(x.count)+'</b></div>';
  return '<section class="pc-analytics-grid"><article class="pc-panel"><h3 class="pc-section-title">پراکندگی پروژه‌ها بر اساس وضعیت</h3>'+pb.map(x=>bar(x,mp)).join('')+'</article><article class="pc-panel"><h3 class="pc-section-title">وضعیت وظایف در بانک کار</h3>'+tb.map(x=>bar(x,mt)).join('')+'</article></section><section class="pc-panel"><div class="pc-panel-head"><div><h3>پیشرفت ثبت‌شده پروژه‌ها</h3><p>رتبه‌بندی بر اساس پیشرفت تأییدشده وظایف؛ برای داده نمونه، صرفاً نمایشی است.</p></div><a class="pc-btn secondary" href="#reports">گزارش‌های تفصیلی</a></div>'+(top.length?'<div class="pc-progress-ranking">'+top.map(x=>'<a href="#project/'+x.p.id+'"><span>'+esc(x.p.title)+'</span><div class="pc-analytics-track"><i style="width:'+Math.max(0,Math.min(100,x.m.actual))+'%"></i></div><b>'+fa(Math.round(x.m.actual))+'٪</b></a>').join('')+'</div>':empty('پروژه‌ای ثبت نشده است','با ایجاد پروژه، نمودار پیشرفت در این بخش نمایش داده می‌شود.'))+'</section>';
