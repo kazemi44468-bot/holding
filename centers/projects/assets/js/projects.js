@@ -229,12 +229,19 @@ function createCall(form){
 }
 function taskReport(id){
  const t=db.tasks.find(x=>x.id===id);if(!t)return;
- const raw=prompt('درصد پیشرفت اعلامی (۰ تا ۱۰۰):',String(t.reportedPercent||0));if(raw===null)return;
- const pct=Math.max(0,Math.min(100,Number(raw)));if(!Number.isFinite(pct))return notice('درصد واردشده معتبر نیست.','error');
- const note=prompt('شرح اقدام انجام‌شده، مانع یا شاهد پیشرفت:','')||'';
+ const dialog=$('#task-report-dialog'),form=$('#task-report-form');if(!dialog||!form)return;
+ form.elements.taskId.value=id;form.elements.percent.value=String(t.reportedPercent||0);form.elements.note.value=t.reportText||'';
+ dialog.showModal();
+}
+function submitTaskReport(form){
+ const d=formData(form),t=db.tasks.find(x=>x.id===d.taskId);if(!t)return;
+ const pct=Math.max(0,Math.min(100,Number(d.percent)));
+ if(!Number.isFinite(pct))return notice('درصد واردشده معتبر نیست.','error');
+ const note=d.note||'';
  t.reportedPercent=pct;t.reportText=note;t.reportedAt=isoNow();t.status=pct>=100?'در انتظار تأیید':'در حال اجرا';
  t.history=t.history||[];t.history.unshift({at:isoNow(),type:'گزارش پیشرفت',percent:pct,note});
- log('report-progress',t.id,'گزارش پیشرفت وظیفه: '+t.title,'درصد اعلامی '+pct+'٪؛ '+note);save();notice('گزارش ثبت شد؛ تا زمان تأیید، پیشرفت قطعی پروژه تغییر نمی‌کند.');render();
+ log('report-progress',t.id,'گزارش پیشرفت وظیفه: '+t.title,'درصد اعلامی '+pct+'٪؛ '+note);
+ save();$('#task-report-dialog').close();notice('گزارش ثبت شد؛ تا زمان تأیید، پیشرفت قطعی پروژه تغییر نمی‌کند.');render();
 }
 function acceptReport(id){
  const t=db.tasks.find(x=>x.id===id);if(!t)return;
@@ -248,7 +255,7 @@ function approveProject(id){
 }
 function baseline(id){
  const p=projectBy(id);if(!p)return;
- if(!confirm('نسخه جدیدی از برنامه فعلی به‌عنوان خط مبنا ثبت شود؟ نسخه‌های قبلی حفظ می‌شوند.'))return;
+ 
  p.baselines=p.baselines||[];
  const tasks=tasksOf(id).map(t=>({id:t.id,title:t.title,startDate:t.startDate,dueDate:t.dueDate,weight:t.weight}));
  p.baselines.push({version:p.baselines.length+1,approvedAt:isoNow(),startDate:p.startDate,endDate:p.dueDate,tasks});
@@ -292,6 +299,9 @@ function exportEvents(){
 view.addEventListener('submit',e=>{
  const f=e.target;if(f.id==='project-form'){e.preventDefault();createProject(f);}else if(f.id==='task-form'){e.preventDefault();createTask(f);}else if(f.id==='call-form'){e.preventDefault();createCall(f);}else if(f.dataset.form==='volunteer'){e.preventDefault();volunteer(f);}
 });
+$('#task-report-form').addEventListener('submit',e=>{e.preventDefault();submitTaskReport(e.currentTarget);});
+$('#close-report-dialog').addEventListener('click',()=>$('#task-report-dialog').close());
+$('#cancel-report-dialog').addEventListener('click',()=>$('#task-report-dialog').close());
 view.addEventListener('click',e=>{
  const b=e.target.closest('[data-action]');if(!b)return;
  const a=b.dataset.action,id=b.dataset.id;
