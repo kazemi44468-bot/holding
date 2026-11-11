@@ -1,0 +1,21 @@
+/* Unified holding reference shell — refined national identity */
+:root{--holding-shell-navy:#153650;--holding-shell-blue:#285a7d;--holding-shell-gold:#c6a36a;--holding-shell-ink:#263b50}
+.holding-masthead{position:relative;isolation:isolate;overflow:hidden;color:#fff;background:linear-gradient(108deg,#142f49 0%,#214f70 54%,#173b59 100%);border-bottom:3px solid var(--holding-shell-gold);box-shadow:0 5px 18px rgba(18,45,68,.12)}
+.holding-masthead:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.16;background:linear-gradient(135deg,transparent 0 47%,rgba(255,255,255,.16) 48%,transparent 49%) 0 0/30px 30px,linear-gradient(45deg,transparent 0 47%,rgba(255,255,255,.1) 48%,transparent 49%) 0 0/30px 30px}
+.holding-masthead__inner{max-width:1240px;min-height:82px;margin:auto;padding:12px 26px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.holding-masthead__identity{display:flex;align-items:center;gap:15px;min-width:0}
+.holding-masthead__flag{width:78px;height:45px;flex:0 0 78px;display:block;object-fit:cover;border:1px solid rgba(255,255,255,.72);border-radius:3px;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+.holding-masthead__copy{min-width:0}
+.holding-masthead__eyebrow{display:block;margin-bottom:2px;color:#e4cfaa;font-size:10px;font-weight:500;letter-spacing:.1px}
+.holding-masthead__title{margin:0;color:#fff;font-size:16px;line-height:1.65;font-weight:700}
+.holding-masthead__subtitle{display:block;margin-top:1px;color:rgba(239,245,249,.78);font-size:9.5px}
+.holding-masthead__portal{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:5px 13px;border:1px solid rgba(255,255,255,.42);border-radius:4px;color:#fff;font-size:10px;white-space:nowrap;transition:background .18s,border-color .18s}
+.holding-masthead__portal:hover{background:rgba(255,255,255,.1);border-color:#e3c99a;text-decoration:none}
+.holding-reference-footer{position:relative;isolation:isolate;overflow:hidden;margin-top:36px;border-top:2px solid var(--holding-shell-gold);background:linear-gradient(108deg,#142f49 0%,#214f70 54%,#173b59 100%);color:#e7edf2}
+.holding-reference-footer:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.11;background:linear-gradient(135deg,transparent 0 48%,#fff 49%,transparent 50%) 0 0/26px 26px}
+.holding-reference-footer__inner{max-width:1240px;min-height:65px;margin:auto;padding:13px 26px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.holding-reference-footer__brand{font-size:11px;font-weight:600;color:#fff}
+.holding-reference-footer__note{font-size:9px;color:#d5c6ad}
+.holding-reference-footer__link{font-size:10px;color:#fff;border-bottom:1px solid rgba(230,207,166,.55);padding-bottom:2px}
+.holding-reference-footer__link:hover{color:#f1d7a8;text-decoration:none}
+@media(max-width:620px){.holding-masthead__inner{min-height:72px;padding:10px 13px;gap:10px}.holding-masthead__identity{gap:10px}.holding-masthead__flag{width:61px;height:35px;flex-basis:61px}.holding-masthead__title{font-size:13px}.holding-masthead__eyebrow{font-size:8.5px}.holding-masthead__subtitle{font-size:8px}.holding-masthead__portal{font-size:9px;padding:4px 8px;min-height:30px}.holding-reference-footer__inner{padding:12px 14px;justify-content:center;text-align:center;flex-direction:column;gap:5px}}
