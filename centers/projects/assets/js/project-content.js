@@ -124,7 +124,6 @@ function apply(){
  const page=location.hash.replace(/^#/,'').split('/')[0]||'overview';
  if(page==='about'){if(view.dataset.pcContentPage==='about')return;view.innerHTML=aboutHTML;view.dataset.pcContentPage='about';document.querySelector('#page-title').textContent='معرفی مرکز پروژه‌ها';document.querySelector('#page-desc').textContent='اهداف، ضرورت‌ها، قابلیت‌ها، مزایا و روش استفاده از سامانه';document.title='معرفی مرکز پروژه‌ها | هلدینگ';}
  else {view.dataset.pcContentPage='';}
- else {view.dataset.pcContentPage='';}
  document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('active',a.dataset.nav===page));
 }
 const observer=new MutationObserver(()=>{const page=location.hash.replace(/^#/,'').split('/')[0]||'overview';if(page==='about'&&!view.querySelector('.pc-about-hero')){view.dataset.pcContentPage='';apply();}});
