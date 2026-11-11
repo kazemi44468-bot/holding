@@ -113,7 +113,7 @@ function eventList(items,limit=9){
 }
 function projectCard(p){
  const m=projectMetrics(p);
- return '<article class="pc-project-card"><div class="pc-panel-head"><h4>'+esc(p.title)+'</h4>'+badge(p.status)+'</div><p>'+esc(p.summary||'شرح کوتاه پروژه ثبت نشده است.')+'</p><div class="pc-card-meta"><span class="pc-badge">'+esc(orgLabel(p.orgId))+'</span><span class="pc-badge">موعد: '+fmtDate(p.dueDate)+'</span><span class="pc-badge">'+fa(m.tasks.length)+' کار</span></div>'+progressBar(m.actual,'پیشرفت تأییدشده')+'<div class="pc-card-actions"><button class="pc-btn secondary" data-action="open-project" data-id="'+p.id+'">مشاهده پرونده</button>'+(p.status==='در انتظار تصویب'?'<button class="pc-btn gold" data-action="approve-project" data-id="'+p.id+'">تصویب درخواست</button>':'')+'</div></article>';
+ return '<article class="pc-project-card"><div class="pc-panel-head"><h4>'+esc(p.title)+'</h4>'+badge(p.status)+'</div><p>'+esc(p.summary||'شرح کوتاه پروژه ثبت نشده است.')+'</p><div class="pc-card-meta"><span class="pc-badge">'+esc(orgLabel(p.orgId))+'</span>'+(p.domain?'<span class="pc-badge">'+esc(p.domain)+'</span>':'')+'<span class="pc-badge">موعد: '+fmtDate(p.dueDate)+'</span><span class="pc-badge">'+fa(m.tasks.length)+' کار</span></div>'+progressBar(m.actual,'پیشرفت تأییدشده')+'<div class="pc-card-actions"><button class="pc-btn secondary" data-action="open-project" data-id="'+p.id+'">مشاهده پرونده</button>'+(p.status==='در انتظار تصویب'?'<button class="pc-btn gold" data-action="approve-project" data-id="'+p.id+'">تصویب درخواست</button>':'')+'</div></article>';
 }
 
 function packagesOf(pid){return db.workPackages.filter(x=>x.projectId===pid&&!x.archived);}
@@ -146,7 +146,7 @@ function renderOverview(){
 }
 function projectForm(){
  return '<details class="pc-panel" open><summary class="pc-section-title">＋ ثبت درخواست یا پروژه جدید</summary><form class="pc-form" id="project-form">'+
- '<div class="pc-field full"><label>عنوان پروژه / درخواست *</label><input name="title" required maxlength="180" placeholder="عنوان روشن و نتیجه‌محور"></div>'+
+ '<div class="pc-field full"><label>عنوان پروژه / درخواست *</label><input name="title" required maxlength="180" placeholder="عنوان روشن و نتیجه‌محور"></div>'+\n '<div class="pc-field"><label>حوزه / زمینه پروژه</label><input name="domain" placeholder="مثلاً پژوهشی، عمرانی، فناوری، اقتصادی، اداری و..."></div>'+\n '<div class="pc-field"><label>اعضای تیم اصلی</label><input name="teamMembers" placeholder="نام افراد یا گروه‌ها؛ با ویرگول جدا کنید"></div>'+
  '<div class="pc-field"><label>قلمرو سازمانی *</label><select name="orgId" required>'+orgOptions('HOLDING')+'</select></div>'+
  '<div class="pc-field"><label>اولویت</label><select name="priority"><option>عادی</option><option>بالا</option><option>فوری</option><option>راهبردی</option></select></div>'+
  '<div class="pc-field"><label>حامی / مالک کسب‌وکار</label><input name="sponsor" placeholder="نام یا عنوان مسئول"></div>'+
@@ -170,7 +170,7 @@ function taskForm(projectId=''){
  return '<details class="pc-panel"><summary class="pc-section-title">＋ تعریف وظیفه یا اقدام جدید</summary><form class="pc-form" id="task-form">'+
  '<div class="pc-field full"><label>عنوان کار *</label><input name="title" required maxlength="180" placeholder="اقدام مشخص و قابل تحویل"></div>'+
  '<div class="pc-field"><label>پروژه مرتبط</label><select name="projectId"><option value="">کار مستقل / اقدام عمومی</option>'+projectOptions+'</select></div>'+
- '<div class="pc-field"><label>قلمرو سازمانی</label><select name="orgId">'+orgOptions('HOLDING')+'</select></div>'+
+ '<div class="pc-field"><label>قلمرو سازمانی</label><select name="orgId">'+orgOptions('HOLDING')+'</select></div>'+\n '<div class="pc-field"><label>نوع فعالیت</label><input name="workType" placeholder="پروژه، مأموریت، کار تیمی، عملیات و..."></div>'+\n '<div class="pc-field full"><label>اعضای همکار تیم (با ویرگول جدا کنید)</label><input name="teamMembers" placeholder="نام اعضا یا گروه‌های همکار"></div>'+
  '<div class="pc-field"><label>مسئول انجام</label><input name="assignee" placeholder="نام فرد یا تیم"></div>'+
  '<div class="pc-field"><label>مالک پاسخ‌گو</label><input name="owner" placeholder="مسئول پیگیری و پذیرش"></div>'+
  '<div class="pc-field"><label>شروع برنامه‌ای</label><input name="startDate" type="date"></div>'+
@@ -182,7 +182,7 @@ function taskForm(projectId=''){
 }
 function taskRow(t){
  const p=projectBy(t.projectId),rp=Number(t.reportedPercent)||0,ap=Number(t.approvedPercent)||0;
- return '<tr><td><strong>'+esc(t.title)+'</strong><small>'+esc(t.id)+' · '+esc(t.assignee||'مسئول تعیین نشده')+'</small></td><td>'+esc(p?.title||'کار مستقل')+'</td><td>'+fmtDate(t.dueDate)+'</td><td>'+badge(t.status)+'</td><td>'+fa(ap)+'٪ <small>اعلامی: '+fa(rp)+'٪</small></td><td><button class="pc-btn secondary" data-action="task-report" data-id="'+t.id+'">ثبت گزارش</button>'+(rp>ap?'<button class="pc-btn gold" data-action="accept-report" data-id="'+t.id+'">تأیید گزارش</button>':'')+'</td></tr>';
+ return '<tr><td><strong>'+esc(t.title)+'</strong><small>'+esc(t.id)+' · '+esc(t.assignee||'مسئول تعیین نشده')+(t.teamMembers?.length?' · همکاران: '+esc(t.teamMembers.join('، ')):'')+'</small></td><td>'+esc(p?.title||'کار مستقل')+'</td><td>'+fmtDate(t.dueDate)+'</td><td>'+badge(t.status)+'</td><td>'+fa(ap)+'٪ <small>اعلامی: '+fa(rp)+'٪</small></td><td><button class="pc-btn secondary" data-action="task-report" data-id="'+t.id+'">ثبت گزارش</button>'+(rp>ap?'<button class="pc-btn gold" data-action="accept-report" data-id="'+t.id+'">تأیید گزارش</button>':'')+'</td></tr>';
 }
 function renderTasks(){
  const ts=db.tasks.filter(t=>!t.archived);
@@ -261,13 +261,13 @@ function filterProjectHistory(){
 function formData(form){return Object.fromEntries(new FormData(form).entries());}
 function createProject(form){
  const d=formData(form);if(!d.title.trim())return;
- const p={id:makeId('PRJ'),title:d.title.trim(),orgId:d.orgId||'HOLDING',priority:d.priority||'عادی',sponsor:d.sponsor||'',manager:d.manager||'',startDate:d.startDate||'',dueDate:d.dueDate||'',strategyRef:d.strategyRef||'',budget:Number(d.budget)||0,objective:d.objective||'',summary:d.summary||'',status:'در انتظار تصویب',createdAt:isoNow(),baselines:[],archived:false};
+ const p={id:makeId('PRJ'),title:d.title.trim(),domain:d.domain||'',teamMembers:(d.teamMembers||'').split(/[،,؛;]/).map(x=>x.trim()).filter(Boolean),orgId:d.orgId||'HOLDING',priority:d.priority||'عادی',sponsor:d.sponsor||'',manager:d.manager||'',startDate:d.startDate||'',dueDate:d.dueDate||'',strategyRef:d.strategyRef||'',budget:Number(d.budget)||0,objective:d.objective||'',summary:d.summary||'',status:'در انتظار تصویب',createdAt:isoNow(),baselines:[],archived:false};
  db.projects.push(p);log('create-project',p.id,'ثبت درخواست پروژه: '+p.title,'درخواست جدید در وضعیت انتظار تصویب ثبت شد.');save();notice('درخواست پروژه ثبت شد و در انتظار بررسی و تصویب است.');location.hash='project/'+p.id;
 }
 function createTask(form){
  const d=formData(form);if(!d.title.trim())return;
  const wp=d.workPackageId?packageBy(d.workPackageId):null;if(wp&&wp.projectId!==(d.projectId||''))return notice('بسته کاری انتخاب‌شده متعلق به پروژه دیگری است.','error');
- const t={id:makeId('TSK'),title:d.title.trim(),projectId:d.projectId||'',workPackageId:d.workPackageId||'',orgId:d.orgId||'HOLDING',assignee:d.assignee||'',owner:d.owner||'',startDate:d.startDate||'',dueDate:d.dueDate||'',weight:Math.max(1,Number(d.weight)||1),estimatedHours:Math.max(0,Number(d.estimatedHours)||0),actualHours:0,priority:d.priority||'عادی',acceptance:d.acceptance||'',status:'در انتظار شروع',reportedPercent:0,approvedPercent:0,history:[],archived:false,createdAt:isoNow()};
+ const t={id:makeId('TSK'),title:d.title.trim(),projectId:d.projectId||'',workPackageId:d.workPackageId||'',orgId:d.orgId||'HOLDING',workType:d.workType||'اقدام اجرایی',teamMembers:(d.teamMembers||'').split(/[،,؛;]/).map(x=>x.trim()).filter(Boolean),assignee:d.assignee||'',owner:d.owner||'',startDate:d.startDate||'',dueDate:d.dueDate||'',weight:Math.max(1,Number(d.weight)||1),estimatedHours:Math.max(0,Number(d.estimatedHours)||0),actualHours:0,priority:d.priority||'عادی',acceptance:d.acceptance||'',status:'در انتظار شروع',reportedPercent:0,approvedPercent:0,history:[],archived:false,createdAt:isoNow()};
  db.tasks.push(t);log('create-task',t.id,'تعریف وظیفه: '+t.title,'مسئول: '+(t.assignee||'تعیین نشده')+'؛ موعد: '+(t.dueDate||'تعیین نشده'));save();notice('وظیفه ثبت شد.');render();
 }
 function createCall(form){
