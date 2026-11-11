@@ -38,6 +38,14 @@
 - اتصال مرکز مدیریت دانش به هسته محلی؛ اتصال سایر مراکز باید مرحله‌ای و با فضای نام اختصاصی انجام شود.
 
 ### ۲.۴ مرکز پروژه‌ها و مدیریت یکپارچه کارها
+مسیر پیش‌نمایش: [مرکز پروژه‌ها](https://kazemi44468-bot.github.io/holding/centers/projects/)  
+مستند جزئیات اجرا: [PROJECT-CENTER-IMPLEMENTATION.md](PROJECT-CENTER-IMPLEMENTATION.md)
+
+فایل‌های اجرایی:
+- `centers/projects/index.html`
+- `centers/projects/assets/css/projects.css`
+- `centers/projects/assets/js/projects.js`
+
 طرح مفهومی جامع، PRD و UX/UI پیش از ساخت اجرایی تدوین شده‌اند. نسخه اجرایی اولیه در مسیر `centers/projects/` ساخته می‌شود و باید به‌صورت شفاف از قابلیت‌های تکمیل‌شده و قابلیت‌های آتی تفکیک شود.
 
 نسخه اولیه محلی شامل:
