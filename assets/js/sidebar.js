@@ -8,8 +8,9 @@ const nav=[
 const defaultOpen=new Set(); // فقط شاخه مرتبط با صفحه جاری باز می‌ماند؛ از اشغال فضای منو توسط شاخه‌های نامرتبط جلوگیری می‌شود.
 const current=b.dataset.sidebarPage||'home';
 const pathname=location.pathname;
-const pagesAt=pathname.indexOf('/pages/');
-const root=pagesAt>=0?pathname.slice(0,pagesAt+1):pathname.slice(0,pathname.lastIndexOf('/')+1);
+const segments=pathname.split('/').filter(Boolean);
+const sectionAt=segments.findIndex(part=>part==='pages'||part==='centers');
+const root=sectionAt>=0?'/'+segments.slice(0,sectionAt).join('/')+'/':(pathname.endsWith('/')?pathname:pathname.slice(0,pathname.lastIndexOf('/')+1));
 const link=p=>root+p;
 const has=x=>x.id===current||(x.children||[]).some(has);
 const render=(items,level=0)=>items.map(x=>{
