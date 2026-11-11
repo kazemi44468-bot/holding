@@ -119,3 +119,37 @@ body{background:radial-gradient(ellipse at 8% 0%,#eaf3fb 0,transparent 36%),radi
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #c49a54;outline-offset:2px}
 @media(max-width:850px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.repository-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.about-columns,.steps{grid-template-columns:1fr}.about-hero{padding:15px}.about-hero .hero-title{font-size:17px}.org-summary{grid-template-columns:1fr}.repository-detail-grid{grid-template-columns:1fr}.repository-toolbar select{width:100%;min-width:0}.repository-toolbar input{min-width:100%}.repository-summary{display:grid}}
+
+/* پرونده قابل ردیابی دانش: تاریخچه، ارزیابی و برنامه اقدام */
+.record-dossier{border-top:3px solid #c49a54}
+.record-dossier>.panelhead{align-items:flex-start}
+.record-dossier>.panelhead h3{margin:5px 0 8px;line-height:1.9}
+.dossier-section{padding:17px 0;border-top:1px solid #e6edf2}
+.dossier-section:first-of-type{border-top:0}
+.dossier-section h4{margin:0;color:#244f70;font-size:13px}
+.dossier-section>.panelhead{margin-bottom:10px}
+.dossier-section>.panelhead h4{margin:0}
+.audit-timeline{position:relative;margin:14px 5px 18px 0;padding-right:19px;border-right:2px solid #dce6ed}
+.audit-event{position:relative;padding:0 12px 17px 0}
+.audit-event:last-child{padding-bottom:4px}
+.audit-marker{position:absolute;right:-26px;top:4px;width:12px;height:12px;border:2px solid #fff;border-radius:50%;background:#397da2;box-shadow:0 0 0 1px #9eb9ca}
+.audit-event-head{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.audit-event-head strong{font-size:11px;color:#294f6b}
+.audit-event-head time{font-size:10px;color:#7a8996;white-space:nowrap}
+.audit-meta{display:flex;gap:7px;flex-wrap:wrap;margin:6px 0}
+.audit-meta span{font-size:9px;color:#536d82;background:#f1f5f8;border:1px solid #e2eaf0;border-radius:4px;padding:3px 7px}
+.audit-event p{margin:4px 0;color:#596d7e;font-size:10px;line-height:2;white-space:pre-wrap}
+.audit-event>small{font-size:9px}
+.audit-form{margin-top:16px;padding:15px;border:1px solid #dfe8ef;border-radius:7px;background:#f8fafc}
+.audit-form h5{margin:0 0 12px;color:#244f70;font-size:12px}
+.audit-form .formgrid{margin-bottom:10px}
+.audit-form textarea{min-height:76px}
+.audit-form button{margin-top:3px}
+.evaluation-detail{margin-top:8px;padding:10px 12px;border:1px solid #e3eaf0;border-radius:6px;background:#fbfcfd}
+.evaluation-detail summary{cursor:pointer;color:#315b78;font-size:10px;font-weight:700}
+.evaluation-detail .about-columns{margin-top:10px}
+.evaluation-detail .about-columns article{background:#fff}
+.record-dossier .tablewrap{margin:12px 0}
+.record-dossier .tablewrap td{vertical-align:top;line-height:1.9}
+.record-dossier .tablewrap td small{font-size:9px;color:#718293}
+@media(max-width:620px){.record-dossier>.panelhead{flex-direction:column}.audit-event-head{align-items:flex-start;flex-direction:column;gap:3px}.audit-meta{display:grid;grid-template-columns:1fr}.audit-form{padding:11px}.dossier-section{padding:13px 0}}
