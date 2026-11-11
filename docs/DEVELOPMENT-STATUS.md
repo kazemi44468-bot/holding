@@ -127,6 +127,8 @@
 
 ## ۶. منابع معماری و نیازمندی
 
+- [معماری مرکز داده و محتویات هلدینگ](DATA-CENTER-ARCHITECTURE.md)
+
 - [طرح مادر هلدینگ](https://kazemi44468-bot.github.io/tarhha/pages/holding-tarh.html)
 - [ماتریس تعاملات مراکز](https://kazemi44468-bot.github.io/tarhha/pages/holding-integration-matrix.html)
 - [طرح جامع مرکز پروژه‌ها](https://kazemi44468-bot.github.io/tarhha/pages/holding-project-center.html)
