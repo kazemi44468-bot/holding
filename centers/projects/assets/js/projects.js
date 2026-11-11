@@ -46,10 +46,10 @@ function weighted(tasks,key){
  const total=tasks.reduce((s,t)=>s+Math.max(1,Number(t.weight)||1),0);
  return total?tasks.reduce((s,t)=>s+Math.max(1,Number(t.weight)||1)*Math.max(0,Math.min(100,Number(t[key])||0)),0)/total:0;
 }
-function scheduledPercent(task,now=new Date()){
+function scheduledPercent(task,now=new Date(),calendar=db.workCalendar){
  if(!task.startDate||!task.dueDate)return null;
  const a=new Date(task.startDate+'T12:00:00'),b=new Date(task.dueDate+'T12:00:00');if(Number.isNaN(a.getTime())||Number.isNaN(b.getTime())||b<a)return null;
- const cal=db.workCalendar||{workDays:[0,1,2,3,4,6],holidays:[]},days=cal.workDays||[0,1,2,3,4,6],holidays=new Set(cal.holidays||[]),key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');let total=0,elapsed=0;
+ const cal=calendar||{workDays:[0,1,2,3,4,6],holidays:[]},days=cal.workDays||[0,1,2,3,4,6],holidays=new Set(cal.holidays||[]),key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');let total=0,elapsed=0;
  for(let d=new Date(a);d<=b;d.setDate(d.getDate()+1)){if(days.includes(d.getDay())&&!holidays.has(key(d))){total++;if(d<=now)elapsed++;}}return total?Math.max(0,Math.min(100,elapsed/total*100)):null;
 }
 function projectMetrics(p){
@@ -57,7 +57,7 @@ function projectMetrics(p){
  const base=p.baselines?.[p.baselines.length-1]||null;
  const schedule=base?.tasks?.length?base.tasks:tasks;
  const dated=schedule.filter(t=>t.startDate&&t.dueDate);
- const plan=dated.length?weighted(dated.map(t=>({...t,plannedPercent:scheduledPercent(t)})),'plannedPercent'):null;
+ const plan=dated.length?weighted(dated.map(t=>({...t,plannedPercent:scheduledPercent(t,new Date(),base?.workCalendar||db.workCalendar)})),'plannedPercent'):null;
  const duration=Math.max(1,Math.ceil((new Date((base?.endDate||p.dueDate||today())+'T12:00:00')-new Date((base?.startDate||p.startDate||today())+'T12:00:00'))/86400000));
  const variance=plan===null?null:Math.round((actual-plan)*duration/100);
  const due=base?.endDate||p.dueDate||null;
@@ -91,9 +91,9 @@ function setHeader(page){
 }
 function empty(title,copy){return '<div class="pc-empty"><strong>'+esc(title)+'</strong>'+esc(copy)+'</div>';}
 function stat(label,value,unit=''){const shown=typeof value==='number'?fa(value):esc(value);return '<div class="pc-stat"><small>'+esc(label)+'</small><strong>'+shown+'</strong><em>'+esc(unit)+'</em></div>';}
-function eventList(items){
+function eventList(items,limit=9){
  if(!items.length)return empty('هنوز رویدادی ثبت نشده است','با ثبت پروژه، وظیفه یا گزارش، تاریخچه اقدامات در این قسمت نمایش داده می‌شود.');
- return '<div class="pc-timeline">'+items.slice(0,9).map(e=>'<div class="pc-event"><time>'+fmtDateTime(e.at)+'</time><div><strong>'+esc(e.title)+'</strong><p>'+esc(e.details||e.action||'')+'</p></div></div>').join('')+'</div>';
+ return '<div class="pc-timeline">'+items.slice(0,limit).map(e=>'<div class="pc-event" data-event-date="'+esc(String(e.at||'').slice(0,10))+'"><time>'+fmtDateTime(e.at)+'</time><div><strong>'+esc(e.title)+'</strong><p>'+esc(e.details||e.action||'')+'</p></div></div>').join('')+'</div>';
 }
 function projectCard(p){
  const m=projectMetrics(p);
@@ -212,18 +212,18 @@ function renderProject(id){
  return '<section class="pc-panel"><div class="pc-detail-head"><div><h3>'+esc(p.title)+'</h3><p>'+esc(p.id)+' · '+esc(orgLabel(p.orgId))+' · '+badge(p.status)+'</p><p>'+esc(p.summary||p.objective||'شرح پروژه ثبت نشده است.')+'</p></div><div class="pc-detail-actions"><button class="pc-btn secondary" data-action="baseline" data-id="'+p.id+'">ثبت خط مبنا</button>'+(p.status==='در انتظار تصویب'?'<button class="pc-btn gold" data-action="approve-project" data-id="'+p.id+'">تصویب پروژه</button>':'')+'<a class="pc-btn secondary" href="#tasks">افزودن وظیفه</a></div></div>'+
  '<div class="pc-keyvals"><div class="pc-keyval"><small>حامی / مالک کسب‌وکار</small><strong>'+esc(p.sponsor||'تعیین نشده')+'</strong></div><div class="pc-keyval"><small>مدیر پروژه</small><strong>'+esc(p.manager||'تعیین نشده')+'</strong></div><div class="pc-keyval"><small>شروع برنامه‌ای</small><strong>'+fmtDate(p.startDate)+'</strong></div><div class="pc-keyval"><small>پایان هدف</small><strong>'+fmtDate(p.dueDate)+'</strong></div></div>'+
  '<div class="pc-stats">'+stat('پیشرفت تأییدشده',Math.round(m.actual),'درصد')+stat('پیشرفت اعلامی',Math.round(m.reported),'درصد')+stat('وظایف',ts.length,'مورد')+stat('نسخه‌های خط مبنا',(p.baselines||[]).length,'نسخه')+stat('انحراف روزانه',m.variance===null?'—':Math.abs(m.variance),m.variance===null?'نیازمند برنامه':m.variance<0?'روز عقب':'روز جلو')+'</div>'+
- '<div class="pc-grid"><section class="pc-panel"><h3 class="pc-section-title">پیشرفت واقعی در برابر برنامه</h3>'+progressBar(m.actual,'تأییدشده')+'<div style="margin-top:12px">'+(m.plan===null?'<div class="pc-note">برای محاسبه برنامه‌ای، وظایف باید تاریخ شروع و پایان داشته باشند و خط مبنا ثبت شود.</div>':progressBar(m.plan,'برنامه‌ای تا امروز'))+'</div><p class="pc-help">پیش‌بینی پایان: '+fmtDate(m.forecast)+' · '+(m.variance===null?'انحراف زمانی قابل محاسبه نیست':(m.variance<0?'عقب‌تر از برنامه به میزان ':'جلوتر از برنامه به میزان ')+fa(Math.abs(m.variance))+' روز')+'</p></section>'+
+ '<div class="pc-grid"><section class="pc-panel"><h3 class="pc-section-title">پیشرفت واقعی در برابر برنامه</h3>'+progressBar(m.actual,'تأییدشده')+'<div style="margin-top:12px">'+(m.plan===null?'<div class="pc-note">برای محاسبه برنامه‌ای، وظایف باید تاریخ شروع و پایان داشته باشند و خط مبنا ثبت شود.</div>':progressBar(m.plan,'برنامه‌ای تا امروز'))+'</div><p class="pc-help">پیش‌بینی پایان: '+fmtDate(m.forecast)+' · '+(m.variance===null?'انحراف زمانی قابل محاسبه نیست':(m.variance<0?'برآورد عقب‌ماندگی: ':'برآورد جلو بودن: ')+fa(Math.abs(m.variance))+' روز')+' · مبنا: نسخه زمان‌بندی ثبت‌شده</p></section>'+
  '<section class="pc-panel"><h3 class="pc-section-title">خط مبنای مصوب</h3>'+(base?'<div class="pc-keyvals"><div class="pc-keyval"><small>نسخه</small><strong>'+fa(base.version)+'</strong></div><div class="pc-keyval"><small>تاریخ ثبت</small><strong>'+fmtDateTime(base.approvedAt)+'</strong></div><div class="pc-keyval"><small>شروع</small><strong>'+fmtDate(base.startDate)+'</strong></div><div class="pc-keyval"><small>پایان</small><strong>'+fmtDate(base.endDate)+'</strong></div></div><p class="pc-help">تغییرات بعدی برنامه نسخه قبلی را حذف نمی‌کند.</p>':'<div class="pc-empty">هنوز خط مبنای مصوبی ثبت نشده است.</div>')+'</section></div>'+
  '<section class="pc-panel"><div class="pc-panel-head"><div><h3>ساختار شکست کار و نقاط عطف</h3><p>بسته‌های کاری و نقاط کنترل پروژه</p></div><a class="pc-btn secondary" href="#planning">مدیریت برنامه‌ریزی</a></div>'+(packageTree(p.id)||empty('ساختار شکست کار ثبت نشده است','از بخش برنامه‌ریزی بسته‌های کاری چندسطحی را تعریف کنید.'))+'</section>'+
  '<section class="pc-panel"><div class="pc-panel-head"><div><h3>نقاط عطف پروژه</h3><p>موعدهای کلیدی و وضعیت تحقق</p></div></div>'+(db.milestones.filter(x=>x.projectId===p.id).length?db.milestones.filter(x=>x.projectId===p.id).map(x=>'<div class="pc-alert-row"><strong>'+esc(x.title)+'</strong><span>'+fmtDate(x.dueDate)+' · '+badge(x.status)+'</span></div>').join(''):empty('نقطه عطفی تعریف نشده است','در بخش برنامه‌ریزی نقاط کنترل و تحویل مرحله‌ای را ثبت کنید.'))+'</section>'+
  '<section class="pc-panel"><div class="pc-panel-head"><div><h3>وظایف و بسته‌های اجرایی</h3><p>وزن هر وظیفه در محاسبه پیشرفت پروژه مؤثر است.</p></div><a class="pc-btn secondary" href="#tasks">مدیریت کارها</a></div>'+
  (ts.length?'<div class="pc-table-wrap"><table class="pc-table"><thead><tr><th>وظیفه</th><th>مسئول</th><th>موعد</th><th>وضعیت</th><th>پیشرفت تأییدشده</th><th>گزارش</th></tr></thead><tbody>'+ts.map(t=>'<tr><td><strong>'+esc(t.title)+'</strong><small>وزن: '+fa(t.weight)+'</small></td><td>'+esc(t.assignee||'—')+'</td><td>'+fmtDate(t.dueDate)+'</td><td>'+badge(t.status)+'</td><td>'+fa(t.approvedPercent)+'٪</td><td><button class="pc-btn secondary" data-action="task-report" data-id="'+t.id+'">ثبت گزارش</button>'+(t.reportedPercent>t.approvedPercent?'<button class="pc-btn gold" data-action="accept-report" data-id="'+t.id+'">تأیید</button>':'')+'</td></tr>').join('')+'</tbody></table></div>':empty('وظیفه‌ای به این پروژه متصل نیست','از بخش کارها، وظیفه‌ای با انتخاب این پروژه ثبت کنید.'))+'</section>'+
- '<section class="pc-panel"><h3 class="pc-section-title">تاریخچه اقدامات پروژه</h3>'+eventList(db.events.filter(e=>e.entity===p.id||ts.some(t=>t.id===e.entity)))+'</section></section>';
+ '<section class="pc-panel"><div class="pc-panel-head"><div><h3>تاریخچه کامل اقدامات پروژه</h3><p>گزارش‌ها، تأییدها، تغییرات و رویدادهای مرتبط به ترتیب زمان ثبت شده‌اند.</p></div><span class="pc-badge">'+fa(db.events.filter(e=>e.entity===p.id||ts.some(t=>t.id===e.entity)).length)+' رویداد</span></div><div class="pc-toolbar"><label>از تاریخ <input type="date" id="project-history-from"></label><label>تا تاریخ <input type="date" id="project-history-to"></label><button class="pc-btn secondary" type="button" id="clear-project-history">پاک‌کردن فیلتر</button></div><div id="project-history-list">'+eventList(db.events.filter(e=>e.entity===p.id||ts.some(t=>t.id===e.entity)),500)+'</div></section></section>';
 }
 function render(){
  const r=currentRoute();setHeader(r.page);
  view.innerHTML=r.page==='overview'?renderOverview():r.page==='projects'?renderProjects():r.page==='planning'?renderPlanning():r.page==='tasks'?renderTasks():r.page==='calls'?renderCalls():r.page==='resources'?renderResources():r.page==='control'?renderControl():r.page==='reports'?renderReports():r.page==='about'?renderAbout():r.page==='settings'?renderSettings():renderProject(r.id);
- if(r.page==='tasks')filterTasks();if(r.page==='projects')filterProjects();window.scrollTo({top:0,behavior:'instant'});
+ if(r.page==='tasks')filterTasks();if(r.page==='projects')filterProjects();if(r.page==='project')filterProjectHistory();window.scrollTo({top:0,behavior:'instant'});
 }
 function filterProjects(){
  const search=$('#project-search'),filter=$('#project-filter');if(!search)return;
@@ -234,6 +234,13 @@ function filterTasks(){
  const search=$('#task-search'),filter=$('#task-filter');if(!search)return;
  const apply=()=>{const q=search.value.trim().toLocaleLowerCase('fa'),st=filter.value;view.querySelectorAll('tbody tr').forEach(row=>{const t=row.textContent.toLocaleLowerCase('fa');row.hidden=!!(q&&!t.includes(q))||!!(st&&!t.includes(st));});};
  search.addEventListener('input',apply);filter.addEventListener('change',apply);
+}
+function filterProjectHistory(){
+ const from=$('#project-history-from'),to=$('#project-history-to'),clear=$('#clear-project-history');
+ if(!from||!to)return;
+ const apply=()=>{const a=from.value,b=to.value;view.querySelectorAll('#project-history-list .pc-event').forEach(row=>{const d=row.dataset.eventDate||'';row.hidden=!!((a&&d<a)||(b&&d>b));});};
+ from.addEventListener('change',apply);to.addEventListener('change',apply);
+ if(clear)clear.addEventListener('click',()=>{from.value='';to.value='';apply();});
 }
 function formData(form){return Object.fromEntries(new FormData(form).entries());}
 function createProject(form){
