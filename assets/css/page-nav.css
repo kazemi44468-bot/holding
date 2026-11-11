@@ -10,12 +10,12 @@
 .page-nav>a:hover,.page-nav>details>summary:hover{background:#eef5f8;color:#123e61;border-color:#dce9ed}
 .page-nav>a.nav-home,.page-nav>a.nav-end{background:#f3f7f5;border-color:#dce8e4}
 .page-nav>a.nav-home:hover,.page-nav>a.nav-end:hover{background:#eaf1f7;color:#1b4e73}
-.page-nav .page-subnav{position:absolute;right:0;top:calc(100% + 6px);min-width:190px;max-width:290px;max-height:min(65vh,520px);overflow:auto;padding:6px;background:rgba(255,253,249,.99);border:1px solid rgba(22,77,112,.13);border-radius:12px;box-shadow:0 16px 34px rgba(23,55,70,.14);display:flex;flex-direction:column;gap:2px;z-index:120}
+ .page-nav .page-subnav{position:absolute;right:0;top:calc(100% + 6px);min-width:190px;max-width:290px;max-height:none;overflow:visible;padding:6px;background:rgba(255,253,249,.99);border:1px solid rgba(22,77,112,.13);border-radius:12px;box-shadow:0 16px 34px rgba(23,55,70,.14);display:flex;flex-direction:column;gap:2px;z-index:120}
 .page-nav .page-subnav a{display:block;padding:6px 9px;border-radius:8px;color:#315766;text-decoration:none;font-size:10.5px;font-weight:500;line-height:1.7;white-space:nowrap}
 .page-nav .page-subnav a:hover{background:#eef5f8;color:#123e61}
 .page-nav .page-subnav a+a:before{display:none}
 @media(max-width:900px){.page-nav{gap:3px}.page-nav>a,.page-nav>details>summary{font-size:10.5px;padding-inline:9px}}
-@media(max-width:760px){.page-nav{top:5px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;padding:6px}.page-nav::-webkit-scrollbar{display:none}.page-nav>a,.page-nav>details>summary{font-size:10.5px;flex:0 0 auto}.page-nav .page-subnav{position:fixed;right:12px;top:52px;min-width:190px;max-width:calc(100vw - 24px);max-height:62vh;overflow:auto}}
+@media(max-width:760px){.page-nav{top:5px;flex-wrap:wrap;overflow:visible;padding:6px}.page-nav>a,.page-nav>details>summary{font-size:10.5px;flex:0 0 auto}.page-nav .page-subnav{position:fixed;right:12px;top:52px;min-width:190px;max-width:calc(100vw - 24px);max-height:none;overflow:visible}}
 
 
 /* حذف آیکن فهرست پیش از عنوان‌های منوی بالایی؛ فلش بازشدن زیرمنو حفظ می‌شود */
