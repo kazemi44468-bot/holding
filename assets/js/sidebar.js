@@ -4,7 +4,7 @@ const d=document,b=d.body;
 const nav=[
 {id:'portal',label:'درگاه هلدینگ',href:'index.html',icon:'۰۱'},
 {id:'knowledge',label:'مرکز مدیریت دانش و درس‌آموخته‌ها',href:'centers/knowledge/',icon:'۰۲'},
-{id:'local-data-vault',label:'مدیریت داده‌های محلی و پشتیبان‌گیری',href:'pages/local-data-vault.html',icon:'۰۳'}
+{id:'local-data-vault',label:'زیرساخت داده هلدینگ و پشتیبان‌گیری',href:'pages/local-data-vault.html',icon:'۰۳'}
 ];
 const defaultOpen=new Set(); // فقط شاخه مرتبط با صفحه جاری باز می‌ماند؛ از اشغال فضای منو توسط شاخه‌های نامرتبط جلوگیری می‌شود.
 const current=b.dataset.sidebarPage||'home';
