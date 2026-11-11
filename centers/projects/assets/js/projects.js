@@ -89,7 +89,8 @@ async function load(){
  if(window.HoldingLocalDataVault){try{const r=await window.HoldingLocalDataVault.get(RECORD_ID);if(r?.content)raw=r.content;}catch(e){}}
  if(!raw)raw=localStorage.getItem(KEY);
  if(raw){try{const parsed=JSON.parse(raw);if(parsed&&Array.isArray(parsed.projects)){db={...blank(),...parsed,projects:Array.isArray(parsed.projects)?parsed.projects:[],tasks:Array.isArray(parsed.tasks)?parsed.tasks:[],calls:Array.isArray(parsed.calls)?parsed.calls:[],workPackages:Array.isArray(parsed.workPackages)?parsed.workPackages:[],milestones:Array.isArray(parsed.milestones)?parsed.milestones:[],dependencies:Array.isArray(parsed.dependencies)?parsed.dependencies:[],resources:Array.isArray(parsed.resources)?parsed.resources:[],raids:Array.isArray(parsed.raids)?parsed.raids:[],changes:Array.isArray(parsed.changes)?parsed.changes:[],deliverables:Array.isArray(parsed.deliverables)?parsed.deliverables:[],events:Array.isArray(parsed.events)?parsed.events:[],workCalendar:parsed.workCalendar||blank().workCalendar};}}catch(e){notice('خواندن داده‌های قبلی ممکن نشد؛ فضای خالی نمایش داده می‌شود.','error');}}
- if(!db.samplePortfolioVersion){seedInitialPortfolio();notice('بانک اولیه شامل ۲۰ پروژه و ۱۰۰ وظیفه نمونه ایجاد شد؛ داده‌ها قابل ویرایش‌اند و عملکرد واقعی محسوب نمی‌شوند.');}\n await save();
+ if(!db.samplePortfolioVersion){seedInitialPortfolio();notice('بانک اولیه شامل ۲۰ پروژه و ۱۰۰ وظیفه نمونه ایجاد شد؛ داده‌ها قابل ویرایش‌اند و عملکرد واقعی محسوب نمی‌شوند.');}
+ await save();
 }
 function notice(message,type='info'){const el=$('#app-status');if(!el)return;el.textContent=message;el.className='app-status show'+(type==='error'?' error':'');clearTimeout(notice.timer);notice.timer=setTimeout(()=>el.className='app-status',5500);}
 function weighted(tasks,key){
@@ -196,7 +197,9 @@ function renderOverview(){
 }
 function projectForm(){
  return '<details class="pc-panel" open><summary class="pc-section-title">＋ ثبت درخواست یا پروژه جدید</summary><form class="pc-form" id="project-form">'+
- '<div class="pc-field full"><label>عنوان پروژه / درخواست *</label><input name="title" required maxlength="180" placeholder="عنوان روشن و نتیجه‌محور"></div>'+\n '<div class="pc-field"><label>حوزه / زمینه پروژه</label><input name="domain" placeholder="مثلاً پژوهشی، عمرانی، فناوری، اقتصادی، اداری و..."></div>'+\n '<div class="pc-field"><label>اعضای تیم اصلی</label><input name="teamMembers" placeholder="نام افراد یا گروه‌ها؛ با ویرگول جدا کنید"></div>'+
+ '<div class="pc-field full"><label>عنوان پروژه / درخواست *</label><input name="title" required maxlength="180" placeholder="عنوان روشن و نتیجه‌محور"></div>'+
+ '<div class="pc-field"><label>حوزه / زمینه پروژه</label><input name="domain" placeholder="مثلاً پژوهشی، عمرانی، فناوری، اقتصادی، اداری و..."></div>'+
+ '<div class="pc-field"><label>اعضای تیم اصلی</label><input name="teamMembers" placeholder="نام افراد یا گروه‌ها؛ با ویرگول جدا کنید"></div>'+
  '<div class="pc-field"><label>قلمرو سازمانی *</label><select name="orgId" required>'+orgOptions('HOLDING')+'</select></div>'+
  '<div class="pc-field"><label>اولویت</label><select name="priority"><option>عادی</option><option>بالا</option><option>فوری</option><option>راهبردی</option></select></div>'+
  '<div class="pc-field"><label>حامی / مالک کسب‌وکار</label><input name="sponsor" placeholder="نام یا عنوان مسئول"></div>'+
@@ -220,7 +223,9 @@ function taskForm(projectId=''){
  return '<details class="pc-panel"><summary class="pc-section-title">＋ تعریف وظیفه یا اقدام جدید</summary><form class="pc-form" id="task-form">'+
  '<div class="pc-field full"><label>عنوان کار *</label><input name="title" required maxlength="180" placeholder="اقدام مشخص و قابل تحویل"></div>'+
  '<div class="pc-field"><label>پروژه مرتبط</label><select name="projectId"><option value="">کار مستقل / اقدام عمومی</option>'+projectOptions+'</select></div>'+
- '<div class="pc-field"><label>قلمرو سازمانی</label><select name="orgId">'+orgOptions('HOLDING')+'</select></div>'+\n '<div class="pc-field"><label>نوع فعالیت</label><input name="workType" placeholder="پروژه، مأموریت، کار تیمی، عملیات و..."></div>'+\n '<div class="pc-field full"><label>اعضای همکار تیم (با ویرگول جدا کنید)</label><input name="teamMembers" placeholder="نام اعضا یا گروه‌های همکار"></div>'+
+ '<div class="pc-field"><label>قلمرو سازمانی</label><select name="orgId">'+orgOptions('HOLDING')+'</select></div>'+
+ '<div class="pc-field"><label>نوع فعالیت</label><input name="workType" placeholder="پروژه، مأموریت، کار تیمی، عملیات و..."></div>'+
+ '<div class="pc-field full"><label>اعضای همکار تیم (با ویرگول جدا کنید)</label><input name="teamMembers" placeholder="نام اعضا یا گروه‌های همکار"></div>'+
  '<div class="pc-field"><label>مسئول انجام</label><input name="assignee" placeholder="نام فرد یا تیم"></div>'+
  '<div class="pc-field"><label>مالک پاسخ‌گو</label><input name="owner" placeholder="مسئول پیگیری و پذیرش"></div>'+
  '<div class="pc-field"><label>شروع برنامه‌ای</label><input name="startDate" type="date"></div>'+
