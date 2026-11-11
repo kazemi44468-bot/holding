@@ -6,7 +6,7 @@ const today=()=>{const d=new Date(),z=n=>String(n).padStart(2,'0');return d.getF
 const isoNow=()=>new Date().toISOString();
 const fmtDate=v=>{if(!v)return '—';const d=new Date(v.length===10?v+'T12:00:00':v);return Number.isNaN(d.getTime())?esc(v):new Intl.DateTimeFormat('fa-IR',{dateStyle:'medium'}).format(d)};
 const fmtDateTime=v=>{if(!v)return '—';const d=new Date(v);return Number.isNaN(d.getTime())?esc(v):new Intl.DateTimeFormat('fa-IR',{dateStyle:'short',timeStyle:'short'}).format(d)};
-const makeId=p=>p+'-'+new Date().getFullYear()+'-'+Math.random().toString(36).slice(2,7).toUpperCase();
+const makeId=p=>p+'-'+fa(new Date().getFullYear())+'-'+fa(Math.floor(Math.random()*90000+10000));
 const blank=()=>({schemaVersion:2,projects:[],tasks:[],calls:[],workPackages:[],milestones:[],dependencies:[],resources:[],raids:[],changes:[],deliverables:[],events:[],workCalendar:{workDays:[0,1,2,3,4,6],holidays:[]},updatedAt:isoNow()});
 let db=blank(),saving=false;
 const orgRegistry=window.HOLDING_ORG_REGISTRY||{};
@@ -60,7 +60,7 @@ function seedInitialPortfolio(){
  ];
  const now='2026-11-11',teamNames=['گروه راهبری','تیم تخصصی','کارگروه اجرایی','گروه پژوهش','تیم فناوری'];
  definitions.forEach((d,i)=>{
-  const id='PRJ-SEED-'+String(i+1).padStart(2,'0');
+  const id='PRJ-SEED-'+fa(i+1).padStart(2,'۰');
   const start=d[4],end=d[5],progress=[42,28,55,36,22,31,18,26,33,47,15,38,29,24,19,44,21,34,17,40][i];
   const status=i===19?'در حال برنامه‌ریزی':i===14?'در حال برنامه‌ریزی':'مصوب / در اجرا';
   const p={id,title:d[0],domain:d[1],teamMembers:[d[3],teamNames[i%teamNames.length]],orgId:'HOLDING',priority:i<5?'راهبردی':i%4===0?'بالا':'عادی',sponsor:'مدیریت هلدینگ',manager:d[3],startDate:start,dueDate:end,strategyRef:'',budget:0,objective:d[2],summary:d[2],status,createdAt:now+'T09:00:00.000Z',baselines:[],archived:false,sampleData:true};
@@ -71,12 +71,12 @@ function seedInitialPortfolio(){
    const date=x=>x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');
    const pct=j===0?100:j===1?Math.max(15,progress):j===2?Math.max(0,progress-15):0;
    const state=pct===100?'تکمیل‌شده':pct>0?'در حال اجرا':'در انتظار شروع';
-   const task={id:'TSK-SEED-'+String(i+1).padStart(2,'0')+'-'+(j+1),title,projectId:id,workPackageId:'WPK-SEED-'+String(i+1).padStart(2,'0')+'-'+(j+1),orgId:'HOLDING',workType:'بسته کاری پروژه',teamMembers:[teamNames[(i+j)%teamNames.length]],assignee:teamNames[(i+j)%teamNames.length],owner:d[3],startDate:date(from),dueDate:date(to),weight:[3,2,3,2,2][j],estimatedHours:[48,64,80,48,32][j],actualHours:0,priority:j===0?'بالا':'عادی',acceptance:'تحویل مستند و قابل بازبینی مطابق شرح فعالیت',status:state,reportedPercent:pct,approvedPercent:pct,history:[],archived:false,createdAt:now+'T09:00:00.000Z',sampleData:true};
+   const task={id:'TSK-SEED-'+fa(i+1).padStart(2,'۰')+'-'+fa(j+1),title,projectId:id,workPackageId:'WPK-SEED-'+String(i+1).padStart(2,'0')+'-'+(j+1),orgId:'HOLDING',workType:'بسته کاری پروژه',teamMembers:[teamNames[(i+j)%teamNames.length]],assignee:teamNames[(i+j)%teamNames.length],owner:d[3],startDate:date(from),dueDate:date(to),weight:[3,2,3,2,2][j],estimatedHours:[48,64,80,48,32][j],actualHours:0,priority:j===0?'بالا':'عادی',acceptance:'تحویل مستند و قابل بازبینی مطابق شرح فعالیت',status:state,reportedPercent:pct,approvedPercent:pct,history:[],archived:false,createdAt:now+'T09:00:00.000Z',sampleData:true};
    db.tasks.push(task);
-   db.workPackages.push({id:task.workPackageId,projectId:id,parentId:'',code:String(j+1),title,owner:d[3],weight:task.weight,startDate:task.startDate,dueDate:task.dueDate,description:task.acceptance,status:pct===100?'تکمیل‌شده':pct>0?'در حال اجرا':'برنامه‌ریزی‌شده',createdAt:now+'T09:00:00.000Z',sampleData:true});
+   db.workPackages.push({id:task.workPackageId,projectId:id,parentId:'',code:fa(j+1),title,owner:d[3],weight:task.weight,startDate:task.startDate,dueDate:task.dueDate,description:task.acceptance,status:pct===100?'تکمیل‌شده':pct>0?'در حال اجرا':'برنامه‌ریزی‌شده',createdAt:now+'T09:00:00.000Z',sampleData:true});
    return {id:task.id,title:task.title,startDate:task.startDate,dueDate:task.dueDate,weight:task.weight,workPackageId:task.workPackageId};
   });
-  const ms=[{id:'MIL-SEED-'+(i+1)+'-1',projectId:id,title:'تأیید طراحی و برنامه اجرایی',dueDate:tasks[1].dueDate,owner:d[3],acceptance:'تأیید برنامه و خروجی مرحله طراحی',status:'برنامه‌ریزی‌شده',sampleData:true},{id:'MIL-SEED-'+(i+1)+'-2',projectId:id,title:'تحویل نهایی و ارزیابی نتیجه',dueDate:end,owner:d[3],acceptance:'تحویل کامل و تأیید خروجی‌های پروژه',status:'برنامه‌ریزی‌شده',sampleData:true}];
+  const ms=[{id:'MIL-SEED-'+fa(i+1)+'-۱',projectId:id,title:'تأیید طراحی و برنامه اجرایی',dueDate:tasks[1].dueDate,owner:d[3],acceptance:'تأیید برنامه و خروجی مرحله طراحی',status:'برنامه‌ریزی‌شده',sampleData:true},{id:'MIL-SEED-'+fa(i+1)+'-۲',projectId:id,title:'تحویل نهایی و ارزیابی نتیجه',dueDate:end,owner:d[3],acceptance:'تحویل کامل و تأیید خروجی‌های پروژه',status:'برنامه‌ریزی‌شده',sampleData:true}];
   db.milestones.push(...ms);
   p.baselines=[{version:1,approvedAt:now+'T09:00:00.000Z',startDate:start,endDate:end,tasks,packages:db.workPackages.filter(x=>x.projectId===id),milestones:ms,dependencies:[],workCalendar:{...db.workCalendar},sampleData:true}];
  });
@@ -194,7 +194,7 @@ function renderOverview(){
  const ps=activeProjects(),ts=db.tasks.filter(t=>!t.archived),late=ts.filter(t=>t.dueDate&&t.dueDate<today()&&t.status!=='تکمیل‌شده'&&t.status!=='مختومه').length;
  const waiting=ps.filter(p=>p.status==='در انتظار تصویب').length,calls=db.calls.filter(c=>c.status==='باز').length;
  const risk=ps.filter(p=>{const m=projectMetrics(p);return m.variance!==null&&m.variance< -2;}).length;
- return '<section class="pc-hero"><div><div class="pc-kicker">مدیریت یکپارچه سبد، پروژه و کار</div><h3>از تصمیم تا نتیجه؛ با سابقه قابل پیگیری</h3><p>در این مرکز، پروژه‌ها به کارهای قابل واگذاری و سنجش تبدیل می‌شوند. برنامه مصوب، گزارش مجری، پیشرفت تأییدشده و تاریخچه تغییرات از یکدیگر تفکیک می‌شوند تا گزارش مدیریتی قابل اتکا باشد.</p></div><div class="pc-hero-side"><strong>'+fa(ps.length)+'</strong><span>پروژه ثبت‌شده در این فضای محلی</span></div></section>'+
+ return '<section class="pc-hero"><div><div class="pc-kicker">مدیریت یکپارچه سبد، پروژه و کار</div><h3>از تصمیم تا نتیجه؛ با سابقه قابل پیگیری</h3><p>در این مرکز، پروژه‌ها به کارهای قابل واگذاری و سنجش تبدیل می‌شوند. برنامه مصوب، گزارش مجری، پیشرفت تأییدشده و تاریخچه تغییرات از یکدیگر تفکیک می‌شوند تا گزارش مدیریتی قابل اتکا باشد.</p></div><div class="pc-hero-side"><strong>'+fa(ps.length)+'</strong><span>پروژه ثبت‌شده در بانک اولیه</span></div></section>'+sampleDataBanner()+
  '<div class="pc-stats">'+stat('پروژه‌های فعال',ps.filter(p=>!['مختومه','لغوشده','بایگانی‌شده'].includes(p.status)).length,'پروژه')+stat('کل وظایف',ts.length,'کار')+stat('وظایف سررسیدگذشته',late,'نیازمند پیگیری')+stat('در انتظار تصویب',waiting,'درخواست')+stat('فراخوان‌های باز',calls,'مشارکت')+'</div>'+portfolioCharts()+
  '<div class="pc-grid"><section class="pc-panel"><div class="pc-panel-head"><div><h3>پروژه‌های نیازمند توجه</h3><p>پروژه‌هایی با انحراف برنامه یا درخواست در انتظار تصمیم</p></div><a class="pc-btn secondary" href="#projects">همه پروژه‌ها</a></div>'+
  (risk||waiting?'<div class="pc-note warn">'+fa(risk)+' پروژه دارای عقب‌ماندگی محاسبه‌شده و '+fa(waiting)+' درخواست در انتظار تصویب است.</div>':'<div class="pc-note info">وضعیت انحراف فقط در صورت وجود خط مبنا و زمان‌بندی معتبر محاسبه می‌شود.</div>')+
