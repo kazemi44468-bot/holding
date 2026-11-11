@@ -44,3 +44,7 @@ a:hover{color:#173d5c}
 .page-nav>a,.page-nav>details>summary{border-radius:4px!important}
 .page-nav .page-subnav{border-radius:5px!important}
 @media(max-width:760px){.wrap{padding:15px 12px 42px}.hero{padding:18px!important}.section,.panel{padding:16px 13px!important}}
+
+
+.page-nav .page-subnav{z-index:300}
+@media(max-width:760px){.page-nav .page-subnav{top:124px;right:10px;max-width:calc(100vw - 20px);box-shadow:0 14px 32px rgba(20,47,73,.2)}}
