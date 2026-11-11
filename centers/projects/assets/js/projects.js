@@ -34,7 +34,7 @@ async function save(){
   catch(e){console.error(e);notice('ذخیره در مخزن محلی مرکزی انجام نشد؛ نسخه مرورگر نگهداری شده است.','error');}
  }
 }
-async async function load(){
+async function load(){
  let raw=null;
  if(window.HoldingLocalDataVault){try{const r=await window.HoldingLocalDataVault.get(RECORD_ID);if(r?.content)raw=r.content;}catch(e){}}
  if(!raw)raw=localStorage.getItem(KEY);
