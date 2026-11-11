@@ -280,3 +280,20 @@ body{background:radial-gradient(ellipse at 4% 0%,#e7f2ff 0,transparent 34%),radi
 .pc-project-progress-highlight{display:flex;justify-content:flex-start;align-items:center;margin:12px 0;padding:10px 14px;border:1px solid #d8e8f8;border-radius:10px;background:linear-gradient(100deg,#f3f9ff,#fff4ef)}.pc-project-progress-highlight .pc-progress-ring{width:82px;height:82px}.pc-project-progress-highlight .pc-progress-ring:before{inset:7px}.pc-project-progress-highlight .pc-progress-ring strong{font-size:16px}.pc-project-progress-highlight .pc-progress-ring small{font-size:8px}
 
 .pc-panel-head p,.pc-project-card p,.pc-event p,.pc-help{color:#58769a}.pc-event strong{color:#1f67a7}.pc-steps li::marker{color:#e45b75}.pc-bullets b{color:#1769b5}.pc-section-title{color:#174f88}
+
+
+/* Compact project completion card: joins the overview analytics grid */
+.pc-donut-grid{align-items:stretch}
+.pc-donut-grid>.pc-panel{margin:0;min-width:0}
+.pc-progress-overview{padding:13px 14px}
+.pc-progress-overview .pc-panel-head{align-items:center;margin-bottom:9px;gap:8px}
+.pc-progress-overview .pc-panel-head h3{font-size:12px}
+.pc-progress-overview .pc-panel-head p{font-size:9px}
+.pc-progress-overview .pc-btn{padding:5px 8px;font-size:9px;white-space:nowrap}
+.pc-progress-ranking{gap:9px}
+.pc-progress-ranking>a{grid-template-columns:minmax(0,1.15fr) minmax(55px,1fr) 34px;gap:8px;font-size:9px;min-width:0}
+.pc-progress-ranking>a>span{min-width:0;overflow-wrap:anywhere;line-height:1.6}
+.pc-progress-ranking b{font-size:10px;white-space:nowrap}
+.pc-progress-ranking .pc-analytics-track{height:7px}
+@media(max-width:1050px){.pc-donut-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pc-donut-grid .pc-donut-panel:last-child{grid-column:auto}}
+@media(max-width:760px){.pc-donut-grid{grid-template-columns:1fr}.pc-progress-overview{padding:12px}.pc-progress-ranking>a{grid-template-columns:minmax(0,1fr) minmax(70px,1fr) 34px}}
