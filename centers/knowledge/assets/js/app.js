@@ -1,5 +1,5 @@
 (()=>{
-const KEY='holding_knowledge_center_v2', $=id=>document.getElementById(id), fa=n=>String(n??0).replace(/\\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const KEY='holding_knowledge_center_v2', $=id=>document.getElementById(id), fa=n=>String(n??0).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
 const sample=()=>({records:[
 {id:'KN-1405-001',type:'تجربه اجرایی',title:'کاهش زمان رسیدگی به درخواست‌های نگهداری',unit:'معاونت خدمات شهری',owner:'واحد نگهداری',summary:'با ایجاد فرم واحد ثبت درخواست و اولویت‌بندی بر اساس میزان اثر بر خدمت، زمان ارجاع و رسیدگی کاهش یافت. تجربه قابل انتقال به سایر واحدهای عملیاتی است.',keywords:['نگهداری','فرایند','بهبود'],status:'تأییدشده',visibility:'سازمانی',created:'۱۴۰۵/۰۷/۲۸',views:24},
 {id:'KN-1405-002',type:'درس‌آموخته',title:'ضرورت ثبت مسئول اقدام در صورت‌جلسه‌ها',unit:'ستاد هلدینگ',owner:'دبیرخانه',summary:'در پیگیری مصوبات، درج عنوان اقدام، مسئول مشخص، موعد و معیار تحویل، احتمال برداشت‌های متفاوت را کاهش می‌دهد.',keywords:['مصوبات','پیگیری','مدیریت'],status:'در انتظار بررسی',visibility:'سازمانی',created:'۱۴۰۵/۰۸/۰۳',views:11},
