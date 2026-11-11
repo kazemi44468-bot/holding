@@ -1,0 +1,21 @@
+/* Holding Local Data Vault v1 — IndexedDB adapter for every holding system */
+(function(global){
+'use strict';
+const DB='holding-local-vault', VERSION=1, STORE='records', META='meta';
+function openDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB,VERSION);req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(STORE)){const s=db.createObjectStore(STORE,{keyPath:'id'});s.createIndex('scope','scope',{unique:false});s.createIndex('updatedAt','updatedAt',{unique:false});}if(!db.objectStoreNames.contains(META))db.createObjectStore(META,{keyPath:'key'});};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});}
+const txDone=tx=>new Promise((resolve,reject)=>{tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||new Error('تراکنش لغو شد'));});
+const request=req=>new Promise((resolve,reject)=>{req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});
+const cleanScope=s=>String(s||'').trim().replace(/[^\w\-:.\u0600-\u06FF]/g,'-').slice(0,100)||'general';
+function bytesToBase64(buf){const bytes=new Uint8Array(buf);let binary='';const step=0x8000;for(let i=0;i<bytes.length;i+=step)binary+=String.fromCharCode.apply(null,bytes.subarray(i,i+step));return btoa(binary);}
+function base64ToBuffer(b64){const binary=atob(b64),bytes=new Uint8Array(binary.length);for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);return bytes.buffer;}
+async function fileToObject(file){if(!file)return null;return {name:file.name,type:file.type||'application/octet-stream',size:file.size,lastModified:file.lastModified,data:bytesToBase64(await file.arrayBuffer())};}
+function objectToBlob(f){return f?new Blob([base64ToBuffer(f.data)],{type:f.type||'application/octet-stream'}):null;}
+async function put(scope,record){const db=await openDB(),tx=db.transaction(STORE,'readwrite'),s=tx.objectStore(STORE);const now=new Date().toISOString();const item={...record,id:record.id||('rec-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8)),scope:cleanScope(scope),createdAt:record.createdAt||now,updatedAt:now};s.put(item);await txDone(tx);db.close();return item;}
+async function all(scope){const db=await openDB(),tx=db.transaction(STORE,'readonly'),s=tx.objectStore(STORE);const rows=scope?await request(s.index('scope').getAll(cleanScope(scope))):await request(s.getAll());db.close();return rows.sort((a,b)=>(b.updatedAt||'').localeCompare(a.updatedAt||''));}
+async function remove(id){const db=await openDB(),tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).delete(id);await txDone(tx);db.close();}
+async function get(id){const db=await openDB(),tx=db.transaction(STORE,'readonly'),v=await request(tx.objectStore(STORE).get(id));db.close();return v||null;}
+async function exportData(scope){const rows=await all(scope);const packed=[];for(const r of rows){const copy={...r};if(copy.file&&copy.file instanceof Blob)copy.file=await fileToObject(new File([copy.file],copy.fileName||'attachment'));packed.push(copy);}return {format:'holding-local-vault',schemaVersion:1,exportedAt:new Date().toISOString(),scope:scope?cleanScope(scope):'*',recordCount:packed.length,records:packed};}
+async function importData(payload,mode){if(!payload||payload.format!=='holding-local-vault'||!Array.isArray(payload.records))throw new Error('ساختار فایل پشتیبان معتبر نیست.');if(payload.schemaVersion>1)throw new Error('نسخه فایل پشتیبان از نسخه این سامانه جدیدتر است.');const db=await openDB(),tx=db.transaction(STORE,'readwrite'),store=tx.objectStore(STORE);let count=0;for(const raw of payload.records){if(!raw||!raw.id||!raw.scope)continue;const item={...raw,scope:cleanScope(raw.scope),restoredAt:new Date().toISOString()};if(item.file&&item.file.data&&typeof item.file.data==='string')item.file=objectToBlob(item.file);if(mode==='replace-scope'){const existing=await request(store.index('scope').getAll(item.scope));existing.forEach(x=>store.delete(x.id));mode='merge';}store.put(item);count++;}await txDone(tx);db.close();return count;}
+async function scopes(){const rows=await all();return [...new Set(rows.map(x=>x.scope))].sort();}
+global.HoldingLocalDataVault={version:1,cleanScope,put,all,get,remove,exportData,importData,scopes,fileToObject,objectToBlob};
+})(window);
