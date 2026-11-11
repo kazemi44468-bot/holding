@@ -76,3 +76,46 @@ body{background:radial-gradient(ellipse at 8% 0%,#eaf3fb 0,transparent 36%),radi
 .org-note{background:#edf5fa;border:1px solid #dce9f1;color:#496b84;border-radius:9px;padding:9px 12px;font-size:10px}
 @media(max-width:850px){.chart-grid{grid-template-columns:1fr}.donut-wrap{justify-content:center}}
 @media(max-width:560px){.topinner{padding:10px 13px}.brand h1{font-size:14px}.brandmark{width:34px;height:34px}.nav a{padding:9px 9px}.hero-panel{padding:15px}.hero-title{font-size:16px}.chart-bar-row{grid-template-columns:95px 1fr 28px}.donut-wrap{flex-direction:column}.chart-legend{width:100%}}
+
+/* معرفی عمومی مرکز و ارتقای تجربه جست‌وجوی مخزن */
+.brand-logo{display:block;width:31px;height:21px;object-fit:cover;border-radius:2px}
+.brandmark{overflow:hidden;border-radius:5px}
+.brand-subtitle{display:block;color:#e2d5bf;font-size:9px;margin-top:1px}
+.about-hero{padding:23px 25px}
+.about-hero .hero-title{font-size:21px;line-height:1.8}
+.about-hero .hero-copy{font-size:12px;line-height:2.15;max-width:980px}
+.about-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.about-columns>article{padding:14px 16px;border:1px solid #e5ebf0;border-right:3px solid #c49a54;border-radius:7px;background:#fbfcfd}
+.about-columns h4{margin:0 0 7px;color:#244d6c;font-size:12px}
+.about-columns p,.about-columns li{font-size:11px;line-height:2;color:#5f7182}
+.about-columns ul{margin:0;padding-right:18px}
+.about-list{padding-right:20px}
+.about-list li{margin:7px 0;font-size:11px}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.step{padding:13px;border:1px solid #e2e9ef;border-radius:7px;background:#fbfcfd;display:flex;flex-direction:column;gap:5px}
+.step b{color:#244d6c;font-size:11px}
+.step span{color:#6b7c8c;font-size:10px;line-height:1.9}
+.org-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
+.org-summary>div{padding:12px;border:1px solid #e2e9ef;background:#f8fafc;border-radius:7px;display:flex;align-items:center;gap:10px}
+.org-summary strong{font-size:22px;color:#2c668d}
+.org-summary span{font-size:10px;color:#687b8d}
+.repository-intro{background:linear-gradient(110deg,#fff 0%,#f4f8fb 75%,#fffaf1 100%)}
+.repository-benefits{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.repository-benefits span{font-size:10px;padding:5px 10px;border:1px solid #dce6ed;border-radius:5px;background:#fff;color:#486780}
+.repository-toolbar{align-items:stretch}
+.repository-toolbar input{flex:1 1 270px}
+.repository-toolbar select{flex:0 1 auto;min-width:145px}
+.repository-summary{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:9px 11px;margin:10px 0;border:1px solid #e3eaf0;border-radius:6px;background:#f7fafc;color:#61778a;font-size:10px}
+.repository-summary strong{color:#244f70;font-size:12px}
+.repository-detail{scroll-margin-top:85px}
+.repository-detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}
+.repository-detail-grid>div{padding:9px 11px;border:1px solid #e8edf1;border-radius:6px;background:#fafbfd;min-width:0}
+.repository-detail-grid small{display:block;color:#8492a0;font-size:9px}
+.repository-detail-grid strong{display:block;color:#34536c;font-size:10px;overflow-wrap:anywhere}
+.repository-summary-text{border-top:1px solid #e8edf1;padding-top:10px}
+.repository-summary-text h4{margin:0 0 5px;color:#244d6c;font-size:11px}
+.repository-summary-text p{white-space:pre-wrap;font-size:11px;line-height:2;color:#566d80}
+.tile small a{color:#315f80;text-decoration:underline;text-underline-offset:3px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #c49a54;outline-offset:2px}
+@media(max-width:850px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.repository-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.about-columns,.steps{grid-template-columns:1fr}.about-hero{padding:15px}.about-hero .hero-title{font-size:17px}.org-summary{grid-template-columns:1fr}.repository-detail-grid{grid-template-columns:1fr}.repository-toolbar select{width:100%;min-width:0}.repository-toolbar input{min-width:100%}.repository-summary{display:grid}}
