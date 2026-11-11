@@ -18,6 +18,7 @@ const sample=()=>({records:[
 let db;try{db=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){db=null}if(!db){db=sample();persist()}
 function persist(){localStorage.setItem(KEY,JSON.stringify(db))}
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const iconPaths={"dashboard":"<rect x=\"3\" y=\"3\" width=\"8\" height=\"8\" rx=\"1.5\"/>","layers":"<path d=\"m12 3 9 5-9 5-9-5z\"/>"};const svgIcon=name=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65">'+(iconPaths[name]||'')+'</svg>';
 const page=document.body.dataset.page||'dashboard';
 const nav=[['dashboard','نمای کلی','index.html'],['repository','مخزن دانش','pages/repository.html'],['capture','ثبت دانش','pages/capture.html'],['lessons','درس‌آموخته‌ها','pages/lessons.html'],['experts','شبکه خبرگان','pages/experts.html'],['publishing','تألیف و انتشارات','pages/publishing.html'],['workflow','کارتابل بررسی','pages/workflow.html'],['reports','گزارش‌ها','pages/reports.html'],['settings','تنظیمات و پشتیبان','pages/settings.html']];
 const titles={dashboard:'میزکار مرکز مدیریت دانش',repository:'مخزن دانش و مستندات',capture:'ثبت دانش و تجربه',lessons:'مدیریت درس‌آموخته‌ها',experts:'شبکه خبرگان و صاحبان تجربه',publishing:'تألیف و انتشارات',workflow:'کارتابل بررسی و تأیید',reports:'گزارش‌ها و تحلیل عملکرد',settings:'تنظیمات و پشتیبان‌گیری'};
