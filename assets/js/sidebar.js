@@ -3,18 +3,7 @@
 const d=document,b=d.body;
 const nav=[
 {id:'portal',label:'درگاه هلدینگ',href:'index.html',icon:'۰۱'},
-{id:'holding',label:'طرح مادر هلدینگ',href:'pages/holding-tarh.html',icon:'۰۲-۳',children:[
-{id:'holding-services',label:'معاونت ۰۱ | خدمات شهری',href:'pages/holding-services-deputy.html',icon:'۰۲-۳-۰۱'},
-{id:'holding-knowledge',label:'مرکز مدیریت دانش و درس‌آموخته‌ها',href:'pages/holding-knowledge-center.html',icon:'۰۲-۳-۰۲'},
-{id:'holding-cooperative',label:'مرکز تعاونی مصرف و حمایت کارکنان',href:'pages/holding-employee-cooperative.html',icon:'۰۲-۳-۰۳'},
-{id:'holding-evaluation',label:'مرکز ارزیابی و کانون ارزیابی',href:'pages/holding-evaluation-center.html',icon:'۰۲-۳-۰۴'},
-{id:'holding-observatory',label:'مرکز رصد و اشراف',href:'pages/holding-observatory-center.html',icon:'۰۲-۳-۰۵'},
-{id:'holding-integration-matrix',label:'ماتریس مراکز و تعاملات',href:'pages/holding-integration-matrix.html',icon:'۰۲-۳-۰۶'},
-{id:'holding-systems-data',label:'نقشه سامانه‌ها و بانک‌های اطلاعاتی',href:'pages/holding-systems-data.html',icon:'۰۲-۳-۰۷'},
-{id:'holding-project-center',label:'مرکز پروژه‌ها و مدیریت یکپارچه کارها',href:'pages/holding-project-center.html',icon:'۰۲-۳-۰۸'},
-{id:'holding-strategy-planning',label:'سامانه راهبرد اهداف و برنامه‌ها',href:'pages/holding-strategy-planning.html',icon:'۰۲-۳-۰۹'},
-{id:'holding-legal-center',label:'مرکز جامع حقوقی و داوری',href:'pages/holding-legal-center.html',icon:'۰۲-۳-۱۰'}
-]}
+{id:'knowledge',label:'مرکز مدیریت دانش و درس‌آموخته‌ها',href:'centers/knowledge/',icon:'۰۲'}
 ];
 const defaultOpen=new Set(); // فقط شاخه مرتبط با صفحه جاری باز می‌ماند؛ از اشغال فضای منو توسط شاخه‌های نامرتبط جلوگیری می‌شود.
 const current=b.dataset.sidebarPage||'home';
@@ -30,8 +19,8 @@ const render=(items,level=0)=>items.map(x=>{
  const anchor='<a class="'+itemClass+'" href="'+link(x.href)+'"'+(active?' aria-current="page"':'')+(child?' aria-expanded="'+(open?'true':'false')+'"':'')+'><span class="sp-icon" aria-hidden="true">'+x.icon+'</span><span class="sp-label">'+x.label+'</span></a>';
  return '<div class="sp-group sp-depth-'+level+' sp-cat-'+x.id+' '+(open?'has-active':'')+'"><div class="sp-item-wrap">'+anchor+'</div>'+(child?'<div class="sp-sub '+(open?'is-open':'')+'">'+render(x.children,level+1)+'</div>':'')+'</div>';
 }).join('');
-const side=d.createElement('aside');side.className='sp-sidebar menu-expanded';side.setAttribute('aria-label','منوی کناری طرح و برنامه‌ها');
-side.innerHTML='<button class="sp-toggle" type="button" aria-label="جمع و باز کردن منوی کناری" aria-expanded="true"><span></span><span></span><span></span></button><div class="sp-brand"><span class="sp-mark">ط</span><div class="sp-brand-text"><strong>طرح و برنامه‌ها</strong><small>مرجع ایده، طرح، برنامه و توسعه</small></div></div><nav class="sp-nav" aria-label="منوی اصلی طرح و برنامه‌ها">'+render(nav)+'</nav>';
+const side=d.createElement('aside');side.className='sp-sidebar menu-expanded';side.setAttribute('aria-label','منوی سامانه‌های هلدینگ');
+side.innerHTML='<button class="sp-toggle" type="button" aria-label="جمع و باز کردن منوی کناری" aria-expanded="true"><span></span><span></span><span></span></button><div class="sp-brand"><span class="sp-mark">ط</span><div class="sp-brand-text"><strong>سامانه‌های هلدینگ</strong><small>درگاه خدمات و راهبری</small></div></div><nav class="sp-nav" aria-label="منوی اصلی هلدینگ">'+render(nav)+'</nav>';
 d.body.prepend(side);d.body.classList.add('menu-body-expanded');
 /* راهنمای کامل عنوان آیتم‌های بلند و دکمه یکپارچه بازگشت به بالا */
 side.querySelectorAll('.sp-item,.sp-subitem').forEach(a=>{
