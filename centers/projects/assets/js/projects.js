@@ -13,7 +13,7 @@ const pageState=Object.create(null),listFilter={projects:{q:'',status:'',domain:
 const orgRegistry=window.HOLDING_ORG_REGISTRY||{};
 function orgs(){
  const out=[{id:'HOLDING',label:'ستاد هلدینگ'}];
- (orgRegistry.deputies||[]).forEach(x=>out.push({id:x.organization_id,label:x.label||x.name||('معاونت '+x.sequence)}));
+ (orgRegistry.deputies||[]).forEach(x=>out.push({id:x.organization_id,label:x.name||('معاونت '+fa(x.sequence))}));
  (orgRegistry.companies||[]).forEach(x=>out.push({id:x.organization_id,label:x.name||'شرکت تابعه'}));
  (orgRegistry.provincial_branch_managements||[]).forEach(x=>out.push({id:x.organization_id,label:'مدیریت شعب استانی '+fa(x.sequence)}));
  return out;
@@ -231,9 +231,9 @@ function portfolioCharts(){
  const ps=activeProjects(),ts=db.tasks.filter(t=>!t.archived);
  const projectStates=['مصوب / در اجرا','در حال برنامه‌ریزی','در انتظار تصویب','متوقف','مختومه'].map(label=>({label,count:ps.filter(p=>p.status===label).length}));
  const taskStates=['تکمیل‌شده','در حال اجرا','در انتظار شروع','در انتظار تأیید','متوقف'].map(label=>({label,count:ts.filter(t=>t.status===label).length}));
- const orgData=orgs().filter(o=>o.id!=='HOLDING').map(o=>({label:o.label,count:ps.filter(p=>p.orgId===o.id).length})).filter(x=>x.count);
+ const orgData=orgs().filter(o=>o.id!=='HOLDING').map(o=>({label:o.label,count:ps.filter(p=>p.orgId===o.id).length})).filter(x=>x.count),taskOrgData=orgs().filter(o=>o.id!=='HOLDING').map(o=>({label:o.label,count:ts.filter(t=>t.orgId===o.id).length})).filter(x=>x.count);
  const top=ps.map(p=>({p,m:projectMetrics(p)})).sort((a,b)=>b.m.actual-a.m.actual).slice(0,6);
- return '<section class="pc-donut-grid">'+donutChart('ترکیب پروژه‌ها بر اساس وضعیت',projectStates,'پروژه')+donutChart('ترکیب وظایف بر اساس وضعیت',taskStates,'وظیفه')+donutChart('توزیع پروژه‌ها در معاونت‌ها و شرکت‌ها',orgData,'پروژه')+'</section><section class="pc-panel"><div class="pc-panel-head"><div><h3>درصد تکمیل پروژه‌ها</h3><p>درصدها بر اساس پیشرفت تأییدشده وظایف هر پروژه محاسبه می‌شوند.</p></div><a class="pc-btn secondary" href="#reports">گزارش‌های تفصیلی</a></div>'+(top.length?'<div class="pc-progress-ranking">'+top.map(x=>'<a href="#project/'+x.p.id+'"><span>'+esc(x.p.title)+'</span>'+progressRing(x.m.actual,'تکمیل')+'<div class="pc-analytics-track"><i style="width:'+Math.max(0,Math.min(100,x.m.actual))+'%"></i></div><b>'+fa(Math.round(x.m.actual))+'٪</b></a>').join('')+'</div>':empty('پروژه‌ای ثبت نشده است','با ایجاد پروژه، نمودار پیشرفت در این بخش نمایش داده می‌شود.'))+'</section>';
+ return '<section class="pc-donut-grid">'+donutChart('ترکیب پروژه‌ها بر اساس وضعیت',projectStates,'پروژه')+donutChart('ترکیب وظایف بر اساس وضعیت',taskStates,'وظیفه')+donutChart('توزیع پروژه‌ها در معاونت‌ها و شرکت‌ها',orgData,'پروژه')+donutChart('توزیع وظایف در معاونت‌ها و شرکت‌ها',taskOrgData,'وظیفه')+'</section><section class="pc-panel"><div class="pc-panel-head"><div><h3>درصد تکمیل پروژه‌ها</h3><p>درصدها بر اساس پیشرفت تأییدشده وظایف هر پروژه محاسبه می‌شوند.</p></div><a class="pc-btn secondary" href="#reports">گزارش‌های تفصیلی</a></div>'+(top.length?'<div class="pc-progress-ranking">'+top.map(x=>'<a href="#project/'+x.p.id+'"><span>'+esc(x.p.title)+'</span>'+progressRing(x.m.actual,'تکمیل')+'<div class="pc-analytics-track"><i style="width:'+Math.max(0,Math.min(100,x.m.actual))+'%"></i></div><b>'+fa(Math.round(x.m.actual))+'٪</b></a>').join('')+'</div>':empty('پروژه‌ای ثبت نشده است','با ایجاد پروژه، نمودار پیشرفت در این بخش نمایش داده می‌شود.'))+'</section>';
 }
 function overviewGuide(){
  return '<section class="pc-overview-how"><div><b>چطور از این مرکز استفاده کنید؟</b><p>از ثبت هدف تا تحویل نتیجه، همه مراحل در پرونده پروژه پیگیری می‌شوند.</p></div><div class="pc-overview-how-grid"><article><i>۱</i><strong>تعریف پروژه</strong><span>هدف، حوزه، حامی، مدیر و زمان آغاز و پایان</span></article><article><i>۲</i><strong>برنامه‌ریزی</strong><span>ساختار شکست کار، بسته‌ها، نقاط عطف و خط مبنا</span></article><article><i>۳</i><strong>تقسیم وظایف</strong><span>تعیین مسئول، همکار، موعد و معیار پذیرش هر کار</span></article><article><i>۴</i><strong>پایش و تحویل</strong><span>ثبت گزارش، مقایسه برنامه و واقعیت و تأیید خروجی</span></article></div></section>';
@@ -328,10 +328,10 @@ function renderCalls(){
 function renderReports(){
  const ps=activeProjects(),ts=db.tasks.filter(t=>!t.archived);
  const domainData=[...new Set(ps.map(p=>p.domain).filter(Boolean))].map(label=>({label,count:ps.filter(p=>p.domain===label).length}));
- const orgData=orgs().map(o=>({label:o.label,count:ps.filter(p=>p.orgId===o.id).length})).filter(x=>x.count);
+ const orgData=orgs().map(o=>({label:o.label,count:ts.filter(t=>t.orgId===o.id).length})).filter(x=>x.count);
  const reportRows=ps.slice().sort((a,b)=>String(a.title).localeCompare(String(b.title),'fa'));
  return '<div class="pc-stats">'+stat('پروژه‌ها',ps.length,'مورد')+stat('وظایف',ts.length,'مورد')+stat('تکمیل‌شده',ts.filter(t=>t.status==='تکمیل‌شده').length,'وظیفه')+stat('فراخوان‌ها',db.calls.length,'مورد')+'</div>'+
- portfolioCharts()+'<section class="pc-donut-grid">'+donutChart('تفکیک پروژه‌ها بر اساس حوزه تخصصی',domainData,'پروژه')+donutChart('سهم واحدهای سازمانی',orgData,'پروژه')+'</section>'+
+ portfolioCharts()+'<section class="pc-donut-grid">'+donutChart('تفکیک پروژه‌ها بر اساس حوزه تخصصی',domainData,'پروژه')+donutChart('توزیع وظایف در واحدهای سازمانی',orgData,'وظیفه')+'</section>'+
  '<section class="pc-panel"><div class="pc-panel-head"><div><h3>وضعیت زمان و پیشرفت پروژه‌ها</h3><p>مقایسه پیشرفت تأییدشده با برنامه مصوب و برآورد تاریخ پایان.</p></div></div>'+
  (reportRows.length?'<div class="pc-table-wrap"><table class="pc-table"><thead><tr><th>پروژه / قلمرو</th><th>پیشرفت تأییدشده</th><th>برنامه‌ای</th><th>اختلاف زمان</th><th>پیش‌بینی پایان</th></tr>'+pageTableRows(reportRows,'report-projects',p=>{const m=projectMetrics(p);return '<tr><td><strong>'+esc(p.title)+'</strong><small>'+esc(orgLabel(p.orgId))+' · '+esc(p.domain||'بدون حوزه')+'</small></td><td>'+fa(Math.round(m.actual))+'٪</td><td>'+(m.plan===null?'—':fa(Math.round(m.plan))+'٪')+'</td><td>'+(m.variance===null?'—':(m.variance>=0?'جلوتر ':'عقب‌تر ')+fa(Math.abs(m.variance))+' روز')+'</td><td>'+fmtDate(m.forecast)+'</td></tr>';},8)+'</table></div>'+pageNav(reportRows,'report-projects',8):empty('گزارش پروژه‌ای موجود نیست','ابتدا پروژه ثبت و برای وظایف آن زمان‌بندی تعریف کنید.'))+'</section>'+
  '<section class="pc-panel"><div class="pc-panel-head"><div><h3>دفتر وقایع و اقدامات اخیر</h3><p>ثبت تغییرات و رویدادها با زمان وقوع</p></div><button class="pc-btn secondary" data-action="export-events">خروجی CSV وقایع</button></div>'+eventList(db.events,9,'report-events')+'</section>';
