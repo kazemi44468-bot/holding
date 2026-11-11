@@ -15,8 +15,8 @@ const sample=()=>({records:[
 {id:'WK-01',title:'بازبینی تجربه کاهش زمان رسیدگی',recordId:'KN-1405-001',assignee:'کارگروه ارزیابی',due:'۱۴۰۵/۰۸/۲۵',stage:'در حال بررسی'},
 {id:'WK-02',title:'تکمیل شواهد درس‌آموخته صورت‌جلسه‌ها',recordId:'KN-1405-002',assignee:'دبیرخانه',due:'۱۴۰۵/۰۸/۲۸',stage:'ارجاع‌شده'}
 ]});
-let db;try{db=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){db=null}if(!db){db=sample();persist()}
-function persist(){localStorage.setItem(KEY,JSON.stringify(db))}
+let db;try{db=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){db=null}if(!db){db=sample();persist()}else{persist()}
+function persist(){const snapshot=JSON.stringify(db);localStorage.setItem(KEY,snapshot);if(window.HoldingLocalDataVault)window.HoldingLocalDataVault.put('knowledge-center-core',{id:'knowledge-center-state',kind:'application-state',title:'نسخه ساختاری داده‌های مرکز مدیریت دانش',content:snapshot,schemaVersion:2}).catch(()=>{});}
 const nowIso=()=>new Date().toISOString();
 const dateTimeFa=value=>{if(!value)return 'زمان دقیق در اطلاعات قبلی ثبت نشده';const d=new Date(value);return Number.isNaN(d.getTime())?String(value):new Intl.DateTimeFormat('fa-IR',{dateStyle:'short',timeStyle:'short'}).format(d)};
 const ensureRecordAudit=r=>{if(!Array.isArray(r.history))r.history=[];if(!Array.isArray(r.evaluations))r.evaluations=[];if(!Array.isArray(r.followUps))r.followUps=[];if(!r.history.length)r.history.push({id:'H-'+r.id+'-INITIAL',type:'ثبت اولیه',actor:r.creator||'در اطلاعات اولیه ثبت نشده',unit:r.unit||'واحد ثبت نشده',role:'اطلاعات ثبت اولیه',at:null,dateLabel:r.created||'تاریخ ثبت نشده',note:'این سابقه از اطلاعات موجود پرونده بازسازی شده است؛ ساعت و مشخصات ثبت‌کننده در داده قدیمی موجود نبوده است.',legacy:true});return r};
