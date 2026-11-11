@@ -82,15 +82,22 @@ function seedInitialPortfolio(){
   p.baselines=[{version:1,approvedAt:now+'T09:00:00.000Z',startDate:start,endDate:end,tasks,packages:db.workPackages.filter(x=>x.projectId===id),milestones:ms,dependencies:[],workCalendar:{...db.workCalendar},sampleData:true}];
  });
  db.events.unshift({id:'EVT-SEED-001',at:now+'T09:00:00.000Z',action:'seed-portfolio',entity:'PORTFOLIO',title:'ایجاد بانک اولیه بیست پروژه',details:'مجموعه داده نمونه و قابل ویرایش برای نمایش ساختار بانک پروژه‌ها و گزارش‌ها.'});
- db.samplePortfolioVersion=1;
+ db.samplePortfolioVersion=2;
 }
 
 async function load(){
- let raw=null;
- if(window.HoldingLocalDataVault){try{const r=await window.HoldingLocalDataVault.get(RECORD_ID);if(r?.content)raw=r.content;}catch(e){}}
- if(!raw)raw=localStorage.getItem(KEY);
+ let vaultRaw=null,browserRaw=localStorage.getItem(KEY),raw=null;
+ if(window.HoldingLocalDataVault){try{const r=await window.HoldingLocalDataVault.get(RECORD_ID);if(r?.content)vaultRaw=r.content;}catch(e){}}
+ raw=vaultRaw||browserRaw;
+ if(vaultRaw&&browserRaw){
+  try{
+   const a=JSON.parse(vaultRaw),b=JSON.parse(browserRaw);
+   const score=x=>['projects','tasks','calls','workPackages','milestones','dependencies','resources','raids','changes','deliverables','events'].reduce((n,k)=>n+(Array.isArray(x?.[k])?x[k].length:0),0);
+   if(score(b)>score(a)||(score(b)===score(a)&&Date.parse(b.updatedAt||0)>Date.parse(a.updatedAt||0)))raw=browserRaw;
+  }catch(e){}
+ }
  if(raw){try{const parsed=JSON.parse(raw);if(parsed&&Array.isArray(parsed.projects)){db={...blank(),...parsed,projects:Array.isArray(parsed.projects)?parsed.projects:[],tasks:Array.isArray(parsed.tasks)?parsed.tasks:[],calls:Array.isArray(parsed.calls)?parsed.calls:[],workPackages:Array.isArray(parsed.workPackages)?parsed.workPackages:[],milestones:Array.isArray(parsed.milestones)?parsed.milestones:[],dependencies:Array.isArray(parsed.dependencies)?parsed.dependencies:[],resources:Array.isArray(parsed.resources)?parsed.resources:[],raids:Array.isArray(parsed.raids)?parsed.raids:[],changes:Array.isArray(parsed.changes)?parsed.changes:[],deliverables:Array.isArray(parsed.deliverables)?parsed.deliverables:[],events:Array.isArray(parsed.events)?parsed.events:[],workCalendar:parsed.workCalendar||blank().workCalendar};}}catch(e){notice('خواندن داده‌های قبلی ممکن نشد؛ فضای خالی نمایش داده می‌شود.','error');}}
- if(!db.samplePortfolioVersion&&db.projects.length===0){seedInitialPortfolio();notice('بانک اولیه شامل ۲۰ پروژه و ۱۰۰ وظیفه نمونه ایجاد شد؛ داده‌ها قابل ویرایش‌اند و عملکرد واقعی محسوب نمی‌شوند.');}
+ if(db.projects.length===0&&Number(db.samplePortfolioVersion||0)<2){seedInitialPortfolio();notice('بانک اولیه شامل ۲۰ پروژه و ۱۰۰ وظیفه نمونه ایجاد شد؛ داده‌ها قابل ویرایش‌اند و عملکرد واقعی محسوب نمی‌شوند.');}
  await save();
 }
 function notice(message,type='info'){const el=$('#app-status');if(!el)return;el.textContent=message;el.className='app-status show'+(type==='error'?' error':'');clearTimeout(notice.timer);notice.timer=setTimeout(()=>el.className='app-status',5500);}
