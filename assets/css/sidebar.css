@@ -93,3 +93,9 @@
 
 /* قاعده سراسری پروژه: متن لینک‌ها در هیچ صفحه‌ای زیرخط نداشته باشد. */
 a,a:hover,a:focus,a:active,a:visited{text-decoration:none!important}
+
+/* National holding refinement: formal blue-gold back-to-top control */
+.sp-back-top,.back-top{width:42px!important;height:42px!important;min-width:42px!important;border:1px solid #c8d5e0!important;border-radius:6px!important;background:rgba(255,255,255,.97)!important;color:#234f70!important;box-shadow:0 5px 17px rgba(23,58,90,.16)!important}
+.sp-back-top svg,.back-top svg{width:19px!important;height:19px!important;display:block}
+.sp-back-top:hover,.back-top:hover{background:#234f70!important;color:#fff!important;border-color:#234f70!important}
+@media(max-width:600px){.sp-back-top,.back-top{width:38px!important;height:38px!important;min-width:38px!important;border-radius:5px!important}}
