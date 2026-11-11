@@ -210,7 +210,7 @@ function renderReports(){
  '<section class="pc-panel"><div class="pc-panel-head"><div><h3>دفتر وقایع و اقدامات اخیر</h3><p>ثبت تغییرات و رویدادها با زمان وقوع</p></div><button class="pc-btn secondary" data-action="export-events">خروجی CSV وقایع</button></div>'+eventList(db.events)+'</section>';
 }
 function renderAbout(){
- return '<section class="pc-hero"><div><div class="pc-kicker">شناسه معماری: ۰۲-۳-۰۸</div><h3>مرجع واحد اجرای پروژه‌ها و کارهای سازمانی</h3><p>مرکز پروژه‌ها / دفتر راهبری پروژه‌ها (PMO) روش، استاندارد، کیفیت داده و گزارش تلفیقی را راهبری می‌کند؛ مالک کسب‌وکار، حامی، مدیر پروژه و واحدهای تخصصی مسئولیت‌های اجرایی و تصمیمی خود را حفظ می‌کنند.</p></div><div class="pc-hero-side"><strong>۰۲-۳-۰۸</strong><span>شناسه مرکز در طرح مادر</span></div></section>'+
+ return '<section class="pc-hero"><div><div class="pc-kicker">دفتر راهبری پروژه‌ها · PMO</div><h3>مرجع واحد اجرای پروژه‌ها و کارهای سازمانی</h3><p>روش اجرا، استانداردهای برنامه‌ریزی، کیفیت داده و گزارش تلفیقی در این مرکز سامان‌دهی می‌شود؛ مالک کسب‌وکار، حامی، مدیر پروژه و واحدهای تخصصی نیز مسئولیت‌های اجرایی و تصمیمی خود را دنبال می‌کنند.</p></div><div class="pc-hero-side"><strong>PMO</strong><span>راهبری و کنترل پروژه</span></div></section>'+
  '<div class="pc-grid"><section class="pc-panel"><h3 class="pc-section-title">چرخه عمر پروژه</h3><ol class="pc-steps"><li>ثبت ایده و درخواست</li><li>غربال، ارزیابی و تصویب</li><li>منشور، محدوده و برنامه مبنا</li><li>تقسیم کار، تخصیص و اجرا</li><li>کنترل زمان، هزینه، ریسک و تغییر</li><li>تحویل، پذیرش و اختتام</li><li>سنجش منافع و ثبت درس‌آموخته</li></ol></section>'+
  '<section class="pc-panel"><h3 class="pc-section-title">مرزبندی با مراکز دیگر</h3><ul class="pc-bullets"><li><b>مرکز راهبرد:</b> مرجع هدف، راهبرد و برنامه؛ این مرکز مرجع اجرای پروژه و گزارش تحویل است.</li><li><b>مرکز دانش:</b> مرجع درس‌آموخته و محتوای دانشی؛ پروژه‌ها شواهد و تجربه را به آن ارجاع می‌دهند.</li><li><b>مرکز رصد:</b> مصرف‌کننده داده‌های تأییدشده برای نمای تلفیقی؛ ثبت اصلی اطلاعات در مرکز تخصصی باقی می‌ماند.</li><li><b>مرکز ارزیابی:</b> ارزیابی مستقل نتایج و شواهد؛ داده عملیاتی پروژه را بازنویسی نمی‌کند.</li><li><b>مرکز داده:</b> نگهداری و پشتیبان‌گیری؛ مالک چرخه عمر و قواعد کسب‌وکار پروژه نیست.</li></ul></section></div>'+
  '<section class="pc-panel"><h3 class="pc-section-title">قواعد سنجش پیشرفت و انحراف</h3><ul class="pc-bullets"><li>پیشرفت اعلامی مجری و پیشرفت تأییدشده مسئول پذیرش جدا هستند.</li><li>درصد پیشرفت پروژه از میانگین وزنی پیشرفت تأییدشده وظایف محاسبه می‌شود.</li><li>پیشرفت برنامه‌ای از زمان‌بندی خط مبنا و وزن فعالیت‌ها در تاریخ گزارش محاسبه می‌شود.</li><li>تغییر خط مبنا فقط با تصمیم مجاز ثبت می‌شود و نسخه قبلی حفظ خواهد شد.</li><li>شاخص‌های ارزش کسب‌شده مانند SPI/CPI تا زمان تعریف داده‌های معتبر و روش مصوب نمایش داده نمی‌شوند.</li></ul></section>'+
@@ -380,7 +380,7 @@ view.addEventListener('click',e=>{
  if(a==='backup')exportBackup();
  if(a==='export-events')exportEvents();
 });
-$('#restore-file').addEventListener('change',e=>{const f=e.target.files?.[0];if(f)restoreFile(f);e.target.value='';});
+view.addEventListener('change',e=>{if(e.target.id!=='restore-file')return;const f=e.target.files?.[0];if(f)restoreFile(f);e.target.value='';});
 window.addEventListener('hashchange',render);
 $('#backTop').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 window.addEventListener('scroll',()=>$('#backTop').classList.toggle('visible',window.scrollY>260),{passive:true});
