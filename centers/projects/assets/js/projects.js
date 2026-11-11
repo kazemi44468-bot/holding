@@ -113,7 +113,7 @@ function eventList(items,limit=9){
 }
 function projectCard(p){
  const m=projectMetrics(p);
- return '<article class="pc-project-card"><div class="pc-panel-head"><h4>'+esc(p.title)+'</h4>'+badge(p.status)+'</div><p>'+esc(p.summary||'شرح کوتاه پروژه ثبت نشده است.')+'</p><div class="pc-card-meta"><span class="pc-badge">'+esc(orgLabel(p.orgId))+'</span>'+(p.domain?'<span class="pc-badge">'+esc(p.domain)+'</span>':'')+'<span class="pc-badge">موعد: '+fmtDate(p.dueDate)+'</span><span class="pc-badge">'+fa(m.tasks.length)+' کار</span></div>'+progressBar(m.actual,'پیشرفت تأییدشده')+'<div class="pc-card-actions"><button class="pc-btn secondary" data-action="open-project" data-id="'+p.id+'">مشاهده پرونده</button>'+(p.status==='در انتظار تصویب'?'<button class="pc-btn gold" data-action="approve-project" data-id="'+p.id+'">تصویب درخواست</button>':'')+'</div></article>';
+ return '<article class="pc-project-card"><div class="pc-panel-head"><h4>'+esc(p.title)+'</h4>'+badge(p.status)+'</div><p>'+esc(p.summary||'شرح کوتاه پروژه ثبت نشده است.')+'</p><div class="pc-card-meta"><span class="pc-badge">'+esc(orgLabel(p.orgId))+'</span>'+(p.domain?'<span class="pc-badge">'+esc(p.domain)+'</span>':'')+(p.teamMembers?.length?'<span class="pc-badge">تیم اصلی: '+fa(p.teamMembers.length)+' نفر</span>':'')+'<span class="pc-badge">موعد: '+fmtDate(p.dueDate)+'</span><span class="pc-badge">'+fa(m.tasks.length)+' کار</span></div>'+progressBar(m.actual,'پیشرفت تأییدشده')+'<div class="pc-card-actions"><button class="pc-btn secondary" data-action="open-project" data-id="'+p.id+'">مشاهده پرونده</button>'+(p.status==='در انتظار تصویب'?'<button class="pc-btn gold" data-action="approve-project" data-id="'+p.id+'">تصویب درخواست</button>':'')+'</div></article>';
 }
 
 function packagesOf(pid){return db.workPackages.filter(x=>x.projectId===pid&&!x.archived);}
@@ -182,7 +182,7 @@ function taskForm(projectId=''){
 }
 function taskRow(t){
  const p=projectBy(t.projectId),rp=Number(t.reportedPercent)||0,ap=Number(t.approvedPercent)||0;
- return '<tr><td><strong>'+esc(t.title)+'</strong><small>'+esc(t.id)+' · '+esc(t.assignee||'مسئول تعیین نشده')+(t.teamMembers?.length?' · همکاران: '+esc(t.teamMembers.join('، ')):'')+'</small></td><td>'+esc(p?.title||'کار مستقل')+'</td><td>'+fmtDate(t.dueDate)+'</td><td>'+badge(t.status)+'</td><td>'+fa(ap)+'٪ <small>اعلامی: '+fa(rp)+'٪</small></td><td><button class="pc-btn secondary" data-action="task-report" data-id="'+t.id+'">ثبت گزارش</button>'+(rp>ap?'<button class="pc-btn gold" data-action="accept-report" data-id="'+t.id+'">تأیید گزارش</button>':'')+'</td></tr>';
+ return '<tr><td><strong>'+esc(t.title)+'</strong><small>'+esc(t.id)+' · '+esc(t.workType||'اقدام اجرایی')+' · '+esc(t.assignee||'مسئول تعیین نشده')+(t.teamMembers?.length?' · همکاران: '+esc(t.teamMembers.join('، ')):'')+'</small></td><td>'+esc(p?.title||'کار مستقل')+'</td><td>'+fmtDate(t.dueDate)+'</td><td>'+badge(t.status)+'</td><td>'+fa(ap)+'٪ <small>اعلامی: '+fa(rp)+'٪</small></td><td><button class="pc-btn secondary" data-action="task-report" data-id="'+t.id+'">ثبت گزارش</button>'+(rp>ap?'<button class="pc-btn gold" data-action="accept-report" data-id="'+t.id+'">تأیید گزارش</button>':'')+'</td></tr>';
 }
 function renderTasks(){
  const ts=db.tasks.filter(t=>!t.archived);
