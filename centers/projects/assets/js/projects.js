@@ -80,9 +80,12 @@ const pages={
 };
 function currentRoute(){const h=decodeURIComponent(location.hash.replace(/^#/,''));if(h.startsWith('project/'))return {page:'project',id:h.slice(8)};return {page:pages[h]?h:'overview'};}
 function setHeader(page){
- const meta=pages[page]||['جزئیات پروژه','شناسنامه، برنامه، وظایف، پیشرفت و تاریخچه'];
+ const route=currentRoute(),project=page==='project'?projectBy(route.id):null;
+ const meta=project?[project.title,'شناسنامه، برنامه، وظایف، پیشرفت و تاریخچه پروژه']:pages[page]||['جزئیات پروژه','شناسنامه، برنامه، وظایف، پیشرفت و تاریخچه'];
+ document.title=meta[0]+' | مرکز پروژه‌های هلدینگ';
  $('#page-title').textContent=meta[0];$('#page-desc').textContent=meta[1];
- document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('active',a.dataset.nav===page));
+ const navPage=page==='project'?'projects':page;
+ document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('active',a.dataset.nav===navPage));
 }
 function empty(title,copy){return '<div class="pc-empty"><strong>'+esc(title)+'</strong>'+esc(copy)+'</div>';}
 function stat(label,value,unit=''){const shown=typeof value==='number'?fa(value):esc(value);return '<div class="pc-stat"><small>'+esc(label)+'</small><strong>'+shown+'</strong><em>'+esc(unit)+'</em></div>';}
