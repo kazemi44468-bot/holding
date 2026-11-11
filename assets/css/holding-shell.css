@@ -48,3 +48,10 @@ a:hover{color:#173d5c}
 
 .page-nav .page-subnav{z-index:300}
 @media(max-width:760px){.page-nav .page-subnav{top:124px;right:10px;max-width:calc(100vw - 20px);box-shadow:0 14px 32px rgba(20,47,73,.2)}}
+
+/* دو ستونه‌سازی هوشمند محتوای متنی در صفحات طرح‌ها و مراکز */
+.wrap:has(> .section){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:14px;row-gap:14px;align-items:start}
+.wrap:has(> .section)>.hero,.wrap:has(> .section)>.stats,.wrap:has(> .section)>.page-nav,.wrap:has(> .section)>.pagehead,.wrap:has(> .section)>.intro,.wrap:has(> .section)>.notice{grid-column:1/-1}
+.wrap:has(> .section)>.section{min-width:0;margin:0 0 2px}
+.wrap:has(> .section)>.section:has(table),.wrap:has(> .section)>.section:has(.table-wrap),.wrap:has(> .section)>.section:has(.matrix),.wrap:has(> .section)>.section:has(.wide-content){grid-column:1/-1}
+@media(max-width:780px){.wrap:has(> .section){grid-template-columns:1fr;row-gap:12px}.wrap:has(> .section)>.section{margin:0}}
