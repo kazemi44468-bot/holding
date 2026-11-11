@@ -127,7 +127,7 @@ function apply(){
  else {view.dataset.pcContentPage='';}
  document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('active',a.dataset.nav===page));
 }
-const observer=new MutationObserver(()=>{if(['overview','about'].includes(location.hash.replace(/^#/,'').split('/')[0]||'overview'))apply();});
+const observer=new MutationObserver(()=>{const page=location.hash.replace(/^#/,'').split('/')[0]||'overview';if(page==='about'&&!view.querySelector('.pc-about-hero')){view.dataset.pcContentPage='';apply();}else if(page==='overview'&&!view.querySelector('.pc-overview-hero')){view.dataset.pcContentPage='';apply();}});
 observer.observe(view,{childList:true});
 window.addEventListener('hashchange',()=>{view.dataset.pcContentPage='';apply();});
 apply();
