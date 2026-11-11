@@ -28,11 +28,24 @@ function log(action,entity,title,details=''){
  db.events.unshift(item);db.events=db.events.slice(0,500);
  if(window.HoldingLocalDataVault)window.HoldingLocalDataVault.logEvent('project-'+action,SCOPE,{entity,title,details}).catch(()=>{});
 }
+async function syncProjectCalendar(){
+ if(!window.HoldingLocalDataVault)return;
+ const scope='holding-calendar-events',existing=await window.HoldingLocalDataVault.all(scope),owned=existing.filter(x=>x.sourceCenter==='projects'),desired=[];
+ db.tasks.filter(t=>!t.archived&&!t.sampleData&&t.dueDate).forEach(t=>{
+  const p=projectBy(t.projectId),id='CAL-PRJ-'+t.id;
+  desired.push({id,title:'موعد اقدام پروژه: '+t.title,type:'deadline',scope:t.orgId||p?.orgId||'HOLDING',date:t.dueDate,time:'09:00',priority:t.priority==='بالا'?'high':'normal',status:(+t.approvedPercent||0)>=100?'done':'planned',owner:t.assignee||t.owner||'',reminder:'1440',sourceCenter:'projects',linkedProjectId:t.projectId||'',linkedTaskId:t.id,linkedStrategyId:p?.strategyRef||'',description:'اقدام مرتبط با پروژه '+(p?.title||t.projectId||'')+' · شناسه وظیفه '+t.id});
+ });
+ const keep=new Set(desired.map(x=>x.id));
+ for(const old of owned)if(!keep.has(old.id))await window.HoldingLocalDataVault.remove(old.id);
+ for(const event of desired)await window.HoldingLocalDataVault.put(scope,event);
+}
 async function save(){
  db.updatedAt=isoNow();localStorage.setItem(KEY,JSON.stringify(db));
  if(window.HoldingLocalDataVault){
-  try{await window.HoldingLocalDataVault.put(SCOPE,{id:RECORD_ID,kind:'application-state',title:'داده عملیاتی مرکز پروژه‌ها',content:JSON.stringify(db),schemaVersion:1});}
-  catch(e){console.error(e);notice('ذخیره در مخزن محلی مرکزی انجام نشد؛ نسخه مرورگر نگهداری شده است.','error');}
+  try{
+   await window.HoldingLocalDataVault.put(SCOPE,{id:RECORD_ID,kind:'application-state',title:'داده عملیاتی مرکز پروژه‌ها',content:JSON.stringify(db),schemaVersion:1});
+   await syncProjectCalendar();
+  }catch(e){console.error(e);notice('ذخیره داده‌های پروژه انجام شد، اما همگام‌سازی موعدها با تقویم کامل نشد.','error');}
  }
 }
 function seedInitialPortfolio(){
