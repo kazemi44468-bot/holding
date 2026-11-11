@@ -1,0 +1,5 @@
+# Generated data backups are not committed by default.
+*.json
+*.zip
+*.7z
+*.bak
