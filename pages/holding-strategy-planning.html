@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>سامانه راهبرد اهداف و برنامه‌ها | هلدینگ</title>
+<meta name="description" content="طرح جامع سامانه راهبرد و برنامه‌ریزی هلدینگ؛ مدیریت مأموریت، چشم‌انداز، اهداف، برنامه‌ها، شاخص‌ها، پایش و ارزیابی تحقق.">
+<link rel="stylesheet" href="../assets/css/sidebar.css?v=20261111-02">
+<link rel="stylesheet" href="../assets/css/page-nav.css?v=20261011-03">
+<link rel="stylesheet" href="../assets/css/page-visual.css">
+<style>
+@font-face{font-family:TarhhaBody;src:url('../assets/fonts/Vazirmatn-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:TarhhaBody;src:url('../assets/fonts/Vazirmatn-Medium.woff2') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:TarhhaBody;src:url('../assets/fonts/Vazirmatn-SemiBold.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:TarhhaBody;src:url('../assets/fonts/Vazirmatn-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
+:root{--ink:#24364a;--muted:#68798b;--line:#dce4ed;--blue:#315d83;--blue2:#edf3f8;--gold:#ad8750;--bg:#f4f7fa}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:95px}body{margin:0;background:var(--bg);color:var(--ink);font-family:TarhhaBody,Vazirmatn,sans-serif;line-height:1.95}.wrap{max-width:1180px;margin:auto;padding:25px 23px 75px}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:28px;align-items:center;background:linear-gradient(135deg,#183d5d,#315f83 68%,#527d98);color:#fff;border:1px solid #244f70;border-radius:22px;padding:29px 31px;box-shadow:0 14px 34px #183d5d18;overflow:hidden}.eyebrow{font-size:12px;color:#e5c99c;font-weight:700}.hero h1{font-size:29px;line-height:1.65;margin:5px 0 8px}.hero p{margin:0;color:#edf4f8;font-size:13px;max-width:820px}.hero-meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}.pill{border:1px solid #ffffff45;background:#ffffff12;border-radius:30px;padding:4px 10px;font-size:11px;color:#f7fbfd}
+.hero-visual{min-height:220px;border:1px solid #ffffff45;border-radius:17px;background:linear-gradient(145deg,#ffffff19,#ffffff08);padding:15px;display:flex;flex-direction:column;justify-content:space-between}.visual-head{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#e8f1f6}.visual-main{border-radius:11px;background:#fff;color:#294d6c;padding:10px 12px;text-align:center;font-size:12px;font-weight:700}.visual-main small{display:block;font-size:9px;color:#6b7f91;font-weight:400}.visual-levels{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.visual-node{border:1px solid #ffffff50;background:#ffffff12;border-radius:9px;padding:9px 5px;text-align:center;font-size:10px;color:#f4f7fa}.visual-node b{display:block;color:#f3dfb9;font-size:12px}.visual-caption{font-size:9px;color:#dce8f0;text-align:center}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin:15px 0 20px}.stat{background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px 15px}.stat strong{display:block;color:var(--blue);font-size:15px}.stat span{font-size:11px;color:var(--muted)}
+.page-nav>details[open]>summary{background:#315d83;color:#fff;border-color:#315d83;box-shadow:0 4px 12px #315d8326}.page-nav>a.nav-home,.page-nav>a.nav-end{background:#edf3f8;border-color:#dce6ef;color:#315d83}
+.section{background:#fff;border:1px solid var(--line);border-radius:17px;padding:22px;margin:15px 0;box-shadow:0 7px 22px #1d334508}.section h2{font-size:19px;color:#274f70;margin:0 0 7px}.section h3{font-size:14px;color:#345d7c;margin:0 0 5px}.intro{font-size:12px;color:var(--muted);margin:0 0 15px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.unit{min-width:0;border:1px solid var(--line);border-radius:12px;background:#fbfcfe;padding:12px 14px}.unit p{font-size:11.5px;color:#5e7082;margin:3px 0 0}.unit ul{margin:6px 0 0;padding-right:18px}.unit li{font-size:11.5px;color:#5e7082;margin:3px 0}.tag{display:inline-block;font-size:10px;color:#496783;background:#edf3f8;border-radius:18px;padding:2px 8px;margin:2px}.note,.blue-note{margin-top:12px;padding:10px 13px;border-radius:9px;font-size:11.5px}.note{border-right:3px solid var(--gold);background:#fbf8f2;color:#67583f}.blue-note{border-right:3px solid var(--blue);background:#f1f6fa;color:#405d78}
+.table-wrap{overflow-x:auto;border:1px solid #e0e7ee;border-radius:10px;margin:9px 0}.matrix{width:100%;border-collapse:collapse;min-width:760px;font-size:11.5px}.matrix th,.matrix td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:right;vertical-align:top}.matrix th{background:#f1f5f8;color:#385873;white-space:nowrap}.matrix td{color:#53677d}.matrix td:first-child{font-weight:600;color:#304f6c}.matrix tr:last-child td{border-bottom:0}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.flow div{background:#f7f9fb;border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center;font-size:11px;color:#5b6e81}.flow b{display:block;color:#315d83;font-size:12px}.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:12px}.steps div{background:#f7f9fb;border:1px solid var(--line);border-radius:10px;padding:9px;text-align:center;font-size:10.5px}.steps b{display:block;color:#315d83;font-size:12px}
+a{color:#315d83;text-decoration:none}a:hover{text-decoration:underline}.footnote{font-size:10.5px;color:#7b8997;margin-top:14px}
+@media(max-width:780px){.wrap{padding:14px 12px 58px}.hero{grid-template-columns:1fr;padding:20px;gap:17px}.hero h1{font-size:23px}.hero-visual{min-height:185px}.stats{grid-template-columns:repeat(2,1fr)}.grid,.grid.three{grid-template-columns:1fr}.flow{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:repeat(2,1fr)}.section{padding:16px 13px}.matrix{min-width:720px}}
+</style>
+</head>
+<body data-sidebar-page="holding-strategy-planning" class="sp-main">
+<main class="wrap">
+<header class="hero" id="top">
+<div><div class="eyebrow">مرکز راهبری و کنترل | معماری برنامه‌ریزی هلدینگ</div>
+<h1>سامانه راهبرد اهداف و برنامه‌ها</h1>
+<p>مرجع تدوین و مدیریت راهبرد، تبدیل جهت‌گیری‌های کلان به اهداف قابل سنجش، طراحی برنامه‌های راهبردی و عملیاتی، هم‌راستاسازی معاونت‌ها و شرکت‌ها، پایش شاخص‌ها، تحلیل انحراف و ارزیابی تحقق نتایج.</p>
+<div class="hero-meta"><span class="pill">کد طرح ۰۲-۳-۰۹</span><span class="pill">راهبرد و اهداف</span><span class="pill">برنامه‌ریزی چندسطحی</span><span class="pill">شاخص و سنجه</span><span class="pill">پایش و تحلیل انحراف</span><span class="pill">پیوند با پروژه‌ها</span></div></div>
+<div class="hero-visual" role="img" aria-label="نمای مفهومی زنجیره راهبرد تا برنامه و اقدام">
+<div class="visual-head"><span>زنجیره هم‌راستایی سازمان</span><span>۰۲-۳-۰۹</span></div>
+<div class="visual-main">مأموریت و چشم‌انداز<small>چرایی وجود و مقصد بلندمدت</small></div>
+<div class="visual-levels"><div class="visual-node"><b>اهداف</b>نتیجه مطلوب</div><div class="visual-node"><b>برنامه‌ها</b>مسیر تحقق</div><div class="visual-node"><b>شاخص‌ها</b>شواهد سنجش</div></div>
+<div class="visual-caption">راهبرد ← هدف ← برنامه ← پروژه/اقدام ← نتیجه و منفعت</div>
+</div>
+</header>
+<nav class="page-nav" aria-label="فهرست بخش‌های سامانه راهبرد و برنامه‌ها">
+<details><summary>مبانی راهبرد</summary><div class="page-subnav"><a href="#mission">مأموریت و جایگاه</a><a href="#principles">اصول راهبری</a><a href="#architecture">معماری راهبرد</a><a href="#levels">سطوح و آبشاری‌سازی</a><a href="#governance">حکمرانی و نقش‌ها</a></div></details>
+<details><summary>اهداف و برنامه‌ها</summary><div class="page-subnav"><a href="#objectives">نظام اهداف</a><a href="#programs">برنامه‌ها</a><a href="#alignment">هم‌راستایی سازمانی</a><a href="#planning-cycle">چرخه برنامه‌ریزی</a><a href="#resources">منابع و بودجه</a></div></details>
+<details><summary>شاخص و پایش</summary><div class="page-subnav"><a href="#indicators">شاخص‌ها و سنجه‌ها</a><a href="#monitoring">پایش و تحلیل</a><a href="#risk">ریسک و سناریو</a><a href="#reports">گزارش‌ها</a><a href="#evaluation">ارزیابی و یادگیری</a></div></details>
+<details><summary>سامانه و استقرار</summary><div class="page-subnav"><a href="#product">محیط واقعی سامانه</a><a href="#data">مدل داده</a><a href="#integration">ارتباط با مراکز</a><a href="#security">امنیت و ممیزی</a><a href="#roadmap">نقشه راه</a><a href="#decisions">تصمیم‌های باز</a></div></details>
+<a href="#top" class="nav-home">ابتدای صفحه</a><a href="#roadmap" class="nav-end">نقشه راه</a>
+</nav>
+<div class="stats"><div class="stat"><strong>یکپارچگی عمودی و افقی</strong><span>از هلدینگ تا واحد و پروژه</span></div><div class="stat"><strong>هدف‌محور و نتیجه‌گرا</strong><span>تمرکز بر خروجی و منفعت</span></div><div class="stat"><strong>داده‌مبنا و قابل ردیابی</strong><span>شاخص، منبع و مالک مشخص</span></div><div class="stat"><strong>پایش مستمر</strong><span>برنامه، انحراف و اقدام اصلاحی</span></div></div>
+
+<section class="section" id="mission"><h2>۱. مأموریت و جایگاه سامانه</h2><p class="intro">این سامانه چرخه راهبرد را مدیریت می‌کند؛ از تحلیل محیط و انتخاب اولویت تا تبدیل راهبرد به هدف، برنامه، شاخص، اقدام اصلاحی و بازنگری.</p><div class="grid">
+<div class="unit"><h3>مرجع جهت‌گیری و انتخاب</h3><p>ثبت مأموریت، چشم‌انداز، ارزش‌ها، مسائل راهبردی، گزینه‌ها، اولویت‌ها و تصمیم‌های کلان همراه با مستندات و نسخه‌های مصوب.</p></div>
+<div class="unit"><h3>مرجع هدف و نتیجه</h3><p>تعریف هدف‌های روشن و قابل سنجش، مالک نتیجه، افق زمانی، خط مبنا، مقدار هدف و شواهد تحقق.</p></div>
+<div class="unit"><h3>مرجع برنامه‌ریزی</h3><p>تبدیل هدف‌ها به برنامه‌های راهبردی و عملیاتی، ابتکارها، اقدامات، منابع، نقاط عطف و مسئولیت‌های مشخص.</p></div>
+<div class="unit"><h3>مرجع پایش و بازنگری</h3><p>گردآوری عملکرد، تحلیل انحراف، ثبت ریسک و فرض، تصمیم اصلاحی و بازنگری کنترل‌شده در راهبرد و برنامه.</p></div>
+</div><div class="blue-note">مرزبندی: این سامانه «چه نتیجه‌ای، چرا و تا چه زمانی؟» را مدیریت می‌کند؛ مرکز پروژه‌ها «چه کاری، توسط چه کسی و با چه توالی اجرایی؟» را کنترل می‌کند. هر دو از شناسه‌های مشترک هدف، برنامه و پروژه استفاده می‌کنند.</div></section>
+
+<section class="section" id="principles"><h2>۲. اصول راهبری و طراحی</h2><div class="grid three">
+<div class="unit"><h3>تمرکز راهبردی</h3><p>تعداد محدود اولویت‌های واقعی؛ جلوگیری از فهرست آرزوها و اهداف متعارض.</p></div><div class="unit"><h3>قابلیت سنجش</h3><p>هر هدف دارای نتیجه مورد انتظار، مالک، افق و معیار ارزیابی روشن باشد.</p></div><div class="unit"><h3>مالکیت روشن</h3><p>مالک هدف پاسخ‌گوی نتیجه است؛ مالک شاخص مسئول کیفیت سنجش و منبع داده است.</p></div><div class="unit"><h3>هم‌راستایی</h3><p>اهداف واحدها باید به اهداف بالادست متصل باشند یا دلیل استقلال مصوب داشته باشند.</p></div><div class="unit"><h3>واقع‌گرایی منابع</h3><p>برنامه بدون ظرفیت، بودجه، مسئول و پیش‌نیاز معتبر، برنامه مصوب محسوب نشود.</p></div><div class="unit"><h3>یادگیری و بازنگری</h3><p>تغییر محیط، فرض یا عملکرد ضعیف باید به بازنگری مستند منجر شود، نه دستکاری گذشته.</p></div>
+</div></section>
+
+<section class="section" id="architecture"><h2>۳. معماری چرخه راهبرد</h2><div class="steps"><div><b>۱. شناخت</b>محیط و ذی‌نفعان</div><div><b>۲. انتخاب</b>مسائل و اولویت‌ها</div><div><b>۳. صورت‌بندی</b>اهداف و نتایج</div><div><b>۴. برنامه‌ریزی</b>برنامه و منابع</div><div><b>۵. اجرا</b>پروژه و اقدام</div><div><b>۶. پایش</b>شاخص و انحراف</div><div><b>۷. ارزیابی</b>اثربخشی و منافع</div><div><b>۸. بازنگری</b>یادگیری و اصلاح</div></div><p class="note">چرخه فوق تکرارشونده است. تصویب نسخه جدید راهبرد نباید سوابق نسخه پیشین، اهداف لغوشده یا مبانی تصمیم را حذف کند.</p></section>
+
+<section class="section" id="levels"><h2>۴. سطوح راهبرد و آبشاری‌سازی</h2><div class="table-wrap"><table class="matrix"><thead><tr><th>سطح</th><th>محتوا</th><th>خروجی مورد انتظار</th><th>مالک پاسخ‌گو</th></tr></thead><tbody>
+<tr><td>هلدینگ</td><td>مأموریت، چشم‌انداز، محورهای راهبردی و اهداف کلان</td><td>نقشه راهبرد و سبد اولویت‌های کلان</td><td>مرجع راهبری مصوب</td></tr>
+<tr><td>معاونت/حوزه</td><td>اهداف حوزه‌ای، نتایج کلیدی و برنامه‌های تخصصی</td><td>برنامه راهبردی حوزه و تعهدات بین‌واحدی</td><td>معاونت و مالک حوزه</td></tr>
+<tr><td>شرکت</td><td>اهداف کسب‌وکار، عملیاتی و توسعه‌ای هم‌راستا</td><td>برنامه شرکت و شاخص‌های عملکرد</td><td>مدیرعامل/مرجع مصوب</td></tr>
+<tr><td>واحد/اداره</td><td>اهداف اجرایی و بهبود فرایند</td><td>برنامه عملیاتی، اقدامات و مسئولان</td><td>مدیر واحد</td></tr>
+<tr><td>پروژه/تیم</td><td>خروجی‌های زمان‌دار و تحویل‌دادنی</td><td>منشور، برنامه پروژه و معیار پذیرش</td><td>حامی و مدیر پروژه</td></tr>
+</tbody></table></div><p class="intro">اهداف پایین‌دست باید سهم قابل توضیحی در تحقق هدف بالادست داشته باشند؛ ارتباط صرفاً ظاهری یا الصاق چند هدف به همه برنامه‌ها پذیرفته نیست.</p></section>
+
+<section class="section" id="objectives"><h2>۵. نظام اهداف و شناسنامه هدف</h2><div class="grid">
+<div class="unit"><h3>هدف راهبردی</h3><p>تغییر معنادار و بلندمدت در موقعیت، توانمندی یا نتیجه سازمان.</p></div><div class="unit"><h3>هدف عملیاتی</h3><p>نتیجه مشخص یک حوزه یا واحد در دوره برنامه‌ریزی.</p></div><div class="unit"><h3>نتیجه کلیدی</h3><p>شرط قابل سنجشی که نشان می‌دهد هدف تا چه حد محقق شده است.</p></div><div class="unit"><h3>هدف بهبود</h3><p>کاهش شکاف عملکرد، ارتقای کیفیت، بهره‌وری یا بلوغ فرایند.</p></div>
+</div><h3 style="margin-top:15px">فیلدهای اجباری شناسنامه هدف</h3><ul><li>شناسه و عنوان روشن؛ شرح وضعیت مطلوب و مسئله‌ای که هدف حل می‌کند.</li><li>سطح سازمانی، هدف بالادست، محور راهبردی و دلیل ارتباط.</li><li>مالک پاسخ‌گو، همکاران و ذی‌نفعان.</li><li>خط مبنا، مقدار هدف، واحد، افق زمانی و منبع شواهد.</li><li>فرض‌ها، محدودیت‌ها، ریسک‌ها و وابستگی‌ها.</li><li>برنامه‌ها و ابتکارهای پشتیبان و منافع مورد انتظار.</li></ul><div class="note">هدف باید نتیجه را توصیف کند، نه صرفاً فعالیت را؛ «افزایش کیفیت خدمت» نتیجه است، «برگزاری پنج جلسه» فعالیت محسوب می‌شود.</div></section>
+
+<section class="section" id="programs"><h2>۶. نظام برنامه‌ها و ابتکارهای راهبردی</h2><div class="grid three">
+<div class="unit"><h3>برنامه راهبردی</h3><p>مجموعه هماهنگ ابتکارها و پروژه‌ها برای تحقق یک هدف یا منفعت کلان.</p></div><div class="unit"><h3>برنامه عملیاتی</h3><p>تعهدات دوره‌ای واحدها با فعالیت، مسئول، زمان، منبع و خروجی.</p></div><div class="unit"><h3>ابتکار راهبردی</h3><p>مداخله یا مسیر تغییر که می‌تواند به چند پروژه و اقدام شکسته شود.</p></div><div class="unit"><h3>بسته اقدام</h3><p>اقدامات مشخص و قابل واگذاری که لزوماً پروژه مستقل نیستند.</p></div><div class="unit"><h3>برنامه بهبود</h3><p>پاسخ زمان‌دار به شکاف ارزیابی، ریسک یا مسئله عملکردی.</p></div><div class="unit"><h3>برنامه اقتضایی</h3><p>سناریوی جایگزین برای تغییر شرایط یا تحقق ریسک کلیدی.</p></div>
+</div><p class="blue-note">برنامه راهبردی در این سامانه مالک هدف و منفعت است؛ پروژه‌های اجراییِ دارای دامنه و زمان مشخص در مرکز پروژه‌ها مدیریت می‌شوند و وضعیتشان به این سامانه بازمی‌گردد.</p></section>
+
+<section class="section" id="alignment"><h2>۷. هم‌راستایی و نقشه ارتباط اهداف</h2><p class="intro">نقشه هم‌راستایی باید روابط عمودی و افقی را نشان دهد: هدف بالادست، هدف حوزه، برنامه، پروژه، شاخص و مالک. وابستگی‌های بین‌شرکتی و تعارض اهداف نیز باید قابل ثبت باشد.</p><div class="flow"><div><b>راهبرد هلدینگ</b>اولویت‌های کلان</div><div><b>اهداف حوزه</b>سهم معاونت/شرکت</div><div><b>برنامه‌ها</b>ابتکارهای همسو</div><div><b>اجرا</b>پروژه و اقدام</div></div></section>
+
+<section class="section" id="planning-cycle"><h2>۸. چرخه تدوین و تصویب برنامه</h2><div class="steps"><div><b>دستور برنامه‌ریزی</b>دامنه و تقویم</div><div><b>تحلیل وضع</b>عملکرد و محیط</div><div><b>پیشنهاد هدف</b>نتیجه و شاخص</div><div><b>طراحی برنامه</b>اقدام و منابع</div><div><b>چالش‌سنجی</b>تعارض و امکان</div><div><b>تصویب</b>مرجع اختیار</div><div><b>ابلاغ</b>تعهد و مالک</div><div><b>پایش</b>گزارش و اصلاح</div></div><p class="note">هر نسخه برنامه باید دوره اعتبار، مرجع تصویب، تاریخ ابلاغ، تغییرات، فرض‌ها و دلایل بازنگری را نگهداری کند.</p></section>
+
+<section class="section" id="indicators"><h2>۹. نظام شاخص‌ها و شناسنامه سنجه</h2><div class="table-wrap"><table class="matrix"><thead><tr><th>نوع سنجه</th><th>پرسش</th><th>کاربرد</th></tr></thead><tbody><tr><td>ورودی</td><td>چه منابعی تخصیص یافته؟</td><td>بودجه، نفرساعت، ظرفیت</td></tr><tr><td>فرایندی</td><td>کار چگونه پیش می‌رود؟</td><td>زمان چرخه، کیفیت فرایند</td></tr><tr><td>خروجی</td><td>چه چیزی تحویل شد؟</td><td>خدمت، محصول، پوشش</td></tr><tr><td>پیامد</td><td>چه تغییری ایجاد شد؟</td><td>رضایت، اثربخشی، بهبود</td></tr><tr><td>اثر</td><td>اثر بلندمدت چیست؟</td><td>ارزش اجتماعی/اقتصادی/سازمانی</td></tr></tbody></table></div><p class="intro">هر شاخص باید تعریف، هدف سنجش، فرمول، واحد، جهت مطلوب، تناوب، منبع، مالک داده، مالک تحلیل، خط مبنا، هدف دوره‌ای، قواعد تجمیع و محدودیت تفسیر داشته باشد. تغییر فرمول با نسخه‌بندی ثبت شود.</p></section>
+
+<section class="section" id="monitoring"><h2>۱۰. پایش، تحلیل انحراف و اقدام اصلاحی</h2><div class="grid">
+<div class="unit"><h3>ثبت عملکرد</h3><p>ورود دستی کنترل‌شده یا دریافت از سامانه مرجع؛ همراه با دوره، زمان ثبت، تأییدکننده و سند پشتیبان.</p></div><div class="unit"><h3>اعتبارسنجی داده</h3><p>کنترل دامنه، واحد، تکرار، تازگی، سازگاری و کامل بودن داده.</p></div><div class="unit"><h3>تحلیل انحراف</h3><p>مقایسه عملکرد با خط مبنا و هدف، بررسی روند و علت‌یابی با توجه به زمینه.</p></div><div class="unit"><h3>اقدام اصلاحی</h3><p>ثبت اقدام، مالک، موعد، اثر مورد انتظار و سنجش اثربخشی پس از اجرا.</p></div>
+</div><p class="note">وضعیت سبز/زرد/قرمز فقط با آستانه مصوب و داده معتبر محاسبه شود. در نبود داده یا تأخیر گزارش، وضعیت «نامشخص/داده ناکافی» نمایش داده شود، نه وضعیت مطلوب.</p></section>
+
+<section class="section" id="risk"><h2>۱۱. ریسک، فرض و سناریو</h2><p class="intro">برای هر هدف و برنامه، فرض‌های محیطی، ریسک تحقق، فرصت، وابستگی، سناریوی پایه/بدبینانه/خوش‌بینانه و نشانه‌های هشدار ثبت شود. تغییر فرض کلیدی باید اثر آن بر هدف، برنامه، بودجه و زمان را آشکار کند.</p></section>
+
+<section class="section" id="resources"><h2>۱۲. منابع، بودجه و ظرفیت</h2><div class="grid">
+<div class="unit"><h3>برآورد و تخصیص</h3><p>بودجه، سرمایه، نیروی انسانی، تخصص، فناوری، زمان مدیریتی و ظرفیت عملیاتی موردنیاز هر برنامه.</p></div><div class="unit"><h3>تطبیق با منابع واقعی</h3><p>مقایسه درخواست حوزه‌ها با سقف اعتبار و ظرفیت قابل تأمین؛ ثبت شکاف و گزینه‌های اولویت‌بندی.</p></div><div class="unit"><h3>سناریو و اولویت</h3><p>تحلیل گزینه‌ها در شرایط کمبود منابع؛ حفاظت از اهداف حیاتی و بازتنظیم دامنه برنامه‌ها.</p></div><div class="unit"><h3>کنترل تعهد</h3><p>نمایش اعتبار مصوب، تخصیص‌یافته و مصرف‌شده از منبع مالی مرجع، بدون ثبت دوباره سند حسابداری.</p></div>
+</div></section>
+
+<section class="section" id="governance"><h2>۱۳. حکمرانی و نقش‌ها</h2><div class="grid">
+<div class="unit"><h3>مرجع راهبری</h3><p>تصویب جهت‌گیری‌ها، اولویت‌ها، اهداف کلان و بازنگری‌های راهبردی در حدود اختیار مصوب.</p></div><div class="unit"><h3>دفتر راهبرد و برنامه‌ریزی</h3><p>مالک روش‌شناسی، تقویم برنامه‌ریزی، کیفیت اهداف، یکپارچگی برنامه‌ها و گزارش تلفیقی.</p></div><div class="unit"><h3>مالک هدف</h3><p>پاسخ‌گوی تحقق نتیجه و رفع موانع؛ نه صرفاً ثبت گزارش.</p></div><div class="unit"><h3>مالک شاخص/داده</h3><p>تضمین تعریف، منبع، صحت، تناوب و مستندات شاخص.</p></div><div class="unit"><h3>واحد برنامه‌ریزی حوزه</h3><p>تجمیع برنامه عملیاتی و هماهنگی میان واحدهای حوزه.</p></div><div class="unit"><h3>مرکز ارزیابی و مرکز رصد</h3><p>ارزیابی مستقل و پایش/هشدار با تفکیک نقش از مالک اجرا و گزارش.</p></div>
+</div><p class="note">نام کمیته‌ها، ترکیب اعضا، تناوب جلسات و حدود تصویب تا زمان ابلاغ ساختار رسمی پیشنهادی است.</p></section>
+
+<section class="section" id="evaluation"><h2>۱۴. ارزیابی تحقق و یادگیری راهبردی</h2><ul><li>تفکیک ارزیابی عملکرد دوره‌ای از ارزیابی اثربخشی و اثر بلندمدت.</li><li>ترکیب داده کمی، شواهد کیفی، نظر ذی‌نفع و تحلیل زمینه.</li><li>ثبت عوامل بیرونی، تغییر دامنه و فرض‌های محقق‌نشده.</li><li>ارزیابی مستقل توسط مرکز ارزیابی؛ سامانه راهبرد صرفاً داده و مستندات را فراهم می‌کند.</li><li>ثبت درس‌آموخته، تصمیم ادامه/توقف/بازطراحی و مسئول پیگیری.</li></ul></section>
+
+<section class="section" id="reports"><h2>۱۵. گزارش‌ها و نماهای مدیریتی</h2><div class="grid three">
+<div class="unit"><h3>نمای راهبرد کلان</h3><p>نقشه اهداف، وضعیت تحقق، روند شاخص‌ها، ریسک‌های راهبردی و تصمیم‌های معوق.</p></div><div class="unit"><h3>نمای معاونت/شرکت</h3><p>تعهدات حوزه، اهداف همسو، برنامه‌ها، منابع، عملکرد و انحراف.</p></div><div class="unit"><h3>نمای مالک هدف</h3><p>شاخص‌های تحت مالکیت، گزارش‌های موعددار و اقدامات اصلاحی.</p></div><div class="unit"><h3>نمای برنامه</h3><p>پروژه‌های مرتبط، منافع، وابستگی‌ها، نقاط عطف و ریسک.</p></div><div class="unit"><h3>گزارش دوره‌ای</h3><p>مقایسه دوره‌ها، روند، تغییر هدف و تبیین انحراف.</p></div><div class="unit"><h3>گزارش کیفیت داده</h3><p>داده ناقص، دیرهنگام، ناسازگار و شاخص‌های بدون مالک.</p></div>
+</div></section>
+
+<section class="section" id="product"><h2>۱۶. طراحی محیط واقعی سامانه</h2><p class="intro">محیط اجرایی باید یک نرم‌افزار نقش‌محور با ناوبری و گردش کار واقعی باشد؛ صفحه حاضر سند معماری و طرح مفهومی است، نه پنل عملیاتی متصل به پایگاه داده.</p><div class="table-wrap"><table class="matrix"><thead><tr><th>صفحه سامانه</th><th>کارکرد اصلی</th><th>کنترل‌ها و اجزای ضروری</th></tr></thead><tbody>
+<tr><td>میزکار راهبرد</td><td>نمای خلاصه تعهدات و وضعیت</td><td>انتخاب دوره/قلمرو، اهداف کلیدی، هشدار، تصمیم معوق</td></tr>
+<tr><td>نقشه راهبرد</td><td>نمای ارتباط مأموریت تا نتیجه</td><td>درخت اهداف، نقشه روابط، نسخه و تاریخ اعتبار</td></tr>
+<tr><td>مدیریت اهداف</td><td>تعریف و بازنگری هدف</td><td>شناسنامه هدف، مالک، شاخص، خط مبنا، هدف و تصویب</td></tr>
+<tr><td>برنامه‌ها</td><td>مدیریت برنامه و ابتکار</td><td>هدف مرتبط، مالک، اقدام‌ها، منابع، زمان و ریسک</td></tr>
+<tr><td>شاخص‌ها</td><td>تعریف سنجه و ثبت عملکرد</td><td>فرمول، منبع، دوره، مقدار، شاهد و تأیید</td></tr>
+<tr><td>پایش و تحلیل</td><td>کشف انحراف و پیگیری</td><td>روند، علت، هشدار، اقدام اصلاحی و پیگیری</td></tr>
+<tr><td>گزارش و تصمیم</td><td>گزارش مدیریتی و ثبت مصوبه</td><td>فیلتر، خروجی، تصمیم، مسئول و موعد</td></tr>
+<tr><td>تنظیمات و حکمرانی</td><td>کنترل ساختار و دسترسی</td><td>تقویم، نقش، چرخه، طبقه‌بندی، ممیزی</td></tr>
+</tbody></table></div>
+<div class="blue-note">در پیاده‌سازی، داشبورد فقط صفحه شروع است؛ هسته محصول شناسنامه‌های نسخه‌دار هدف/شاخص/برنامه، گردش تصویب، ثبت عملکرد معتبر و تاریخچه تصمیم‌هاست.</div></section>
+
+<section class="section" id="data"><h2>۱۷. مدل داده و شناسنامه‌های مرجع</h2><div class="table-wrap"><table class="matrix"><thead><tr><th>موجودیت</th><th>کلیدهای اصلی</th><th>ارتباطات</th></tr></thead><tbody>
+<tr><td>StrategicPlan</td><td>شناسه، دوره، نسخه، وضعیت، مرجع تصویب</td><td>اهداف و محورهای راهبردی</td></tr>
+<tr><td>StrategicTheme</td><td>عنوان، تعریف، اولویت</td><td>اهداف مرتبط</td></tr>
+<tr><td>Objective</td><td>شناسه، متن نتیجه، سطح، مالک، افق</td><td>هدف بالادست/پایین‌دست، شاخص، برنامه</td></tr>
+<tr><td>Program</td><td>شناسه، عنوان، مالک، دوره، وضعیت</td><td>اهداف، پروژه‌ها، منافع، منابع</td></tr>
+<tr><td>Indicator</td><td>تعریف، فرمول، واحد، جهت، تناوب، منبع</td><td>هدف و سری زمانی عملکرد</td></tr>
+<tr><td>PerformanceValue</td><td>دوره، مقدار، وضعیت تأیید، شاهد</td><td>شاخص و منبع داده</td></tr>
+<tr><td>CorrectiveAction</td><td>علت، اقدام، مالک، موعد، نتیجه</td><td>انحراف، هدف یا برنامه</td></tr>
+<tr><td>Approval/Version</td><td>تصمیم، مرجع، زمان، نسخه</td><td>همه اسناد مصوب</td></tr>
+</tbody></table></div></section>
+
+<section class="section" id="integration"><h2>۱۸. ارتباط با مراکز و سامانه‌های دیگر</h2><div class="table-wrap"><table class="matrix"><thead><tr><th>مرجع مرتبط</th><th>داده دریافتی</th><th>داده/خروجی ارسالی</th><th>مرز مسئولیت</th></tr></thead><tbody>
+<tr><td><a href="holding-project-center.html">مرکز پروژه‌ها</a></td><td>وضعیت پروژه، نقاط عطف، ریسک، هزینه و خروجی</td><td>شناسه هدف، برنامه، اولویت و منفعت مورد انتظار</td><td>راهبرد مالک هدف؛ پروژه مالک اجرا</td></tr>
+<tr><td>مرکز رصد و اشراف</td><td>داده عملکرد و وضعیت تجمیع‌شده</td><td>شاخص‌های راهبردی و قواعد هشدار</td><td>رصد مشاهده/هشدار؛ مالک هدف پاسخ‌گو</td></tr>
+<tr><td>مرکز ارزیابی</td><td>نتیجه ارزیابی و بلوغ</td><td>معیار، شواهد و برنامه بهبود</td><td>ارزیابی مستقل و حرفه‌ای</td></tr>
+<tr><td>مرکز دانش</td><td>درس‌آموخته و تجربه</td><td>نیاز دانشی و نتایج بازنگری</td><td>دانش مالک محتوا و بازاستفاده</td></tr>
+<tr><td>مالی و منابع انسانی</td><td>منابع و عملکرد واقعی تأییدشده</td><td>نیاز و برآورد برنامه‌ها</td><td>سامانه مبدأ مرجع داده مالی/پرسنلی</td></tr>
+</tbody></table></div></section>
+
+<section class="section" id="security"><h2>۱۹. امنیت، محرمانگی و ممیزی</h2><ul><li>دسترسی بر مبنای نقش، قلمرو سازمانی و محرمانگی برنامه/هدف.</li><li>تفکیک ثبت عملکرد، تأیید داده و ارزیابی نتیجه برای جلوگیری از تعارض منافع.</li><li>ثبت نسخه راهبرد، تغییر هدف، تغییر فرمول شاخص، اصلاح مقدار و تصمیم تصویب.</li><li>حفظ تاریخچه مقادیر قبلی و علت اصلاح؛ جلوگیری از بازنویسی بی‌ردپای عملکرد گذشته.</li><li>خروجی‌گیری و مشاهده اطلاعات حساس تحت سیاست و ممیزی.</li></ul></section>
+
+<section class="section" id="roadmap"><h2>۲۰. نقشه راه تدوین و استقرار</h2><div class="steps"><div><b>مرحله ۱</b>تثبیت ساختار و نقش</div><div><b>مرحله ۲</b>تدوین فرهنگ هدف و شاخص</div><div><b>مرحله ۳</b>مدل داده و وایرفریم</div><div><b>مرحله ۴</b>ساخت MVP</div><div><b>مرحله ۵</b>پایلوت یک حوزه</div><div><b>مرحله ۶</b>اتصال پروژه و رصد</div><div><b>مرحله ۷</b>توسعه گزارش‌ها</div><div><b>مرحله ۸</b>توسعه به کل هلدینگ</div></div><p class="note">مدت، بودجه و منابع هر مرحله پس از انتخاب پایلوت و برآورد فنی تعیین می‌شود؛ این سند زمان قطعی یا هزینه ساخت فرضی تعیین نمی‌کند.</p></section>
+
+<section class="section" id="decisions"><h2>۲۱. تصمیم‌های باز برای تصویب</h2><ul><li>مرجع تصویب راهبرد و ترکیب مرجع راهبری.</li><li>افق زمانی و تناوب بازنگری راهبرد و برنامه‌ها.</li><li>ساختار رسمی معاونت‌ها، شرکت‌ها و مالکان هدف.</li><li>فرهنگ شاخص‌ها، استانداردهای محاسبه و منابع داده.</li><li>ماتریس تفویض اختیار برای تصویب/تغییر هدف و برنامه.</li><li>انتخاب حوزه پایلوت و اهدافی که قابلیت سنجش معتبر دارند.</li><li>سیاست محرمانگی و سطح انتشار گزارش‌ها.</li></ul><p class="blue-note">وضعیت سند: طرح جامع مفهومی و معماری محصول؛ پیش از پیاده‌سازی باید با اسناد راهبردی واقعی، ساختار مصوب و صاحبان فرایند تطبیق و تصویب شود.</p></section>
+
+<section class="section" id="references"><h2>۲۲. منابع روش‌شناختی و مبانی تدوین</h2><p class="intro">این طرح بر اصول رایج مدیریت راهبرد، مدیریت عملکرد، برنامه‌ریزی چندسطحی، مدیریت پرتفوی، کارت امتیازی متوازن و مدیریت شاخص‌ها استوار است. انتخاب چارچوب نهایی (مانند BSC، OKR یا ترکیبی) باید بر اساس ماهیت هلدینگ انجام شود؛ هیچ چارچوبی بدون بومی‌سازی بر همه حوزه‌ها تحمیل نمی‌شود.</p><p><a href="holding-project-center.html">← مرکز پروژه‌ها و مدیریت یکپارچه کارها</a> | <a href="holding-tarh.html">طرح مادر هلدینگ</a> | <a href="holding-integration-matrix.html">ماتریس مراکز و تعاملات</a></p></section>
+<p class="footnote">این صفحه سند طرح و معماری است و به‌معنای وجود سامانه عملیاتی، داده واقعی، مصوبات، اهداف عددی یا اتصال زنده نیست. مقادیر هدف، آستانه‌ها، SLA، اختیارات و زمان‌بندی باید پس از تصویب تعیین شوند.</p>
+
+<section class="section" id="strategy-knowledge-governance">
+<h2>مرجع راهبردها، شیوه‌نامه‌ها، دستورالعمل‌ها و اسناد حاکمیتی</h2>
+<p class="intro">سامانه باید علاوه بر مدیریت هدف و برنامه، مرجع کنترل‌شده و نسخه‌مند اسناد راهبری سازمان باشد؛ به‌گونه‌ای که هیچ راهبرد، اصل، سیاست یا دستورالعمل معتبر خارج از زنجیره مرجعیت و هماهنگی باقی نماند.</p>
+<div class="grid">
+<div class="unit"><h3>مخزن اسناد معتبر</h3><p>ثبت راهبردها، سیاست‌ها، اصول و مبانی، شیوه‌نامه‌ها، دستورالعمل‌ها، آیین‌نامه‌ها، استانداردها، مصوبات و ابلاغیه‌ها با شناسه یکتا، مالک، مرجع تصویب، تاریخ اعتبار و نسخه.</p></div>
+<div class="unit"><h3>طبقه‌بندی و دامنه اجرا</h3><p>تفکیک اسناد هلدینگ، معاونت، شرکت، واحد و موضوع؛ تعیین مخاطب، قلمرو الزام، سطح محرمانگی، سند بالادستی و اسناد وابسته.</p></div>
+<div class="unit"><h3>نسخه و اعتبار</h3><p>چرخه تدوین، بررسی، تطبیق، تصویب، ابلاغ، اجرا، بازنگری، جایگزینی و ابطال؛ حفظ نسخه‌های قبلی و مشخص‌بودن سند جاری در هر تاریخ.</p></div>
+<div class="unit"><h3>هماهنگی و کنترل تعارض</h3><p>شناسایی تعارض، تکرار، هم‌پوشانی، خلأ یا ناسازگاری میان راهبردها و دستورالعمل‌ها؛ ارجاع برای بررسی کارشناسی و ثبت تصمیم نهایی با مرجع تصویب‌کننده.</p></div>
+<div class="unit"><h3>ردیابی اثر و انطباق</h3><p>نمایش اینکه هر هدف، برنامه، پروژه یا فرایند از کدام راهبرد، سیاست و دستورالعمل اثر می‌گیرد و تغییر هر سند چه اهداف، واحدها و برنامه‌هایی را متأثر می‌کند.</p></div>
+<div class="unit"><h3>ابلاغ و آگاهی سازمانی</h3><p>توزیع نسخه معتبر برای مخاطبان، ثبت مشاهده/دریافت و در صورت الزام اخذ تأیید آگاهی؛ جلوگیری از استفاده ناخواسته از نسخه منسوخ.</p></div>
+</div>
+<div class="note">سامانه ابزار کشف و مدیریت تعارض و هماهنگی است، نه مرجع تصویب خودکار. تشخیص ماشینی یا هوشمند می‌تواند موارد مشکوک را پیشنهاد کند؛ تأیید تعارض، تفسیر سند و تصویب اصلاح فقط با صاحبان صلاحیت انجام می‌شود.</div>
+</section>
+<section class="section" id="strategy-governance-model">
+<h2>متولی سازمانی و مدل بهره‌برداری بین معاونت‌ها</h2>
+<p>این سامانه از نظر سازمانی زیر نظر یک معاونت مشخص و مصوب مستقر می‌شود که «معاونت متولی» مسئول راهبری، نگهداری مرجع اسناد، کنترل کیفیت و هماهنگی میان‌بخشی آن خواهد بود. نام و حدود اختیار معاونت متولی در این مرحله باز گذاشته می‌شود تا بر اساس ساختار نهایی سازمان تصویب شود.</p>
+<div class="grid">
+<div class="unit"><h3>معاونت متولی</h3><p>مالک محصول و فرایند راهبری سامانه؛ مسئول طبقه‌بندی و مرجعیت اسناد، مدیریت چرخه بررسی و بازنگری، هماهنگی میان معاونت‌ها، کنترل نسخه معتبر و گزارش تعارض‌ها و انحرافات.</p></div>
+<div class="unit"><h3>سایر معاونت‌ها</h3><p>مصرف‌کننده و مشارکت‌کننده سازمانی؛ مشاهده اسناد و راهبردهای معتبر، ثبت پیشنهاد و نیاز، تدوین اسناد حوزه‌ای در حدود اختیار، مدیریت اهداف و برنامه‌های داخلی و گزارش انطباق.</p></div>
+<div class="unit"><h3>سطح اختصاصی هر معاونت</h3><p>هر معاونت می‌تواند فضای کاری، اهداف، برنامه‌ها، شاخص‌ها و اسناد حوزه خود را متناسب با اندازه و نیازش داشته باشد؛ اما این فضا باید از طبقه‌بندی، اصول، استانداردها و قواعد یکپارچگی مرجع تبعیت کند.</p></div>
+<div class="unit"><h3>مرجع تصویب و صاحبان سند</h3><p>معاونت متولی جایگزین مرجع قانونی یا سازمانی تصویب‌کننده نیست. صاحب هر سند مسئول محتوای تخصصی آن است و مرجع دارای صلاحیت، تصویب و ابلاغ را انجام می‌دهد.</p></div>
+</div>
+<p>مدل دسترسی باید چندسطحی باشد: مشاهده عمومی درون‌سازمانی برای اسناد مجاز، ویرایش حوزه‌ای برای مالکان تعیین‌شده، بررسی بین‌معاونتی برای اسناد اثرگذار، و تصویب/ابلاغ فقط برای نقش‌ها و مراجع دارای اختیار. همه دسترسی‌ها و تغییرات ثبت ممیزی می‌شوند.</p>
+</section>
+<section class="section" id="strategy-integration-loop">
+<h2>چرخه یکپارچگی و هماهنگی راهبردها</h2>
+<div class="flow">
+<div><b>۱. ثبت و طبقه‌بندی</b>ثبت سند، منبع، مالک، نسخه و دامنه اجرا</div>
+<div><b>۲. تحلیل ارتباط</b>پیوند به اصول، راهبردها، اهداف و اسناد بالادستی</div>
+<div><b>۳. بررسی هم‌راستایی</b>کشف تعارض، تکرار، خلأ و اثرات متقابل</div>
+<div><b>۴. هماهنگی تخصصی</b>اخذ نظر معاونت‌ها و ثبت اختلاف‌نظرها</div>
+<div><b>۵. تصویب و ابلاغ</b>ارجاع به مرجع صلاحیت‌دار و انتشار نسخه معتبر</div>
+<div><b>۶. پایش اجرا</b>سنجش انطباق برنامه‌ها و فعالیت‌ها با اسناد</div>
+<div><b>۷. بازنگری کنترل‌شده</b>ثبت تغییر، تحلیل اثر و حفظ تاریخچه</div>
+<div><b>۸. گزارش راهبری</b>نمای وضعیت اسناد، تعارض‌ها و اقدامات باز</div>
+</div>
+<p class="note">یکپارچگی به معنای یکسان‌سازی اجباری همه معاونت‌ها نیست؛ اصول و قواعد پایه مشترک‌اند، اما هر معاونت در قلمرو اختیار خود می‌تواند سیاست‌ها و برنامه‌های تخصصی داشته باشد، مشروط به اینکه با اسناد بالادستی و مبانی مصوب تعارض نداشته باشند.</p>
+</section>
+
+</main>
+<script src="../assets/js/sidebar.js?v=20261111-02"></script>
+
+<script src="../assets/js/page-visual.js"></script>
+</body></html>
