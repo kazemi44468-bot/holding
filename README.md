@@ -24,7 +24,7 @@
 
 - [درگاه اجرایی هلدینگ](https://kazemi44468-bot.github.io/holding/)
 - [مرکز مدیریت دانش](https://kazemi44468-bot.github.io/holding/centers/knowledge/)
-- [مرکز داده و محتویات هلدینگ](https://kazemi44468-bot.github.io/holding/centers/data/)
+
 - [مرکز پروژه‌ها](https://kazemi44468-bot.github.io/holding/centers/projects/)
 
 ## مستندات توسعه
