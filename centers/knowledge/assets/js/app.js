@@ -1,4 +1,4 @@
-(()=>{
+(async()=>{
 const KEY='holding_knowledge_center_v2', $=id=>document.getElementById(id), fa=n=>String(n??0).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
 const sample=()=>({records:[
 {demo:true,id:'KN-1405-001',type:'تجربه اجرایی',title:'کاهش زمان رسیدگی به درخواست‌های نگهداری',unit:'معاونت خدمات شهری',owner:'واحد نگهداری',summary:'با ایجاد فرم واحد ثبت درخواست و اولویت‌بندی بر اساس میزان اثر بر خدمت، زمان ارجاع و رسیدگی کاهش یافت. تجربه قابل انتقال به سایر واحدهای عملیاتی است.',keywords:['نگهداری','فرایند','بهبود'],status:'تأییدشده',visibility:'سازمانی',created:'۱۴۰۵/۰۷/۲۸',views:24},
@@ -15,7 +15,7 @@ const sample=()=>({records:[
 {id:'WK-01',title:'بازبینی تجربه کاهش زمان رسیدگی',recordId:'KN-1405-001',assignee:'کارگروه ارزیابی',due:'۱۴۰۵/۰۸/۲۵',stage:'در حال بررسی'},
 {id:'WK-02',title:'تکمیل شواهد درس‌آموخته صورت‌جلسه‌ها',recordId:'KN-1405-002',assignee:'دبیرخانه',due:'۱۴۰۵/۰۸/۲۸',stage:'ارجاع‌شده'}
 ]});
-let db;try{db=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){db=null}if(!db){db=sample();persist()}else{persist()}
+let cachedSnapshot=localStorage.getItem(KEY);if(!cachedSnapshot&&window.HoldingLocalDataVault){try{const restored=await window.HoldingLocalDataVault.get('knowledge-center-state');if(restored?.content){cachedSnapshot=restored.content;localStorage.setItem(KEY,cachedSnapshot)}}catch(e){}}let db;try{db=JSON.parse(cachedSnapshot||'null')}catch(e){db=null}if(!db){db=sample();persist()}else{persist()}
 function persist(){const snapshot=JSON.stringify(db);localStorage.setItem(KEY,snapshot);if(window.HoldingLocalDataVault)window.HoldingLocalDataVault.put('knowledge-center-core',{id:'knowledge-center-state',kind:'application-state',title:'نسخه ساختاری داده‌های مرکز مدیریت دانش',content:snapshot,schemaVersion:2}).catch(()=>{});}
 const nowIso=()=>new Date().toISOString();
 const dateTimeFa=value=>{if(!value)return 'زمان دقیق در اطلاعات قبلی ثبت نشده';const d=new Date(value);return Number.isNaN(d.getTime())?String(value):new Intl.DateTimeFormat('fa-IR',{dateStyle:'short',timeStyle:'short'}).format(d)};
