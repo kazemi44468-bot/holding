@@ -30,7 +30,7 @@
       "sequence": 2,
       "name": null,
       "status": "name_pending",
-      "name_label": "معاونت 02 ـ عنوان در انتظار ثبت نهایی",
+      "name_label": "معاونت دوم ـ عنوان در انتظار ثبت نهایی",
       "companies": []
     },
     {
@@ -40,7 +40,7 @@
       "sequence": 3,
       "name": null,
       "status": "name_pending",
-      "name_label": "معاونت 03 ـ عنوان در انتظار ثبت نهایی",
+      "name_label": "معاونت سوم ـ عنوان در انتظار ثبت نهایی",
       "companies": []
     },
     {
@@ -50,7 +50,7 @@
       "sequence": 4,
       "name": null,
       "status": "name_pending",
-      "name_label": "معاونت 04 ـ عنوان در انتظار ثبت نهایی",
+      "name_label": "معاونت چهارم ـ عنوان در انتظار ثبت نهایی",
       "companies": []
     },
     {
@@ -60,7 +60,7 @@
       "sequence": 5,
       "name": null,
       "status": "name_pending",
-      "name_label": "معاونت 05 ـ عنوان در انتظار ثبت نهایی",
+      "name_label": "معاونت پنجم ـ عنوان در انتظار ثبت نهایی",
       "companies": []
     },
     {
@@ -70,7 +70,7 @@
       "sequence": 6,
       "name": null,
       "status": "name_pending",
-      "name_label": "معاونت 06 ـ عنوان در انتظار ثبت نهایی",
+      "name_label": "معاونت ششم ـ عنوان در انتظار ثبت نهایی",
       "companies": []
     },
     {
@@ -80,7 +80,7 @@
       "sequence": 7,
       "name": null,
       "status": "name_pending",
-      "name_label": "معاونت 07 ـ عنوان در انتظار ثبت نهایی",
+      "name_label": "معاونت هفتم ـ عنوان در انتظار ثبت نهایی",
       "companies": []
     },
     {
@@ -90,7 +90,7 @@
       "sequence": 8,
       "name": null,
       "status": "name_pending",
-      "name_label": "معاونت 08 ـ عنوان در انتظار ثبت نهایی",
+      "name_label": "معاونت هشتم ـ عنوان در انتظار ثبت نهایی",
       "companies": []
     },
     {
@@ -100,7 +100,7 @@
       "sequence": 9,
       "name": null,
       "status": "name_pending",
-      "name_label": "معاونت 09 ـ عنوان در انتظار ثبت نهایی",
+      "name_label": "معاونت نهم ـ عنوان در انتظار ثبت نهایی",
       "companies": []
     },
     {
@@ -110,7 +110,7 @@
       "sequence": 10,
       "name": null,
       "status": "name_pending",
-      "name_label": "معاونت 10 ـ عنوان در انتظار ثبت نهایی",
+      "name_label": "معاونت دهم ـ عنوان در انتظار ثبت نهایی",
       "companies": []
     }
   ],
