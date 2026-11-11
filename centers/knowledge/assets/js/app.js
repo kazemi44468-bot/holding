@@ -43,7 +43,7 @@ const page=document.body.dataset.page||'dashboard';
 
 const orgRegistry=window.HOLDING_ORG_REGISTRY||{deputies:[]};
 const deputies=orgRegistry.deputies||[],companies=orgRegistry.companies||[],branchManagements=orgRegistry.provincial_branch_managements||[];
-const organizationIdForUnit=value=>{const v=String(value||'');const company=companies.find(c=>c.name===v);if(company)return company.organization_id;if(v.includes('معاونت راهبری خدمات شهری')||v.includes('معاونت خدمات شهری'))return 'DEP-01';return null};
+const organizationIdForUnit=value=>{const v=String(value||'');const company=companies.find(c=>c.name===v);if(company)return company.organization_id;const deputy=deputies.find(d=>d.name&&d.name===v);if(deputy)return deputy.organization_id;const branch=branchManagements.find(b=>v==='مدیریت شعب استانی '+fa(b.sequence)||v==='مدیریت شعب استانی '+b.sequence);if(branch)return branch.organization_id;if(v.includes('معاونت راهبری خدمات شهری')||v.includes('معاونت خدمات شهری'))return 'DEP-01';return null};
 const recordOrganizationId=record=>record.organization_id||organizationIdForUnit(record.unit);
 const belongsToDeputy=(record,deputyId)=>{const id=recordOrganizationId(record);return id===deputyId||companies.some(c=>c.organization_id===id&&c.parent_organization_id===deputyId)};
 const deputyForUnit=value=>{const id=organizationIdForUnit(value),company=companies.find(c=>c.organization_id===id);return company?company.parent_organization_id:id};
