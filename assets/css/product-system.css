@@ -53,3 +53,5 @@
 .org-summary strong{font-size:22px;color:#244f70;font-weight:700}.org-summary span{font-size:10px;color:#718397}
 @media(max-width:760px){.about-columns{grid-template-columns:1fr}.org-summary{grid-template-columns:1fr}.footer{gap:5px;flex-direction:column}.nav{padding:0 10px}.nav a{padding:8px 9px;font-size:10px}.nav-submenu{position:absolute;top:100%;right:0;left:auto;min-width:205px}}
 @media(max-width:560px){.topinner{min-height:60px;padding:8px 12px}.brandmark{width:65px;height:37px;flex-basis:65px}.brand h1{font-size:13px}.brand small{font-size:8px}.navwrap{position:relative}.nav{padding:0 7px}.nav a{padding:8px 7px;font-size:9px;gap:5px}.nav a svg{width:13px;height:13px}.nav-group>summary{padding:8px 8px;font-size:9px}.nav-submenu{position:absolute;top:100%;right:0;left:auto;width:min(245px,calc(100vw - 20px));min-width:0}.back-to-top{left:13px;bottom:14px;width:38px;height:38px}.about-hero{padding:17px}.about-hero .hero-title{font-size:18px}}
+
+.org-chart-panel{grid-column:1/-1}.org-chart-panel .chart-bars{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:22px}@media(max-width:650px){.org-chart-panel .chart-bars{grid-template-columns:1fr}}
