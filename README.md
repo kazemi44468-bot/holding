@@ -30,6 +30,7 @@
 ## مستندات توسعه
 
 - [گزارش وضعیت، سوابق پیاده‌سازی و نقشه راه](docs/DEVELOPMENT-STATUS.md)
+- [مستند فنی و قابلیت‌های نسخه اولیه مرکز پروژه‌ها](docs/PROJECT-CENTER-IMPLEMENTATION.md)
 - [طرح مادر هلدینگ](https://kazemi44468-bot.github.io/tarhha/pages/holding-tarh.html)
 - [ماتریس مراکز مشترک و تعاملات](https://kazemi44468-bot.github.io/tarhha/pages/holding-integration-matrix.html)
 - [طرح جامع مرکز پروژه‌ها](https://kazemi44468-bot.github.io/tarhha/pages/holding-project-center.html)
