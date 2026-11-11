@@ -284,3 +284,20 @@ body{background:#f3f6f9;color:#263b50}
 #view>.hero-panel,#view>.pc-hero,#view>.stats,#view>.pc-stats,#view>.dashboard-tools,#view>.toolbar,#view>.filters,#view>.notice,#view>.chart-grid,#view>.calendar-grid,#view>.calendar-toolbar,#view>.pc-panel:has(table),#view>.pc-panel:has(.pc-gantt),#view>.pc-panel:has(.pc-form),#view>.pc-panel:has(.pc-analytics-grid),#view>.panel:has(table),#view>.panel:has(.list-table),#view>.panel:has(.calendar),#view>.panel:has(.month-grid),#view>.panel:has(.agenda-list),#view>.panel:has(.table-wrap){grid-column:1/-1}
 #view>.panel{margin:0 0 14px;min-width:0}
 @media(max-width:820px){#view{grid-template-columns:1fr}}
+
+
+/* Balanced content flow for operational centers */
+#view{display:block;column-count:2;column-gap:16px;column-fill:balance}
+#view>*{break-inside:avoid;-webkit-column-break-inside:avoid;min-width:0}
+#view>.panel,#view>.pc-panel{display:inline-block;width:100%;vertical-align:top;margin:0 0 14px}
+#view>.hero-panel,#view>.pc-hero,#view>.stats,#view>.pc-stats,
+#view>.dashboard-tools,#view>.toolbar,#view>.filters,#view>.notice,
+#view>.chart-grid,#view>.calendar-grid,#view>.calendar-toolbar,
+#view>.pc-panel:has(table),#view>.pc-panel:has(.pc-gantt),
+#view>.pc-panel:has(.pc-form),#view>.pc-panel:has(.pc-analytics-grid),
+#view>.panel:has(table),#view>.panel:has(.list-table),
+#view>.panel:has(.calendar),#view>.panel:has(.month-grid),
+#view>.panel:has(.agenda-list),#view>.panel:has(.table-wrap){
+  display:block;width:auto;column-span:all;-webkit-column-span:all
+}
+@media(max-width:820px){#view{column-count:1}#view>.panel,#view>.pc-panel{display:block;width:100%}}
