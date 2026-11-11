@@ -82,7 +82,7 @@
 
 /* دکمه یکپارچه بازگشت به بالا برای تمام صفحات */
 .sp-back-top,.back-top{position:fixed!important;left:22px!important;right:auto!important;bottom:22px!important;top:auto!important;z-index:2147482998!important;width:44px!important;height:44px!important;min-width:44px!important;padding:0!important;display:grid!important;place-items:center!important;border:1px solid rgba(35,79,112,.22)!important;border-radius:15px!important;background:rgba(255,253,249,.96)!important;color:#234f70!important;box-shadow:0 8px 24px rgba(38,59,80,.14)!important;text-decoration:none!important;cursor:pointer!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important;transform:translateY(8px)!important;transition:opacity .22s ease,transform .22s ease,visibility .22s ease,background .2s ease!important;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.sp-back-top span,.back-top span{font-size:25px!important;font-family:Arial,sans-serif!important;line-height:1!important;font-weight:400!important}
+.sp-back-top span,.back-top span{font-size:25px!important;font-family:TarhhaBody!important;line-height:1!important;font-weight:400!important}
 .sp-back-top.is-visible,.back-top.is-visible{opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:translateY(0)!important}
 .sp-back-top:hover,.back-top:hover{background:#234f70!important;color:#fff!important;border-color:#234f70!important}
 .sp-back-top:focus-visible,.back-top:focus-visible{outline:3px solid #b38a4b!important;outline-offset:3px!important}
