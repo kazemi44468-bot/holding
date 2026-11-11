@@ -30,17 +30,24 @@ async function syncOperationalState(state){
  if(!state||!window.HoldingLocalDataVault)return {synced:0};
  const existing=await records(),byId=new Map(existing.map(x=>[x.id,x]));let synced=0;
  const sourceItems=[];
- for(const r of state.records||[]){if(r.demo)continue;sourceItems.push({sourceModule:'capture',sourceId:r.id,id:'CORE-'+String(r.id).replace(/[^a-zA-Z0-9_-]/g,'-'),title:r.title||'اثر بدون عنوان',type:r.type||'دانش سازمانی',unit:r.unit||'واحد ثبت نشده',author:r.owner||r.creator||'',keywords:r.keywords||[],abstract:r.summary||'',content:r.fullText||r.content||r.summary||'',status:r.status||'ثبت‌شده',createdAt:r.createdAt||stamp(),sourceDate:r.updatedAt||r.createdAt||null});}
- for(const p of state.publications||[]){if(p.demo)continue;sourceItems.push({sourceModule:'publishing',sourceId:p.id,id:'PUB-'+String(p.id).replace(/[^a-zA-Z0-9_-]/g,'-'),title:p.title||'اثر بدون عنوان',type:p.kind||'تألیف و انتشارات',unit:p.unit||p.owner||'واحد ثبت نشده',author:p.author||p.owner||'',keywords:p.keywords||[],abstract:p.abstract||p.notes||'',content:[p.abstract,p.notes,p.references].filter(Boolean).join('\n\n'),status:p.stage||'پیشنهاد اولیه',createdAt:p.createdAt||p.date||stamp(),sourceDate:p.updatedAt||p.publishDate||p.date||null});}
+ for(const r of state.records||[]){
+  if(r.demo)continue;
+  const lesson=r.type==='درس‌آموخته';
+  sourceItems.push({sourceModule:lesson?'lessons':'capture',sourceId:r.id,id:'CORE-'+String(r.id).replace(/[^a-zA-Z0-9_-]/g,'-'),title:r.title||'اثر بدون عنوان',type:r.type||'دانش سازمانی',unit:r.unit||'واحد ثبت نشده',author:r.owner||r.creator||'',creator:r.creator||'',creatorRole:r.creatorRole||'',keywords:r.keywords||[],abstract:r.summary||'',content:r.fullText||r.content||r.summary||'',status:r.status||'ثبت‌شده',visibility:r.visibility||'',source:r.source||'',relatedProject:r.relatedProject||'',originPeriod:r.originPeriod||'',evidenceRef:r.evidenceRef||'',audience:r.audience||'',reviewOwner:r.reviewOwner||'',reviewCycle:r.reviewCycle||'',createdAt:r.createdAt||stamp(),sourceDate:r.updatedAt||r.createdAt||null,sourceHistory:r.history||[]});
+ }
+ for(const p of state.publications||[]){
+  if(p.demo)continue;
+  sourceItems.push({sourceModule:'publishing',sourceId:p.id,id:'PUB-'+String(p.id).replace(/[^a-zA-Z0-9_-]/g,'-'),title:p.title||'اثر بدون عنوان',type:p.kind||'تألیف و انتشارات',topic:p.topic||'',unit:p.unit||p.owner||'واحد ثبت نشده',author:p.author||p.owner||'',owner:p.owner||'',reviewer:p.reviewer||'',editor:p.editor||'',audience:p.audience||'',license:p.license||'',standardId:p.standardId||'',edition:p.edition||'',targetDate:p.targetDate||'',publishDate:p.publishDate||'',nextReview:p.nextReview||'',visibility:p.visibility||'',fileRef:p.fileRef||'',keywords:p.keywords||[],abstract:p.abstract||p.notes||'',content:[p.abstract,p.notes,p.references].filter(Boolean).join('\n\n'),references:p.references||'',status:p.stage||'پیشنهاد اولیه',stageHistory:p.stageHistory||[],createdAt:p.createdAt||p.date||stamp(),sourceDate:p.updatedAt||p.publishDate||p.date||null});
+ }
  const activeIds=new Set(sourceItems.map(x=>x.id));
  for(const x of sourceItems){
-  const fingerprint=JSON.stringify([x.title,x.type,x.unit,x.author,x.keywords,x.abstract,x.content,x.status,x.sourceDate]);
+  const fingerprint=JSON.stringify([x.title,x.type,x.topic,x.unit,x.author,x.owner,x.reviewer,x.editor,x.audience,x.license,x.standardId,x.edition,x.targetDate,x.publishDate,x.nextReview,x.visibility,x.fileRef,x.keywords,x.abstract,x.content,x.references,x.status,x.stageHistory,x.creator,x.creatorRole,x.source,x.relatedProject,x.originPeriod,x.evidenceRef,x.reviewOwner,x.reviewCycle,x.sourceHistory,x.sourceDate]);
   const old=byId.get(x.id);if(old&&old.sourceFingerprint===fingerprint)continue;
   const now=stamp();
-  await HoldingLocalDataVault.put(STORE,{...(old||{}),...x,sourceRecordId:x.sourceId,sourceFingerprint,sourceStatus:'فعال در سامانه مبدأ',version:(old?.version||0)+1,createdAt:old?.createdAt||x.createdAt||now,updatedAt:now,history:[...(old?.history||[]),{at:now,action:old?'همگام‌سازی تغییرات فرم عملیاتی':'انتقال از فرم عملیاتی',unit:x.unit,actor:'سامانه مرکز مدیریت دانش'}]});
+  await HoldingLocalDataVault.put(STORE,{...(old||{}),...x,sourceRecordId:x.sourceId,sourceFingerprint:fingerprint,sourceStatus:'فعال در سامانه مبدأ',version:(old?.version||0)+1,createdAt:old?.createdAt||x.createdAt||now,updatedAt:now,history:[...(old?.history||[]),{at:now,action:old?'همگام‌سازی تغییرات فرم عملیاتی':'انتقال از فرم عملیاتی',unit:x.unit,actor:'سامانه مرکز مدیریت دانش'}]});
   synced++;
  }
- for(const old of existing){if(['capture','publishing'].includes(old.sourceModule)&&old.sourceRecordId&&!activeIds.has(old.id)&&old.sourceStatus!=='حذف‌شده در سامانه مبدأ'){const now=stamp();await HoldingLocalDataVault.put(STORE,{...old,status:'بایگانی‌شده',sourceStatus:'حذف‌شده در سامانه مبدأ',archivedAt:now,updatedAt:now,history:[...(old.history||[]),{at:now,action:'بایگانی پس از حذف در سامانه مبدأ',unit:old.unit,actor:'سامانه مرکز مدیریت دانش'}]});synced++;}}
+ for(const old of existing){if(['capture','lessons','publishing'].includes(old.sourceModule)&&old.sourceRecordId&&!activeIds.has(old.id)&&old.sourceStatus!=='حذف‌شده در سامانه مبدأ'){const now=stamp();await HoldingLocalDataVault.put(STORE,{...old,status:'بایگانی‌شده',sourceStatus:'حذف‌شده در سامانه مبدأ',archivedAt:now,updatedAt:now,history:[...(old.history||[]),{at:now,action:'بایگانی پس از حذف در سامانه مبدأ',unit:old.unit,actor:'سامانه مرکز مدیریت دانش'}]});synced++;}}
  return {synced};
 }
 window.KnowledgeWorkspace={renderLibrary,renderOffline,syncOperationalState,bind:page=>page==='library'?bindLibrary():page==='offline'?bindOffline():null};
