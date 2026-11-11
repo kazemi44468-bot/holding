@@ -38,7 +38,7 @@ async function load(){
  let raw=null;
  if(window.HoldingLocalDataVault){try{const r=await window.HoldingLocalDataVault.get(RECORD_ID);if(r?.content)raw=r.content;}catch(e){}}
  if(!raw)raw=localStorage.getItem(KEY);
- if(raw){try{const parsed=JSON.parse(raw);if(parsed&&Array.isArray(parsed.projects)){db={...blank(),...parsed};}}catch(e){notice('خواندن داده‌های قبلی ممکن نشد؛ فضای خالی نمایش داده می‌شود.','error');}}
+ if(raw){try{const parsed=JSON.parse(raw);if(parsed&&Array.isArray(parsed.projects)){db={...blank(),...parsed,projects:Array.isArray(parsed.projects)?parsed.projects:[],tasks:Array.isArray(parsed.tasks)?parsed.tasks:[],calls:Array.isArray(parsed.calls)?parsed.calls:[],events:Array.isArray(parsed.events)?parsed.events:[]};}}catch(e){notice('خواندن داده‌های قبلی ممکن نشد؛ فضای خالی نمایش داده می‌شود.','error');}}
  await save();
 }
 function notice(message,type='info'){const el=$('#app-status');if(!el)return;el.textContent=message;el.className='app-status show'+(type==='error'?' error':'');clearTimeout(notice.timer);notice.timer=setTimeout(()=>el.className='app-status',5500);}
@@ -62,7 +62,7 @@ function projectMetrics(p){
  const duration=Math.max(1,Math.ceil((new Date((base?.endDate||p.dueDate||today())+'T12:00:00')-new Date((base?.startDate||p.startDate||today())+'T12:00:00'))/86400000));
  const variance=plan===null?null:Math.round((actual-plan)*duration/100);
  const due=base?.endDate||p.dueDate||null;
- const forecast=due&&variance!==null?addDays(due,Math.max(0,-variance)):due;
+ const forecast=due&&variance!==null?addDays(due,-variance):due;
  return {tasks,actual,reported,plan,variance,due,forecast,baseline:base};
 }
 function addDays(date,n){const d=new Date(date+'T12:00:00');d.setDate(d.getDate()+n);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
@@ -193,7 +193,7 @@ function renderProject(id){
  '<section class="pc-panel"><h3 class="pc-section-title">خط مبنای مصوب</h3>'+(base?'<div class="pc-keyvals"><div class="pc-keyval"><small>نسخه</small><strong>'+fa(base.version)+'</strong></div><div class="pc-keyval"><small>تاریخ ثبت</small><strong>'+fmtDateTime(base.approvedAt)+'</strong></div><div class="pc-keyval"><small>شروع</small><strong>'+fmtDate(base.startDate)+'</strong></div><div class="pc-keyval"><small>پایان</small><strong>'+fmtDate(base.endDate)+'</strong></div></div><p class="pc-help">تغییرات بعدی برنامه نسخه قبلی را حذف نمی‌کند.</p>':'<div class="pc-empty">هنوز خط مبنای مصوبی ثبت نشده است.</div>')+'</section></div>'+
  '<section class="pc-panel"><div class="pc-panel-head"><div><h3>وظایف و بسته‌های اجرایی</h3><p>وزن هر وظیفه در محاسبه پیشرفت پروژه مؤثر است.</p></div><a class="pc-btn secondary" href="#tasks">مدیریت کارها</a></div>'+
  (ts.length?'<div class="pc-table-wrap"><table class="pc-table"><thead><tr><th>وظیفه</th><th>مسئول</th><th>موعد</th><th>وضعیت</th><th>پیشرفت تأییدشده</th><th>گزارش</th></tr></thead><tbody>'+ts.map(t=>'<tr><td><strong>'+esc(t.title)+'</strong><small>وزن: '+fa(t.weight)+'</small></td><td>'+esc(t.assignee||'—')+'</td><td>'+fmtDate(t.dueDate)+'</td><td>'+badge(t.status)+'</td><td>'+fa(t.approvedPercent)+'٪</td><td><button class="pc-btn secondary" data-action="task-report" data-id="'+t.id+'">ثبت گزارش</button>'+(t.reportedPercent>t.approvedPercent?'<button class="pc-btn gold" data-action="accept-report" data-id="'+t.id+'">تأیید</button>':'')+'</td></tr>').join('')+'</tbody></table></div>':empty('وظیفه‌ای به این پروژه متصل نیست','از بخش کارها، وظیفه‌ای با انتخاب این پروژه ثبت کنید.'))+'</section>'+
- '<section class="pc-panel"><h3 class="pc-section-title">تاریخچه اقدامات پروژه</h3>'+eventList(db.events.filter(e=>e.entity===p.id||e.entity==='task'&&ts.some(t=>t.id===e.entityId)))+'</section></section>';
+ '<section class="pc-panel"><h3 class="pc-section-title">تاریخچه اقدامات پروژه</h3>'+eventList(db.events.filter(e=>e.entity===p.id||ts.some(t=>t.id===e.entity)))+'</section></section>';
 }
 function render(){
  const r=currentRoute();setHeader(r.page);
