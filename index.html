@@ -301,6 +301,10 @@ h1{font-size:clamp(32px,3.4vw,40px)}
  .logo-wrap{width:116px!important}
  .gold-rule{margin:5px auto 9px!important}
 }
+</style><style>
+.portal-back-top{position:fixed;left:20px;bottom:20px;z-index:50;width:42px;height:42px;display:grid;place-items:center;border:1px solid #c7d4df;border-radius:6px;background:rgba(255,255,255,.96);color:#234f70;box-shadow:0 5px 18px rgba(12,31,49,.2);opacity:0;visibility:hidden;transform:translateY(8px);transition:.18s ease;cursor:pointer}
+.portal-back-top.visible{opacity:1;visibility:visible;transform:none}.portal-back-top svg{width:19px;height:19px}
+@media(max-width:560px){.portal-back-top{left:13px;bottom:14px;width:38px;height:38px}}
 </style></head>
 <body><main class="intro" aria-labelledby="holding-title">
 <img class="intro-photo" src="assets/images/introback.webp" alt="" fetchpriority="high"><div class="frame" aria-hidden="true"></div>
@@ -372,4 +376,4 @@ h1{font-size:clamp(32px,3.4vw,40px)}
  function saveOrder(){try{localStorage.setItem(key,JSON.stringify(groups().map(g=>g.getAttribute('aria-labelledby'))))}catch(e){}}
 })();
 </script>
-</body></html>
+<button class="portal-back-top" id="portalBackTop" type="button" aria-label="بازگشت به بالای صفحه" title="بازگشت به بالا"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button><script>(function(){const b=document.getElementById("portalBackTop");if(!b)return;const u=()=>b.classList.toggle("visible",window.scrollY>240);b.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));window.addEventListener("scroll",u,{passive:true});u()})();</script></body></html>
