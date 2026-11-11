@@ -30,7 +30,7 @@ side.querySelectorAll('.sp-item,.sp-subitem').forEach(a=>{
 });
 let back=d.querySelector('.sp-back-top,.back-top');
 if(!back){
- back=d.createElement('button');back.type='button';back.className='sp-back-top';back.setAttribute('aria-label','بازگشت به بالای صفحه');back.innerHTML='<span aria-hidden="true">↑</span>';d.body.appendChild(back);
+ back=d.createElement('button');back.type='button';back.className='sp-back-top';back.setAttribute('aria-label','بازگشت به بالای صفحه');back.innerHTML='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';d.body.appendChild(back);
 }else{
  back.classList.add('sp-back-top');
  back.setAttribute('aria-label','بازگشت به بالای صفحه');
