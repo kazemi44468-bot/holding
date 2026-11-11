@@ -119,3 +119,5 @@ body{background:#f3f6f9;color:#263b50}
 .step b{display:block;color:#214f70;font-size:11px;margin-bottom:3px}
 @media(max-width:760px){.operating-guide ol{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:480px){.steps{grid-template-columns:1fr}.brand-subtitle{font-size:8px}}
+
+.workflow-stages{grid-template-columns:repeat(5,minmax(0,1fr))}@media(max-width:760px){.workflow-stages{grid-template-columns:repeat(2,minmax(0,1fr))}}
