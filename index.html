@@ -428,6 +428,41 @@ h1{font-size:clamp(32px,3.4vw,40px)}
  .directory>.group .group-body{max-height:240px}
 }
 @media(prefers-reduced-motion:reduce){.directory>.group{transition:none}}
+
+/* Final responsive image and masonry overrides */
+.intro{position:relative!important;min-height:100svh;height:auto!important;overflow:visible!important;isolation:isolate}
+.intro-photo{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important;object-fit:cover!important;object-position:center 42%!important;z-index:-2}
+.intro:before{position:absolute!important;inset:0!important;z-index:-1}
+.frame{position:absolute!important;inset:clamp(8px,1.3vw,18px)!important}
+.directory{display:block!important;width:min(100%,900px)!important;max-width:900px!important;margin-inline:auto!important;columns:2 340px!important;column-gap:10px!important;column-fill:balance!important}
+.directory>.group{display:inline-block!important;width:100%!important;min-width:0;margin:0 0 10px!important;vertical-align:top;break-inside:avoid;-webkit-column-break-inside:avoid;align-self:start}
+.group-head{touch-action:none!important;cursor:grab}
+.group.drag-ghost{position:fixed!important;z-index:9999!important;pointer-events:none!important;opacity:.94!important;transform:scale(1.015);max-width:min(92vw,520px)}
+@media(max-width:760px){
+ .intro{padding:24px 14px 28px!important;min-height:100svh}
+ .content{width:100%;max-width:620px;margin:0 auto}
+ .directory{columns:1!important;width:min(100%,620px)!important}
+ .directory>.group{margin-bottom:8px!important}
+ .intro-photo{object-position:center 38%!important}
+ .frame{inset:7px!important}
+ .directory>.group .group-body{max-height:260px}
+}
+@media(max-width:420px){
+ .intro{padding:20px 10px 24px!important}
+ .intro-photo{object-position:54% center!important}
+ .directory>.group .group-body{max-height:240px}
+}
+@media(orientation:landscape) and (max-height:600px){
+ .intro{padding:10px 20px 16px!important;min-height:100svh}
+ .content{max-width:1100px}
+ .logo-wrap{width:64px!important}
+ h1{font-size:28px!important}
+ .gold-rule{margin:3px auto 6px!important}
+ .directory{columns:2 340px!important;column-gap:7px!important}
+ .intro-photo{object-position:center 48%!important}
+ .directory>.group .group-body{max-height:145px}
+}
+@media(prefers-reduced-motion:reduce){.group{transition:none}}
 </style>  <link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="icon" href="favicon.ico" sizes="any">
 <link rel="stylesheet" href="assets/css/persian-date.css?v=20261112-01"></head>
 <body><main class="intro" aria-labelledby="holding-title">
