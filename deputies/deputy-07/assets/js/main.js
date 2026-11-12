@@ -74,8 +74,8 @@ document.querySelectorAll('.back-to-top').forEach(node=>node.remove());
  if(nav){
   nav.innerHTML='<a href="'+home+'">نمای کلان</a><details class="nav-dropdown"><summary>ادارات کل</summary><div class="nav-menu">'+
    ['اداره اداری و پشتیبانی','اداره تحقیق و توسعه','اداره پارکبان و معبربانان','اداره تأسیسات فنی و امور نگهداری','اداره فاوا و خدمات فنی','اداره جمع‌آوری و بازیافت پسماند','اداره بازرسی و تحقیقات محلی'].map((n,i)=>'<a href="'+urls.departments[i]+'">'+n+'</a>').join('')+
-   '</div></details><details class="nav-dropdown"><summary>مدیریت</summary><div class="nav-menu">'+
-   [[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],[urls.followups,'پیگیری دستورات'],[urls.notices,'اعلانات ریاست'],[urls.calendar,'تقویم شرکت']].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
+   '</div></details><a class="nav-direct nav-data-center" href="'+urls.localData+'">مرکز داده و پشتیبان‌گیری</a><details class="nav-dropdown"><summary>مدیریت</summary><div class="nav-menu">'+
+   [[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],[urls.followups,'پیگیری دستورات'],[urls.notices,'اعلانات ریاست'],[urls.calendar,'تقویم شرکت']].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>مرکز خدمات</summary><div class="nav-menu">'+
    [[urls.services,'نمای کلی خدمات'],[urls.communications,'ارتباطات کارکنان'],[urls.welfare,'خدمات رفاهی'],[urls.coop,'فروشگاه تعاونی'],[urls.economic,'برنامه‌ریزی اقتصادی'],[urls.retirees,'خدمات بازنشستگان']].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>گزارش‌ها</summary><div class="nav-menu">'+
@@ -97,7 +97,8 @@ document.querySelectorAll('.back-to-top').forEach(node=>node.remove());
  const current=location.pathname.split('/').pop();
  const groups=[
   {id:'departments',label:'ادارات',icon:'▦',links:urls.departments.map((href,i)=>[href,['اداره اداری و پشتیبانی','اداره تحقیق و توسعه','اداره پارکبان و معبربانان','اداره تأسیسات فنی و امور نگهداری','اداره فاوا و خدمات فنی','اداره جمع‌آوری و بازیافت پسماند','اداره بازرسی و تحقیقات محلی'][i]])},
-  {id:'management',label:'مدیریت',icon:'▤',links:[[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],[urls.followups,'پیگیری دستورات ریاست'],[urls.notices,'مرکز اعلانات ریاست'],[urls.calendar,'تقویم شرکت']]},
+  {id:'infrastructure',label:'زیرساخت',icon:'▣',links:[[urls.localData,'مرکز داده و پشتیبان‌گیری']]},
+  {id:'management',label:'مدیریت',icon:'▤',links:[[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],[urls.followups,'پیگیری دستورات ریاست'],[urls.notices,'مرکز اعلانات ریاست'],[urls.calendar,'تقویم شرکت']]},
   {id:'services',label:'خدمات',icon:'◇',links:[[urls.services,'نمای کلی مرکز خدمات'],[urls.communications,'ارتباطات کارکنان'],[urls.welfare,'خدمات رفاهی'],[urls.coop,'فروشگاه و تعاونی مصرف'],[urls.economic,'برنامه‌ریزی اقتصادی'],[urls.retirees,'خدمات بازنشستگان']]},
   {id:'reports',label:'گزارش‌ها',icon:'▥',links:[[urls.reports,'گزارش تلفیقی ادارات'],[urls.catalog,'کاتالوگ گزارش‌ها'],[urls.archive,'آرشیو گزارش‌ها'],[urls.participation,'نظرسنجی']]}
  ];
