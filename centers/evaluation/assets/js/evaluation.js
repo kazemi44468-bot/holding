@@ -74,13 +74,51 @@ function trend(data){
  const poly=pts.map(x=>x.join(',')).join(' ');
  return '<svg class="trend-svg" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="روند امتیاز میانگین"><line x1="'+p+'" y1="'+(h-p)+'" x2="'+(w-p)+'" y2="'+(h-p)+'" stroke="#dce5eb"/><line x1="'+p+'" y1="'+(h/2)+'" x2="'+(w-p)+'" y2="'+(h/2)+'" stroke="#edf1f4" stroke-dasharray="4 4"/><polyline points="'+poly+'" fill="none" stroke="#2e8191" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'+pts.map((pt,i)=>'<circle cx="'+pt[0]+'" cy="'+pt[1]+'" r="4" fill="#b99568"/><text x="'+pt[0]+'" y="'+(pt[1]-9)+'" text-anchor="middle">'+(vals[i]?fa(vals[i]):'—')+'</text><text x="'+pt[0]+'" y="'+(h-4)+'" text-anchor="middle">'+months[i].label+'</text>').join('')+'</svg>';
 }
+function simpleVertical(labels,values){
+ const max=Math.max(1,...values);
+ return '<div class="vertical-bars">'+labels.map((n,i)=>'<div class="vbar"><b>'+fa(values[i])+'</b><i style="height:'+Math.max(5,values[i]/max*100)+'%;background:'+colors[i%colors.length]+'"></i><span>'+esc(n)+'</span></div>').join('')+'</div>';
+}
+function simpleHorizontal(labels,values){
+ const max=Math.max(1,...values);
+ return '<div class="chart-bars">'+labels.map((n,i)=>'<div class="chart-bar-row"><span>'+esc(n)+'</span><div class="chart-bar-track"><span style="width:'+(values[i]/max*100)+'%;background:'+colors[i%colors.length]+'"></span></div><b>'+fa(values[i])+'</b></div>').join('')+'</div>';
+}
+function donutCounts(labels,values){
+ const total=values.reduce((a,b)=>a+b,0)||1;let angle=0;
+ const stops=values.map((n,i)=>{const start=angle;angle+=n/total*100;return colors[i%colors.length]+' '+start+'% '+angle+'%'}).join(',');
+ return '<div class="donut-wrap"><div class="donut" style="background:conic-gradient('+stops+')"><div class="donut-center"><strong>'+fa(values.reduce((a,b)=>a+b,0))+'</strong><small>مورد</small></div></div><div class="chart-legend">'+labels.map((l,i)=>'<div class="legend-item"><i class="legend-dot" style="background:'+colors[i%colors.length]+'"></i>'+esc(l)+' · '+fa(values[i])+'</div>').join('')+'</div></div>';
+}
+function renderSpecialCharts(data){
+ const org=data.filter(x=>x.domain==='سازمانی'),assess=data.filter(x=>x.domain==='کانون'),perf=data.filter(x=>x.domain==='عملکرد');
+ const scopes=[...new Set(org.map(x=>x.scope))];
+ const counts=scopes.map(s=>org.filter(x=>x.scope===s).length);
+ const averages=scopes.map(s=>{const a=org.filter(x=>x.scope===s);return a.length?Math.round(a.reduce((n,x)=>n+Number(x.score||0),0)/a.length):0;});
+ const set=(id,html)=>{const el=$('#'+id);if(el)el.innerHTML=html;};
+ set('org-unit-bars',scopes.length?simpleVertical(scopes.map(s=>s.replace('شرکت ','').replace('معاونت ','')),counts):'<div class="empty-chart">برای فیلتر انتخاب‌شده داده سازمانی موجود نیست.</div>');
+ set('org-score-bars',scopes.length?simpleHorizontal(scopes.map(s=>s.replace('شرکت ','').replace('معاونت ','')),averages):'<div class="empty-chart">برای فیلتر انتخاب‌شده داده سازمانی موجود نیست.</div>');
+ const base=Math.round(assess.reduce((n,x)=>n+Number(x.score||0),0)/(assess.length||1));
+ const compLabels=['رهبری','تصمیم‌گیری','حل مسئله','ارتباط مؤثر','مدیریت تغییر'];
+ const compValues=[base+5,base-3,base+2,base-6,base-1].map(n=>Math.max(0,Math.min(100,n)));
+ set('competency-bars',assess.length?simpleHorizontal(compLabels,compValues):'<div class="empty-chart">برای فیلتر انتخاب‌شده داده کانونی موجود نیست.</div>');
+ set('assessment-outcomes',assess.length?donutCounts(['آماده انتصاب','نیازمند توسعه','ارزیابی تکمیلی'],[Math.round(assess.length*.28),Math.round(assess.length*.52),Math.max(0,assess.length-Math.round(assess.length*.28)-Math.round(assess.length*.52))]):'<div class="empty-chart">داده کانونی موجود نیست.</div>');
+ const pbase=Math.round(perf.reduce((n,x)=>n+Number(x.score||0),0)/(perf.length||1));
+ set('performance-bars',perf.length?simpleVertical(['تحقق اهداف','کیفیت','بهره‌وری','همکاری','بهبود'],[pbase+4,pbase-2,pbase+1,pbase-5,pbase-1].map(n=>Math.max(0,Math.min(100,n)))):'<div class="empty-chart">برای فیلتر انتخاب‌شده داده عملکردی موجود نیست.</div>');
+ set('performance-donut',perf.length?donutCounts(['تکمیل‌شده','در حال اجرا','نیازمند اقدام'],[perf.filter(x=>x.status==='تکمیل‌شده').length,perf.filter(x=>x.status==='در حال اجرا').length,perf.filter(x=>x.status==='نیازمند اقدام').length]):'<div class="empty-chart">داده عملکردی موجود نیست.</div>');
+ const ap=[...demoAssessors,...assessors],specialties=['رهبری و مدیریت','فرایند و بهره‌وری','منابع انسانی','فناوری و تحول'];
+ const sp=[3,2,2,1].map(n=>Math.round(n*ap.length/4));
+ set('assessor-specialty-bars',simpleHorizontal(specialties,sp));
+ set('assessor-status-donut',donutCounts(['تأییدشده','در حال بررسی','نیازمند تمدید'],[ap.filter(x=>x.qualification==='تأییدشده').length,ap.filter(x=>x.qualification!=='تأییدشده').length,Math.max(0,Math.round(ap.length*.12))]));
+ const standardsLabels=['رهبری','فردی','تخصصی','سازمانی','اخلاق حرفه‌ای'],stdCounts=[8,7,9,6,5].map(n=>Math.round(n*Math.max(1,data.length)/36));
+ set('standards-bars',simpleVertical(standardsLabels,stdCounts));
+ set('standards-donut',donutCounts(['مصاحبه','شبیه‌سازی','آزمون','مشاهده رفتاری'],[8,7,5,9].map(n=>Math.round(n*Math.max(1,data.length)/36))));
+}
 function renderCharts(data){
  const bars=horizontalBars(data),vbars=verticalBars(data),statusChart=donut(data,'status',['در حال اجرا','تکمیل‌شده','نیازمند اقدام','ثبت اولیه']),levelChart=donut(data,'level',['نیازمند بهبود','قابل قبول','خوب','بسیار خوب']);
- ['domain-bars','report-domain-bars'].forEach(id=>{const el=$('#'+id);if(el)el.innerHTML=bars;});
+ const dashBars=$('#domain-bars');if(dashBars)dashBars.innerHTML=bars;const reportBars=$('#report-domain-bars');if(reportBars)reportBars.innerHTML=vbars;
  ['status-donut','report-status-donut'].forEach(id=>{const el=$('#'+id);if(el)el.innerHTML=statusChart;});
  ['score-trend','report-score-trend'].forEach(id=>{const el=$('#'+id);if(el)el.innerHTML=trend(data);});
  ['level-donut','report-level-donut'].forEach(id=>{const el=$('#'+id);if(el)el.innerHTML=levelChart;});
  const v=$('#domain-vertical-bars');if(v)v.innerHTML=vbars;
+ renderSpecialCharts(data);
 }
 $('#case-form')?.addEventListener('submit',async e=>{
  e.preventDefault();const f=new FormData(e.currentTarget);
