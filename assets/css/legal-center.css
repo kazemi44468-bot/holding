@@ -37,19 +37,20 @@
 @media(max-width:900px){.lw-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:650px){.lw-head{display:block;padding:15px}.lw-head-side{justify-content:flex-start;margin-top:9px}.lw-content{padding:10px}.lw-grid{grid-template-columns:1fr}.lw-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.lw-form{grid-template-columns:1fr}.lw-field.full{grid-column:auto}.lw-toolbar input,.lw-toolbar select{width:100%;min-width:0}.lw-toolbar .lw-spacer{display:none}.lw-tab{padding:7px 9px;font-size:9px}}
 
-/* Legal Center palette aligned to the shared Knowledge Center layout */
-:root{--legal-primary:#23656b;--legal-deep:#174b55;--legal-soft:#edf5f4;--legal-copper:#bd8958}
-.lw-head{background:linear-gradient(110deg,#174b55,#23656b);border-bottom:2px solid #bd8958}
-.lw-tag{color:#f2d5b5}
-.lw-tab.active{color:#174b55;border-color:#c8dcda}
-.lw-btn{background:#23656b;border-color:#23656b}
-.lw-btn:hover{background:#174b55}
-.lw-btn.light{color:#23656b;border-color:#cbdedc}
-.lw-btn.gold{background:#fbf5ef;color:#805b39;border-color:#e8d7c4}
-.lw-metric strong{color:#23656b}
-.lw-panel h3,.lw-row strong,.lw-table td strong{color:#315f64}
-.lw-badge.blue{background:#edf5f4;border-color:#d5e5e3;color:#23656b}
-.lw-alert{border-color:#d5e5e3;border-right-color:#23656b;background:#edf5f4;color:#315f64}
+
+/* مرکز حقوقی — هم‌راستا با سامانه‌های عملیاتی هلدینگ */
+:root{--legal-primary:#315d83;--legal-deep:#1b4568;--legal-soft:#edf3f8;--legal-copper:#c49a54}
+.lw-head{background:linear-gradient(110deg,#173a5a,#285d80);border-bottom:2px solid #c49a54}
+.lw-tag{color:#f2dfbd}
+.lw-tab.active{color:#1b4568;border-color:#cbd9e4}
+.lw-btn{background:#315d83;border-color:#315d83}
+.lw-btn:hover{background:#1b4568}
+.lw-btn.light{color:#315d83;border-color:#cbd9e4}
+.lw-btn.gold{background:#fbf6ec;color:#805f32;border-color:#ead9b9}
+.lw-metric strong{color:#315d83}
+.lw-panel h3,.lw-row strong,.lw-table td strong{color:#315d83}
+.lw-badge.blue{background:#edf3f8;border-color:#d7e3ed;color:#315d83}
+.lw-alert{border-color:#d8e4ed;border-right-color:#315d83;background:#edf3f8;color:#3d607c}
 .lw-alert.warn{border-color:#ead9c8;border-right-color:#bd8958;background:#fbf5ef;color:#70553e}
-.lw-actions button{color:#23656b}
-.lw-field input:focus,.lw-field select:focus,.lw-field textarea:focus,.lw-toolbar input:focus{border-color:#6d9b9c;box-shadow:0 0 0 3px #23656b12}
+.lw-actions button{color:#315d83}
+.lw-field input:focus,.lw-field select:focus,.lw-field textarea:focus,.lw-toolbar input:focus{border-color:#7c9bb3;box-shadow:0 0 0 3px #315d8312}
