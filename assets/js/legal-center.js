@@ -141,8 +141,9 @@ async function load(){
  try{const raw=localStorage.getItem(KEY);if(raw){db={...blank(),...JSON.parse(raw)};if(window.HoldingLocalDataVault)await window.HoldingLocalDataVault.put(SCOPE,{id:STATE_ID,kind:'application-state',title:'داده عملیاتی مرکز حقوقی',content:JSON.stringify(db),schemaVersion:1});}}catch(e){console.warn(e)}
 }
 async function save(){
- db.updatedAt=now();localStorage.setItem(KEY,JSON.stringify(db));
+ db.updatedAt=now();
  if(window.HoldingLocalDataVault)await window.HoldingLocalDataVault.put(SCOPE,{id:STATE_ID,kind:'application-state',title:'داده عملیاتی مرکز حقوقی',content:JSON.stringify(db),schemaVersion:1});
+ try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){console.warn('LocalStorage mirror skipped; IndexedDB remains primary',e)}
  await syncCalendar();
  if(window.HoldingLocalDataVault)await maybeLocalSnapshot();
 }
