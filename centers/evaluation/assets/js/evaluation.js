@@ -194,7 +194,7 @@ $('#backTop')?.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smo
 const backTop=$('#backTop');if(backTop){const syncBackTop=()=>backTop.classList.toggle('visible',window.scrollY>320);window.addEventListener('scroll',syncBackTop,{passive:true});syncBackTop();}
 $$('#filter-period,#filter-domain,#filter-unit').forEach(el=>el.addEventListener('change',render));
 if(page==='assessment')renderCompetencyProfile();
-if(page==='performance')renderPersonProfiles();
+if(page==='profiles'||page==='performance')renderPersonProfiles();
 if(page==='assessors')renderAssessorProfiles();
 load();
 })();
