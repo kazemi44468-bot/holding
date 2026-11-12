@@ -174,6 +174,54 @@ async function seedDemoCases(){
  for(const r of demo)db.events.unshift({id:makeId('EVT'),at:now(),key:'cases',recordId:r.id,action:'ثبت نمونه نمایشی',title:r.title,note:'داده نمایشی و قابل ویرایش'});
  await save();
 }
+
+async function seedExtendedDemoData(){
+ const expertSamples=[
+ ['EXP-DEMO-001','وکیل نمونه ۱','دعاوی و دادرسی','ایران','دادگاه‌های عمومی و تجدیدنظر','۱۸','۴','45000000'],
+ ['EXP-DEMO-002','مشاور نمونه ۲','قراردادها و بازرگانی','ایران','قراردادهای پیمان و سرمایه‌گذاری','۱۵','۳','38000000'],
+ ['EXP-DEMO-003','متخصص نمونه ۳','املاک و اراضی','ایران','املاک، ثبت و اراضی','۲۰','۲','42000000'],
+ ['EXP-DEMO-004','وکیل نمونه ۴','حقوق عمومی و اداری','ایران','دیوان عدالت اداری و مراجع عمومی','۱۲','۳','35000000'],
+ ['EXP-DEMO-005','داور نمونه ۵','داوری و میانجیگری','ایران','داوری تجاری و حل‌وفصل اختلاف','۱۶','۳','50000000'],
+ ['EXP-DEMO-006','مشاور نمونه ۶','مالی و مالیاتی','ایران','مالیات، مطالبات و امور مالی','۱۴','۲','40000000'],
+ ['EXP-DEMO-007','کارشناس نمونه ۷','کار و تأمین اجتماعی','ایران','روابط کار و تأمین اجتماعی','۱۱','۴','30000000'],
+ ['EXP-DEMO-008','مشاور بین‌المللی نمونه ۸','قراردادها و بازرگانی','آلمان / اتحادیه اروپا','قراردادهای فرامرزی و تطبیق حقوقی؛ نیازمند احراز صلاحیت در هر حوزه','۱۹','۲','1800']
+ ];
+ if(!rows('experts').some(x=>x.demo)){
+  db.experts.push(...expertSamples.map((x,i)=>({id:x[0],demo:true,name:x[1],specialty:x[2],country:x[3],jurisdiction:x[4],yearsExperience:x[5],capacity:x[6],rate:x[7],currency:i===7?'یورو':'تومان',licenseNo:'شناسه نمونه ـ نیازمند راستی‌آزمایی',status:'فعال',conflictStatus:'بررسی نشده',expertise:'پروفایل نمایشی برای نمایش ظرفیت، ارجاع و ارزیابی؛ هویت و صلاحیت واقعی نیست.'})));
+ }
+ const demoIds=rows('cases').filter(x=>x.demo).map(x=>x.id);
+ const expertIds=expertSamples.map(x=>x[0]);
+ const extra=[
+ ['اختلاف در تفسیر و اجرای قرارداد خدمات','قراردادها و تعهدات','در جریان رسیدگی','مهم','2026-01-14','2026-12-02','6200000000','موفقیت نسبی'],
+ ['مطالبه وجه و خسارت ناشی از تأخیر','مطالبه وجه','اجرای حکم','فوری','2025-11-05','2026-11-26','3100000000','وصول مطالبات'],
+ ['اعتراض به تشخیص و مطالبه مالیاتی','سایر','در حال مذاکره / سازش','مهم','2026-04-11','2026-11-30','2700000000','در حال رسیدگی'],
+ ['اختلاف در مالکیت و حدود اراضی','ملکی','در جریان رسیدگی','فوری','2026-02-19','2026-12-05','9800000000','در حال رسیدگی'],
+ ['اختلاف پیمانکار در تعدیل و صورت‌وضعیت','حقوقی','صدور رأی / حکم','مهم','2025-08-20','2026-12-08','5400000000','در حال رسیدگی'],
+ ['درخواست ابطال تصمیم اداری','اداری و دیوان عدالت','ثبت و آماده‌سازی','عادی','2026-10-20','2026-12-10','0','در حال رسیدگی'],
+ ['اختلاف در فسخ و خاتمه قرارداد','حقوقی','در حال مذاکره / سازش','مهم','2026-06-09','2026-11-28','4600000000','در حال رسیدگی'],
+ ['دفاع در دعوای مطالبه خسارت','حقوقی','مختومه','عادی','2025-02-12','','1900000000','موفقیت کامل'],
+ ['اختلاف کار و مطالبات بیمه‌ای','کار و تأمین اجتماعی','در جریان رسیدگی','عادی','2026-05-17','2026-12-14','850000000','در حال رسیدگی'],
+ ['رسیدگی به اختلاف بین‌المللی تأمین کالا','داوری و میانجیگری','در حال مذاکره / سازش','فوری','2026-03-03','2026-12-18','12500000000','در حال رسیدگی']
+ ];
+ const add=[];
+ for(let i=0;i<extra.length;i++){
+  const n=i+5,id='CASE-DEMO-'+String(n).padStart(3,'0');if(demoIds.includes(id))continue;
+  const x=extra[i],expertId=expertIds[i%expertIds.length];
+  add.push({id,demo:true,title:x[0],caseNumber:'نمونه-۱۴۰۵-'+String(n).padStart(3,'0'),org:i%2?'HOLDING':'CMP-01-001',caseType:x[1],forum:'مرجع رسیدگی ـ نمونه نمایشی',opposingParty:'طرف مقابل ـ نمونه',lawyer:expertSamples[i%expertSamples.length][1],expertId,owner:'مسئول پیگیری نمونه',status:x[2],filedDate:x[4],judgmentDate:x[2]==='اجرای حکم'||x[2]==='مختومه'||x[2]==='صدور رأی / حکم'?'2026-09-10':'',executionStartDate:x[2]==='اجرای حکم'||x[2]==='مختومه'?'2026-09-25':'',executionEndDate:x[2]==='مختومه'?'2026-10-20':'',closedDate:x[2]==='مختومه'?'2026-10-22':'',priority:x[3],nextDate:x[2]==='مختومه'?'':x[5],claimValue:x[6],confidentiality:i%3===0?'محرمانه':'عادی',outcome:x[7],recoveredValue:x[7]==='وصول مطالبات'?'2100000000':'0',actualCost:String(9000000+(i*1700000)),summary:'نمونه نمایشی برای آزمون دسته‌بندی، گردش کار، ارجاع تخصصی و گزارش‌گیری؛ هیچ‌یک از اشخاص، شماره‌ها یا مبالغ، داده واقعی نیست.'});
+ }
+ if(add.length)db.cases.push(...add);
+ rows('cases').filter(x=>x.demo).forEach((x,i)=>{if(!x.expertId)x.expertId=expertIds[i%expertIds.length];if(!x.outcome)x.outcome=x.status==='مختومه'?'موفقیت نسبی':'در حال رسیدگی';});
+ if(!rows('engagements').some(x=>x.demo)){
+  const jobs=Array.from({length:14},(_,i)=>({id:'ENG-DEMO-'+String(i+1).padStart(3,'0'),demo:true,title:['بررسی و تنظیم لایحه دفاعیه','تحلیل قرارداد و ارائه نظر تخصصی','ارزیابی اسناد و سوابق ثبتی','تهیه دادخواست و پیگیری رسیدگی','ارزیابی امکان سازش و میانجیگری','بررسی مالی و محاسبه مطالبات','مشاوره روابط کار و بیمه'][i%7],expertId:expertIds[i%8],caseId:'CASE-DEMO-'+String(i+1).padStart(3,'0'),mode:['ارجاع اختصاصی','دعوت محدود از متخصصان','فراخوان مسئله‌محور'][i%3],scope:'شرح خدمات و خروجی مورد انتظار در این رکورد صرفاً نمایشی است.',status:['تأییدشده','تحویل‌شده','در حال انجام','در حال بازبینی'][i%4],startDate:'2026-08-'+String(3+i).padStart(2,'0'),dueDate:'2026-12-'+String(5+i).padStart(2,'0'),agreedFee:String(18000000+i*4200000),currency:'تومان',score:String(76+(i*7)%23),evaluation:'امتیاز و ارزیابی نمونه برای نمایش کارنامه متخصص؛ مبنای واقعی رتبه‌بندی نیست.'}));
+  db.engagements.push(...jobs);
+ }
+ if(!rows('payments').some(x=>x.demo)){
+  const pays=Array.from({length:11},(_,i)=>({id:'PAY-DEMO-'+String(i+1).padStart(3,'0'),demo:true,expertId:expertIds[i%8],engagementId:'ENG-DEMO-'+String(i+1).padStart(3,'0'),caseId:'CASE-DEMO-'+String(i+1).padStart(3,'0'),description:'حق‌الزحمه و هزینه خدمت تخصصی ـ نمونه',amount:String(9000000+i*3500000),currency:'تومان',paymentType:i%3===0?'پیش‌پرداخت':i%3===1?'مرحله‌ای':'تسویه نهایی',paymentDate:'2026-10-'+String(5+i).padStart(2,'0'),status:i<8?'پرداخت‌شده':i===8?'در انتظار تأیید':'درخواست پرداخت',invoiceNo:'سند نمونه '+(i+1),notes:'رکورد مالی نمایشی؛ برای آزمون گردش تأیید و گزارش هزینه.'}));
+  db.payments.push(...pays);
+ }
+ if(!db.demoLegalExpandedVersion){db.demoLegalExpandedVersion=1;db.events.unshift({id:makeId('EVT'),at:now(),key:'cases',action:'تکمیل داده‌های نمایشی',title:'۱۴ پرونده نمونه و کارنامه متخصصان',note:'داده‌های نمونه برای نمایش نمودارها و گردش کار؛ قابل حذف یا جایگزینی'});await save();}
+}
+
 function countOpen(key,closed){return rows(key).filter(x=>!closed.includes(x.status)).length}
 function dateOverdue(x){return x&&x<today()}
 function upcoming(){
@@ -360,5 +408,5 @@ app.addEventListener('click',async e=>{
 app.addEventListener('submit',async e=>{if(e.target.id!=='lw-record-form')return;e.preventDefault();if(!e.target.reportValidity())return;const btn=e.target.querySelector('[type=submit]');btn.disabled=true;try{await saveForm(e.target)}catch(err){console.error(err);toast(err.message||'ذخیره اطلاعات انجام نشد.','warn');btn.disabled=false;}});
 app.addEventListener('input',e=>{if(e.target.id==='lw-search'){query=e.target.value;const old=$('#lw-view');if(old)old.innerHTML=tableHtml(tab)}});
 app.addEventListener('change',e=>{if(e.target.id==='legal-org-scope'){orgScope=e.target.value;render();}});
-(async()=>{await load();await seedDemoCases();try{await syncCalendar()}catch(e){console.warn('Calendar sync skipped',e)}render();})();
+(async()=>{await load();await seedDemoCases();await seedExtendedDemoData();try{await syncCalendar()}catch(e){console.warn('Calendar sync skipped',e)}render();})();
 })();
