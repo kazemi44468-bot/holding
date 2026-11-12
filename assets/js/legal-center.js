@@ -114,6 +114,7 @@ const defs={
 };
 const tabs=[['overview','نمای کلی'],['requests','درخواست‌ها'],['cases','پرونده‌ها'],['contracts','قراردادها'],['advice','مشاوره‌ها'],['arbitration','داوری و سازش'],['employee','حمایت کارکنان'],['experts','شبکه متخصصان'],['risks','ریسک‌ها'],['compliance','انطباق'],['knowledge','دانش و اسناد'],['backup','پشتیبان‌گیری']];
 const pageTabs=(app.dataset.tabs||tab).split(',').filter(Boolean);
+let orgScope='all';
 const rows=key=>db[key]||[];
 function toast(msg,type='ok'){const el=$('#lw-status');if(!el)return;el.textContent=msg;el.className='lw-alert'+(type==='warn'?' warn':'');el.hidden=false;clearTimeout(toast.timer);toast.timer=setTimeout(()=>{el.hidden=true},5500)}
 async function load(){
@@ -153,24 +154,52 @@ function upcoming(){
 }
 function metric(label,value,sub){return '<div class="lw-metric"><small>'+esc(label)+'</small><strong>'+fa(value)+'</strong><em>'+esc(sub||'')+'</em></div>'}
 function badge(status){let cls='';if(['بحرانی','فوری','معوق'].some(x=>(status||'').includes(x)))cls='red';else if(['در انتظار','نیازمند','مهم','شناسایی‌شده'].some(x=>(status||'').includes(x)))cls='gold';else if(['فعال','در جریان','در حال'].some(x=>(status||'').includes(x)))cls='blue';else if(['مختومه','رفع‌شده','پاسخ داده‌شده','خاتمه‌یافته','تأیید و ابلاغ'].some(x=>(status||'').includes(x)))cls='green';return '<span class="lw-badge '+cls+'">'+esc(status||'—')+'</span>'}
+function scopeRows(key){
+ const items=rows(key);
+ if(orgScope==='all')return items;
+ const companies=orgRegistry.companies||[];
+ return items.filter(r=>{
+  const id=r.org||r.organization_id||r.unit||'';
+  if(orgScope==='unassigned')return !id;
+  if(id===orgScope)return true;
+  if((orgRegistry.deputies||[]).some(d=>d.organization_id===orgScope)){
+   const company=companies.find(c=>c.organization_id===id);
+   return company?.parent_organization_id===orgScope;
+  }
+  return false;
+ });
+}
 function overview(){
- const events=upcoming();
- const groups=[['درخواست‌ها',rows('requests').length],['پرونده‌ها',rows('cases').length],['قراردادها',rows('contracts').length],['مشاوره‌ها',rows('advice').length],['داوری',rows('arbitration').length],['حمایت کارکنان',rows('employee').length],['متخصصان',rows('experts').length],['ریسک‌ها',rows('risks').length],['انطباق',rows('compliance').length],['اسناد دانش',rows('knowledge').length]];
- const total=groups.reduce((a,x)=>a+x[1],0);
- const openCases=countOpen('cases',['مختومه']),closedCases=rows('cases').length-openCases;
- const openRequests=countOpen('requests',['پاسخ داده‌شده','مختومه']),closedRequests=rows('requests').length-openRequests;
- const chart=(items)=>items.map(x=>'<div class="lw-chart-row"><span>'+esc(x[0])+'</span><div class="lw-chart-track"><span style="width:'+((total?Math.max(2,x[1]/Math.max(...items.map(y=>y[1]),1)*100):0))+'%"></span></div><b>'+fa(x[1])+'</b></div>').join('');
+ const keys=['requests','cases','contracts','advice','arbitration','employee','experts','risks','compliance','knowledge'];
+ const labels={requests:'درخواست حقوقی',cases:'پرونده و دعوا',contracts:'قرارداد و تعهد',advice:'مشاوره حقوقی',arbitration:'داوری و سازش',employee:'حمایت کارکنان',experts:'متخصصان',risks:'ریسک حقوقی',compliance:'انطباق و مقررات',knowledge:'اسناد و دانش حقوقی'};
+ const counts=keys.map(k=>[labels[k],scopeRows(k).length,k]);
+ const total=counts.reduce((a,x)=>a+x[1],0);
+ const openCases=scopeRows('cases').filter(x=>x.status!=='مختومه').length,closedCases=scopeRows('cases').length-openCases;
+ const openRequests=scopeRows('requests').filter(x=>!['پاسخ داده‌شده','مختومه'].includes(x.status)).length,closedRequests=scopeRows('requests').length-openRequests;
+ const allScoped=keys.flatMap(k=>scopeRows(k).map(r=>({key:k,record:r})));
+ const chart=(items,max)=>items.map(x=>'<div class="lw-chart-row"><span>'+esc(x[0])+'</span><div class="lw-chart-track"><span style="width:'+((max?x[1]/max*100:0))+'%"></span></div><b>'+fa(x[1])+'</b></div>').join('');
+ const maxCategory=Math.max(1,...counts.map(x=>x[1]));
  const statusItems=[['پرونده‌های در جریان',openCases],['پرونده‌های مختومه',closedCases],['درخواست‌های باز',openRequests],['درخواست‌های پاسخ‌داده‌شده یا مختومه',closedRequests]];
- return '<div class="lw-toolbar"><button class="lw-btn" data-action="new" data-key="requests">＋ ثبت درخواست حقوقی</button><button class="lw-btn light" data-action="new" data-key="cases">＋ ثبت پرونده</button><button class="lw-btn light" data-action="new" data-key="contracts">＋ ثبت قرارداد</button><button class="lw-btn light" data-action="new" data-key="arbitration">＋ ثبت داوری</button><button class="lw-btn light" data-action="new" data-key="employee">＋ حمایت کارکنان</button></div>'+
- '<div class="lw-metrics">'+metric('درخواست‌های باز',openRequests,'در صف رسیدگی')+metric('پرونده‌های فعال',openCases,'دعاوی و اختلافات')+metric('قراردادهای جاری',countOpen('contracts',['خاتمه‌یافته','فسخ‌شده']),'دارای تعهد فعال')+metric('مشاوره‌های باز',countOpen('advice',['تأیید و ابلاغ','مختومه']),'در انتظار پاسخ')+metric('ریسک‌های باز',countOpen('risks',['رفع‌شده','پذیرفته‌شده با مجوز']),'نیازمند کنترل')+metric('داوری و سازش',countOpen('arbitration',['سازش‌شده','مختومه']),'حل اختلاف جایگزین')+metric('حمایت کارکنان',countOpen('employee',['پاسخ داده‌شده','مختومه']),'در حال رسیدگی')+metric('موضوعات انطباق',countOpen('compliance',['منطبق','مختومه']),'الزامات و مقررات')+'</div>'+
- '<div class="lw-grid"><section class="lw-panel"><h3>مهلت‌ها و رویدادهای نزدیک</h3>'+(events.length?'<div class="lw-list">'+events.map(x=>'<div class="lw-row"><div><strong>'+esc(x.title)+'</strong><small>'+esc(x.label)+' · '+fmtDate(x.date)+'</small></div>'+badge(x.late?'معوق':'سررسید')+'</div>').join('')+'</div>':'<div class="lw-empty"><strong>مهلت ثبت‌شده‌ای وجود ندارد</strong></div>')+'</section><section class="lw-panel"><h3>وضعیت اطلاعات ثبت‌شده</h3><div class="lw-list">'+groups.map(x=>'<div class="lw-row"><strong>'+x[0]+'</strong><span class="lw-badge">'+fa(x[1])+'</span></div>').join('')+'</div></section></div>'+
- '<div class="lw-grid" style="margin-top:11px"><section class="lw-panel"><h3>حجم اطلاعات به تفکیک حوزه</h3>'+(total?'<div class="lw-chart-bars">'+chart(groups)+'</div>':'<div class="lw-empty"><strong>هنوز داده‌ای ثبت نشده است</strong>پس از ثبت اطلاعات، نمودار این بخش به‌روزرسانی می‌شود.</div>')+'</section><section class="lw-panel"><h3>وضعیت پرونده‌ها و درخواست‌ها</h3>'+(rows('cases').length+rows('requests').length?'<div class="lw-chart-bars">'+statusItems.map(x=>'<div class="lw-chart-row"><span>'+x[0]+'</span><div class="lw-chart-track"><span style="width:'+((x[1]/Math.max(rows('cases').length+rows('requests').length,1))*100)+'%"></span></div><b>'+fa(x[1])+'</b></div>').join('')+'</div>':'<div class="lw-empty"><strong>داده‌ای برای تحلیل وضعیت وجود ندارد</strong></div>')+'</section></div>';
+ const statusMax=Math.max(1,...statusItems.map(x=>x[1]));
+ const orgItems=orgs().filter(o=>o.id!=='HOLDING').map(o=>[o.label,allScoped.filter(x=>(x.record.org||x.record.organization_id||'')===o.id).length]).filter(x=>x[1]>0||orgScope==='all');
+ const orgMax=Math.max(1,...orgItems.map(x=>x[1]));
+ const eventItems=upcoming().filter(x=>orgScope==='all'||(rows(x.key).find(r=>r.id===x.id)?.org||'')===orgScope).slice(0,8);
+ const orgOptions='<option value="all">کل هلدینگ</option><option value="HOLDING">ستاد هلدینگ</option>'+((orgRegistry.deputies||[]).map(x=>'<option value="'+esc(x.organization_id)+'" '+(orgScope===x.organization_id?'selected':'')+'>'+esc(x.name||x.label||'معاونت')+'</option>').join(''))+
+ ((orgRegistry.companies||[]).length?'<optgroup label="شرکت‌های تابعه">'+orgRegistry.companies.map(x=>'<option value="'+esc(x.organization_id)+'" '+(orgScope===x.organization_id?'selected':'')+'>'+esc(x.name)+'</option>').join('')+'</optgroup>':'')+
+ ((orgRegistry.provincial_branch_managements||[]).length?'<optgroup label="مدیریت‌های استانی">'+orgRegistry.provincial_branch_managements.map(x=>'<option value="'+esc(x.organization_id)+'" '+(orgScope===x.organization_id?'selected':'')+'>مدیریت شعب استانی '+fa(x.sequence)+'</option>').join('')+'</optgroup>':'')+'<option value="unassigned" '+(orgScope==='unassigned'?'selected':'')+'>فاقد انتساب سازمانی</option>';
+ return '<div class="lw-toolbar"><label class="lw-filter-label" for="legal-org-scope">دامنه گزارش</label><select id="legal-org-scope">'+orgOptions+'</select><span class="lw-spacer"></span><button class="lw-btn" data-action="new" data-key="requests">＋ ثبت درخواست</button><button class="lw-btn light" data-action="new" data-key="cases">＋ ثبت پرونده</button><button class="lw-btn light" data-action="new" data-key="contracts">＋ ثبت قرارداد</button></div>'+
+ '<div class="lw-metrics">'+metric('درخواست‌های باز',openRequests,'در صف رسیدگی')+metric('پرونده‌های فعال',openCases,'دعاوی و اختلافات')+metric('قراردادهای جاری',scopeRows('contracts').filter(x=>!['خاتمه‌یافته','فسخ‌شده'].includes(x.status)).length,'دارای تعهد فعال')+metric('مشاوره‌های باز',scopeRows('advice').filter(x=>!['تأیید و ابلاغ','مختومه'].includes(x.status)).length,'در انتظار پاسخ')+metric('ریسک‌های باز',scopeRows('risks').filter(x=>!['رفع‌شده','پذیرفته‌شده با مجوز'].includes(x.status)).length,'نیازمند کنترل')+metric('داوری و سازش',scopeRows('arbitration').filter(x=>!['سازش‌شده','مختومه'].includes(x.status)).length,'حل اختلاف جایگزین')+metric('حمایت کارکنان',scopeRows('employee').filter(x=>!['پاسخ داده‌شده','مختومه'].includes(x.status)).length,'در حال رسیدگی')+metric('متخصصان ثبت‌شده',scopeRows('experts').length,'شبکه تخصصی')+'</div>'+
+ '<div class="lw-grid"><section class="lw-panel"><h3>ترکیب فعالیت‌های حقوقی</h3><p class="lw-muted">تعداد اطلاعات ثبت‌شده در هر حوزه تخصصی</p>'+(total?'<div class="lw-chart-bars">'+chart(counts,maxCategory)+'</div>':'<div class="lw-empty"><strong>هنوز اطلاعاتی ثبت نشده است</strong>با ثبت درخواست، پرونده و سایر اطلاعات، این نمودار به‌صورت خودکار تکمیل می‌شود.</div>')+'</section>'+
+ '<section class="lw-panel"><h3>وضعیت رسیدگی</h3><p class="lw-muted">تفکیک پرونده‌ها و درخواست‌ها بر اساس وضعیت جاری</p>'+(statusItems.some(x=>x[1])?'<div class="lw-chart-bars">'+chart(statusItems,statusMax)+'</div>':'<div class="lw-empty"><strong>داده‌ای برای تحلیل وضعیت وجود ندارد</strong></div>')+'</section></div>'+
+ '<div class="lw-grid" style="margin-top:11px"><section class="lw-panel lw-wide"><h3>پراکندگی فعالیت در معاونت‌ها و شرکت‌ها</h3><p class="lw-muted">گزارش بر اساس انتساب سازمانی هر رکورد؛ با انتخاب دامنه از بالای صفحه قابل محدودسازی است.</p>'+(orgItems.some(x=>x[1])?'<div class="lw-chart-bars">'+chart(orgItems,orgMax)+'</div>':'<div class="lw-empty"><strong>هنوز رکوردی به معاونت یا شرکت منتسب نشده است</strong></div>')+'</section></div>'+
+ '<div class="lw-grid" style="margin-top:11px"><section class="lw-panel"><h3>مهلت‌ها و رویدادهای نزدیک</h3>'+(eventItems.length?'<div class="lw-list">'+eventItems.map(x=>'<div class="lw-row"><div><strong>'+esc(x.title)+'</strong><small>'+esc(x.label)+' · '+fmtDate(x.date)+'</small></div>'+badge(x.late?'معوق':'سررسید')+'</div>').join('')+'</div>':'<div class="lw-empty"><strong>مهلت ثبت‌شده‌ای وجود ندارد</strong></div>')+'</section><section class="lw-panel"><h3>تفکیک اطلاعات بر پایه ساختار سازمانی</h3><div class="lw-list">'+counts.map(x=>'<div class="lw-row"><strong>'+x[0]+'</strong><span class="lw-badge">'+fa(x[1])+'</span></div>').join('')+'</div></section></div>';
 }
 function fieldHtml(f,value){
  const val=value??'',req=f.required?'required':'',full=f.full?' full':'';
  if(f.type==='textarea')return '<div class="lw-field'+full+'"><label>'+esc(f.label)+(f.required?' *':'')+'</label><textarea name="'+f.name+'" '+req+'>'+esc(val)+'</textarea></div>';
  if(f.type==='select')return '<div class="lw-field'+full+'"><label>'+esc(f.label)+'</label><select name="'+f.name+'">'+(f.options||[]).map(x=>'<option '+(x===val?'selected':'')+'>'+esc(x)+'</option>').join('')+'</select></div>';
  if(f.type==='org')return '<div class="lw-field'+full+'"><label>'+esc(f.label)+'</label><select name="org">'+orgs().map(x=>'<option value="'+esc(x.id)+'" '+(x.id===val?'selected':'')+'>'+esc(x.label)+'</option>').join('')+'</select></div>';
+ if(f.type==='date'){const shown=window.HoldingPersianDate?.fromISO(val)||val||'';return '<div class="lw-field'+full+'"><label>'+esc(f.label)+(f.required?' *':'')+'</label><input name="'+f.name+'" type="text" data-jalali-date value="'+esc(shown)+'" placeholder="۱۴۰۵/۰۸/۲۱" '+req+'></div>';}
  return '<div class="lw-field'+full+'"><label>'+esc(f.label)+(f.required?' *':'')+'</label><input name="'+f.name+'" type="'+(f.type||'text')+'" value="'+esc(val)+'" '+req+' '+(f.type==='number'?'min="0" step="any"':'')+'></div>';
 }
 function attachmentList(rec){
@@ -214,7 +243,7 @@ async function addFiles(record,files){
 async function saveForm(form){
  const key=form.dataset.key,id=form.dataset.id,def=defs[key],fd=new FormData(form),old=id?rows(key).find(x=>x.id===id):null;
  const record={...(old||{}),id:id||makeId(def.prefix),createdAt:old?.createdAt||now(),updatedAt:now()};
- for(const f of def.fields)record[f.name]=String(fd.get(f.name)||'').trim();
+ for(const f of def.fields){const raw=String(fd.get(f.name)||'').trim();if(f.type==='date'){const iso=window.HoldingPersianDate?.toISO(raw)||'';if(raw&&!iso)throw new Error('تاریخ واردشده معتبر نیست؛ تاریخ شمسی را به شکل سال/ماه/روز وارد کنید.');record[f.name]=iso;}else record[f.name]=raw;}
  record.note=String(fd.get('note')||'').trim();
  const files=[...(form.querySelector('input[name="attachments"]')?.files||[])];
  await addFiles(record,files);
@@ -258,5 +287,6 @@ app.addEventListener('click',async e=>{
 });
 app.addEventListener('submit',async e=>{if(e.target.id!=='lw-record-form')return;e.preventDefault();if(!e.target.reportValidity())return;const btn=e.target.querySelector('[type=submit]');btn.disabled=true;try{await saveForm(e.target)}catch(err){console.error(err);toast(err.message||'ذخیره اطلاعات انجام نشد.','warn');btn.disabled=false;}});
 app.addEventListener('input',e=>{if(e.target.id==='lw-search'){query=e.target.value;const old=$('#lw-view');if(old)old.innerHTML=tableHtml(tab)}});
+app.addEventListener('change',e=>{if(e.target.id==='legal-org-scope'){orgScope=e.target.value;render();}});
 (async()=>{await load();try{await syncCalendar()}catch(e){console.warn('Calendar sync skipped',e)}render();})();
 })();
