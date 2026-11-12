@@ -145,7 +145,7 @@ async function save(){
 async function syncCalendar(){
  if(!window.HoldingLocalDataVault)return;
  const scope='holding-calendar-events',existing=await window.HoldingLocalDataVault.all(scope),owned=existing.filter(x=>x.sourceCenter==='legal'),desired=[];
- const add=(record,date,title,type,description,status)=>{if(!date)return;desired.push({id:'CAL-LEGAL-'+record.id+'-'+type,title,type:'deadline',scope:record.org||'HOLDING',date,time:'09:00',priority:record.urgency==='بحرانی'||record.priority==='بحرانی'?'high':'normal',status,owner:record.owner||record.requester||record.lawyer||'',reminder:'1440',sourceCenter:'legal',linkedLegalRecordId:record.id,description});};
+ const add=(record,date,title,type,description,status)=>{if(!date)return;desired.push({id:'CAL-LEGAL-'+record.id+'-'+type,title,type:'deadline',scope:record.org||'HOLDING',date,time:record.sessionTime||'09:00',priority:record.urgency==='بحرانی'||record.priority==='بحرانی'?'high':'normal',status,owner:record.owner||record.requester||record.lawyer||'',reminder:'1440',sourceCenter:'legal',linkedLegalRecordId:record.id,description});};
  db.cases.filter(x=>x.status!=='مختومه').forEach(x=>add(x,x.nextDate,'مهلت / جلسه پرونده حقوقی: '+x.title,'case','قلمرو: '+orgLabel(x.org)+' · پرونده '+x.id+' · '+(x.caseNumber||'بدون شماره')+' · '+(x.summary||''),'planned'));
  db.contracts.filter(x=>!['خاتمه‌یافته','فسخ‌شده'].includes(x.status)).forEach(x=>add(x,x.endDate,'سررسید قرارداد: '+x.title,'contract','قلمرو: '+orgLabel(x.org)+' · قرارداد '+(x.contractNo||x.id)+' · '+(x.obligations||''),'planned'));
  db.requests.filter(x=>!['پاسخ داده‌شده','مختومه'].includes(x.status)).forEach(x=>add(x,x.dueDate,'مهلت پاسخ درخواست حقوقی: '+x.title,'request','قلمرو: '+orgLabel(x.org)+' · درخواست '+x.id+' · '+(x.description||''),'planned'));
@@ -296,7 +296,18 @@ async function saveForm(form){
  const key=form.dataset.key,id=form.dataset.id,def=defs[key],fd=new FormData(form),old=id?rows(key).find(x=>x.id===id):null;
  const record={...(old||{}),id:id||makeId(def.prefix),createdAt:old?.createdAt||now(),updatedAt:now()};
  for(const f of def.fields){const raw=String(fd.get(f.name)||'').trim();if(f.type==='date'){const iso=window.HoldingPersianDate?.toISO(raw)||'';if(raw&&!iso)throw new Error('تاریخ واردشده معتبر نیست؛ تاریخ شمسی را به شکل سال/ماه/روز وارد کنید.');record[f.name]=iso;}else record[f.name]=raw;}
- record.note=String(fd.get('note')||'').trim();
+ if(key==='cases'){
+ if(!record.filedDate)throw new Error('تاریخ ثبت / آغاز پرونده الزامی است.');
+ if(record.judgmentDate&&record.judgmentDate<record.filedDate)throw new Error('تاریخ صدور حکم نمی‌تواند پیش از تاریخ ثبت پرونده باشد.');
+ if(record.executionStartDate&&!record.judgmentDate)throw new Error('برای ثبت آغاز اجرای حکم، ابتدا تاریخ صدور رأی / حکم را وارد کنید.');
+ if(record.executionEndDate&&!record.executionStartDate)throw new Error('برای ثبت پایان اجرای حکم، تاریخ آغاز اجرا الزامی است.');
+ if(record.executionEndDate&&record.executionEndDate<record.executionStartDate)throw new Error('پایان اجرای حکم نمی‌تواند پیش از آغاز آن باشد.');
+ if(record.closedDate&&record.executionEndDate&&record.closedDate<record.executionEndDate)throw new Error('تاریخ مختومه‌شدن نمی‌تواند پیش از پایان اجرای حکم باشد.');
+ if(record.status==='صدور رأی / حکم'&&!record.judgmentDate)throw new Error('برای این مرحله، تاریخ صدور رأی / حکم را وارد کنید.');
+ if(record.status==='اجرای حکم'&&(!record.judgmentDate||!record.executionStartDate))throw new Error('مرحله اجرای حکم به تاریخ صدور حکم و تاریخ آغاز اجرا نیاز دارد.');
+ if(record.status==='مختومه'&&!record.closedDate)throw new Error('برای مختومه‌کردن پرونده، تاریخ مختومه‌شدن را ثبت کنید.');
+}
+record.note=String(fd.get('note')||'').trim();
  const files=[...(form.querySelector('input[name="attachments"]')?.files||[])];
  await addFiles(record,files);
  const list=rows(key),ix=list.findIndex(x=>x.id===record.id);if(ix>=0)list[ix]=record;else list.unshift(record);
