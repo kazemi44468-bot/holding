@@ -51,5 +51,5 @@ async function syncOperationalState(state){
  for(const old of existing){if(['capture','lessons','publishing'].includes(old.sourceModule)&&old.sourceRecordId&&!activeIds.has(old.id)&&old.sourceStatus!=='حذف‌شده در سامانه مبدأ'){const now=stamp();await HoldingLocalDataVault.put(STORE,{...old,status:'بایگانی‌شده',sourceStatus:'حذف‌شده در سامانه مبدأ',archivedAt:now,updatedAt:now,history:[...(old.history||[]),{at:now,action:'بایگانی پس از حذف در سامانه مبدأ',unit:old.unit,actor:'سامانه مرکز مدیریت دانش'}]});synced++;}}
  return {synced};
 }
-window.KnowledgeWorkspace={renderLibrary,renderOffline,syncOperationalState,saveCaptureAttachments,bind:page=>page==='library'?bindLibrary():page==='offline'?bindOffline():null};
+window.KnowledgeWorkspace={renderLibrary,renderOffline,syncOperationalState,saveCaptureAttachments,bind:async page=>{if(page==='library'){await bindLibrary();const ref=new URLSearchParams(location.search).get('record');if(ref){const all=await records(),match=all.find(r=>r.id===ref||r.sourceRecordId===ref);if(match){const button=Array.from($('#kwList').querySelectorAll('[data-read]')).find(x=>x.dataset.read===match.id);button?.click();}else msg('مستند با شناسه '+ref+' در کتابخانه محلی پیدا نشد.','error');}}else if(page==='offline')await bindOffline();}};
 })();
