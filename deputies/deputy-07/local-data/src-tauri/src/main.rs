@@ -38,7 +38,7 @@ fn load_vault_snapshot(app: AppHandle) -> Result<Option<String>, String> {
     let fallback = dir.join("vault-state.previous.h7vault");
     if target.exists() {
         if let Ok(content) = fs::read_to_string(&target) {
-            if content.contains("\\\"format\\\":\\\"H7LOCAL\\\"") { return Ok(Some(content)); }
+            if content.contains("\"format\":\"H7LOCAL\"") { return Ok(Some(content)); }
         }
     }
     if fallback.exists() { return fs::read_to_string(fallback).map(Some).map_err(|e| e.to_string()); }
