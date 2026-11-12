@@ -62,4 +62,4 @@ document.querySelectorAll('[data-close]').forEach(function(b){b.addEventListener
 window.addEventListener('hashchange',function(){active=location.hash.slice(1)||'overview';render()});var back=$('#backTop');window.addEventListener('scroll',function(){back.classList.toggle('visible',scrollY>300)});back.addEventListener('click',function(){scrollTo({top:0,behavior:'smooth'})});
 (async function(){await load();var src=new URLSearchParams(location.search).get('sourceEvent');if(src){openForm(null,src)}render()})();
 })();
-</script></body></html>
+</script><script src="../../assets/js/persian-date.js?v=20261112-02"></script></body></html>
