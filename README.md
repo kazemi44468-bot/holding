@@ -24,6 +24,8 @@
 ## مسیرهای مهم
 
 - [درگاه اجرایی هلدینگ](https://kazemi44468-bot.github.io/holding/)
+- [نمای اصلی معاونت ۷](https://kazemi44468-bot.github.io/holding/deputies/deputy-07/dashboard.html)
+- [مرکز داده و پشتیبان‌گیری معاونت ۷](https://kazemi44468-bot.github.io/holding/deputies/deputy-07/local-data/)
 - [مرکز مدیریت دانش](https://kazemi44468-bot.github.io/holding/centers/knowledge/)
 
 - [مرکز پروژه‌ها](https://kazemi44468-bot.github.io/holding/centers/projects/)
