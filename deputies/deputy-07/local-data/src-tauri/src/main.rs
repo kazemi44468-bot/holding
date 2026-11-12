@@ -36,8 +36,14 @@ fn load_vault_snapshot(app: AppHandle) -> Result<Option<String>, String> {
     let dir = data_dir(&app)?;
     let target = dir.join("vault-state.h7vault");
     let fallback = dir.join("vault-state.previous.h7vault");
-    let source = if target.exists() { target } else if fallback.exists() { fallback } else { return Ok(None); };
-    fs::read_to_string(source).map(Some).map_err(|e| e.to_string())
+    if target.exists() {
+        if let Ok(content) = fs::read_to_string(&target) {
+            if content.contains("\\\"format\\\":\\\"H7LOCAL\\\"") { return Ok(Some(content)); }
+        }
+    }
+    if fallback.exists() { return fs::read_to_string(fallback).map(Some).map_err(|e| e.to_string()); }
+    if target.exists() { return fs::read_to_string(target).map(Some).map_err(|e| e.to_string()); }
+    Ok(None)
 }
 
 #[tauri::command]
