@@ -38,8 +38,9 @@ document.querySelectorAll('.back-to-top').forEach(node=>node.remove());
  if(!body.classList.contains('ops-page'))return;
  const inPages=location.pathname.includes('/pages/');
  const prefix=inPages?'':'pages/';
- const home=inPages?'../dashboard.html':'#overview';
-  const localData=inPages?'../local-data/index.html':'local-data/index.html';
+ const inLocalData=location.pathname.includes('/local-data/');
+ const home=(inPages||inLocalData)?'../dashboard.html':'#overview';
+ const localData=inPages?'../local-data/index.html':(inLocalData?'index.html':'local-data/index.html');
   const brand=document.querySelector('.ops-brand');
   if(brand)brand.href=home;
  const urls={
