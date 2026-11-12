@@ -18,7 +18,7 @@ function orgs(){
 }
 const orgLabel=id=>orgs().find(x=>x.id===id||x.label===id)?.label||id||'—';
 const orgIdOf=r=>{const raw=r?.org||r?.organization_id||r?.unit||'';return orgs().find(x=>x.id===raw||x.label===raw)?.id||raw};
-const blank=()=>({schemaVersion:1,requests:[],cases:[],contracts:[],advice:[],arbitration:[],employee:[],experts:[],sessions:[],risks:[],compliance:[],knowledge:[],events:[],updatedAt:now()});
+const blank=()=>({schemaVersion:2,requests:[],cases:[],contracts:[],advice:[],arbitration:[],employee:[],experts:[],engagements:[],payments:[],sessions:[],risks:[],compliance:[],knowledge:[],events:[],updatedAt:now()});
 let db=blank(),tab=app.dataset.tab||'overview',editing=null,query='',busy=false;
 const defs={
  requests:{label:'درخواست‌های حقوقی',singular:'درخواست حقوقی',prefix:'REQ',fields:[
@@ -33,7 +33,8 @@ const defs={
  {name:'title',label:'عنوان پرونده',required:true},{name:'caseNumber',label:'شماره پرونده / کلاسه'},
  {name:'org',label:'شخصیت حقوقی ذی‌نفع',type:'org',required:true},{name:'caseType',label:'نوع پرونده',type:'select',options:['حقوقی','کیفری','اداری و دیوان عدالت','کار و تأمین اجتماعی','ثبتی','ملکی','داوری و میانجیگری','مطالبه وجه','سایر']},
  {name:'forum',label:'مرجع رسیدگی / شعبه'},{name:'opposingParty',label:'طرف مقابل'},
- {name:'lawyer',label:'وکیل / متخصص مسئول'},{name:'owner',label:'مسئول پیگیری داخلی'},
+ {name:'lawyer',label:'نام وکیل / متخصص مسئول'},{name:'expertId',label:'انتخاب متخصص از بانک',type:'expert'},{name:'owner',label:'مسئول پیگیری داخلی'},
+ {name:'outcome',label:'نتیجه پرونده',type:'select',options:['در حال رسیدگی','موفقیت کامل','موفقیت نسبی','سازش مطلوب','وصول مطالبات','جلوگیری از زیان','نتیجه نامطلوب','مختومه بدون نتیجه مالی']},{name:'recoveredValue',label:'مبلغ وصول‌شده / منفعت محقق‌شده (تومان)',type:'number'},{name:'actualCost',label:'هزینه مستقیم پرونده (تومان)',type:'number'},
  {name:'status',label:'مرحله جاری پرونده',type:'select',options:['ثبت و آماده‌سازی','در جریان رسیدگی','صدور رأی / حکم','اجرای حکم','در حال مذاکره / سازش','متوقف','مختومه']},
  {name:'filedDate',label:'تاریخ ثبت / آغاز پرونده',type:'date',required:true},
  {name:'judgmentDate',label:'تاریخ صدور رأی / حکم',type:'date'},
@@ -64,13 +65,15 @@ const defs={
  {name:'response',label:'خلاصه نظر / نتیجه بررسی',type:'textarea',full:true}
  ]},
  experts:{label:'شبکه متخصصان حقوقی',singular:'متخصص حقوقی',prefix:'EXP',fields:[
- {name:'name',label:'نام و نام خانوادگی',required:true},{name:'specialty',label:'تخصص اصلی',type:'select',options:['دعاوی و دادرسی','قراردادها و بازرگانی','شرکت‌ها و ثبت','کار و تأمین اجتماعی','املاک و اراضی','مالی و مالیاتی','داوری و میانجیگری','حقوق عمومی و اداری','مالکیت فکری و فناوری','سایر']},
+ {name:'name',label:'نام و نام خانوادگی',required:true},{name:'specialty',label:'تخصص اصلی',type:'select',options:['دعاوی و دادرسی','قراردادها و بازرگانی','شرکت‌ها و ثبت','کار و تأمین اجتماعی','املاک و اراضی','مالی و مالیاتی','داوری و میانجیگری','حقوق عمومی و اداری','مالکیت فکری و فناوری','سایر']},{name:'country',label:'کشور / حوزه قضایی'},{name:'jurisdiction',label:'صلاحیت و حوزه فعالیت'},{name:'yearsExperience',label:'سابقه حرفه‌ای (سال)',type:'number'},{name:'capacity',label:'ظرفیت پذیرش کار هم‌زمان',type:'number'},{name:'rate',label:'نرخ پایه خدمات',type:'number'},{name:'currency',label:'واحد پول',type:'select',options:['تومان','ریال','دلار آمریکا','یورو','درهم']},
  {name:'licenseNo',label:'شماره پروانه / شناسه صلاحیت'},{name:'expertise',label:'تجربه و حوزه‌های تکمیلی',type:'textarea',full:true},
  {name:'phone',label:'تلفن'},{name:'email',label:'رایانامه'},
  {name:'status',label:'وضعیت همکاری',type:'select',options:['در انتظار احراز','فعال','غیرفعال','تعلیق همکاری']},
  {name:'conflictStatus',label:'وضعیت بررسی تعارض منافع',type:'select',options:['بررسی نشده','بدون تعارض اعلام‌شده','دارای تعارض / محدودیت','نیازمند بررسی مجدد']},
  {name:'notes',label:'یادداشت ارزیابی و سوابق همکاری',type:'textarea',full:true}
  ]},
+ engagements:{label:'ارجاع کار و برون‌سپاری',singular:'ارجاع کار تخصصی',prefix:'ENG',fields:[{name:'title',label:'عنوان کار / مأموریت',required:true},{name:'expertId',label:'متخصص منتخب',type:'expert',required:true},{name:'caseId',label:'شناسه پرونده مرتبط'},{name:'mode',label:'شیوه همکاری',type:'select',options:['ارجاع اختصاصی','دعوت محدود از متخصصان','فراخوان مسئله‌محور','مشاوره موردی','همکاری مستمر']},{name:'scope',label:'شرح خدمات و خروجی مورد انتظار',type:'textarea',full:true},{name:'status',label:'وضعیت مأموریت',type:'select',options:['پیشنهادی','در انتظار پذیرش','در حال انجام','تحویل‌شده','در حال بازبینی','تأییدشده','ردشده','لغوشده']},{name:'startDate',label:'تاریخ ارجاع',type:'date'},{name:'dueDate',label:'مهلت تحویل',type:'date'},{name:'agreedFee',label:'مبلغ توافق‌شده',type:'number'},{name:'currency',label:'واحد پول',type:'select',options:['تومان','ریال','دلار آمریکا','یورو','درهم']},{name:'score',label:'امتیاز ارزیابی (از ۱۰۰)',type:'number'},{name:'evaluation',label:'ارزیابی کیفیت، دقت و زمان‌بندی',type:'textarea',full:true}]},
+ payments:{label:'هزینه‌ها و پرداخت متخصصان',singular:'ثبت هزینه / پرداخت',prefix:'PAY',fields:[{name:'expertId',label:'متخصص دریافت‌کننده',type:'expert',required:true},{name:'engagementId',label:'شناسه ارجاع کار'},{name:'caseId',label:'شناسه پرونده مرتبط'},{name:'description',label:'شرح هزینه / خدمت',required:true},{name:'amount',label:'مبلغ',type:'number',required:true},{name:'currency',label:'واحد پول',type:'select',options:['تومان','ریال','دلار آمریکا','یورو','درهم']},{name:'paymentType',label:'نوع پرداخت',type:'select',options:['پیش‌پرداخت','مرحله‌ای','تسویه نهایی','هزینه دادرسی','هزینه کارشناسی','هزینه سفر و مأموریت','سایر']},{name:'paymentDate',label:'تاریخ پرداخت / ثبت',type:'date'},{name:'status',label:'وضعیت مالی',type:'select',options:['درخواست پرداخت','در انتظار تأیید','تأییدشده','پرداخت‌شده','ردشده']},{name:'invoiceNo',label:'شماره صورتحساب / سند'},{name:'notes',label:'توضیحات',type:'textarea',full:true}]},
  sessions:{label:'جلسات تخصصی و مشاوره بیرونی',singular:'جلسه تخصصی',prefix:'SES',fields:[
  {name:'title',label:'موضوع جلسه',required:true},{name:'specialist',label:'وکیل / خبره مدعو',required:true},
  {name:'specialty',label:'حوزه تخصصی',type:'select',options:['دعاوی و دادرسی','قراردادها و بازرگانی','شرکت‌ها و ثبت','کار و تأمین اجتماعی','املاک و اراضی','مالی و مالیاتی','داوری و میانجیگری','حقوق عمومی و اداری','فناوری و مالکیت فکری','سایر']},
@@ -128,7 +131,7 @@ const defs={
  {name:'summary',label:'خلاصه، کلیدواژه‌ها و نحوه کاربرد',type:'textarea',full:true}
  ]},
 };
-const tabs=[['overview','نمای کلی'],['requests','درخواست‌ها'],['cases','پرونده‌ها'],['contracts','قراردادها'],['advice','مشاوره‌ها'],['arbitration','داوری و سازش'],['employee','حمایت کارکنان'],['experts','شبکه متخصصان'],['risks','ریسک‌ها'],['compliance','انطباق'],['knowledge','دانش و اسناد'],['backup','پشتیبان‌گیری']];
+const tabs=[['overview','نمای کلی'],['requests','درخواست‌ها'],['cases','پرونده‌ها'],['contracts','قراردادها'],['advice','مشاوره‌ها'],['arbitration','داوری و سازش'],['employee','حمایت کارکنان'],['experts','بانک متخصصان'],['engagements','ارجاع کار و برون‌سپاری'],['payments','هزینه‌ها و پرداخت‌ها'],['risks','ریسک‌ها'],['compliance','انطباق'],['knowledge','دانش و اسناد'],['backup','پشتیبان‌گیری']];
 const pageTabs=(app.dataset.tabs||tab).split(',').filter(Boolean);
 let orgScope='all';
 const rows=key=>db[key]||[];
@@ -199,8 +202,8 @@ function scopeRows(key){
  });
 }
 function overview(){
- const keys=['requests','cases','contracts','advice','arbitration','employee','experts','sessions','risks','compliance','knowledge'];
- const labels={requests:'درخواست حقوقی',cases:'پرونده و دعوا',contracts:'قرارداد و تعهد',advice:'مشاوره حقوقی',arbitration:'داوری و سازش',employee:'حمایت کارکنان',experts:'متخصصان',sessions:'جلسات تخصصی',risks:'ریسک حقوقی',compliance:'انطباق و مقررات',knowledge:'اسناد و دانش حقوقی'};
+ const keys=['requests','cases','contracts','advice','arbitration','employee','experts','engagements','payments','sessions','risks','compliance','knowledge'];
+ const labels={requests:'درخواست حقوقی',cases:'پرونده و دعوا',contracts:'قرارداد و تعهد',advice:'مشاوره حقوقی',arbitration:'داوری و سازش',employee:'حمایت کارکنان',experts:'بانک متخصصان',engagements:'ارجاع کار',payments:'هزینه و پرداخت',sessions:'جلسات تخصصی',risks:'ریسک حقوقی',compliance:'انطباق و مقررات',knowledge:'اسناد و دانش حقوقی'};
  const counts=keys.map(k=>[labels[k],scopeRows(k).length,k]);
  const total=counts.reduce((a,x)=>a+x[1],0);
  const openCases=scopeRows('cases').filter(x=>x.status!=='مختومه').length,closedCases=scopeRows('cases').length-openCases;
@@ -228,7 +231,7 @@ function overview(){
 }
 function performanceView(){
  const keys=['requests','cases','contracts','advice','arbitration','employee','experts','sessions','risks','compliance','knowledge'];
- const labels={requests:'درخواست‌ها',cases:'پرونده‌ها',contracts:'قراردادها',advice:'مشاوره‌ها',arbitration:'داوری و سازش',employee:'حمایت کارکنان',experts:'متخصصان',sessions:'جلسات',risks:'ریسک‌ها',compliance:'انطباق',knowledge:'اسناد حقوقی'};
+ const labels={requests:'درخواست‌ها',cases:'پرونده‌ها',contracts:'قراردادها',advice:'مشاوره‌ها',arbitration:'داوری و سازش',employee:'حمایت کارکنان',experts:'متخصصان',engagements:'ارجاع کار',payments:'پرداخت‌ها',sessions:'جلسات',risks:'ریسک‌ها',compliance:'انطباق',knowledge:'اسناد حقوقی'};
  const counts=keys.map(k=>[labels[k],scopeRows(k).length]);
  const total=counts.reduce((a,x)=>a+x[1],0);
  const activeCases=scopeRows('cases').filter(x=>x.status!=='مختومه').length;
@@ -251,6 +254,7 @@ function fieldHtml(f,value){
  if(f.type==='textarea')return '<div class="lw-field'+full+'"><label>'+esc(f.label)+(f.required?' *':'')+'</label><textarea name="'+f.name+'" '+req+'>'+esc(val)+'</textarea></div>';
  if(f.type==='select')return '<div class="lw-field'+full+'"><label>'+esc(f.label)+'</label><select name="'+f.name+'">'+(f.options||[]).map(x=>'<option '+(x===val?'selected':'')+'>'+esc(x)+'</option>').join('')+'</select></div>';
  if(f.type==='org')return '<div class="lw-field'+full+'"><label>'+esc(f.label)+'</label><select name="org">'+orgs().map(x=>'<option value="'+esc(x.id)+'" '+(x.id===val?'selected':'')+'>'+esc(x.label)+'</option>').join('')+'</select></div>';
+ if(f.type==='expert')return '<div class="lw-field'+full+'"><label>'+esc(f.label)+'</label><select name="'+f.name+'"><option value="">انتخاب متخصص</option>'+rows('experts').map(x=>'<option value="'+esc(x.id)+'" '+(x.id===val?'selected':'')+'>'+esc(x.name)+' · '+esc(x.specialty||'')+'</option>').join('')+'</select></div>';
  if(f.type==='date'){const shown=window.HoldingPersianDate?.fromISO(val)||val||'';return '<div class="lw-field'+full+'"><label>'+esc(f.label)+(f.required?' *':'')+'</label><input name="'+f.name+'" type="text" data-jalali-date value="'+esc(shown)+'" placeholder="۱۴۰۵/۰۸/۲۱" '+req+'></div>';}
  return '<div class="lw-field'+full+'"><label>'+esc(f.label)+(f.required?' *':'')+'</label><input name="'+f.name+'" type="'+(f.type||'text')+'" value="'+esc(val)+'" '+req+' '+(f.type==='number'?'min="0" step="any"':'')+'></div>';
 }
@@ -266,14 +270,15 @@ function formHtml(key,id){
  '<div class="lw-field full lw-form-actions"><button class="lw-btn" type="submit">ذخیره اطلاعات</button><button class="lw-btn light" type="button" data-action="cancel-form">انصراف</button></div></form></div>';
 }
 function caseTimeline(x){const parts=[['ثبت',x.filedDate],['حکم',x.judgmentDate],['شروع اجرا',x.executionStartDate],['پایان اجرا',x.executionEndDate],['اختتام',x.closedDate]].filter(p=>p[1]);return parts.map(p=>p[0]+' '+fmtDate(p[1])).join(' ← ')||'تاریخچه زمانی تکمیل نشده';}
+function expertStats(id){const ex=rows('experts').find(e=>e.id===id);const cases=rows('cases').filter(x=>x.expertId===id||(!x.expertId&&ex&&x.lawyer===ex.name));const jobs=rows('engagements').filter(x=>x.expertId===id);const pays=rows('payments').filter(x=>x.expertId===id);const paid=pays.filter(x=>x.status==='پرداخت‌شده').reduce((s,x)=>s+(Number(x.amount)||0),0);const scores=jobs.map(x=>Number(x.score)).filter(x=>Number.isFinite(x)&&x>0);return {cases:cases.length,jobs:jobs.length,paid,score:scores.length?Math.round(scores.reduce((a,b)=>a+b,0)/scores.length):null};}
 function tableHtml(key){
  const def=defs[key],items=rows(key).filter(x=>!query||JSON.stringify(x).toLowerCase().includes(query.toLowerCase()));
  if(!items.length)return '<div class="lw-empty"><strong>موردی ثبت نشده است</strong></div>';
  const titleField=key==='experts'?'name':'title';
- const subField={requests:'serviceType',cases:'caseNumber',contracts:'contractNo',advice:'subject',arbitration:'method',employee:'serviceType',experts:'specialty',sessions:'specialty',risks:'category',compliance:'category',knowledge:'docType'}[key];
+ const subField={requests:'serviceType',cases:'caseNumber',contracts:'contractNo',advice:'subject',arbitration:'method',employee:'serviceType',experts:'specialty',engagements:'mode',payments:'paymentType',sessions:'specialty',risks:'category',compliance:'category',knowledge:'docType'}[key];
  const statusField='status';
- const dateField={requests:'dueDate',cases:'nextDate',contracts:'endDate',advice:'dueDate',arbitration:'dueDate',employee:'dueDate',experts:'',sessions:'sessionDate',risks:'dueDate',compliance:'dueDate',knowledge:'reviewDate'}[key];
- return '<div class="lw-table-wrap"><table class="lw-table"><thead><tr><th>عنوان / شناسه</th><th>حوزه / مرجع</th><th>واحد / مسئول</th><th>وضعیت</th><th>تاریخ مهم</th><th>عملیات</th></tr></thead><tbody>'+items.map(x=>'<tr><td><strong>'+esc(x[titleField])+'</strong><small>'+esc(x.id)+'</small></td><td>'+esc(x[subField]||x.caseType||x.contractType||'—')+'</td><td>'+esc(x.org?orgLabel(x.org):(x.requester||x.owner||'—'))+'</td><td>'+badge(x[statusField])+(x.demo?'<small class="lw-demo-mark">نمونه نمایشی</small>':'')+'</td><td>'+fmtDate(x[dateField])+(key==='cases'?'<small>'+caseTimeline(x)+'</small>':'')+'</td><td><div class="lw-actions"><button data-action="edit" data-key="'+key+'" data-id="'+esc(x.id)+'">ویرایش</button><button class="delete" data-action="delete" data-key="'+key+'" data-id="'+esc(x.id)+'">حذف</button></div></td></tr>').join('')+'</tbody></table></div>';
+ const dateField={requests:'dueDate',cases:'nextDate',contracts:'endDate',advice:'dueDate',arbitration:'dueDate',employee:'dueDate',experts:'',engagements:'dueDate',payments:'paymentDate',sessions:'sessionDate',risks:'dueDate',compliance:'dueDate',knowledge:'reviewDate'}[key];
+ return '<div class="lw-table-wrap"><table class="lw-table"><thead><tr><th>عنوان / شناسه</th><th>حوزه / مرجع</th><th>واحد / مسئول</th><th>وضعیت</th><th>تاریخ مهم</th><th>عملیات</th></tr></thead><tbody>'+items.map(x=>'<tr><td><strong>'+esc(x[titleField])+'</strong><small>'+esc(x.id)+'</small></td><td>'+esc(x[subField]||x.caseType||x.contractType||'—')+'</td><td>'+(key==='experts'?(()=>{const s=expertStats(x.id);return fa(s.cases)+' پرونده · '+fa(s.jobs)+' ارجاع · پرداخت '+fa(s.paid)+' تومان · امتیاز '+(s.score===null?'—':fa(s.score))})():esc(x.org?orgLabel(x.org):(x.requester||x.owner||x.expertId||'—')))+'</td><td>'+badge(x[statusField])+(x.demo?'<small class="lw-demo-mark">نمونه نمایشی</small>':'')+'</td><td>'+fmtDate(x[dateField])+(key==='cases'?'<small>'+caseTimeline(x)+'</small>':'')+'</td><td><div class="lw-actions"><button data-action="edit" data-key="'+key+'" data-id="'+esc(x.id)+'">ویرایش</button><button class="delete" data-action="delete" data-key="'+key+'" data-id="'+esc(x.id)+'">حذف</button></div></td></tr>').join('')+'</tbody></table></div>';
 }
 function listView(key){
  const def=defs[key];
