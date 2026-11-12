@@ -18,7 +18,7 @@ function orgs(){
 }
 const orgLabel=id=>orgs().find(x=>x.id===id||x.label===id)?.label||id||'—';
 const orgIdOf=r=>{const raw=r?.org||r?.organization_id||r?.unit||'';return orgs().find(x=>x.id===raw||x.label===raw)?.id||raw};
-const blank=()=>({schemaVersion:1,requests:[],cases:[],contracts:[],advice:[],arbitration:[],employee:[],experts:[],risks:[],compliance:[],knowledge:[],events:[],updatedAt:now()});
+const blank=()=>({schemaVersion:1,requests:[],cases:[],contracts:[],advice:[],arbitration:[],employee:[],experts:[],sessions:[],risks:[],compliance:[],knowledge:[],events:[],updatedAt:now()});
 let db=blank(),tab=app.dataset.tab||'overview',editing=null,query='',busy=false;
 const defs={
  requests:{label:'درخواست‌های حقوقی',singular:'درخواست حقوقی',prefix:'REQ',fields:[
@@ -70,6 +70,16 @@ const defs={
  {name:'status',label:'وضعیت همکاری',type:'select',options:['در انتظار احراز','فعال','غیرفعال','تعلیق همکاری']},
  {name:'conflictStatus',label:'وضعیت بررسی تعارض منافع',type:'select',options:['بررسی نشده','بدون تعارض اعلام‌شده','دارای تعارض / محدودیت','نیازمند بررسی مجدد']},
  {name:'notes',label:'یادداشت ارزیابی و سوابق همکاری',type:'textarea',full:true}
+ ]},
+ sessions:{label:'جلسات تخصصی و مشاوره بیرونی',singular:'جلسه تخصصی',prefix:'SES',fields:[
+ {name:'title',label:'موضوع جلسه',required:true},{name:'specialist',label:'وکیل / خبره مدعو',required:true},
+ {name:'specialty',label:'حوزه تخصصی',type:'select',options:['دعاوی و دادرسی','قراردادها و بازرگانی','شرکت‌ها و ثبت','کار و تأمین اجتماعی','املاک و اراضی','مالی و مالیاتی','داوری و میانجیگری','حقوق عمومی و اداری','فناوری و مالکیت فکری','سایر']},
+ {name:'org',label:'واحد درخواست‌کننده',type:'org'},
+ {name:'sessionDate',label:'تاریخ جلسه',type:'date',required:true},{name:'sessionTime',label:'ساعت جلسه'},
+ {name:'format',label:'شیوه برگزاری',type:'select',options:['حضوری','برخط','ترکیبی']},
+ {name:'status',label:'وضعیت جلسه',type:'select',options:['پیشنهادی','در انتظار تأیید','برنامه‌ریزی‌شده','برگزارشده','لغوشده']},
+ {name:'agenda',label:'دستور جلسه و پرسش‌های اصلی',type:'textarea',full:true},
+ {name:'outcome',label:'جمع‌بندی، تصمیم‌ها و اقدامات بعدی',type:'textarea',full:true}
  ]},
  risks:{label:'ریسک‌ها و مهلت‌های حقوقی',singular:'ریسک حقوقی',prefix:'RSK',fields:[
  {name:'title',label:'عنوان ریسک / تعهد',required:true},{name:'org',label:'شرکت / واحد مربوط',type:'org'},
@@ -144,6 +154,7 @@ async function syncCalendar(){
  db.arbitration.filter(x=>!['سازش‌شده','مختومه'].includes(x.status)).forEach(x=>add(x,x.dueDate,'جلسه / مهلت حل اختلاف: '+x.title,'arbitration','قلمرو: '+orgLabel(x.org)+' · پرونده '+x.id+' · '+(x.summary||''),'planned'));
  db.employee.filter(x=>!['پاسخ داده‌شده','مختومه'].includes(x.status)).forEach(x=>add(x,x.dueDate,'مهلت حمایت حقوقی کارکنان: '+x.title,'employee','درخواست‌کننده: '+(x.requester||'')+' · '+(x.description||''),'planned'));
  db.compliance.filter(x=>!['منطبق','مختومه'].includes(x.status)).forEach(x=>add(x,x.dueDate,'مهلت انطباق حقوقی: '+x.title,'compliance','مستند: '+(x.reference||'')+' · '+(x.actionPlan||''),'planned'));
+ db.sessions.filter(x=>!['برگزارشده','لغوشده'].includes(x.status)).forEach(x=>add(x,x.sessionDate,'جلسه تخصصی حقوقی: '+x.title,'session','مدعو: '+(x.specialist||'')+' · '+(x.agenda||''),'planned'));
  const keep=new Set(desired.map(x=>x.id));
  for(const old of owned)if(!keep.has(old.id))await window.HoldingLocalDataVault.remove(old.id);
  for(const item of desired)await window.HoldingLocalDataVault.put(scope,item);
@@ -188,8 +199,8 @@ function scopeRows(key){
  });
 }
 function overview(){
- const keys=['requests','cases','contracts','advice','arbitration','employee','experts','risks','compliance','knowledge'];
- const labels={requests:'درخواست حقوقی',cases:'پرونده و دعوا',contracts:'قرارداد و تعهد',advice:'مشاوره حقوقی',arbitration:'داوری و سازش',employee:'حمایت کارکنان',experts:'متخصصان',risks:'ریسک حقوقی',compliance:'انطباق و مقررات',knowledge:'اسناد و دانش حقوقی'};
+ const keys=['requests','cases','contracts','advice','arbitration','employee','experts','sessions','risks','compliance','knowledge'];
+ const labels={requests:'درخواست حقوقی',cases:'پرونده و دعوا',contracts:'قرارداد و تعهد',advice:'مشاوره حقوقی',arbitration:'داوری و سازش',employee:'حمایت کارکنان',experts:'متخصصان',sessions:'جلسات تخصصی',risks:'ریسک حقوقی',compliance:'انطباق و مقررات',knowledge:'اسناد و دانش حقوقی'};
  const counts=keys.map(k=>[labels[k],scopeRows(k).length,k]);
  const total=counts.reduce((a,x)=>a+x[1],0);
  const openCases=scopeRows('cases').filter(x=>x.status!=='مختومه').length,closedCases=scopeRows('cases').length-openCases;
@@ -216,7 +227,7 @@ function overview(){
 }
 function performanceView(){
  const keys=['requests','cases','contracts','advice','arbitration','employee','experts','risks','compliance','knowledge'];
- const labels={requests:'درخواست‌ها',cases:'پرونده‌ها',contracts:'قراردادها',advice:'مشاوره‌ها',arbitration:'داوری و سازش',employee:'حمایت کارکنان',experts:'متخصصان',risks:'ریسک‌ها',compliance:'انطباق',knowledge:'اسناد حقوقی'};
+ const labels={requests:'درخواست‌ها',cases:'پرونده‌ها',contracts:'قراردادها',advice:'مشاوره‌ها',arbitration:'داوری و سازش',employee:'حمایت کارکنان',experts:'متخصصان',sessions:'جلسات',risks:'ریسک‌ها',compliance:'انطباق',knowledge:'اسناد حقوقی'};
  const counts=keys.map(k=>[labels[k],scopeRows(k).length]);
  const total=counts.reduce((a,x)=>a+x[1],0);
  const activeCases=scopeRows('cases').filter(x=>x.status!=='مختومه').length;
@@ -258,9 +269,9 @@ function tableHtml(key){
  const def=defs[key],items=rows(key).filter(x=>!query||JSON.stringify(x).toLowerCase().includes(query.toLowerCase()));
  if(!items.length)return '<div class="lw-empty"><strong>موردی ثبت نشده است</strong></div>';
  const titleField=key==='experts'?'name':'title';
- const subField={requests:'serviceType',cases:'caseNumber',contracts:'contractNo',advice:'subject',arbitration:'method',employee:'serviceType',experts:'specialty',risks:'category',compliance:'category',knowledge:'docType'}[key];
+ const subField={requests:'serviceType',cases:'caseNumber',contracts:'contractNo',advice:'subject',arbitration:'method',employee:'serviceType',experts:'specialty',sessions:'specialty',risks:'category',compliance:'category',knowledge:'docType'}[key];
  const statusField='status';
- const dateField={requests:'dueDate',cases:'nextDate',contracts:'endDate',advice:'dueDate',arbitration:'dueDate',employee:'dueDate',experts:'',risks:'dueDate',compliance:'dueDate',knowledge:'reviewDate'}[key];
+ const dateField={requests:'dueDate',cases:'nextDate',contracts:'endDate',advice:'dueDate',arbitration:'dueDate',employee:'dueDate',experts:'sessionDate',sessions:'sessionDate',risks:'dueDate',compliance:'dueDate',knowledge:'reviewDate'}[key];
  return '<div class="lw-table-wrap"><table class="lw-table"><thead><tr><th>عنوان / شناسه</th><th>حوزه / مرجع</th><th>واحد / مسئول</th><th>وضعیت</th><th>تاریخ مهم</th><th>عملیات</th></tr></thead><tbody>'+items.map(x=>'<tr><td><strong>'+esc(x[titleField])+'</strong><small>'+esc(x.id)+'</small></td><td>'+esc(x[subField]||x.caseType||x.contractType||'—')+'</td><td>'+esc(x.org?orgLabel(x.org):(x.requester||x.owner||'—'))+'</td><td>'+badge(x[statusField])+(x.demo?'<small class="lw-demo-mark">نمونه نمایشی</small>':'')+'</td><td>'+fmtDate(x[dateField])+(key==='cases'?'<small>'+caseTimeline(x)+'</small>':'')+'</td><td><div class="lw-actions"><button data-action="edit" data-key="'+key+'" data-id="'+esc(x.id)+'">ویرایش</button><button class="delete" data-action="delete" data-key="'+key+'" data-id="'+esc(x.id)+'">حذف</button></div></td></tr>').join('')+'</tbody></table></div>';
 }
 function listView(key){
