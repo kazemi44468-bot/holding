@@ -255,3 +255,17 @@ body{padding-top:0;background:radial-gradient(ellipse at 8% 0%,#eaf1f2 0,transpa
 .footer-links a:hover{color:#173a5a!important}
 .footer-mark,.footer-endmark{display:none!important}
 @media(max-width:650px){.topinner{padding:10px 13px!important}.brandmark{width:34px!important;height:34px!important}.brand-logo{width:31px!important;height:21px!important}.brand-copy h1{font-size:14px!important}.brand-subtitle{display:block!important;font-size:8px!important}.toplink{font-size:9px!important;padding:5px 7px!important}.nav{padding:0 10px!important}.nav a,.nav-group summary{padding:9px 9px!important;font-size:10px!important}.nav-submenu{position:fixed!important;top:auto!important;right:10px!important;left:10px!important;max-height:65vh!important;overflow:auto!important}.footer-inner{flex-direction:row!important;align-items:center!important}}
+
+
+/* Final parity pass: match the Knowledge Center's latest menu and footer rules */
+.nav a,.nav-group summary{padding:10px 11px!important;border:0!important;border-bottom:2px solid transparent!important;border-radius:7px 7px 0 0!important;background:transparent!important}
+.nav a:hover,.nav-group summary:hover{background:#f1f5f8!important;color:#2874a6!important}
+.nav a.active{background:#f0f5f9!important;color:#1b4e73!important;border-bottom-color:#c49a54!important}
+.nav-submenu a{border-radius:5px!important;border:0!important;background:#fff!important}
+.nav-submenu a:hover,.nav-submenu a.active{background:#f0f5f9!important;color:#1b4e73!important;border-right:2px solid #c49a54!important}
+.footer{max-width:1320px!important;margin:0 auto 14px!important;padding:12px 20px!important;border:1px solid #e5eaf0!important;border-radius:10px!important;background:rgba(255,255,255,.8)!important;color:#8492a0!important;font-size:9px!important;text-align:center!important}
+.footer-inner{max-width:none!important;display:flex!important;justify-content:center!important;align-items:center!important;gap:10px!important;flex-wrap:wrap!important}
+.footer-links{display:flex!important;justify-content:center!important;flex-wrap:wrap!important;gap:14px!important}
+.footer-links a{font-size:9px!important;color:#8492a0!important}
+.footer-mark,.footer-endmark{display:none!important}
+@media(max-width:650px){.nav a,.nav-group summary{padding:9px 9px!important}.footer{margin:0 10px 10px!important;padding:10px!important}}
