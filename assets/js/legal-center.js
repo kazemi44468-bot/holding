@@ -138,12 +138,13 @@ const rows=key=>db[key]||[];
 function toast(msg,type='ok'){const el=$('#lw-status');if(!el)return;el.textContent=msg;el.className='lw-alert'+(type==='warn'?' warn':'');el.hidden=false;clearTimeout(toast.timer);toast.timer=setTimeout(()=>{el.hidden=true},5500)}
 async function load(){
  try{if(window.HoldingLocalDataVault){const list=await window.HoldingLocalDataVault.all(SCOPE),rec=list.find(x=>x.id===STATE_ID);if(rec?.content){db={...blank(),...JSON.parse(rec.content)};return;}}}catch(e){console.warn('Legal vault read failed',e)}
- try{const raw=localStorage.getItem(KEY);if(raw)db={...blank(),...JSON.parse(raw)}}catch(e){console.warn(e)}
+ try{const raw=localStorage.getItem(KEY);if(raw){db={...blank(),...JSON.parse(raw)};if(window.HoldingLocalDataVault)await window.HoldingLocalDataVault.put(SCOPE,{id:STATE_ID,kind:'application-state',title:'داده عملیاتی مرکز حقوقی',content:JSON.stringify(db),schemaVersion:1});}}catch(e){console.warn(e)}
 }
 async function save(){
  db.updatedAt=now();localStorage.setItem(KEY,JSON.stringify(db));
  if(window.HoldingLocalDataVault)await window.HoldingLocalDataVault.put(SCOPE,{id:STATE_ID,kind:'application-state',title:'داده عملیاتی مرکز حقوقی',content:JSON.stringify(db),schemaVersion:1});
  await syncCalendar();
+ if(window.HoldingLocalDataVault)await maybeLocalSnapshot();
 }
 async function syncCalendar(){
  if(!window.HoldingLocalDataVault)return;
@@ -353,12 +354,13 @@ function listView(key){
  const def=defs[key];
  return (key==='cases'?'<div class="lw-toolbar lw-case-filters"><button class="lw-btn '+(caseFilter==='all'?'':'light')+'" data-case-filter="all">همه پرونده‌ها</button><button class="lw-btn '+(caseFilter==='active'?'':'light')+'" data-case-filter="active">پرونده‌های جاری</button><button class="lw-btn '+(caseFilter==='archived'?'':'light')+'" data-case-filter="archived">آرشیو مختومه‌ها</button></div>':'')+'<div class="lw-toolbar"><input id="lw-search" type="search" placeholder="جست‌وجو در اطلاعات..." value="'+esc(query)+'"><span class="lw-spacer"></span><button class="lw-btn" data-action="new" data-key="'+key+'">＋ ثبت '+esc(def.singular)+'</button></div>'+tableHtml(key);
 }
-function backupView(){return '<div class="lw-grid"><section class="lw-panel"><h3>نسخه پشتیبان</h3><button class="lw-btn" data-action="export">دریافت نسخه پشتیبان</button></section><section class="lw-panel"><h3>بازیابی اطلاعات</h3><input id="lw-import-file" type="file" accept=".json,application/json"><div style="margin-top:9px"><button class="lw-btn gold" data-action="import">بازیابی فایل</button></div></section></div>';}
+function backupView(){return '<div class="lw-alert">اطلاعات مرکز حقوقی در مخزن محلی همین مرورگر (IndexedDB) نگهداری می‌شود و برای ثبت و ویرایش به پایگاه داده هاست وابسته نیست. برای انتقال به دستگاه دیگر یا محافظت در برابر پاک‌شدن داده‌های مرورگر، فایل پشتیبان را جداگانه نگهداری کنید.</div><div id="lw-vault-stats" class="lw-metrics"><div class="lw-metric"><small>مخزن محلی</small><strong>در حال بررسی…</strong></div></div><div class="lw-grid"><section class="lw-panel"><h3>پشتیبان‌گیری</h3><p>خروجی رکوردها، پیوست‌ها و تاریخچه تغییرات مرکز حقوقی.</p><button class="lw-btn" data-action="export">ساخت و دریافت نسخه پشتیبان</button><button class="lw-btn light" data-action="snapshot" style="margin-inline-start:6px">ثبت نقطه بازیابی محلی</button></section><section class="lw-panel"><h3>بازیابی اطلاعات</h3><p>بازیابی از فایل JSON؛ پیش از جایگزینی، نسخه فعلی را پشتیبان بگیرید.</p><input id="lw-import-file" type="file" accept=".json,application/json"><div style="margin-top:9px"><button class="lw-btn gold" data-action="import">بازیابی فایل</button></div></section></div><section class="lw-panel" style="margin-top:16px"><h3>نقاط بازیابی محلی</h3><div id="lw-local-snapshots">در حال بارگذاری…</div></section>';}
 function render(){
  const title=tab==='overview'?'نمای کلی مرکز حقوقی':tab==='performance'?'گزارش عملکرد مرکز حقوقی':tab==='backup'?'پشتیبان‌گیری و بازیابی':defs[tab]?.label||'مرکز حقوقی';
  const localTabs=pageTabs.length>1?'<div class="lw-tabs">'+pageTabs.map(k=>'<button class="lw-tab '+(tab===k?'active':'')+'" data-tab="'+k+'">'+(k==='overview'?'نمای کلی':k==='backup'?'پشتیبان‌گیری':(defs[k]?.label||k))+'</button>').join('')+'</div>':'';
  app.innerHTML=localTabs+'<div class="lw-content"><div id="lw-status" class="lw-alert" hidden></div><h3 style="font-size:12px;color:#355b77;margin:0 0 11px">'+title+'</h3><div id="lw-view">'+(tab==='overview'?overview():tab==='performance'?performanceView():tab==='backup'?backupView():listView(tab))+'</div></div>';
  updateCenterNav();
+ if(tab==='backup')renderBackupStats().catch(e=>console.warn(e));
 }
 function openForm(key,id){editing={key,id:id||null};query='';const view=$('#lw-view');view.innerHTML=formHtml(key,id);const el=$('#lw-record-form');if(el)el.querySelector('input:not([type=file]),textarea,select')?.focus();}
 async function addFiles(record,files){
@@ -398,6 +400,26 @@ async function downloadFile(id){
  const file=await window.HoldingLocalDataVault.get(id);if(!file?.file)throw new Error('فایل پیوست پیدا نشد.');
  const blob=file.file instanceof Blob?file.file:window.HoldingLocalDataVault.objectToBlob(file.file),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=file.fileName||'attachment';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);
 }
+async function maybeLocalSnapshot(){
+ const vault=window.HoldingLocalDataVault;if(!vault)return;
+ const last=await vault.getMeta('legal-center-last-snapshot'),nowMs=Date.now();
+ if(last&&nowMs-Number(last)<30*60*1000)return;
+ await createLocalSnapshot();await vault.setMeta('legal-center-last-snapshot',String(nowMs));
+}
+async function createLocalSnapshot(){
+ const vault=window.HoldingLocalDataVault;if(!vault)throw new Error('مخزن محلی در دسترس نیست.');
+ const data=await vault.exportData(SCOPE),snapshots=await vault.all('holding-local-backups');
+ const item={id:'LEGAL-SNAP-'+Date.now(),kind:'local-snapshot',title:'نقطه بازیابی مرکز حقوقی · '+fmtDate(today()),scope:'holding-local-backups',createdAt:now(),updatedAt:now(),sourceScope:SCOPE,recordCount:data.recordCount,byteSize:new Blob([JSON.stringify(data)]).size,payload:data};
+ await vault.put('holding-local-backups',item);
+ const all=await vault.all('holding-local-backups');for(const old of all.slice(12))await vault.remove(old.id);
+ await vault.setMeta('legal-center-last-snapshot',String(Date.now()));
+}
+async function renderBackupStats(){
+ const vault=window.HoldingLocalDataVault;if(!vault)return;
+ const records=await vault.all(SCOPE),snaps=await vault.all('holding-local-backups'),bytes=new Blob([JSON.stringify(records.map(x=>({...x,file:undefined})))]).size;
+ const stats=$('#lw-vault-stats');if(stats)stats.innerHTML='<div class="lw-metric"><small>رکوردهای مخزن حقوقی</small><strong>'+fa(records.filter(x=>x.kind!=='attachment').length)+'</strong></div><div class="lw-metric"><small>پیوست‌ها</small><strong>'+fa(records.filter(x=>x.kind==='attachment').length)+'</strong></div><div class="lw-metric"><small>حجم تقریبی رکوردها</small><strong>'+fa(Math.ceil(bytes/1024))+' KB</strong></div><div class="lw-metric"><small>نقاط بازیابی</small><strong>'+fa(snaps.length)+'</strong></div>';
+ const list=$('#lw-local-snapshots');if(list)list.innerHTML=snaps.length?'<div class="lw-list">'+snaps.map(x=>'<div class="lw-row"><div><strong>'+esc(x.title)+'</strong><small>'+fa(x.recordCount)+' رکورد · '+fa(Math.ceil((x.byteSize||0)/1024))+' کیلوبایت</small></div><button class="lw-btn light" data-action="restore-snapshot" data-id="'+esc(x.id)+'">بازیابی</button></div>').join('')+'</div>':'<div class="lw-empty">هنوز نقطه بازیابی ثبت نشده است.</div>';
+}
 async function exportBackup(){
  if(window.HoldingLocalDataVault){const pack=await window.HoldingLocalDataVault.createBackup(SCOPE);downloadJson(pack.data,'holding-legal-center-backup-'+today()+'.json');}
  else downloadJson({format:'holding-legal-center',schemaVersion:1,state:db},'holding-legal-center-backup-'+today()+'.json');
@@ -429,6 +451,8 @@ app.addEventListener('click',async e=>{
  if(action==='delete'){const key=t.dataset.key,id=t.dataset.id;if(!confirm('این رکورد حذف شود؟'))return;const item=rows(key).find(x=>x.id===id);if(item?.attachments&&window.HoldingLocalDataVault)for(const a of item.attachments)await window.HoldingLocalDataVault.remove(a.id);db[key]=rows(key).filter(x=>x.id!==id);db.events.unshift({id:makeId('EVT'),at:now(),key,recordId:id,action:'حذف',title:item?.title||item?.name||''});await save();render();toast('رکورد حذف شد.');}
  if(action==='download-file')await downloadFile(t.dataset.file);
  if(action==='export')await exportBackup();
+ if(action==='snapshot'){await createLocalSnapshot();render();toast('نقطه بازیابی محلی ثبت شد.');}
+ if(action==='restore-snapshot'){const snap=await window.HoldingLocalDataVault.get(t.dataset.id);if(!snap?.payload)throw new Error('نقطه بازیابی پیدا نشد.');if(!confirm('اطلاعات فعلی مرکز حقوقی با این نقطه بازیابی جایگزین شود؟'))return;await window.HoldingLocalDataVault.importData(snap.payload,'replace-scope');await load();render();toast('بازیابی از نقطه محلی انجام شد.');}
  if(action==='import')await importBackup();
  }catch(err){console.error(err);toast(err.message||'عملیات انجام نشد.','warn');}
 });
