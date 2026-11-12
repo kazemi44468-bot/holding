@@ -110,6 +110,13 @@ function renderSpecialCharts(data){
  const standardsLabels=['رهبری','فردی','تخصصی','سازمانی','اخلاق حرفه‌ای'],stdCounts=[8,7,9,6,5].map(n=>Math.round(n*Math.max(1,data.length)/36));
  set('standards-bars',simpleVertical(standardsLabels,stdCounts));
  set('standards-donut',donutCounts(['مصاحبه','شبیه‌سازی','آزمون','مشاهده رفتاری'],[8,7,5,9].map(n=>Math.round(n*Math.max(1,data.length)/36))));
+ const avg=Math.round(data.reduce((n,x)=>n+Number(x.score||0),0)/(data.length||1));
+ set('program-progress',simpleVertical(['تحقق اهداف','پیشرفت زمانی','کیفیت تحویل','تحقق منافع'],[avg+3,avg-5,avg+2,avg-3].map(n=>Math.max(0,Math.min(100,n)))));
+ set('program-status',donutCounts(['در مسیر','دارای انحراف','تکمیل‌شده'],[Math.round(data.length*.55),Math.round(data.length*.25),Math.max(0,data.length-Math.round(data.length*.8))]));
+ set('service-quality',simpleHorizontal(['سرعت پاسخ','صحت خدمت','دسترس‌پذیری','حل درخواست','تجربه مخاطب'],[avg+2,avg+5,avg-2,avg-4,avg+1].map(n=>Math.max(0,Math.min(100,n)))));
+ set('service-satisfaction',donutCounts(['رضایت بالا','رضایت متوسط','نیازمند رسیدگی'],[Math.round(data.length*.58),Math.round(data.length*.3),Math.max(0,data.length-Math.round(data.length*.88))]));
+ set('improvement-status',donutCounts(['انجام‌شده','در حال اجرا','عقب‌افتاده'],[Math.round(data.length*.32),Math.round(data.length*.48),Math.max(0,data.length-Math.round(data.length*.8))]));
+ set('improvement-actions',simpleVertical(['اولویت بالا','اولویت متوسط','اولویت عادی'],[Math.round(data.length*.28),Math.round(data.length*.46),Math.max(0,data.length-Math.round(data.length*.74))]));
 }
 function renderCharts(data){
  const bars=horizontalBars(data),vbars=verticalBars(data),statusChart=donut(data,'status',['در حال اجرا','تکمیل‌شده','نیازمند اقدام','ثبت اولیه']),levelChart=donut(data,'level',['نیازمند بهبود','قابل قبول','خوب','بسیار خوب']);
