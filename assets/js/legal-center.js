@@ -74,8 +74,45 @@ const defs={
  {name:'status',label:'وضعیت',type:'select',options:['شناسایی‌شده','در حال کنترل','نیازمند تصمیم','رفع‌شده','پذیرفته‌شده با مجوز']},
  {name:'mitigation',label:'اقدام پیشگیرانه / اصلاحی',type:'textarea',full:true}
  ]}
+
+ arbitration:{label:'داوری و حل اختلاف',singular:'پرونده داوری',prefix:'ARB',fields:[
+ {name:'title',label:'موضوع اختلاف',required:true},{name:'org',label:'شخصیت حقوقی ذی‌نفع',type:'org',required:true},
+ {name:'method',label:'روش حل اختلاف',type:'select',options:['داوری','میانجیگری','مذاکره','سازش','کارشناسی توافقی']},
+ {name:'otherParty',label:'طرف مقابل'},{name:'forum',label:'مرجع / نهاد داوری'},
+ {name:'arbitrator',label:'داور / میانجی / متخصص'},{name:'status',label:'وضعیت',type:'select',options:['در حال ارزیابی','در حال مذاکره','در جریان داوری','در انتظار نظر کارشناس','توافق اولیه','سازش‌شده','مختومه']},
+ {name:'startDate',label:'تاریخ آغاز',type:'date'},{name:'dueDate',label:'جلسه / مهلت بعدی',type:'date'},
+ {name:'value',label:'ارزش مالی اختلاف (تومان)',type:'number'},{name:'owner',label:'مسئول داخلی'},
+ {name:'summary',label:'شرح اختلاف، خواسته‌ها و راهبرد حل‌وفصل',type:'textarea',full:true}
+ ]},
+ employee:{label:'حمایت حقوقی کارکنان',singular:'درخواست حمایت حقوقی',prefix:'EMP',fields:[
+ {name:'title',label:'موضوع درخواست',required:true},{name:'requester',label:'درخواست‌کننده',required:true},
+ {name:'beneficiary',label:'فرد ذی‌نفع / نسبت با درخواست‌کننده'},
+ {name:'org',label:'واحد سازمانی',type:'org'},
+ {name:'serviceType',label:'نوع خدمت',type:'select',options:['مشاوره حقوقی','حقوق کار و بیمه','اختلافات شغلی','امور بازنشستگی','امور خانواده','املاک و مسکن','حمایت قراردادی','معرفی به متخصص','سایر']},
+ {name:'confidentiality',label:'سطح محرمانگی',type:'select',options:['عادی','محرمانه','محرمانه ویژه']},
+ {name:'status',label:'وضعیت',type:'select',options:['ثبت‌شده','در حال بررسی','ارجاع به متخصص','نیازمند مدرک','پاسخ داده‌شده','ارجاع بیرونی','مختومه']},
+ {name:'owner',label:'مسئول رسیدگی'},{name:'dueDate',label:'مهلت پاسخ / اقدام',type:'date'},
+ {name:'description',label:'شرح درخواست و نتیجه مورد انتظار',type:'textarea',full:true}
+ ]},
+ compliance:{label:'انطباق و مقررات',singular:'موضوع انطباق',prefix:'CMP',fields:[
+ {name:'title',label:'عنوان موضوع / الزام',required:true},{name:'org',label:'واحد / شرکت مشمول',type:'org'},
+ {name:'category',label:'حوزه انطباق',type:'select',options:['قوانین و مقررات','حاکمیت شرکتی','مجوزها و الزامات ثبتی','کار و تأمین اجتماعی','مالیات و امور مالی','حفاظت داده و محرمانگی','مقررات قراردادی','سایر']},
+ {name:'reference',label:'مستند قانونی / مقرره'},{name:'owner',label:'مسئول انطباق'},
+ {name:'status',label:'وضعیت',type:'select',options:['شناسایی‌شده','در حال ارزیابی','نیازمند اقدام','در حال اصلاح','منطبق','دارای عدم انطباق','مختومه']},
+ {name:'dueDate',label:'مهلت انطباق / بازبینی',type:'date'},
+ {name:'impact',label:'سطح اثر',type:'select',options:['کم','متوسط','زیاد','بحرانی']},
+ {name:'actionPlan',label:'اقدامات اصلاحی و شواهد انطباق',type:'textarea',full:true}
+ ]},
+ knowledge:{label:'دانش و اسناد حقوقی',singular:'سند حقوقی',prefix:'DOC',fields:[
+ {name:'title',label:'عنوان سند / دانش',required:true},{name:'docType',label:'نوع',type:'select',options:['قانون و مقرره','رأی و نظریه قضایی','نظریه مشورتی','الگوی قرارداد','شیوه‌نامه و دستورالعمل','نظر حقوقی داخلی','درس‌آموخته پرونده','پژوهش و یادداشت تخصصی','سایر']},
+ {name:'subject',label:'حوزه تخصصی'},{name:'reference',label:'شماره / شناسه / مرجع انتشار'},
+ {name:'issueDate',label:'تاریخ سند',type:'date'},{name:'reviewDate',label:'تاریخ بازبینی بعدی',type:'date'},
+ {name:'status',label:'وضعیت اعتبار',type:'select',options:['پیش‌نویس','در حال بررسی','معتبر و جاری','نیازمند بازبینی','منسوخ','بایگانی']},
+ {name:'owner',label:'مالک محتوا / بازبین'},
+ {name:'summary',label:'خلاصه، کلیدواژه‌ها و نحوه کاربرد',type:'textarea',full:true}
+ ]},
 };
-const tabs=[['overview','نمای کلی'],['requests','درخواست‌ها'],['cases','پرونده‌ها'],['contracts','قراردادها'],['advice','مشاوره‌ها'],['experts','شبکه متخصصان'],['risks','ریسک و مهلت‌ها'],['backup','پشتیبان‌گیری']];
+const tabs=[['overview','نمای کلی'],['requests','درخواست‌ها'],['cases','پرونده‌ها'],['contracts','قراردادها'],['advice','مشاوره‌ها'],['arbitration','داوری و سازش'],['employee','حمایت کارکنان'],['experts','شبکه متخصصان'],['risks','ریسک‌ها'],['compliance','انطباق'],['knowledge','دانش و اسناد'],['backup','پشتیبان‌گیری']];
 const rows=key=>db[key]||[];
 function toast(msg,type='ok'){const el=$('#lw-status');if(!el)return;el.textContent=msg;el.className='lw-alert'+(type==='warn'?' warn':'');el.hidden=false;clearTimeout(toast.timer);toast.timer=setTimeout(()=>{el.hidden=true},5500)}
 async function load(){
@@ -96,6 +133,9 @@ async function syncCalendar(){
  db.requests.filter(x=>!['پاسخ داده‌شده','مختومه'].includes(x.status)).forEach(x=>add(x,x.dueDate,'مهلت پاسخ درخواست حقوقی: '+x.title,'request','قلمرو: '+orgLabel(x.org)+' · درخواست '+x.id+' · '+(x.description||''),'planned'));
  db.advice.filter(x=>!['تأیید و ابلاغ','مختومه'].includes(x.status)).forEach(x=>add(x,x.dueDate,'مهلت پاسخ مشاوره حقوقی: '+x.title,'advice','قلمرو: '+orgLabel(x.org)+' · مشاوره '+x.id+' · '+(x.question||''),'planned'));
  db.risks.filter(x=>!['رفع‌شده','پذیرفته‌شده با مجوز'].includes(x.status)).forEach(x=>add(x,x.dueDate,'مهلت کنترل ریسک حقوقی: '+x.title,'risk','قلمرو: '+orgLabel(x.org)+' · ریسک '+x.id+' · '+(x.mitigation||''),'planned'));
+ db.arbitration.filter(x=>!['سازش‌شده','مختومه'].includes(x.status)).forEach(x=>add(x,x.dueDate,'جلسه / مهلت حل اختلاف: '+x.title,'arbitration','قلمرو: '+orgLabel(x.org)+' · پرونده '+x.id+' · '+(x.summary||''),'planned'));
+ db.employee.filter(x=>!['پاسخ داده‌شده','مختومه'].includes(x.status)).forEach(x=>add(x,x.dueDate,'مهلت حمایت حقوقی کارکنان: '+x.title,'employee','درخواست‌کننده: '+(x.requester||'')+' · '+(x.description||''),'planned'));
+ db.compliance.filter(x=>!['منطبق','مختومه'].includes(x.status)).forEach(x=>add(x,x.dueDate,'مهلت انطباق حقوقی: '+x.title,'compliance','مستند: '+(x.reference||'')+' · '+(x.actionPlan||''),'planned'));
  const keep=new Set(desired.map(x=>x.id));
  for(const old of owned)if(!keep.has(old.id))await window.HoldingLocalDataVault.remove(old.id);
  for(const item of desired)await window.HoldingLocalDataVault.put(scope,item);
@@ -104,7 +144,7 @@ function countOpen(key,closed){return rows(key).filter(x=>!closed.includes(x.sta
 function dateOverdue(x){return x&&x<today()}
 function upcoming(){
  const out=[];
- for(const [key,label,dateKey] of [['cases','پرونده','nextDate'],['contracts','قرارداد','endDate'],['requests','درخواست','dueDate'],['advice','مشاوره','dueDate'],['risks','ریسک','dueDate']]){
+ for(const [key,label,dateKey] of [['cases','پرونده','nextDate'],['contracts','قرارداد','endDate'],['requests','درخواست','dueDate'],['advice','مشاوره','dueDate'],['risks','ریسک','dueDate'],['arbitration','داوری','dueDate'],['employee','حمایت کارکنان','dueDate'],['compliance','انطباق','dueDate']]){
   for(const r of rows(key))if(r[dateKey]&&r[dateKey]>=today()&&!(r.status==='مختومه'||r.status==='خاتمه‌یافته'||r.status==='رفع‌شده'||r.status==='پاسخ داده‌شده'||r.status==='تأیید و ابلاغ'))out.push({title:r.title||r.name,date:r[dateKey],label,id:r.id,key});
   for(const r of rows(key))if(r[dateKey]&&r[dateKey]<today()&&!(r.status==='مختومه'||r.status==='خاتمه‌یافته'||r.status==='رفع‌شده'||r.status==='پاسخ داده‌شده'||r.status==='تأیید و ابلاغ'))out.push({title:r.title||r.name,date:r[dateKey],label:'معوق · '+label,id:r.id,key,late:true});
  }
@@ -116,7 +156,7 @@ function overview(){
  const events=upcoming(),overdue=events.filter(x=>x.late).length;
  return '<div class="lw-toolbar"><button class="lw-btn" data-action="new" data-key="requests">＋ ثبت درخواست حقوقی</button><button class="lw-btn light" data-action="new" data-key="cases">＋ ثبت پرونده</button><button class="lw-btn light" data-action="new" data-key="contracts">＋ ثبت قرارداد</button></div><div class="lw-metrics">'+metric('درخواست‌های باز',countOpen('requests',['پاسخ داده‌شده','مختومه']),'در صف رسیدگی')+metric('پرونده‌های فعال',countOpen('cases',['مختومه']),'دعاوی و اختلافات')+metric('قراردادهای جاری',countOpen('contracts',['خاتمه‌یافته','فسخ‌شده']),'دارای تعهد فعال')+metric('مشاوره‌های باز',countOpen('advice',['تأیید و ابلاغ','مختومه']),'در انتظار پاسخ')+metric('ریسک‌های باز',countOpen('risks',['رفع‌شده','پذیرفته‌شده با مجوز']),'نیازمند کنترل')+'</div>'+
  '<div class="lw-grid"><section class="lw-panel"><h3>مهلت‌ها و رویدادهای نزدیک</h3>'+(events.length?'<div class="lw-list">'+events.map(x=>'<div class="lw-row"><div><strong>'+esc(x.title)+'</strong><small>'+esc(x.label)+' · '+fmtDate(x.date)+'</small></div>'+badge(x.late?'معوق': 'سررسید')+'</div>').join('')+'</div>':'<div class="lw-empty"><strong>مهلت ثبت‌شده‌ای وجود ندارد</strong>با ثبت تاریخ در پرونده، قرارداد یا درخواست، این بخش به‌روز می‌شود.</div>')+'</section>'+
- '<section class="lw-panel"><h3>نمای وضعیت اطلاعات ثبت‌شده</h3><div class="lw-list">'+[['پرونده‌ها',rows('cases').length],['درخواست‌ها',rows('requests').length],['قراردادها',rows('contracts').length],['متخصصان',rows('experts').length],['ریسک‌ها',rows('risks').length]].map(x=>'<div class="lw-row"><strong>'+x[0]+'</strong><span class="lw-badge">'+fa(x[1])+'</span></div>').join('')+'</div><p>شاخص‌ها فقط از اطلاعات ثبت‌شده در همین مرورگر محاسبه می‌شوند؛ داده نمونه در سامانه درج نشده است.</p></section></div>'+
+ '<section class="lw-panel"><h3>نمای وضعیت اطلاعات ثبت‌شده</h3><div class="lw-list">'+[['پرونده‌ها',rows('cases').length],['درخواست‌ها',rows('requests').length],['قراردادها',rows('contracts').length],['متخصصان',rows('experts').length],['ریسک‌ها',rows('risks').length],['داوری و سازش',rows('arbitration').length],['حمایت کارکنان',rows('employee').length],['دانش و اسناد',rows('knowledge').length],['موضوعات انطباق',rows('compliance').length]].map(x=>'<div class="lw-row"><strong>'+x[0]+'</strong><span class="lw-badge">'+fa(x[1])+'</span></div>').join('')+'</div><p>شاخص‌ها فقط از اطلاعات ثبت‌شده در همین مرورگر محاسبه می‌شوند؛ داده نمونه در سامانه درج نشده است.</p></section></div>'+
  '<div class="lw-alert warn">این نسخه روی همین مرورگر و دستگاه ذخیره می‌شود. تا زمان استقرار سرور، احراز هویت و کنترل دسترسی سازمانی، اطلاعات واقعی محرمانه یا اسناد حساس قضایی را در این نسخه وارد نکنید.</div>';
 }
 function fieldHtml(f,value){
@@ -141,9 +181,9 @@ function tableHtml(key){
  const def=defs[key],items=rows(key).filter(x=>!query||JSON.stringify(x).toLowerCase().includes(query.toLowerCase()));
  if(!items.length)return '<div class="lw-empty"><strong>موردی برای نمایش وجود ندارد</strong>برای شروع، اطلاعات واقعی را با دکمه ثبت وارد کنید؛ هیچ پرونده یا مبلغ نمونه‌ای درج نشده است.</div>';
  const titleField=key==='experts'?'name':'title';
- const subField={requests:'serviceType',cases:'caseNumber',contracts:'contractNo',advice:'subject',experts:'specialty',risks:'category'}[key];
- const statusField=key==='experts'?'status':'status';
- const dateField={requests:'dueDate',cases:'nextDate',contracts:'endDate',advice:'dueDate',experts:'',risks:'dueDate'}[key];
+ const subField={requests:'serviceType',cases:'caseNumber',contracts:'contractNo',advice:'subject',arbitration:'method',employee:'serviceType',experts:'specialty',risks:'category',compliance:'category',knowledge:'docType'}[key];
+ const statusField='status';
+ const dateField={requests:'dueDate',cases:'nextDate',contracts:'endDate',advice:'dueDate',arbitration:'dueDate',employee:'dueDate',experts:'',risks:'dueDate',compliance:'dueDate',knowledge:'reviewDate'}[key];
  return '<div class="lw-table-wrap"><table class="lw-table"><thead><tr><th>عنوان / شناسه</th><th>حوزه / مرجع</th><th>واحد / مسئول</th><th>وضعیت</th><th>تاریخ مهم</th><th>عملیات</th></tr></thead><tbody>'+items.map(x=>'<tr><td><strong>'+esc(x[titleField])+'</strong><small>'+esc(x.id)+'</small></td><td>'+esc(x[subField]||x.caseType||x.contractType||'—')+'</td><td>'+esc(x.org?orgLabel(x.org):(x.requester||x.owner||'—'))+'</td><td>'+badge(x[statusField])+'</td><td>'+fmtDate(x[dateField])+'</td><td><div class="lw-actions"><button data-action="edit" data-key="'+key+'" data-id="'+esc(x.id)+'">ویرایش</button><button class="delete" data-action="delete" data-key="'+key+'" data-id="'+esc(x.id)+'">حذف</button></div></td></tr>').join('')+'</tbody></table></div>';
 }
 function listView(key){
@@ -155,7 +195,7 @@ function backupView(){
 }
 function render(){
  const title=tab==='overview'?'نمای کلی مرکز حقوقی':tab==='backup'?'پشتیبان‌گیری و بازیابی':defs[tab]?.label||'مرکز حقوقی';
- app.innerHTML='<div class="lw-head"><div><h2>میزکار اجرایی مرکز حقوقی</h2><p>مدیریت درخواست‌های حقوقی، پرونده‌ها، قراردادها، مشاوره‌ها، متخصصان، ریسک‌ها و مهلت‌ها در یک محیط یکپارچه.</p></div><div class="lw-head-side"><span class="lw-tag">طرح ۰۲-۳-۱۰</span><span class="lw-tag">نسخه اجرایی اولیه · محلی</span></div></div><div class="lw-privacy">محرمانگی: این نسخه برای ثبت اولیه و آزمایش گردش کار است؛ تا زمان استقرار احراز هویت و دسترسی سازمانی، اطلاعات حساس واقعی را وارد نکنید.</div><div class="lw-tabs" role="tablist">'+tabs.map(([k,l])=>'<button class="lw-tab '+(tab===k?'active':'')+'" role="tab" aria-selected="'+(tab===k)+'" data-tab="'+k+'">'+l+'</button>').join('')+'</div><div class="lw-content"><div id="lw-status" class="lw-alert" hidden></div><h3 style="font-size:12px;color:#355b77;margin:0 0 11px">'+title+'</h3><div id="lw-view">'+(tab==='overview'?overview():tab==='backup'?backupView():listView(tab))+'</div></div><div class="lw-footer"><span>ذخیره‌سازی محلی · شناسه مستقل مرکز حقوقی</span><span>آخرین به‌روزرسانی: '+fmtDate(db.updatedAt)+'</span></div>';
+ app.innerHTML='<div class="lw-head"><div><h2>میزکار اجرایی مرکز حقوقی</h2><p>مدیریت درخواست‌های حقوقی، پرونده‌ها، قراردادها، مشاوره‌ها، متخصصان، ریسک‌ها و مهلت‌ها در یک محیط یکپارچه.</p></div><div class="lw-head-side"><span class="lw-tag">مرکز تخصصی هلدینگ</span><span class="lw-tag">میزکار خدمات حقوقی</span></div></div><div class="lw-privacy">محرمانگی: این نسخه برای ثبت اولیه و آزمایش گردش کار است؛ تا زمان استقرار احراز هویت و دسترسی سازمانی، اطلاعات حساس واقعی را وارد نکنید.</div><div class="lw-tabs" role="tablist">'+tabs.map(([k,l])=>'<button class="lw-tab '+(tab===k?'active':'')+'" role="tab" aria-selected="'+(tab===k)+'" data-tab="'+k+'">'+l+'</button>').join('')+'</div><div class="lw-content"><div id="lw-status" class="lw-alert" hidden></div><h3 style="font-size:12px;color:#355b77;margin:0 0 11px">'+title+'</h3><div id="lw-view">'+(tab==='overview'?overview():tab==='backup'?backupView():listView(tab))+'</div></div><div class="lw-footer"><span>ذخیره‌سازی محلی · شناسه مستقل مرکز حقوقی</span><span>آخرین به‌روزرسانی: '+fmtDate(db.updatedAt)+'</span></div>';
 }
 function openForm(key,id){editing={key,id:id||null};query='';const view=$('#lw-view');view.innerHTML=formHtml(key,id);const el=$('#lw-record-form');if(el)el.querySelector('input:not([type=file]),textarea,select')?.focus();}
 async function addFiles(record,files){
