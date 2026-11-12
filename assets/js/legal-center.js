@@ -332,7 +332,7 @@ function tableHtml(key){
  if(key==='cases'&&caseFilter==='active')items=items.filter(x=>x.status!=='مختومه');if(key==='cases'&&caseFilter==='archived')items=items.filter(x=>x.status==='مختومه');
  if(key==='experts')items.sort((a,b)=>(expertStats(b.id).score||0)-(expertStats(a.id).score||0));
  if(!items.length)return '<div class="lw-empty"><strong>موردی ثبت نشده است</strong></div>';
- const titleField=key==='experts'?'name':'title';
+ const titleField=key==='experts'?'name':key==='payments'?'description':'title';
  const subField={requests:'serviceType',cases:'caseNumber',contracts:'contractNo',advice:'subject',arbitration:'method',employee:'serviceType',experts:'specialty',engagements:'mode',payments:'paymentType',sessions:'specialty',risks:'category',compliance:'category',knowledge:'docType'}[key];
  const statusField='status';
  const dateField={requests:'dueDate',cases:'nextDate',contracts:'endDate',advice:'dueDate',arbitration:'dueDate',employee:'dueDate',experts:'',engagements:'dueDate',payments:'paymentDate',sessions:'sessionDate',risks:'dueDate',compliance:'dueDate',knowledge:'reviewDate'}[key];
@@ -403,7 +403,7 @@ async function importBackup(){
 }
 function updateCenterNav(){}
 app.addEventListener('click',async e=>{
- const t=e.target.closest('[data-tab],[data-action]');if(!t)return;
+ const t=e.target.closest('[data-tab],[data-action],[data-case-filter]');if(!t)return;
  if(t.dataset.tab){tab=t.dataset.tab;query='';editing=null;render();return;}
  if(t.dataset.caseFilter){caseFilter=t.dataset.caseFilter;render();return;}
  const action=t.dataset.action;
