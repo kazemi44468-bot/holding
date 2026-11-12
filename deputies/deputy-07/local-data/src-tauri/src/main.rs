@@ -22,6 +22,7 @@ fn save_vault_snapshot(app: AppHandle, content: String) -> Result<String, String
             let archived = backup_dir.join(format!("vault-auto-{}.h7vault", stamp));
             fs::copy(&target, archived).map_err(|e| e.to_string())?;
         }
+        fs::copy(&target, dir.join("vault-state.previous.h7vault")).map_err(|e| e.to_string())?;
     }
     let temp = dir.join("vault-state.h7vault.tmp");
     fs::write(&temp, content).map_err(|e| e.to_string())?;
@@ -32,9 +33,11 @@ fn save_vault_snapshot(app: AppHandle, content: String) -> Result<String, String
 
 #[tauri::command]
 fn load_vault_snapshot(app: AppHandle) -> Result<Option<String>, String> {
-    let target = data_dir(&app)?.join("vault-state.h7vault");
-    if !target.exists() { return Ok(None); }
-    fs::read_to_string(target).map(Some).map_err(|e| e.to_string())
+    let dir = data_dir(&app)?;
+    let target = dir.join("vault-state.h7vault");
+    let fallback = dir.join("vault-state.previous.h7vault");
+    let source = if target.exists() { target } else if fallback.exists() { fallback } else { return Ok(None); };
+    fs::read_to_string(source).map(Some).map_err(|e| e.to_string())
 }
 
 #[tauri::command]
