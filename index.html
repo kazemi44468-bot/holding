@@ -308,65 +308,81 @@ h1{font-size:clamp(32px,3.4vw,40px)}
 .portal-back-top{position:fixed;left:20px;bottom:20px;z-index:50;width:42px;height:42px;display:grid;place-items:center;border:1px solid #c7d4df;border-radius:6px;background:rgba(255,255,255,.96);color:#234f70;box-shadow:0 5px 18px rgba(12,31,49,.2);opacity:0;visibility:hidden;transform:translateY(8px);transition:.18s ease;cursor:pointer}
 .portal-back-top.visible{opacity:1;visibility:visible;transform:none}.portal-back-top svg{width:19px;height:19px}
 @media(max-width:560px){.portal-back-top{left:13px;bottom:14px;width:38px;height:38px}}
-</style>  <link rel="icon" href="/holding/favicon.ico" sizes="any">
+
+/* Masonry directory: each panel expands independently and surrounding panels fill available gaps */
+.directory{
+ display:block!important;
+ width:min(100%,900px)!important;
+ max-width:900px!important;
+ margin-inline:auto!important;
+ columns:2 340px;
+ column-gap:10px;
+ column-fill:balance;
+}
+.directory>.group{
+ display:inline-block!important;
+ width:100%!important;
+ min-width:0;
+ margin:0 0 10px!important;
+ vertical-align:top;
+ break-inside:avoid;
+ -webkit-column-break-inside:avoid;
+}
+.directory>.group .group-body{max-height:260px}
+@media(max-width:760px){
+ .directory{columns:1!important;width:min(100%,620px)!important}
+ .directory>.group{margin-bottom:8px!important}
+ .directory>.group .group-body{max-height:240px}
+}
+@media(prefers-reduced-motion:reduce){.directory>.group{transition:none}}
+</style>  <link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="icon" href="favicon.ico" sizes="any">
 </head>
 <body><main class="intro" aria-labelledby="holding-title">
 <img class="intro-photo" src="assets/images/introback.webp" alt="" fetchpriority="high"><div class="frame" aria-hidden="true"></div>
 <section class="content">
 <a class="logo-link" href="./index.html" aria-label="بازگشت به صفحه اصلی هلدینگ"><span class="logo-wrap"><img class="logo" src="assets/images/logo.webp" alt="نشان هلدینگ"></span></a><h1 id="holding-title">هلدینگ</h1><div class="gold-rule" aria-hidden="true"></div>
 <nav class="directory" aria-label="درگاه واحدها و مراکز هلدینگ">
-<details class="group" aria-labelledby="group-deputies"><summary class="group-head" id="group-deputies"><span class="group-title">معاونت‌های هلدینگ <span class="group-count">۱۰ معاونت</span></span><span class="drag-handle" draggable="true" tabindex="0" role="button" aria-label="جابجایی این بخش">⠿</span></summary><div class="items group-body">
+<details class="group" aria-labelledby="group-organization" open><summary class="group-head" id="group-organization"><span class="group-title">ساختار سازمانی و شرکت‌ها</span><span class="drag-handle" draggable="true" tabindex="0" role="button" aria-label="جابجایی این بخش">⠿</span></summary><div class="items group-body">
 <a class="entry" href="https://kazemi44468-bot.github.io/khadamatshahr/" target="_blank" rel="noopener"><span class="entry-copy"><span class="entry-name">معاونت اول؛ خدمات شهری</span><span class="entry-note">درگاه عملیاتی مستقل شرکت خدمات شهری شهر بهشت</span></span><span class="entry-mark">↗</span></a>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">معاونت ۰۲ تا ۱۰</span><span class="entry-note">عنوان، مأموریت و درگاه هر معاونت پس از تثبیت ساختار سازمانی درج می‌شود</span></span><span class="entry-mark">آتی</span></div>
-</div></details>
-
-<details class="group" aria-labelledby="group-companies"><summary class="group-head" id="group-companies"><span class="group-title">شرکت‌های تابعه و تخصصی</span><span class="drag-handle" draggable="true" tabindex="0" role="button" aria-label="جابجایی این بخش">⠿</span></summary><div class="items group-body">
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">معاونت‌های ۰۲ تا ۱۰</span><span class="entry-note">تعیین عنوان، مأموریت و درگاه پس از تثبیت ساختار سازمانی</span></span><span class="entry-mark">آتی</span></div>
 <a class="entry" href="https://kazemi44468-bot.github.io/khadamatshahr/" target="_blank" rel="noopener"><span class="entry-copy"><span class="entry-name">شرکت خدمات شهری شهر بهشت</span><span class="entry-note">شرکت تابعه مرتبط با معاونت اول؛ درگاه عملیاتی فعال</span></span><span class="entry-mark">↗</span></a>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">سبد سایر شرکت‌های تابعه</span><span class="entry-note">شناسنامه، شخصیت حقوقی، ارتباط سازمانی و درگاه هر شرکت پس از تصویب ثبت می‌شود</span></span><span class="entry-mark">آتی</span></div>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">شرکت‌های تخصصی و سرمایه‌گذاری</span><span class="entry-note">ظرفیت پیش‌بینی‌شده در معماری مادر؛ فهرست قطعی هنوز تعیین نشده است</span></span><span class="entry-mark">آتی</span></div>
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">سایر شرکت‌های تابعه و تخصصی</span><span class="entry-note">ثبت شناسنامه، شخصیت حقوقی، ارتباط سازمانی و درگاه شرکت‌ها</span></span><span class="entry-mark">آتی</span></div>
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">مدیریت شعب استانی</span><span class="entry-note">سه مدیریت استانی؛ تعیین قلمرو جغرافیایی و درگاه‌های اختصاصی</span></span><span class="entry-mark">آتی</span></div>
 </div></details>
 
-<details class="group" aria-labelledby="group-branches"><summary class="group-head" id="group-branches"><span class="group-title">مدیریت شعب استانی <span class="group-count">۳ مدیریت</span></span><span class="drag-handle" draggable="true" tabindex="0" role="button" aria-label="جابجایی این بخش">⠿</span></summary><div class="items group-body">
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">مدیریت شعب استانی ۰۱</span><span class="entry-note">قلمرو جغرافیایی، مأموریت و درگاه اختصاصی در مرحله تعیین</span></span><span class="entry-mark">آتی</span></div>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">مدیریت شعب استانی ۰۲</span><span class="entry-note">قلمرو جغرافیایی، مأموریت و درگاه اختصاصی در مرحله تعیین</span></span><span class="entry-mark">آتی</span></div>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">مدیریت شعب استانی ۰۳</span><span class="entry-note">قلمرو جغرافیایی، مأموریت و درگاه اختصاصی در مرحله تعیین</span></span><span class="entry-mark">آتی</span></div>
+<details class="group" aria-labelledby="group-governance"><summary class="group-head" id="group-governance"><span class="group-title">راهبری، برنامه‌ریزی و نظارت</span><span class="drag-handle" draggable="true" tabindex="0" role="button" aria-label="جابجایی این بخش">⠿</span></summary><div class="items group-body">
+<a class="entry" href="centers/strategy/"><span class="entry-copy"><span class="entry-name">مرکز راهبرد و برنامه‌ریزی هلدینگ</span><span class="entry-note">راهبردها، اهداف، شاخص‌ها، برنامه‌ها، شیوه‌نامه‌ها و دستورالعمل‌ها</span></span><span class="entry-mark">↗</span></a>
+<a class="entry" href="centers/projects/"><span class="entry-copy"><span class="entry-name">مرکز پروژه‌ها و مدیریت یکپارچه کارها</span><span class="entry-note">مدیریت پروژه، وظایف، جمع‌سپاری، زمان‌بندی و گزارش پیشرفت</span></span><span class="entry-mark">↗</span></a>
+<a class="entry" href="centers/calendar/"><span class="entry-copy"><span class="entry-name">مرکز تقویم و مدیریت زمان</span><span class="entry-note">تقویم یکپارچه، جلسات، رویدادها، یادآوری‌ها و سررسیدها</span></span><span class="entry-mark">↗</span></a>
+<a class="entry" href="centers/followups/"><span class="entry-copy"><span class="entry-name">مرکز پیگیری‌ها و اجرای مصوبات</span><span class="entry-note">ثبت دستورها، ارجاع، مسئولیت، مهلت، پیشرفت و تعیین تکلیف</span></span><span class="entry-mark">↗</span></a>
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز رصد و اشراف هلدینگ</span><span class="entry-note">پایش عملکرد، پروژه‌ها، منابع، تعهدات، ریسک‌ها و هشدارهای مدیریتی</span></span><span class="entry-mark">آتی</span></div>
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز ارزیابی عملکرد و شایستگی</span><span class="entry-note">ارزیابی تحقق اهداف، عملکرد، شایستگی، کیفیت و اقدامات اصلاحی</span></span><span class="entry-mark">آتی</span></div>
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">مدیریت ریسک، حسابرسی و انطباق</span><span class="entry-note">کنترل داخلی، بازرسی، ریسک سازمانی و پیگیری اقدامات اصلاحی</span></span><span class="entry-mark">آتی</span></div>
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">موتور گردش کار سازمانی</span><span class="entry-note">گردش اسناد، درخواست‌ها، گزارش‌ها، مصوبات و تعاملات بین‌مجموعه‌ای</span></span><span class="entry-mark">آتی</span></div>
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">مدیریت سبد کسب‌وکار و سرمایه‌گذاری</span><span class="entry-note">شناسایی فرصت‌ها، امکان‌سنجی، تصمیم ورود و پایش سبد سرمایه‌گذاری</span></span><span class="entry-mark">آتی</span></div>
 </div></details>
 
-<details class="group" aria-labelledby="group-centers"><summary class="group-head" id="group-centers"><span class="group-title">مراکز مشترک و خدمات متمرکز <span class="group-count">مراکز تخصصی هلدینگ</span></span><span class="drag-handle" draggable="true" tabindex="0" role="button" aria-label="جابجایی این بخش">⠿</span></summary><div class="items group-body">
-<a class="entry" href="centers/knowledge/"><span class="entry-copy"><span class="entry-name">مرکز مدیریت دانش، تجربه و درس‌آموخته‌ها</span><span class="entry-note">درگاه عملیاتی اولیه؛ شامل ثبت و بازیابی دانش، شبکه خبرگان، گزارش‌ها، تألیف و انتشارات و بررسی محتوا</span></span><span class="entry-mark">↗</span></a>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز جامع حقوقی، داوری و مشارکت‌های حقوقی</span><span class="entry-note">مشاوره، قراردادها، دعاوی، داوری، امور ثبتی، پیشگیری از ریسک و خدمات حقوقی کارکنان</span></span><span class="entry-mark">آتی</span></div>
-<a class="entry" href="centers/projects/"><span class="entry-copy"><span class="entry-name">مرکز پروژه‌ها و مدیریت یکپارچه کارها</span><span class="entry-note">نسخه عملیاتی اولیه محلی؛ مدیریت پروژه، وظایف، جمع‌سپاری، خط مبنا و گزارش پیشرفت</span></span><span class="entry-mark">↗</span></a>
-<a class="entry" href="centers/calendar/"><span class="entry-copy"><span class="entry-name">مرکز تقویم و مدیریت زمان</span><span class="entry-note">تقویم یکپارچه هلدینگ، معاونت‌ها و شرکت‌ها؛ مدیریت رویدادها، جلسات، یادآوری‌ها و سررسیدها</span></span><span class="entry-mark">↗</span></a>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز رصد و اشراف هلدینگ</span><span class="entry-note">پایش عملکرد، پروژه‌ها، منابع، تعهدات، ریسک‌ها، هشدارها و نماهای تلفیقی مدیریتی</span></span><span class="entry-mark">آتی</span></div>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز ارزیابی و کانون ارزیابی و ارزشیابی</span><span class="entry-note">ارزیابی عملکرد، شایستگی، تحقق اهداف، کیفیت، نتایج و اقدامات اصلاحی</span></span><span class="entry-mark">آتی</span></div>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز تعاونی مصرف و حمایت کارکنان و بازنشستگان</span><span class="entry-note">تأمین کالا و خدمات، خرید گروهی و اقساطی، تخفیف، حمایت هدفمند و خدمات رفاهی</span></span><span class="entry-mark">آتی</span></div>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">درگاه یکپارچه خدمات مشترک</span><span class="entry-note">کاتالوگ خدمات، ثبت درخواست، ارجاع، پیگیری و سنجش کیفیت خدمت در یک ورودی واحد</span></span><span class="entry-mark">آتی</span></div>
-<a class="entry" href="centers/strategy/"><span class="entry-copy"><span class="entry-name">مرکز راهبرد و برنامه‌ریزی هلدینگ</span><span class="entry-note">مدیریت عملیاتی راهبردها، اهداف، شاخص‌ها، برنامه‌ها، شیوه‌نامه‌ها، دستورالعمل‌ها و پایش تحقق با ذخیره‌سازی محلی</span></span><span class="entry-mark">↗</span></a>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز آموزش و توسعه شایستگی</span><span class="entry-note">نیازسنجی، برنامه آموزشی، دوره‌ها، سوابق یادگیری، ارزیابی اثربخشی و گواهی‌ها</span></span><span class="entry-mark">آتی</span></div>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز تخصصی چندرسانه‌ای</span><span class="entry-note">مدیریت عکس، صوت و فیلم، فراداده، پردازش، نسخه‌های اصلی و مشتق و آرشیو رسانه‌ای</span></span><span class="entry-mark">آتی</span></div>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز مدیریت فایل و اسناد</span><span class="entry-note">چرخه عمر فایل و سند، طبقه‌بندی، نسخه معتبر، گردش تأیید، نگهداری و بازیابی</span></span><span class="entry-mark">آتی</span></div>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز اشتراک‌گذاری و تعاملات محتوایی</span><span class="entry-note">انتشار، کشف و دسترسی به محتوا، تعاملات و گزارش مصرف با حفظ مرجعیت فایل منبع</span></span><span class="entry-mark">آتی</span></div>
-
+<details class="group" aria-labelledby="group-knowledge"><summary class="group-head" id="group-knowledge"><span class="group-title">دانش، محتوا و ارتباطات</span><span class="drag-handle" draggable="true" tabindex="0" role="button" aria-label="جابجایی این بخش">⠿</span></summary><div class="items group-body">
+<a class="entry" href="centers/knowledge/"><span class="entry-copy"><span class="entry-name">مرکز مدیریت دانش، تجربه و درس‌آموخته‌ها</span><span class="entry-note">ثبت و بازیابی دانش، شبکه خبرگان، گزارش‌ها، تألیف و انتشارات</span></span><span class="entry-mark">↗</span></a>
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">آموزش و توسعه شایستگی</span><span class="entry-note">نیازسنجی، دوره‌ها، سوابق یادگیری و ارزیابی اثربخشی آموزش</span></span><span class="entry-mark">آتی</span></div>
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">مدیریت اسناد و محتوای سازمانی</span><span class="entry-note">مخزن اسناد، طبقه‌بندی، نسخه معتبر، گردش بررسی و بازیابی</span></span><span class="entry-mark">آتی</span></div>
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز چندرسانه‌ای و آرشیو رسانه</span><span class="entry-note">مدیریت تصویر، صوت، فیلم، پردازش، نسخه‌ها و آرشیو رسانه‌ای</span></span><span class="entry-mark">آتی</span></div>
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">انتشار و تعاملات محتوایی</span><span class="entry-note">کشف و انتشار کنترل‌شده محتوا، تعامل کاربران و گزارش مصرف</span></span><span class="entry-mark">آتی</span></div>
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">ارتباطات سازمانی</span><span class="entry-note">پیام‌رسانی و ارتباط متنی، صوتی و تصویری میان مجموعه‌ها</span></span><span class="entry-mark">آتی</span></div>
 </div></details>
 
-<details class="group" aria-labelledby="group-content-infrastructure"><summary class="group-head" id="group-content-infrastructure"><span class="group-title">زیرساخت داده، اسناد و محتوای چندرسانه‌ای <span class="group-count">۴ مرکز مکمل</span></span><span class="drag-handle" draggable="true" tabindex="0" role="button" aria-label="جابجایی این بخش">⠿</span></summary><div class="items group-body">
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز تخصصی چندرسانه‌ای هلدینگ</span><span class="entry-note">مدیریت چرخه عمر تصویر، صوت، ویدئو، رسانه‌های آموزشی، پردازش، نسخه‌ها و پخش</span></span><span class="entry-mark">آتی</span></div>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز مدیریت فایل و اسناد</span><span class="entry-note">مخزن اسناد و فایل‌ها، پوشه‌بندی، شناسنامه، طبقه‌بندی، نسخه‌ها، گردش بررسی و دسترسی امن</span></span><span class="entry-mark">آتی</span></div>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز اشتراک‌گذاری و تعاملات محتوایی</span><span class="entry-note">کاتالوگ و کشف محتوا، انتشار کنترل‌شده، قلمروهای مستقل، تعامل کاربران و گزارش مصرف</span></span><span class="entry-mark">آتی</span></div>
+<details class="group" aria-labelledby="group-services"><summary class="group-head" id="group-services"><span class="group-title">خدمات سازمانی و پشتیبانی</span><span class="drag-handle" draggable="true" tabindex="0" role="button" aria-label="جابجایی این بخش">⠿</span></summary><div class="items group-body">
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">مرکز حقوقی، داوری و امور قراردادها</span><span class="entry-note">مشاوره، قراردادها، دعاوی، داوری، امور ثبتی و پیشگیری از ریسک حقوقی</span></span><span class="entry-mark">آتی</span></div>
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">خدمات مشترک و پشتیبانی مجموعه</span><span class="entry-note">کاتالوگ خدمات، ثبت درخواست، ارجاع، پیگیری و سنجش کیفیت خدمت</span></span><span class="entry-mark">آتی</span></div>
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">تعاونی مصرف و حمایت کارکنان و بازنشستگان</span><span class="entry-note">خرید گروهی و اقساطی، تخفیف، تأمین کالا و حمایت رفاهی</span></span><span class="entry-mark">آتی</span></div>
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">راهبری سرمایه انسانی</span><span class="entry-note">پرونده کارکنان، جذب، انتصاب، عملکرد، جبران خدمات و جانشین‌پروری</span></span><span class="entry-mark">آتی</span></div>
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">نظام مالی و تخصیص منابع</span><span class="entry-note">بودجه، اعتبار، خزانه‌داری، حسابداری، تدارکات و گزارشگری مالی</span></span><span class="entry-mark">آتی</span></div>
 </div></details>
 
-<details class="group" aria-labelledby="group-platforms"><summary class="group-head" id="group-platforms"><span class="group-title">راهبری، حکمرانی و سامانه‌های مدیریتی</span><span class="drag-handle" draggable="true" tabindex="0" role="button" aria-label="جابجایی این بخش">⠿</span></summary><div class="items group-body">
-
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">راهبری سامانه‌ها و یکپارچگی سازمانی</span><span class="entry-note">معماری سازمانی، مالکیت سامانه‌ها، استانداردها، قراردادهای تبادل و کنترل اتصال</span></span><span class="entry-mark">آتی</span></div>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">فهرست سامانه‌ها و بانک‌های اطلاعاتی</span><span class="entry-note">شناسنامه سامانه‌ها، بانک‌های مرجع و تخصصی، مالک داده و وضعیت اتصال</span></span><span class="entry-mark">آتی</span></div>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">موتور یکپارچه گردش کار سازمانی</span><span class="entry-note">گردش اسناد، گزارش‌ها، درخواست‌ها، مصوبات، پروژه‌ها، منابع و تعاملات بین‌مجموعه‌ای</span></span><span class="entry-mark">آتی</span></div>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">نظام مالی، بودجه‌ریزی و تخصیص منابع</span><span class="entry-note">بودجه، اعتبار، خزانه‌داری، حسابداری، تدارکات، دارایی و گزارشگری مالی</span></span><span class="entry-mark">آتی</span></div>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">نظام راهبری سرمایه انسانی</span><span class="entry-note">ساختار و پرونده کارکنان، جذب، انتصاب، عملکرد، آموزش، جبران خدمات و جانشین‌پروری</span></span><span class="entry-mark">آتی</span></div>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">مدیریت ریسک، حسابرسی و انطباق</span><span class="entry-note">ریسک سازمانی، کنترل داخلی، بازرسی، یافته‌ها، عدم انطباق و اقدامات اصلاحی</span></span><span class="entry-mark">آتی</span></div>
-<a class="entry" href="centers/followups/"><span class="entry-copy"><span class="entry-name">مرکز پیگیری‌ها و اجرای مصوبات</span><span class="entry-note">گردآوری دستورها و مصوبات با منشأ مشخص، ارجاع، مسئول، مهلت، پیشرفت، تاریخچه و تعیین تکلیف</span></span><span class="entry-mark">↗</span></a>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">ارتباطات سازمانی</span><span class="entry-note">پیام‌رسانی، ارتباط متنی، صوتی و تصویری و گروه‌های بین‌مجموعه‌ای با دسترسی کنترل‌شده</span></span><span class="entry-mark">آتی</span></div>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">فناوری اطلاعات، امنیت و پشتیبانی زیرساخت</span><span class="entry-note">هویت و دسترسی، تجهیزات، رخدادها، پشتیبانی، امنیت اطلاعات و تداوم خدمت</span></span><span class="entry-mark">آتی</span></div>
-<div class="entry pending"><span class="entry-copy"><span class="entry-name">مدیریت سبد کسب‌وکار و سرمایه‌گذاری</span><span class="entry-note">شناسایی فرصت، امکان‌سنجی، تصمیم ورود، پایش سبد و مدیریت توسعه</span></span><span class="entry-mark">آتی</span></div>
+<details class="group" aria-labelledby="group-technology"><summary class="group-head" id="group-technology"><span class="group-title">فناوری، داده و زیرساخت دیجیتال</span><span class="drag-handle" draggable="true" tabindex="0" role="button" aria-label="جابجایی این بخش">⠿</span></summary><div class="items group-body">
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">راهبری سامانه‌ها و یکپارچگی سازمانی</span><span class="entry-note">معماری سامانه‌ها، مالکیت، استانداردها و قراردادهای تبادل داده</span></span><span class="entry-mark">آتی</span></div>
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">بانک‌های اطلاعاتی و داده‌های مرجع</span><span class="entry-note">شناسنامه بانک‌ها، مالک داده، منابع مرجع و وضعیت اتصال</span></span><span class="entry-mark">آتی</span></div>
+<div class="entry pending"><span class="entry-copy"><span class="entry-name">فناوری اطلاعات و امنیت زیرساخت</span><span class="entry-note">هویت و دسترسی، تجهیزات، رخدادها، امنیت و تداوم خدمت</span></span><span class="entry-mark">آتی</span></div>
 </div></details>
 </nav></section></main>
 <script>
