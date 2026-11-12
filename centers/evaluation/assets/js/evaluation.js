@@ -80,11 +80,24 @@ function stat(id,n){const el=$('#'+id);if(el)el.textContent=fa(n);}
 function render(){
  const data=filtered(),all=[...demo,...records],people=[...demoAssessors,...assessors];
  stat('metric-total',data.length);stat('metric-org',data.filter(x=>x.domain==='سازمانی').length);stat('metric-center',data.filter(x=>x.domain==='کانون').length);stat('metric-perf',data.filter(x=>x.domain==='عملکرد').length);stat('metric-assessors',people.length);stat('recent-count',all.length);
- renderCharts(data);renderTables(all,people);renderOrganizationMap(data);
+ renderCharts(data);renderTables(all,people);renderOrganizationMap(data);renderAssessorProfiles();
 }
 function renderTables(all,people){
  const body=$('#case-rows');if(body){const sorted=all.slice().sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));body.innerHTML=sorted.slice(0,12).map(x=>'<tr><td>'+esc(x.title)+(x.sample?' <small class="sample-label">نمونه</small>':'')+'</td><td>'+esc(x.domain)+'</td><td>'+esc(x.scopeLabel||scopeById(x.scope).label)+'</td><td><span class="tag">'+esc(x.status)+'</span></td><td>'+fmtDate(x.createdAt)+'</td></tr>').join('');}
  const ab=$('#assessor-rows');if(ab){ab.innerHTML=people.map(x=>'<tr><td>'+esc(x.name||x.title)+'</td><td>'+esc(x.role)+'</td><td>'+esc(x.specialty)+'</td><td><span class="tag">'+esc(x.qualification)+'</span></td><td>'+esc(x.experience||'—')+'</td></tr>').join('');}
+ const dr=$('#domain-record-rows');
+ if(dr){
+  let rows=all.slice();
+  if(page==='organization')rows=rows.filter(x=>x.domain==='سازمانی');
+  else if(page==='assessment')rows=rows.filter(x=>x.domain==='کانون');
+  else if(page==='performance')rows=rows.filter(x=>x.domain==='عملکرد');
+  else if(page==='programs')rows=rows.filter(x=>x.domain==='برنامه و پروژه');
+  else if(page==='services')rows=rows.filter(x=>x.domain==='خدمت و فرایند');
+  else if(page==='improvement')rows=rows.filter(x=>x.status==='نیازمند اقدام');
+  else if(page==='standards')rows=rows.filter(x=>['سازمانی','کانون','عملکرد'].includes(x.domain));
+  rows=rows.slice().sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).slice(0,15);
+  dr.innerHTML=rows.map(x=>'<tr><td>'+esc(x.id)+' <small class="sample-label">نمونه</small></td><td>'+esc(x.title)+'</td><td>'+esc(x.scopeLabel||scopeById(x.scope).label)+'</td><td>'+fa(x.score)+'</td><td><span class="tag">'+esc(x.status)+'</span></td><td>'+esc(x.evidence||'مستندات و شواهد پرونده')+'</td></tr>').join('')||'<tr><td colspan="6" class="empty-row">برای این حوزه در فیلتر انتخاب‌شده رکوردی وجود ندارد.</td></tr>';
+ }
 }
 const colors=['#315f86','#b99568','#82729c','#d17e69','#6c9c80','#6e91a9'];
 function horizontalBars(labels,values){const max=Math.max(1,...values);return '<div class="chart-bars">'+labels.map((n,i)=>'<div class="chart-bar-row"><span>'+esc(n)+'</span><div class="chart-bar-track"><span style="width:'+(values[i]/max*100)+'%;background:'+colors[i%colors.length]+'"></span></div><b>'+fa(values[i])+'</b></div>').join('')+'</div>';}
