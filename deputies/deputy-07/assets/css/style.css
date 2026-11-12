@@ -5625,3 +5625,7 @@ html body.ops-page .ops-header.is-compact .ops-brand img.ops-logo{
     flex-basis:50px!important;width:50px!important;height:30px!important;min-width:50px!important;min-height:30px!important;padding:2px!important;
   }
 }
+
+
+/* مرکز دسترسی شش‌گانه داشبورد؛ چیدمان متوازن در دسکتاپ */
+@media(min-width:901px){body.ops-page .home-quick-access{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
