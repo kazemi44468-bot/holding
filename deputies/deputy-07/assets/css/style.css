@@ -5540,3 +5540,31 @@ html body.ops-page .ops-header.is-compact .ops-brand .ops-logo{width:46px!import
 @media(max-width:700px){
   .ops-header .ops-logo{width:36px;height:23px}
 }
+
+
+/* هماهنگ‌سازی نشان پرچم با الگوی سربرگ مرکز مدیریت دانش هلدینگ */
+html body.ops-page .ops-header .ops-brand .ops-logo{
+  display:block!important;
+  flex:0 0 38px!important;
+  width:38px!important;
+  height:38px!important;
+  min-width:38px!important;
+  min-height:38px!important;
+  box-sizing:border-box!important;
+  padding:8px 3px!important;
+  object-fit:contain!important;
+  background:#fff!important;
+  background-image:none!important;
+  border:1px solid #c5a779!important;
+  border-radius:5px!important;
+  box-shadow:none!important;
+  text-indent:0!important;
+  color:transparent!important;
+  overflow:hidden!important;
+}
+html body.ops-page .ops-header.is-compact .ops-brand .ops-logo{
+  flex-basis:34px!important;width:34px!important;height:34px!important;min-width:34px!important;min-height:34px!important;padding:7px 2px!important;
+}
+@media(max-width:560px){
+  html body.ops-page .ops-header .ops-brand .ops-logo{flex-basis:34px!important;width:34px!important;height:34px!important;min-width:34px!important;min-height:34px!important;padding:7px 2px!important}
+}
