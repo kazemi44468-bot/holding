@@ -5600,3 +5600,28 @@ html body.ops-page .ops-header.is-compact .ops-brand img.ops-logo{
     flex-basis:40px!important;width:40px!important;height:40px!important;min-width:40px!important;min-height:40px!important;padding:6px 3px!important;
   }
 }
+
+
+/* نسبت افقی واقعی پرچم ایران؛ قاب مستطیلی متناسب با نسبت ۷ به ۴ */
+html body.ops-page header.ops-header .ops-header-inner .ops-brand img.ops-logo{
+  flex:0 0 56px!important;
+  width:56px!important;
+  height:34px!important;
+  min-width:56px!important;
+  min-height:34px!important;
+  padding:2px!important;
+  object-fit:contain!important;
+  border-radius:5px!important;
+  border:1px solid #c5a779!important;
+  background:#fff!important;
+  background-image:none!important;
+  box-shadow:0 2px 7px rgba(23,52,79,.14)!important;
+}
+html body.ops-page .ops-header.is-compact .ops-brand img.ops-logo{
+  flex-basis:52px!important;width:52px!important;height:31px!important;min-width:52px!important;min-height:31px!important;padding:2px!important;
+}
+@media(max-width:560px){
+  html body.ops-page header.ops-header .ops-header-inner .ops-brand img.ops-logo{
+    flex-basis:50px!important;width:50px!important;height:30px!important;min-width:50px!important;min-height:30px!important;padding:2px!important;
+  }
+}
