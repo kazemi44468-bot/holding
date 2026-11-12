@@ -27,14 +27,16 @@
 - [مرکز مدیریت دانش](https://kazemi44468-bot.github.io/holding/centers/knowledge/)
 
 - [مرکز پروژه‌ها](https://kazemi44468-bot.github.io/holding/centers/projects/)
-- [مرکز ارزیابی و کانون ارزیابی](https://kazemi44468-bot.github.io/holding/centers/evaluation/)\n- [مرکز جامع حقوقی](https://kazemi44468-bot.github.io/holding/pages/holding-legal-center.html)
+- [مرکز ارزیابی و کانون ارزیابی](https://kazemi44468-bot.github.io/holding/centers/evaluation/)
+- [مرکز جامع حقوقی](https://kazemi44468-bot.github.io/holding/pages/holding-legal-center.html)
 - [معرفی مرکز حقوقی](https://kazemi44468-bot.github.io/holding/pages/holding-legal-introduction.html)
 
 ## مستندات توسعه
 
 - [گزارش وضعیت، سوابق پیاده‌سازی و نقشه راه](docs/DEVELOPMENT-STATUS.md)
 - [معماری زیرساخت ذخیره‌سازی محلی و پشتیبان‌گیری](docs/LOCAL-STORAGE-ARCHITECTURE.md)
-- [مستند فنی و قابلیت‌های نسخه اولیه مرکز پروژه‌ها](docs/PROJECT-CENTER-IMPLEMENTATION.md)\n- [مستند اجرایی مرکز ارزیابی و کانون ارزیابی](docs/EVALUATION-CENTER-IMPLEMENTATION.md)
+- [مستند فنی و قابلیت‌های نسخه اولیه مرکز پروژه‌ها](docs/PROJECT-CENTER-IMPLEMENTATION.md)
+- [مستند اجرایی مرکز ارزیابی و کانون ارزیابی](docs/EVALUATION-CENTER-IMPLEMENTATION.md)
 - [طرح مادر هلدینگ](https://kazemi44468-bot.github.io/tarhha/pages/holding-tarh.html)
 - [ماتریس مراکز مشترک و تعاملات](https://kazemi44468-bot.github.io/tarhha/pages/holding-integration-matrix.html)
 - [طرح جامع مرکز پروژه‌ها](https://kazemi44468-bot.github.io/tarhha/pages/holding-project-center.html)
