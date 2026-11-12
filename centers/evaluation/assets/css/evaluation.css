@@ -177,3 +177,9 @@ body{padding-top:0;background:radial-gradient(ellipse at 8% 0%,#eaf1f2 0,transpa
 .trend-svg text{font-family:Vazirmatn,sans-serif;fill:#738496;font-size:10px}
 @media(max-width:850px){.nav{overflow-x:auto;overflow-y:hidden}.nav a,.nav-group summary{padding:9px 9px;font-size:10px}.nav-submenu{position:fixed;top:auto;right:10px;left:10px;max-width:320px}.chart-grid{grid-template-columns:1fr}}
 @media(max-width:560px){.topinner{padding:10px 13px;align-items:center}.brandmark{width:35px;height:35px}.brand h1,.brand-copy h1{font-size:14px}.brand-copy small{font-size:8px}.brand-subtitle{font-size:8px}.top-context{display:none}.toplink{font-size:9px;padding:5px 7px}.nav{padding:0 8px}.nav a,.nav-group summary{padding:9px 8px;font-size:9px}.footer-inner{gap:8px}.footer-flag{width:28px;height:20px;flex-basis:28px}.footer-links{gap:7px 10px}.footer-links a{font-size:9px}.footer-endmark{display:none}.filter-row label{min-width:100%;}.chart-bar-row{grid-template-columns:90px 1fr 28px}}
+
+
+.chart-subhead{font-size:10px;color:#718397;margin:10px 0 4px}
+.sample-label{font-size:8px;color:#98784a;border:1px solid #eadcc2;border-radius:10px;padding:1px 5px;white-space:nowrap}
+.app-status{padding:9px 12px;margin:8px 0;border:1px solid #dce5ed;background:#edf5f4;color:#356d67;border-radius:8px;font-size:10px}
+.app-status.bad{background:#fbefef;border-color:#ebd6d6;color:#9d4d4d}
