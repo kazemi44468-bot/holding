@@ -226,7 +226,7 @@ function overview(){
  '<div class="lw-grid" style="margin-top:11px"><section class="lw-panel"><h3>مهلت‌ها و رویدادهای نزدیک</h3>'+(eventItems.length?'<div class="lw-list">'+eventItems.map(x=>'<div class="lw-row"><div><strong>'+esc(x.title)+'</strong><small>'+esc(x.label)+' · '+fmtDate(x.date)+'</small></div>'+badge(x.late?'معوق':'سررسید')+'</div>').join('')+'</div>':'<div class="lw-empty"><strong>مهلت ثبت‌شده‌ای وجود ندارد</strong></div>')+'</section><section class="lw-panel"><h3>تفکیک اطلاعات بر پایه ساختار سازمانی</h3><div class="lw-list">'+counts.map(x=>'<div class="lw-row"><strong>'+x[0]+'</strong><span class="lw-badge">'+fa(x[1])+'</span></div>').join('')+'</div></section></div>';
 }
 function performanceView(){
- const keys=['requests','cases','contracts','advice','arbitration','employee','experts','risks','compliance','knowledge'];
+ const keys=['requests','cases','contracts','advice','arbitration','employee','experts','sessions','risks','compliance','knowledge'];
  const labels={requests:'درخواست‌ها',cases:'پرونده‌ها',contracts:'قراردادها',advice:'مشاوره‌ها',arbitration:'داوری و سازش',employee:'حمایت کارکنان',experts:'متخصصان',sessions:'جلسات',risks:'ریسک‌ها',compliance:'انطباق',knowledge:'اسناد حقوقی'};
  const counts=keys.map(k=>[labels[k],scopeRows(k).length]);
  const total=counts.reduce((a,x)=>a+x[1],0);
