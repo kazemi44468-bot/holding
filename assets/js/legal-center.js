@@ -34,7 +34,12 @@ const defs={
  {name:'org',label:'شخصیت حقوقی ذی‌نفع',type:'org',required:true},{name:'caseType',label:'نوع پرونده',type:'select',options:['حقوقی','کیفری','اداری و دیوان عدالت','کار و تأمین اجتماعی','ثبتی','ملکی','داوری و میانجیگری','مطالبه وجه','سایر']},
  {name:'forum',label:'مرجع رسیدگی / شعبه'},{name:'opposingParty',label:'طرف مقابل'},
  {name:'lawyer',label:'وکیل / متخصص مسئول'},{name:'owner',label:'مسئول پیگیری داخلی'},
- {name:'status',label:'وضعیت پرونده',type:'select',options:['در حال بررسی اولیه','آماده‌سازی و ثبت','در جریان رسیدگی','در انتظار اقدام مرجع','در مرحله اجرا','در حال مذاکره / سازش','متوقف','مختومه']},
+ {name:'status',label:'مرحله جاری پرونده',type:'select',options:['ثبت و آماده‌سازی','در جریان رسیدگی','صدور رأی / حکم','اجرای حکم','در حال مذاکره / سازش','متوقف','مختومه']},
+ {name:'filedDate',label:'تاریخ ثبت / آغاز پرونده',type:'date',required:true},
+ {name:'judgmentDate',label:'تاریخ صدور رأی / حکم',type:'date'},
+ {name:'executionStartDate',label:'تاریخ آغاز اجرای حکم',type:'date'},
+ {name:'executionEndDate',label:'تاریخ پایان اجرای حکم',type:'date'},
+ {name:'closedDate',label:'تاریخ مختومه‌شدن پرونده',type:'date'},
  {name:'priority',label:'اولویت',type:'select',options:['عادی','مهم','فوری','بحرانی']},
  {name:'nextDate',label:'نزدیک‌ترین مهلت / جلسه',type:'date'},{name:'claimValue',label:'ارزش خواسته / مبلغ (تومان)',type:'number'},
  {name:'confidentiality',label:'سطح محرمانگی',type:'select',options:['عادی','محرمانه','محرمانه ویژه']},
@@ -143,6 +148,18 @@ async function syncCalendar(){
  for(const old of owned)if(!keep.has(old.id))await window.HoldingLocalDataVault.remove(old.id);
  for(const item of desired)await window.HoldingLocalDataVault.put(scope,item);
 }
+async function seedDemoCases(){
+ if(db.demoSeedVersion||db.cases.length)return;
+ const demo=[
+ {id:'CASE-DEMO-001',demo:true,title:'اختلاف قراردادی در اجرای تعهدات پیمان',caseNumber:'نمونه-۱۴۰۵-۰۰۱',org:'CMP-01-001',caseType:'حقوقی',forum:'مرجع قضایی صالح ـ نمونه',opposingParty:'طرف قرارداد ـ نمونه',lawyer:'وکیل همکار ـ نمونه',owner:'کارشناس حقوقی مرکز',status:'در جریان رسیدگی',filedDate:'2026-03-21',judgmentDate:'',executionStartDate:'',executionEndDate:'',closedDate:'',priority:'مهم',nextDate:'2026-11-24',claimValue:'8500000000',confidentiality:'عادی',summary:'نمونه نمایشی برای نمایش مسیر ثبت، تبادل لوایح و پیگیری رسیدگی؛ اطلاعات طرفین و شماره‌ها واقعی نیست.'},
+ {id:'CASE-DEMO-002',demo:true,title:'مطالبه مطالبات و خسارت تأخیر تأدیه',caseNumber:'نمونه-۱۴۰۴-۰۰۲',org:'HOLDING',caseType:'مطالبه وجه',forum:'واحد اجرای احکام ـ نمونه',opposingParty:'بدهکار تجاری ـ نمونه',lawyer:'وکیل همکار ـ نمونه',owner:'مسئول پیگیری ستاد',status:'اجرای حکم',filedDate:'2025-10-01',judgmentDate:'2026-05-20',executionStartDate:'2026-06-10',executionEndDate:'',closedDate:'',priority:'فوری',nextDate:'2026-11-20',claimValue:'4200000000',confidentiality:'محرمانه',summary:'نمونه نمایشی؛ رأی صادر شده و پرونده در مرحله اجرای حکم و وصول محکوم‌به قرار دارد.'},
+ {id:'CASE-DEMO-003',demo:true,title:'اختلاف ملکی و الزام به ایفای تعهد',caseNumber:'نمونه-۱۴۰۳-۰۰۳',org:'CMP-01-001',caseType:'ملکی',forum:'شعبه حقوقی ـ نمونه',opposingParty:'مالک / متعهد ـ نمونه',lawyer:'وکیل همکار ـ نمونه',owner:'کارشناس حقوقی شرکت',status:'مختومه',filedDate:'2024-09-22',judgmentDate:'2025-02-01',executionStartDate:'2025-02-15',executionEndDate:'2025-08-30',closedDate:'2025-09-01',priority:'عادی',nextDate:'',claimValue:'12000000000',confidentiality:'عادی',summary:'نمونه نمایشی مختومه؛ اجرای مفاد حکم خاتمه یافته و مدارک اختتام در پرونده بایگانی شده است.'},
+ {id:'CASE-DEMO-004',demo:true,title:'اعتراض به تصمیم اداری و درخواست ابطال',caseNumber:'نمونه-۱۴۰۵-۰۰۴',org:'HOLDING',caseType:'اداری و دیوان عدالت',forum:'دیوان عدالت اداری ـ نمونه',opposingParty:'مرجع اداری ـ نمونه',lawyer:'متخصص حقوق عمومی ـ نمونه',owner:'مسئول حقوقی ستاد',status:'ثبت و آماده‌سازی',filedDate:'2026-10-28',judgmentDate:'',executionStartDate:'',executionEndDate:'',closedDate:'',priority:'مهم',nextDate:'2026-11-29',claimValue:'0',confidentiality:'محرمانه',summary:'نمونه نمایشی؛ مدارک اولیه گردآوری شده و پرونده در مرحله تکمیل و آماده‌سازی ثبت قرار دارد.'}
+ ];
+ db.cases.push(...demo);db.demoSeedVersion=1;
+ for(const r of demo)db.events.unshift({id:makeId('EVT'),at:now(),key:'cases',recordId:r.id,action:'ثبت نمونه نمایشی',title:r.title,note:'داده نمایشی و قابل ویرایش'});
+ await save();
+}
 function countOpen(key,closed){return rows(key).filter(x=>!closed.includes(x.status)).length}
 function dateOverdue(x){return x&&x<today()}
 function upcoming(){
@@ -180,7 +197,7 @@ function overview(){
  const allScoped=keys.flatMap(k=>scopeRows(k).map(r=>({key:k,record:r})));
  const chart=(items,max)=>items.map(x=>'<div class="lw-chart-row"><span>'+esc(x[0])+'</span><div class="lw-chart-track"><span style="width:'+((max?x[1]/max*100:0))+'%"></span></div><b>'+fa(x[1])+'</b></div>').join('');
  const maxCategory=Math.max(1,...counts.map(x=>x[1]));
- const statusItems=[['پرونده‌های در جریان',openCases],['پرونده‌های مختومه',closedCases],['درخواست‌های باز',openRequests],['درخواست‌های پاسخ‌داده‌شده یا مختومه',closedRequests]];
+ const caseStages=['ثبت و آماده‌سازی','در جریان رسیدگی','صدور رأی / حکم','اجرای حکم','در حال مذاکره / سازش','متوقف','مختومه'];const statusItems=caseStages.map(stage=>[stage,scopeRows('cases').filter(x=>x.status===stage).length]).concat([['درخواست‌های باز',openRequests],['درخواست‌های تعیین‌تکلیف‌شده',closedRequests]]);
  const statusMax=Math.max(1,...statusItems.map(x=>x[1]));
  const orgItems=orgs().map(o=>[o.label,allScoped.filter(x=>{const id=orgIdOf(x.record);return id===o.id||((orgRegistry.deputies||[]).some(d=>d.organization_id===o.id)&&(orgRegistry.companies||[]).some(c=>c.organization_id===id&&c.parent_organization_id===o.id))}).length]).filter(x=>x[1]>0||orgScope==='all');
  const unassignedCount=allScoped.filter(x=>!orgIdOf(x.record)).length;
@@ -236,6 +253,7 @@ function formHtml(key,id){
  '<div class="lw-field full"><label>یادداشت داخلی / سابقه اقدام</label><textarea name="note" placeholder="شرح اقدام، تصمیم، تماس یا تغییر مهم؛ در تاریخچه ثبت می‌شود.">'+esc(old?.note||'')+'</textarea></div>'+
  '<div class="lw-field full lw-form-actions"><button class="lw-btn" type="submit">ذخیره اطلاعات</button><button class="lw-btn light" type="button" data-action="cancel-form">انصراف</button></div></form></div>';
 }
+function caseTimeline(x){const parts=[['ثبت',x.filedDate],['حکم',x.judgmentDate],['شروع اجرا',x.executionStartDate],['پایان اجرا',x.executionEndDate],['اختتام',x.closedDate]].filter(p=>p[1]);return parts.map(p=>p[0]+' '+fmtDate(p[1])).join(' ← ')||'تاریخچه زمانی تکمیل نشده';}
 function tableHtml(key){
  const def=defs[key],items=rows(key).filter(x=>!query||JSON.stringify(x).toLowerCase().includes(query.toLowerCase()));
  if(!items.length)return '<div class="lw-empty"><strong>موردی ثبت نشده است</strong></div>';
@@ -243,7 +261,7 @@ function tableHtml(key){
  const subField={requests:'serviceType',cases:'caseNumber',contracts:'contractNo',advice:'subject',arbitration:'method',employee:'serviceType',experts:'specialty',risks:'category',compliance:'category',knowledge:'docType'}[key];
  const statusField='status';
  const dateField={requests:'dueDate',cases:'nextDate',contracts:'endDate',advice:'dueDate',arbitration:'dueDate',employee:'dueDate',experts:'',risks:'dueDate',compliance:'dueDate',knowledge:'reviewDate'}[key];
- return '<div class="lw-table-wrap"><table class="lw-table"><thead><tr><th>عنوان / شناسه</th><th>حوزه / مرجع</th><th>واحد / مسئول</th><th>وضعیت</th><th>تاریخ مهم</th><th>عملیات</th></tr></thead><tbody>'+items.map(x=>'<tr><td><strong>'+esc(x[titleField])+'</strong><small>'+esc(x.id)+'</small></td><td>'+esc(x[subField]||x.caseType||x.contractType||'—')+'</td><td>'+esc(x.org?orgLabel(x.org):(x.requester||x.owner||'—'))+'</td><td>'+badge(x[statusField])+'</td><td>'+fmtDate(x[dateField])+'</td><td><div class="lw-actions"><button data-action="edit" data-key="'+key+'" data-id="'+esc(x.id)+'">ویرایش</button><button class="delete" data-action="delete" data-key="'+key+'" data-id="'+esc(x.id)+'">حذف</button></div></td></tr>').join('')+'</tbody></table></div>';
+ return '<div class="lw-table-wrap"><table class="lw-table"><thead><tr><th>عنوان / شناسه</th><th>حوزه / مرجع</th><th>واحد / مسئول</th><th>وضعیت</th><th>تاریخ مهم</th><th>عملیات</th></tr></thead><tbody>'+items.map(x=>'<tr><td><strong>'+esc(x[titleField])+'</strong><small>'+esc(x.id)+'</small></td><td>'+esc(x[subField]||x.caseType||x.contractType||'—')+'</td><td>'+esc(x.org?orgLabel(x.org):(x.requester||x.owner||'—'))+'</td><td>'+badge(x[statusField])+(x.demo?'<small class="lw-demo-mark">نمونه نمایشی</small>':'')+'</td><td>'+fmtDate(x[dateField])+(key==='cases'?'<small>'+caseTimeline(x)+'</small>':'')+'</td><td><div class="lw-actions"><button data-action="edit" data-key="'+key+'" data-id="'+esc(x.id)+'">ویرایش</button><button class="delete" data-action="delete" data-key="'+key+'" data-id="'+esc(x.id)+'">حذف</button></div></td></tr>').join('')+'</tbody></table></div>';
 }
 function listView(key){
  const def=defs[key];
@@ -311,5 +329,5 @@ app.addEventListener('click',async e=>{
 app.addEventListener('submit',async e=>{if(e.target.id!=='lw-record-form')return;e.preventDefault();if(!e.target.reportValidity())return;const btn=e.target.querySelector('[type=submit]');btn.disabled=true;try{await saveForm(e.target)}catch(err){console.error(err);toast(err.message||'ذخیره اطلاعات انجام نشد.','warn');btn.disabled=false;}});
 app.addEventListener('input',e=>{if(e.target.id==='lw-search'){query=e.target.value;const old=$('#lw-view');if(old)old.innerHTML=tableHtml(tab)}});
 app.addEventListener('change',e=>{if(e.target.id==='legal-org-scope'){orgScope=e.target.value;render();}});
-(async()=>{await load();try{await syncCalendar()}catch(e){console.warn('Calendar sync skipped',e)}render();})();
+(async()=>{await load();await seedDemoCases();try{await syncCalendar()}catch(e){console.warn('Calendar sync skipped',e)}render();})();
 })();
