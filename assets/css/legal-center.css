@@ -102,3 +102,22 @@
 .pc-days button{border:1px solid transparent;border-radius:5px;background:#f6f8fa;color:#415b73;cursor:pointer}
 .pc-days button:hover,.pc-days button.selected{background:#1d4969;color:#fff;border-color:#1d4969}
 @media(max-width:650px){.lw-toolbar #legal-org-scope{min-width:100%;max-width:100%}.lw-filter-label{width:100%}.lw-wide{grid-column:auto}}
+
+/* رنگ‌بندی زنده و خوانا برای شاخص‌ها و نمودارهای مرکز حقوقی */
+.lw-chart-row:nth-child(6n+1) .lw-chart-track span{background:#2686b8}
+.lw-chart-row:nth-child(6n+2) .lw-chart-track span{background:#e39a3b}
+.lw-chart-row:nth-child(6n+3) .lw-chart-track span{background:#26a28a}
+.lw-chart-row:nth-child(6n+4) .lw-chart-track span{background:#8b70c7}
+.lw-chart-row:nth-child(6n+5) .lw-chart-track span{background:#dc7181}
+.lw-chart-row:nth-child(6n) .lw-chart-track span{background:#5b9dce}
+.lw-metric:nth-child(6n+1){border-top:3px solid #2686b8}.lw-metric:nth-child(6n+2){border-top:3px solid #e39a3b}
+.lw-metric:nth-child(6n+3){border-top:3px solid #26a28a}.lw-metric:nth-child(6n+4){border-top:3px solid #8b70c7}
+.lw-metric:nth-child(6n+5){border-top:3px solid #dc7181}.lw-metric:nth-child(6n){border-top:3px solid #5b9dce}
+.lw-metric strong{color:#28749d}.lw-panel h3{color:#286b91}
+.lw-demo-mark{display:inline-block!important;margin-top:3px;padding:1px 6px;border-radius:12px;background:#fff4df;color:#9a6a21!important;font-size:8px!important}
+.legal-simulator{padding:18px}.legal-sim-result{margin-top:18px;padding:16px;border:1px solid #dbe6ed;border-radius:9px;background:#fff}
+.legal-sim-result h3{color:#286b91}.legal-sim-result h4{margin:12px 0 6px;color:#875e9e;font-size:12px}
+.legal-sim-result li{margin:5px 0;color:#536a7c;font-size:10.5px;line-height:2}
+.legal-sim-columns{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.legal-sim-result p{color:#526a7c;font-size:10.5px;line-height:2}
+@media(max-width:650px){.legal-sim-columns{grid-template-columns:1fr}}
