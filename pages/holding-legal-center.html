@@ -7,7 +7,7 @@
 <meta name="description" content="میزکار عملیاتی مرکز جامع حقوقی هلدینگ برای ثبت و مدیریت درخواست‌ها، پرونده‌ها، قراردادها، مشاوره‌ها، متخصصان و ریسک‌های حقوقی.">
 <title>مرکز جامع حقوقی، داوری و مشارکت‌های حقوقی | هلدینگ</title>
 <link rel="stylesheet" href="../assets/css/product-system.css?v=20261112-01">
-<link rel="stylesheet" href="../assets/css/legal-center.css?v=20261112-03">
+<link rel="stylesheet" href="../assets/css/legal-center.css?v=20261112-04">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="icon" href="../favicon.ico" sizes="any">
 <style>
@@ -51,13 +51,12 @@
 </header>
 <div class="navwrap">
  <nav class="nav" aria-label="ناوبری مرکز حقوقی">
-  <a href="#overview" class="active">نمای کلی</a>
-  <a href="#workspace">میزکار حقوقی</a>
-  <a href="#services">حوزه‌های خدمت</a>
-  <a href="holding-legal-center-reference.html">سند راهبری مرکز</a>
-  <a href="../centers/projects/">مرکز پروژه‌ها</a>
-  <a href="../centers/calendar/">مرکز تقویم</a>
-  <a href="../centers/followups/">مرکز پیگیری‌ها</a>
+  <a href="#overview" data-nav="overview" class="active"><span class="nav-symbol">⌂</span><span>نمای کلی</span></a>
+  <a href="holding-legal-center-reference.html" data-nav="about"><span class="nav-symbol">ⓘ</span><span>معرفی</span></a>
+  <a href="#workspace" data-nav="workspace"><span class="nav-symbol">▤</span><span>میزکار حقوقی</span></a>
+  <a href="../centers/projects/"><span class="nav-symbol">▦</span><span>مرکز پروژه‌ها</span></a>
+  <a href="../centers/calendar/"><span class="nav-symbol">▦</span><span>مرکز تقویم</span></a>
+  <a href="../centers/followups/"><span class="nav-symbol">✓</span><span>مرکز پیگیری‌ها</span></a>
  </nav>
 </div>
 <main class="container" id="overview">
@@ -71,6 +70,7 @@
    <h2 class="hero-title">صیانت از حقوق و منافع هلدینگ؛ از پیشگیری تا حل‌وفصل اختلاف</h2>
    <p class="hero-copy">این مرکز نقطه ورود واحد خدمات حقوقی مجموعه است؛ درخواست‌های حقوقی را دریافت و پیگیری می‌کند، پرونده‌ها و قراردادها را سامان می‌دهد، دسترسی به مشاوره و متخصصان را مدیریت می‌کند و مهلت‌ها و ریسک‌های حقوقی را در یک میزکار متمرکز نگه می‌دارد.</p>
    <div class="capability-pills"><span>پرونده‌ها و دعاوی</span><span>قراردادها و تعهدات</span><span>مشاوره و نظریات</span><span>شبکه متخصصان</span><span>ریسک و مهلت‌ها</span><span>داوری و سازش</span></div>
+  <div style="margin-top:12px"><a class="toplink" href="holding-legal-center-reference.html">مطالعه معرفی کامل، مأموریت و ساختار مرکز ←</a></div>
   </div>
  </section>
  <section class="legal-capabilities" id="services" aria-label="حوزه‌های خدمات مرکز حقوقی">
@@ -94,7 +94,7 @@
 <button class="back-to-top" id="backTop" type="button" aria-label="بازگشت به بالای صفحه" title="بازگشت به بالا"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
 <script src="../assets/js/organization-registry.js"></script>
 <script src="../assets/js/local-data-vault.js?v=20261111-07"></script>
-<script src="../assets/js/legal-center.js?v=20261112-02"></script>
+<script src="../assets/js/legal-center.js?v=20261112-03"></script>
 <script>
 (()=>{const b=document.getElementById('backTop');if(!b)return;const sync=()=>b.classList.toggle('visible',window.scrollY>240);b.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));window.addEventListener('scroll',sync,{passive:true});sync();const links=[...document.querySelectorAll('.nav a[href^="#"]')];const sections=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);if('IntersectionObserver'in window){const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle('active',a.hash==='#'+e.target.id))}}),{rootMargin:'-25% 0px -65% 0px'});sections.forEach(s=>io.observe(s))}})();
 </script>
