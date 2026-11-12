@@ -196,6 +196,26 @@ function overview(){
  '<div class="lw-grid" style="margin-top:11px"><section class="lw-panel lw-wide"><h3>پراکندگی فعالیت در معاونت‌ها و شرکت‌ها</h3><p class="lw-muted">گزارش بر اساس انتساب سازمانی هر رکورد؛ با انتخاب دامنه از بالای صفحه قابل محدودسازی است.</p>'+(orgItems.some(x=>x[1])?'<div class="lw-chart-bars">'+chart(orgItems,orgMax)+'</div>':'<div class="lw-empty"><strong>هنوز رکوردی به معاونت یا شرکت منتسب نشده است</strong></div>')+'</section></div>'+
  '<div class="lw-grid" style="margin-top:11px"><section class="lw-panel"><h3>مهلت‌ها و رویدادهای نزدیک</h3>'+(eventItems.length?'<div class="lw-list">'+eventItems.map(x=>'<div class="lw-row"><div><strong>'+esc(x.title)+'</strong><small>'+esc(x.label)+' · '+fmtDate(x.date)+'</small></div>'+badge(x.late?'معوق':'سررسید')+'</div>').join('')+'</div>':'<div class="lw-empty"><strong>مهلت ثبت‌شده‌ای وجود ندارد</strong></div>')+'</section><section class="lw-panel"><h3>تفکیک اطلاعات بر پایه ساختار سازمانی</h3><div class="lw-list">'+counts.map(x=>'<div class="lw-row"><strong>'+x[0]+'</strong><span class="lw-badge">'+fa(x[1])+'</span></div>').join('')+'</div></section></div>';
 }
+function performanceView(){
+ const keys=['requests','cases','contracts','advice','arbitration','employee','experts','risks','compliance','knowledge'];
+ const labels={requests:'درخواست‌ها',cases:'پرونده‌ها',contracts:'قراردادها',advice:'مشاوره‌ها',arbitration:'داوری و سازش',employee:'حمایت کارکنان',experts:'متخصصان',risks:'ریسک‌ها',compliance:'انطباق',knowledge:'اسناد حقوقی'};
+ const counts=keys.map(k=>[labels[k],scopeRows(k).length]);
+ const total=counts.reduce((a,x)=>a+x[1],0);
+ const activeCases=scopeRows('cases').filter(x=>x.status!=='مختومه').length;
+ const closedCases=scopeRows('cases').filter(x=>x.status==='مختومه').length;
+ const overdue=upcoming().filter(x=>x.late&&scopeRows(x.key).some(r=>r.id===x.id)).length;
+ const openRequests=scopeRows('requests').filter(x=>!['پاسخ داده‌شده','مختومه'].includes(x.status)).length;
+ const closedRequests=scopeRows('requests').filter(x=>['پاسخ داده‌شده','مختومه'].includes(x.status)).length;
+ const status=[['درخواست‌های باز',openRequests],['درخواست‌های تعیین‌تکلیف‌شده',closedRequests],['پرونده‌های فعال',activeCases],['پرونده‌های مختومه',closedCases],['مهلت‌های معوق',overdue]];
+ const chart=(items)=>{const max=Math.max(1,...items.map(x=>x[1]));return items.map(x=>'<div class="lw-chart-row"><span>'+esc(x[0])+'</span><div class="lw-chart-track"><span style="width:'+(x[1]/max*100)+'%"></span></div><b>'+fa(x[1])+'</b></div>').join('')};
+ const orgItems=orgs().map(o=>[o.label,keys.reduce((sum,k)=>sum+scopeRows(k).filter(r=>(r.org||r.organization_id||orgs().find(z=>z.label===r.unit)?.id||'')===o.id).length,0)]).filter(x=>x[1]>0||orgScope==='all');
+ const orgOptions='<option value="all" '+(orgScope==='all'?'selected':'')+'>کل هلدینگ</option><option value="HOLDING" '+(orgScope==='HOLDING'?'selected':'')+'>ستاد هلدینگ</option>'+((orgRegistry.deputies||[]).map(x=>'<option value="'+esc(x.organization_id)+'" '+(orgScope===x.organization_id?'selected':'')+'>'+esc(x.name||x.label||'معاونت')+'</option>').join(''))+((orgRegistry.companies||[]).length?'<optgroup label="شرکت‌های تابعه">'+orgRegistry.companies.map(x=>'<option value="'+esc(x.organization_id)+'" '+(orgScope===x.organization_id?'selected':'')+'>'+esc(x.name)+'</option>').join('')+'</optgroup>':'');
+ return '<div class="lw-toolbar"><label class="lw-filter-label" for="legal-org-scope">دامنه گزارش</label><select id="legal-org-scope">'+orgOptions+'</select></div>'+
+ '<div class="lw-metrics">'+metric('کل اطلاعات ثبت‌شده',total,'همه حوزه‌ها')+metric('پرونده‌های فعال',activeCases,'در جریان رسیدگی')+metric('پرونده‌های مختومه',closedCases,'تعیین تکلیف شده')+metric('درخواست‌های باز',openRequests,'نیازمند رسیدگی')+metric('درخواست‌های پاسخ‌داده‌شده',closedRequests,'پاسخ یا اختتام')+metric('مهلت‌های معوق',overdue,'نیازمند اقدام فوری')+'</div>'+
+ '<div class="lw-grid"><section class="lw-panel"><h3>عملکرد به تفکیک حوزه حقوقی</h3><p class="lw-muted">حجم ثبت‌شده در هر بخش از مرکز</p>'+(total?'<div class="lw-chart-bars">'+chart(counts)+'</div>':'<div class="lw-empty"><strong>داده‌ای برای گزارش وجود ندارد</strong>با ثبت اطلاعات، شاخص‌ها و نمودارها تکمیل می‌شوند.</div>')+'</section><section class="lw-panel"><h3>وضعیت رسیدگی و تعیین تکلیف</h3><p class="lw-muted">تعداد درخواست‌ها، پرونده‌ها و مهلت‌ها در هر وضعیت</p>'+(status.some(x=>x[1])?'<div class="lw-chart-bars">'+chart(status)+'</div>':'<div class="lw-empty"><strong>هنوز وضعیتی برای سنجش ثبت نشده است</strong></div>')+'</section></div>'+
+ '<div class="lw-grid" style="margin-top:11px"><section class="lw-panel lw-wide"><h3>عملکرد معاونت‌ها و شرکت‌ها</h3><p class="lw-muted">تعداد کل اطلاعات حقوقی منتسب به هر واحد سازمانی</p>'+(orgItems.some(x=>x[1])?'<div class="lw-chart-bars">'+chart(orgItems)+'</div>':'<div class="lw-empty"><strong>هنوز اطلاعاتی به واحدهای سازمانی منتسب نشده است</strong></div>')+'</section></div>'+
+ '<div class="lw-panel"><h3>مبنای محاسبه شاخص‌ها</h3><p class="lw-muted">گزارش‌ها فقط از اطلاعات ثبت‌شده در مرکز ساخته می‌شوند. هیچ آمار نمونه‌ای به‌جای عملکرد واقعی نمایش داده نمی‌شود. برای دقیق‌تر شدن گزارش، هر رکورد باید واحد سازمانی، وضعیت و تاریخ‌های مربوط را داشته باشد.</p></div>';
+}
 function fieldHtml(f,value){
  const val=value??'',req=f.required?'required':'',full=f.full?' full':'';
  if(f.type==='textarea')return '<div class="lw-field'+full+'"><label>'+esc(f.label)+(f.required?' *':'')+'</label><textarea name="'+f.name+'" '+req+'>'+esc(val)+'</textarea></div>';
@@ -230,9 +250,9 @@ function listView(key){
 }
 function backupView(){return '<div class="lw-grid"><section class="lw-panel"><h3>نسخه پشتیبان</h3><button class="lw-btn" data-action="export">دریافت نسخه پشتیبان</button></section><section class="lw-panel"><h3>بازیابی اطلاعات</h3><input id="lw-import-file" type="file" accept=".json,application/json"><div style="margin-top:9px"><button class="lw-btn gold" data-action="import">بازیابی فایل</button></div></section></div>';}
 function render(){
- const title=tab==='overview'?'نمای کلی مرکز حقوقی':tab==='backup'?'پشتیبان‌گیری و بازیابی':defs[tab]?.label||'مرکز حقوقی';
+ const title=tab==='overview'?'نمای کلی مرکز حقوقی':tab==='performance'?'گزارش عملکرد مرکز حقوقی':tab==='backup'?'پشتیبان‌گیری و بازیابی':defs[tab]?.label||'مرکز حقوقی';
  const localTabs=pageTabs.length>1?'<div class="lw-tabs">'+pageTabs.map(k=>'<button class="lw-tab '+(tab===k?'active':'')+'" data-tab="'+k+'">'+(k==='overview'?'نمای کلی':k==='backup'?'پشتیبان‌گیری':(defs[k]?.label||k))+'</button>').join('')+'</div>':'';
- app.innerHTML=localTabs+'<div class="lw-content"><div id="lw-status" class="lw-alert" hidden></div><h3 style="font-size:12px;color:#355b77;margin:0 0 11px">'+title+'</h3><div id="lw-view">'+(tab==='overview'?overview():tab==='backup'?backupView():listView(tab))+'</div></div>';
+ app.innerHTML=localTabs+'<div class="lw-content"><div id="lw-status" class="lw-alert" hidden></div><h3 style="font-size:12px;color:#355b77;margin:0 0 11px">'+title+'</h3><div id="lw-view">'+(tab==='overview'?overview():tab==='performance'?performanceView():tab==='backup'?backupView():listView(tab))+'</div></div>';
  updateCenterNav();
 }
 function openForm(key,id){editing={key,id:id||null};query='';const view=$('#lw-view');view.innerHTML=formHtml(key,id);const el=$('#lw-record-form');if(el)el.querySelector('input:not([type=file]),textarea,select')?.focus();}
