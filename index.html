@@ -580,8 +580,7 @@ h1{font-size:clamp(32px,3.4vw,40px)}
   document.addEventListener('pointerup',onUp,{once:true});
   document.addEventListener('pointercancel',onUp,{once:true});
  });
- directory.addEventListener('click',e=>{const g=e.target.closest('.group');if(g&&g.dataset.dragged==='1'){e.preventDefault();e.stopPropagation();}},true);
- directory.addEventListener('keydown',e=>{
+  directory.addEventListener('keydown',e=>{
   const head=e.target.closest('.group-head');if(!head||!e.altKey||!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))return;
   const g=head.closest('.group');const list=groups(),i=list.indexOf(g);let target=null;
   if(e.key==='ArrowUp'||e.key==='ArrowLeft')target=list[i-1];else target=list[i+1];
