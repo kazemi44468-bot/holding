@@ -165,6 +165,7 @@ $('#assessor-form')?.addEventListener('submit',async e=>{e.preventDefault();cons
 $('#backup-export')?.addEventListener('click',async()=>{try{let payload=window.HoldingLocalDataVault?await HoldingLocalDataVault.exportData(SCOPE):{format:'holding-evaluation-export',exportedAt:new Date().toISOString(),records:[...records,...assessors]};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='evaluation-center-backup.json';a.click();URL.revokeObjectURL(a.href);status('فایل پشتیبان آماده شد.')}catch(e){status('تهیه پشتیبان ناموفق بود: '+e.message,true);}});
 $('#backup-import')?.addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{const data=JSON.parse(await file.text()),incoming=Array.isArray(data.records)?data.records:[];for(const item of incoming)await persist(item);render();status(fa(incoming.length)+' رکورد بازیابی شد.')}catch(err){status('بازیابی ناموفق: '+err.message,true);}e.target.value='';});
 $('#backTop')?.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+const backTop=$('#backTop');if(backTop){const syncBackTop=()=>backTop.classList.toggle('visible',window.scrollY>320);window.addEventListener('scroll',syncBackTop,{passive:true});syncBackTop();}
 $$('#filter-period,#filter-domain,#filter-unit').forEach(el=>el.addEventListener('change',render));
 if(page==='assessment')renderCompetencyProfile();
 if(page==='assessors')renderAssessorProfiles();
