@@ -220,3 +220,38 @@ body{padding-top:0;background:radial-gradient(ellipse at 8% 0%,#eaf1f2 0,transpa
 
 .nav-group[open]>summary{background:#f0f5f9!important;color:#1b4e73!important;border-bottom-color:#c49a54!important}
 @media(max-width:560px){.topinner{padding:10px 13px!important}}
+
+
+/* Shared shell aligned with Knowledge Center */
+.topbar{background:linear-gradient(110deg,#183a59,#285a7c)!important;border-bottom:2px solid #d1ad70!important;overflow:visible}
+.topinner{max-width:1320px!important;padding:12px 24px!important}
+.brand{gap:10px!important}
+.brandmark{width:38px!important;height:38px!important;border-radius:5px!important;border:1px solid #d7bd91!important;background:rgba(255,255,255,.08)!important;overflow:hidden!important;padding:0!important}
+.brand-logo{display:block!important;width:31px!important;height:21px!important;object-fit:cover!important;border-radius:2px!important}
+.brand-rule{width:1px!important;height:39px!important;background:#ffffff55!important}
+.brand-copy small{display:block!important;font-size:9px!important;color:#e0cda9!important}
+.brand-copy h1{font-size:17px!important;letter-spacing:-.2px!important;margin:0!important;color:#fff!important;font-weight:700!important;line-height:1.6!important}
+.brand-subtitle{display:block!important;color:#e2d5bf!important;font-size:9px!important;margin-top:1px!important}
+.top-actions{display:flex!important;align-items:center!important;gap:8px!important}
+.toplink{border:1px solid #ffffff45!important;border-radius:8px!important;padding:6px 11px!important;font-size:11px!important;color:#fff!important;background:transparent!important}
+.toplink:hover{background:#ffffff17!important}
+.topbar-accent{display:none!important}
+.navwrap{background:rgba(255,255,255,.96)!important;border-bottom:1px solid #e4eaf0!important;position:sticky!important;top:0!important;z-index:30!important;backdrop-filter:blur(12px);box-shadow:0 3px 12px rgba(30,56,78,.035)!important}
+.nav{max-width:1320px!important;padding:0 18px!important;gap:3px!important;align-items:stretch!important;overflow-x:auto!important;overflow-y:visible!important}
+.nav a,.nav-group summary{white-space:nowrap!important;padding:10px 11px!important;color:#596b7c!important;font-size:11px!important;font-weight:500!important;border:0!important;border-bottom:2px solid transparent!important;border-radius:0!important;background:transparent!important;display:flex!important;align-items:center!important;gap:7px!important;cursor:pointer!important}
+.nav a svg,.nav-group summary svg{width:15px!important;height:15px!important;opacity:.78}
+.nav a:hover,.nav-group summary:hover,.nav a.active{color:#173a5a!important;border-bottom-color:#c49a54!important;background:transparent!important}
+.nav-group{position:relative!important;flex:none!important}
+.nav-group summary{list-style:none!important}
+.nav-group summary::-webkit-details-marker{display:none!important}
+.nav-group summary i{width:6px;height:6px;border-left:1px solid currentColor;border-bottom:1px solid currentColor;transform:rotate(-45deg);margin:0 2px 3px}
+.nav-submenu{position:absolute!important;top:calc(100% + 1px)!important;right:0!important;min-width:220px!important;padding:6px!important;display:grid!important;gap:2px!important;background:#fff!important;border:1px solid #e1e7ed!important;border-radius:0 0 9px 9px!important;box-shadow:0 10px 24px rgba(28,48,68,.12)!important;z-index:50!important}
+.nav-submenu a{padding:9px 10px!important;border:0!important;border-right:2px solid transparent!important;border-radius:5px!important}
+.nav-submenu a:hover,.nav-submenu a.active{background:#f3f6f9!important;border-right-color:#c49a54!important}
+.footer{max-width:none!important;margin:0!important;padding:16px!important;border:0!important;border-top:1px solid #e1e7ed!important;border-radius:0!important;background:transparent!important;text-align:center!important;color:#8b97a3!important;font-size:10px!important}
+.footer-inner{max-width:1280px!important;margin:auto!important;display:flex!important;justify-content:center!important;align-items:center!important;gap:12px!important;flex-wrap:wrap!important}
+.footer-links{display:flex!important;justify-content:center!important;flex-wrap:wrap!important;gap:14px!important}
+.footer-links a{font-size:10px!important;color:#7c8996!important}
+.footer-links a:hover{color:#173a5a!important}
+.footer-mark,.footer-endmark{display:none!important}
+@media(max-width:650px){.topinner{padding:10px 13px!important}.brandmark{width:34px!important;height:34px!important}.brand-logo{width:31px!important;height:21px!important}.brand-copy h1{font-size:14px!important}.brand-subtitle{display:block!important;font-size:8px!important}.toplink{font-size:9px!important;padding:5px 7px!important}.nav{padding:0 10px!important}.nav a,.nav-group summary{padding:9px 9px!important;font-size:10px!important}.nav-submenu{position:fixed!important;top:auto!important;right:10px!important;left:10px!important;max-height:65vh!important;overflow:auto!important}.footer-inner{flex-direction:row!important;align-items:center!important}}
