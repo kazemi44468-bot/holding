@@ -11,6 +11,7 @@ const deputies=(registry.deputies||[]).slice().sort((a,b)=>a.sequence-b.sequence
 const companies=registry.companies||[];
 const branches=registry.provincial_branch_managements||[];
 const scopes=[
+ {id:'HOLDING',label:'ستاد هلدینگ',type:'ستاد هلدینگ',status:'confirmed'},
  ...deputies.map(x=>({id:x.organization_id,label:x.label,type:'معاونت',status:x.status})),
  ...companies.map(x=>({id:x.organization_id,label:x.name,type:'شرکت تابعه',status:x.status})),
  ...branches.map(x=>({id:x.organization_id,label:'مدیریت شعب استانی '+fa(x.sequence),type:'مدیریت شعب استانی',status:x.status}))
@@ -69,7 +70,7 @@ async function persist(item){
  if(item.kind==='assessor')assessors=[...assessors.filter(x=>x.id!==item.id),item];else records=[...records.filter(x=>x.id!==item.id),item];
 }
 function populateScopeFilters(){
- $$('#filter-unit').forEach(sel=>{const chosen=sel.value;sel.innerHTML='<option value="all">کل هلدینگ</option>'+deputies.map(x=>'<option value="'+esc(x.organization_id)+'">'+esc(x.label)+'</option>').join('')+(companies.length?'<optgroup label="شرکت‌های تابعه">'+companies.map(x=>'<option value="'+esc(x.organization_id)+'">'+esc(x.name)+'</option>').join('')+'</optgroup>':'')+(branches.length?'<optgroup label="مدیریت شعب استانی">'+branches.map(x=>'<option value="'+esc(x.organization_id)+'">مدیریت شعب استانی '+fa(x.sequence)+'</option>').join('')+'</optgroup>':'')+'<option value="unassigned">سایر / فاقد انتساب قطعی</option>';if([...sel.options].some(o=>o.value===chosen))sel.value=chosen;});
+ $$('#filter-unit').forEach(sel=>{const chosen=sel.value;sel.innerHTML='<option value="all">کل هلدینگ</option><option value="HOLDING">ستاد هلدینگ</option>'+deputies.map(x=>'<option value="'+esc(x.organization_id)+'">'+esc(x.label)+'</option>').join('')+(companies.length?'<optgroup label="شرکت‌های تابعه">'+companies.map(x=>'<option value="'+esc(x.organization_id)+'">'+esc(x.name)+'</option>').join('')+'</optgroup>':'')+(branches.length?'<optgroup label="مدیریت شعب استانی">'+branches.map(x=>'<option value="'+esc(x.organization_id)+'">مدیریت شعب استانی '+fa(x.sequence)+'</option>').join('')+'</optgroup>':'')+'<option value="unassigned">سایر / فاقد انتساب قطعی</option>';if([...sel.options].some(o=>o.value===chosen))sel.value=chosen;});
 }
 function filtered(){
  const p=$('#filter-period')?.value||'12',domain=$('#filter-domain')?.value||'all',unit=$('#filter-unit')?.value||'all';
@@ -113,14 +114,14 @@ function renderOrganizationMap(data){
  const host=$('#holding-structure');if(!host)return;
  const count=id=>data.filter(x=>x.scope===id).length;
  const group=(title,items)=>'<section class="org-group"><div class="org-group-head"><b>'+title+'</b><span>'+fa(items.length)+' جایگاه</span></div><div class="org-tiles">'+items.map(x=>'<article class="org-tile"><div><b>'+esc(x.label)+'</b><small>'+esc(x.type)+' · '+(x.status==='confirmed'?'ثبت‌شده در ساختار':'عنوان در انتظار تکمیل')+'</small></div><strong>'+fa(count(x.id))+'</strong><em>پرونده نمونه</em></article>').join('')+'</div></section>';
- host.innerHTML=group('معاونت‌های هلدینگ',scopes.filter(x=>x.type==='معاونت'))+group('شرکت‌های تابعه ثبت‌شده',scopes.filter(x=>x.type==='شرکت تابعه'))+group('مدیریت‌های شعب استانی',scopes.filter(x=>x.type==='مدیریت شعب استانی'));
+ host.innerHTML=group('ستاد و مدیریت مرکزی',scopes.filter(x=>x.type==='ستاد هلدینگ'))+group('معاونت‌های هلدینگ',scopes.filter(x=>x.type==='معاونت'))+group('شرکت‌های تابعه ثبت‌شده',scopes.filter(x=>x.type==='شرکت تابعه'))+group('مدیریت‌های شعب استانی',scopes.filter(x=>x.type==='مدیریت شعب استانی'));
 }
 function renderCompetencyProfile(){
  const host=$('#competency-profile');if(!host)return;
  const cards=profilesWithScores.map((p,i)=>'<button type="button" class="profile-select '+(i===0?'active':'')+'" data-profile="'+i+'"><b>'+esc(p.name)+'</b><span>'+esc(p.role)+'</span><strong>'+fa(p.overall)+'/۱۰۰</strong></button>').join('');
  host.innerHTML='<div class="profile-chooser">'+cards+'</div><div id="competency-detail"></div>';
  const show=i=>{const p=profilesWithScores[i];const rows=p.competencies.flatMap(d=>d.items.map(x=>'<tr><td>'+esc(d.name)+'</td><td><b>'+esc(x.name)+'</b><small>'+esc(x.definition)+'</small></td><td><strong>'+fa(x.score)+'</strong></td><td>'+esc(x.evidence)+'</td></tr>')).join('');
- $('#competency-detail').innerHTML='<div class="profile-summary"><div><small>امتیاز کل شایستگی</small><strong>'+fa(p.overall)+' از ۱۰۰</strong></div><div><small>آمادگی نقش</small><b>'+esc(p.readiness)+'</b></div><div><small>تاریخ کانون</small><b>'+esc(p.date)+'</b></div><div><small>قلمرو سازمانی</small><b>'+esc(p.scope)+'</b></div></div><div class="profile-notes"><div><b>نقاط قوت برجسته</b><p>'+esc(p.strengths)+'</p></div><div><b>شکاف‌های توسعه‌ای</b><p>'+esc(p.gaps)+'</p></div><div><b>پیشنهاد توسعه</b><p>'+esc(p.recommendation)+'</p></div></div><div class="table-wrap"><table class="data-table competency-table"><thead><tr><th>خانواده شایستگی</th><th>شایستگی و تعریف رفتاری</th><th>امتیاز</th><th>نمونه شاهد رفتاری</th></tr></thead><tbody>'+rows+'</tbody></table></div><small class="sample-note">تمام مشخصات و امتیازهای این پرونده صرفاً نمونه نمایشی هستند؛ امتیاز واقعی باید با شواهد چندابزاری، چندارزیاب و جلسه تلفیق تعیین شود.</small>';
+ const dimNames=p.competencies.map(d=>d.name),dimValues=p.competencies.map(d=>Math.round(d.items.reduce((n,x)=>n+x.score,0)/d.items.length));$('#competency-detail').innerHTML='<div class="profile-summary"><div><small>امتیاز کل شایستگی</small><strong>'+fa(p.overall)+' از ۱۰۰</strong></div><div><small>آمادگی نقش</small><b>'+esc(p.readiness)+'</b></div><div><small>تاریخ کانون</small><b>'+esc(p.date)+'</b></div><div><small>قلمرو سازمانی</small><b>'+esc(p.scope)+'</b></div></div><div class="profile-notes"><div><b>نقاط قوت برجسته</b><p>'+esc(p.strengths)+'</p></div><div><b>شکاف‌های توسعه‌ای</b><p>'+esc(p.gaps)+'</p></div><div><b>پیشنهاد توسعه</b><p>'+esc(p.recommendation)+'</p></div></div><div class="profile-dimension-chart"><h4>نمای امتیاز خانواده‌های شایستگی</h4>'+horizontalBars(dimNames,dimValues)+'</div><div class="table-wrap"><table class="data-table competency-table"><thead><tr><th>خانواده شایستگی</th><th>شایستگی و تعریف رفتاری</th><th>امتیاز</th><th>نمونه شاهد رفتاری</th></tr></thead><tbody>'+rows+'</tbody></table></div><small class="sample-note">تمام مشخصات و امتیازهای این پرونده صرفاً نمونه نمایشی هستند؛ امتیاز واقعی باید با شواهد چندابزاری، چندارزیاب و جلسه تلفیق تعیین شود.</small>';
  $$('.profile-select',host).forEach((b,j)=>b.classList.toggle('active',j===i));};
  host.addEventListener('click',e=>{const b=e.target.closest('[data-profile]');if(b)show(Number(b.dataset.profile));});show(0);
 }
