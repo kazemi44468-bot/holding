@@ -25,8 +25,11 @@
 - `docs/PROJECT-STATUS.md`: وضعیت واقعی پیاده‌سازی، تصمیمات و نقشه راه
 
 ## انتشار
-GitHub Pages از شاخه `main` و پوشه ریشه:
-https://kazemi44468-bot.github.io/khadamatshahr/
+GitHub Pages از شاخه `main` و پوشه ریشه مخزن منتشر می‌شود. نشانی نمای اصلی معاونت ۷:
+https://kazemi44468-bot.github.io/holding/deputies/deputy-07/dashboard.html
+
+## دسترسی به مرکز داده و پشتیبان‌گیری
+[ورود به مرکز داده و پشتیبان‌گیری](https://kazemi44468-bot.github.io/holding/deputies/deputy-07/local-data/)
 
 ## نکته داده‌ها
 در نسخه فعلی، بخشی از اطلاعات فرم‌ها در حافظه محلی مرورگر ذخیره می‌شوند؛ این داده‌ها بین کاربران یا دستگاه‌ها همگام نیستند. جزئیات و محدودیت‌ها در سند مرجع پروژه آمده است.
