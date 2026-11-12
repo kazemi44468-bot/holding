@@ -11,7 +11,7 @@ const makeId=p=>p+'-'+Date.now().toString(36)+'-'+Math.random().toString(36).sli
 const orgRegistry=window.HOLDING_ORG_REGISTRY||{};
 function orgs(){
  const out=[{id:'HOLDING',label:'ستاد هلدینگ'}];
- (orgRegistry.deputies||[]).forEach(x=>out.push({id:x.organization_id,label:x.name||x.label||('معاونت '+fa(x.sequence))}));
+ (orgRegistry.deputies||[]).forEach(x=>out.push({id:x.organization_id,label:x.name||('معاونت '+fa(x.sequence))}));
  (orgRegistry.companies||[]).forEach(x=>out.push({id:x.organization_id,label:x.name||x.label||'شرکت تابعه'}));
  (orgRegistry.provincial_branch_managements||[]).forEach(x=>out.push({id:x.organization_id,label:x.name||('مدیریت شعب استانی '+fa(x.sequence))}));
  return out;
@@ -187,7 +187,7 @@ function overview(){
  if(orgScope==='all')orgItems.push(['فاقد انتساب سازمانی',unassignedCount]);
  const orgMax=Math.max(1,...orgItems.map(x=>x[1]));
  const eventItems=upcoming().filter(x=>orgScope==='all'||scopeRows(x.key).some(r=>r.id===x.id)).slice(0,8);
- const orgOptions='<option value="all" '+(orgScope==='all'?'selected':'')+'>کل هلدینگ</option><option value="HOLDING" '+(orgScope==='HOLDING'?'selected':'')+'>ستاد هلدینگ</option>'+((orgRegistry.deputies||[]).map(x=>'<option value="'+esc(x.organization_id)+'" '+(orgScope===x.organization_id?'selected':'')+'>'+esc(x.name||x.label||'معاونت')+'</option>').join(''))+
+ const orgOptions='<option value="all" '+(orgScope==='all'?'selected':'')+'>کل هلدینگ</option><option value="HOLDING" '+(orgScope==='HOLDING'?'selected':'')+'>ستاد هلدینگ</option>'+((orgRegistry.deputies||[]).map(x=>'<option value="'+esc(x.organization_id)+'" '+(orgScope===x.organization_id?'selected':'')+'>'+esc(x.name||('معاونت '+fa(x.sequence)))+'</option>').join(''))+
  ((orgRegistry.companies||[]).length?'<optgroup label="شرکت‌های تابعه">'+orgRegistry.companies.map(x=>'<option value="'+esc(x.organization_id)+'" '+(orgScope===x.organization_id?'selected':'')+'>'+esc(x.name)+'</option>').join('')+'</optgroup>':'')+
  ((orgRegistry.provincial_branch_managements||[]).length?'<optgroup label="مدیریت‌های استانی">'+orgRegistry.provincial_branch_managements.map(x=>'<option value="'+esc(x.organization_id)+'" '+(orgScope===x.organization_id?'selected':'')+'>مدیریت شعب استانی '+fa(x.sequence)+'</option>').join('')+'</optgroup>':'')+'<option value="unassigned" '+(orgScope==='unassigned'?'selected':'')+'>فاقد انتساب سازمانی</option>';
  return '<div class="lw-toolbar"><label class="lw-filter-label" for="legal-org-scope">دامنه گزارش</label><select id="legal-org-scope">'+orgOptions+'</select><span class="lw-spacer"></span><button class="lw-btn" data-action="new" data-key="requests">＋ ثبت درخواست</button><button class="lw-btn light" data-action="new" data-key="cases">＋ ثبت پرونده</button><button class="lw-btn light" data-action="new" data-key="contracts">＋ ثبت قرارداد</button></div>'+
