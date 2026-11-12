@@ -179,7 +179,7 @@ function formHtml(key,id){
 }
 function tableHtml(key){
  const def=defs[key],items=rows(key).filter(x=>!query||JSON.stringify(x).toLowerCase().includes(query.toLowerCase()));
- if(!items.length)return '<div class="lw-empty"><strong>موردی برای نمایش وجود ندارد</strong>برای شروع، اطلاعات واقعی را با دکمه ثبت وارد کنید؛ هیچ پرونده یا مبلغ نمونه‌ای درج نشده است.</div>';
+ if(!items.length)return '<div class="lw-empty"><strong>موردی ثبت نشده است</strong></div>';
  const titleField=key==='experts'?'name':'title';
  const subField={requests:'serviceType',cases:'caseNumber',contracts:'contractNo',advice:'subject',arbitration:'method',employee:'serviceType',experts:'specialty',risks:'category',compliance:'category',knowledge:'docType'}[key];
  const statusField='status';
@@ -193,10 +193,7 @@ function listView(key){
 function backupView(){
  return '<div class="lw-grid"><section class="lw-panel"><h3>خروجی و نسخه پشتیبان</h3><p>تمام داده‌های مرکز حقوقی و پیوست‌های ثبت‌شده را در قالب JSON صادر کنید. فایل خروجی را در محل امن نگهداری کنید.</p><button class="lw-btn" data-action="export">تهیه نسخه پشتیبان</button></section><section class="lw-panel"><h3>بازیابی نسخه پشتیبان</h3><p>بازیابی می‌تواند داده‌های فعلی همین مرکز را جایگزین کند. پیش از بازیابی، از اطلاعات فعلی خروجی بگیرید.</p><input id="lw-import-file" type="file" accept=".json,application/json"><div style="margin-top:9px"><button class="lw-btn gold" data-action="import">بررسی و بازیابی فایل</button></div></section></div><div class="lw-alert warn">فایل پشتیبان حاوی داده‌ها و پیوست‌های مرکز است؛ آن را مانند اسناد محرمانه نگهداری کنید. بازیابی، فقط قلمرو مرکز حقوقی را جایگزین می‌کند و داده مراکز دیگر را دست‌کاری نمی‌کند.</div>';
 }
-function render(){
- const title=tab==='overview'?'نمای کلی مرکز حقوقی':tab==='backup'?'پشتیبان‌گیری و بازیابی':defs[tab]?.label||'مرکز حقوقی';
- app.innerHTML='<div class="lw-head"><div><h2>میزکار اجرایی مرکز حقوقی</h2><p>مدیریت درخواست‌های حقوقی، پرونده‌ها، قراردادها، مشاوره‌ها، متخصصان، ریسک‌ها و مهلت‌ها در یک محیط یکپارچه.</p></div><div class="lw-head-side"><span class="lw-tag">مرکز تخصصی هلدینگ</span><span class="lw-tag">میزکار خدمات حقوقی</span></div></div><div class="lw-privacy">محرمانگی: این نسخه برای ثبت اولیه و آزمایش گردش کار است؛ تا زمان استقرار احراز هویت و دسترسی سازمانی، اطلاعات حساس واقعی را وارد نکنید.</div><div class="lw-tabs" role="tablist">'+tabs.map(([k,l])=>'<button class="lw-tab '+(tab===k?'active':'')+'" role="tab" aria-selected="'+(tab===k)+'" data-tab="'+k+'">'+l+'</button>').join('')+'</div><div class="lw-content"><div id="lw-status" class="lw-alert" hidden></div><h3 style="font-size:12px;color:#355b77;margin:0 0 11px">'+title+'</h3><div id="lw-view">'+(tab==='overview'?overview():tab==='backup'?backupView():listView(tab))+'</div></div><div class="lw-footer"><span>ذخیره‌سازی محلی · شناسه مستقل مرکز حقوقی</span><span>آخرین به‌روزرسانی: '+fmtDate(db.updatedAt)+'</span></div>';
-}
+function render(){const title=tab==='overview'?'نمای کلی مرکز حقوقی':tab==='backup'?'پشتیبان‌گیری و بازیابی':defs[tab]?.label||'مرکز حقوقی';app.innerHTML='<div class="lw-content"><div id="lw-status" class="lw-alert" hidden></div><h3 style="font-size:12px;color:#355b77;margin:0 0 11px">'+title+'</h3><div id="lw-view">'+(tab==='overview'?overview():tab==='backup'?backupView():listView(tab))+'</div></div>';updateCenterNav();}
 function openForm(key,id){editing={key,id:id||null};query='';const view=$('#lw-view');view.innerHTML=formHtml(key,id);const el=$('#lw-record-form');if(el)el.querySelector('input:not([type=file]),textarea,select')?.focus();}
 async function addFiles(record,files){
  if(!window.HoldingLocalDataVault||!files.length)return record;
@@ -234,7 +231,7 @@ async function importBackup(){
  else throw new Error('ساختار فایل پشتیبان معتبر نیست.');
  await load();render();toast('بازیابی اطلاعات مرکز حقوقی انجام شد.');
 }
-app.addEventListener('click',async e=>{
+function updateCenterNav(){document.querySelectorAll('[data-center-tab]').forEach(a=>a.classList.toggle('active',a.dataset.centerTab===tab));document.querySelectorAll('[data-center-section]').forEach(a=>a.classList.toggle('active',a.dataset.centerSection==='introduction'&&location.hash==='#introduction'));}document.querySelector('.legal-nav')?.addEventListener('click',e=>{const a=e.target.closest('[data-center-tab],[data-center-section]');if(!a)return;if(a.dataset.centerSection){document.querySelectorAll('[data-center-tab],[data-center-section]').forEach(x=>x.classList.remove('active'));a.classList.add('active');return;}e.preventDefault();tab=a.dataset.centerTab;query='';editing=null;render();document.querySelector('#workspace')?.scrollIntoView({behavior:'smooth',block:'start'});document.querySelector('.legal-nav-more')?.removeAttribute('open');});window.addEventListener('hashchange',updateCenterNav);app.addEventListener('click',async e=>{
  const t=e.target.closest('[data-tab],[data-action]');if(!t)return;
  if(t.dataset.tab){tab=t.dataset.tab;query='';editing=null;render();return;}
  const action=t.dataset.action;
