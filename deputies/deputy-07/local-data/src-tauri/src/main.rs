@@ -25,6 +25,7 @@ fn save_vault_snapshot(app: AppHandle, content: String) -> Result<String, String
     }
     let temp = dir.join("vault-state.h7vault.tmp");
     fs::write(&temp, content).map_err(|e| e.to_string())?;
+    if target.exists() { fs::remove_file(&target).map_err(|e| e.to_string())?; }
     fs::rename(&temp, &target).map_err(|e| e.to_string())?;
     Ok(target.to_string_lossy().to_string())
 }
