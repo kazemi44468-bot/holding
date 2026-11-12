@@ -1,0 +1,90 @@
+@font-face{font-family:Vazirmatn;src:url("../fonts/Vazirmatn-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:Vazirmatn;src:url("../fonts/Vazirmatn-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+:root{font-family:Vazirmatn,Tahoma,sans-serif;color:#f8fbff;background:#102c49;font-synthesis:none;--navy:#102c49;--gold:#d7b77b;--line:#ffffff38}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0}
+body{font-family:Vazirmatn,Tahoma,sans-serif;background:#102c49 url("../images/introback.webp") center center/cover fixed no-repeat}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.intro{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:clamp(12px,2.2vh,22px);padding:clamp(16px,3vw,36px);position:relative;isolation:isolate}
+.intro:before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(115deg,rgba(5,22,39,.28),rgba(10,38,63,.16) 52%,rgba(8,31,52,.22))}
+.intro-main{width:min(100%,700px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;padding:4px 0 5px;text-align:center}
+.intro-brand{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center}
+.intro-logo{display:block;width:clamp(112px,13vw,148px);height:clamp(112px,13vw,148px);object-fit:contain;object-position:center;filter:drop-shadow(0 5px 14px #0004)}
+.intro-logo-box{width:clamp(142px,17vw,178px);height:clamp(142px,17vw,178px);display:grid;place-items:center;padding:12px;border:1px solid rgba(255,255,255,.48);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.25),rgba(210,229,242,.10));box-shadow:0 12px 32px rgba(3,20,36,.24),inset 0 1px 0 rgba(255,255,255,.52);backdrop-filter:blur(16px) saturate(145%);-webkit-backdrop-filter:blur(16px) saturate(145%)}
+.intro-portals{width:min(100%,570px);display:flex;flex-direction:column;align-items:center;gap:10px}
+.intro-brand-name{display:flex;flex-direction:column;align-items:center;gap:1px;white-space:nowrap;font-size:clamp(15px,1.8vw,20px);line-height:1.5}
+.intro-brand-name span{font-weight:400;color:#e8edf2}
+.intro-brand-name strong{font-size:1.2em;color:#fff}
+.intro-copy{display:flex;flex-direction:column;align-items:center;gap:9px}
+.intro-kicker{font-size:12px;color:var(--gold);letter-spacing:.4px}
+.intro-copy h1{font-size:clamp(18px,2.3vw,25px);line-height:1.5;margin:0;font-weight:700;color:#fff;text-shadow:0 2px 12px #071b2d66}
+.intro-login{display:flex;align-items:center;gap:24px;padding:8px 15px;border:1px solid #e0c58f;border-radius:7px;background:linear-gradient(120deg,#ead5aa,#c5a36d);color:#18334d;font-size:13px;font-weight:700;box-shadow:0 8px 24px #061a2b55;transition:transform .2s,filter .2s}
+.intro-login:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.intro-login span{font-size:18px}
+.portal-grid{width:min(100%,570px);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.portal-card{min-height:62px;position:relative;display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:9px;padding:8px 11px;border:1px solid var(--line);border-radius:9px;background:linear-gradient(145deg,#ffffff1c,#ffffff0b);color:#fff;text-align:right;backdrop-filter:blur(9px);transition:background .2s,border-color .2s,transform .2s}
+.portal-card:disabled{cursor:default;opacity:.68}
+.portal-enabled{border-color:#d7b77b99;background:linear-gradient(145deg,#ffffff28,#ffffff10)}
+.portal-enabled:hover{transform:translateY(-3px);background:#ffffff2b;border-color:var(--gold)}
+.portal-index{font-size:9px;color:#e0c58f;min-width:18px}
+.portal-title{font-size:11px;font-weight:700;line-height:1.5;flex:1}
+.portal-state{display:flex;align-items:center;justify-content:flex-end;font-size:9px;color:#d8e0e8;white-space:nowrap}
+.portal-enabled .portal-state{color:#f1d9a9}
+.portal-state b{font-size:14px;font-weight:400}
+.login-overlay[hidden]{display:none}
+.login-overlay{position:fixed;inset:0;z-index:10;display:grid;place-items:center;padding:18px}
+.login-backdrop{position:absolute;inset:0;width:100%;height:100%;border:0;background:#06182bd1;backdrop-filter:blur(7px)}
+.login-panel{position:relative;width:min(100%,410px);padding:28px;border:1px solid #e0e6ec;border-radius:13px;background:#fff;color:#18334d;box-shadow:0 24px 70px #0006;animation:login-in .2s ease-out}
+.login-close{position:absolute;top:10px;left:12px;width:31px;height:31px;border:0;border-radius:7px;background:#f0f3f6;color:#52677b;font-size:22px}
+.login-brand{display:flex;align-items:center;gap:11px;padding-bottom:17px;border-bottom:1px solid #e9edf1}
+.login-brand img{width:45px;height:45px;object-fit:contain}
+.login-brand strong,.login-brand span{display:block}
+.login-brand strong{font-size:12px;color:#183b5b}
+.login-brand span{font-size:10px;color:#8a98a6;margin-top:4px}
+.login-panel h2{font-size:19px;margin:18px 0;color:#173a59}
+.login-panel label{display:block;margin:12px 0 6px;font-size:11px;font-weight:700;color:#425c74}
+.login-panel input,.login-panel select{width:100%;height:43px;padding:0 12px;border:1px solid #dce4eb;border-radius:7px;outline:0;background:#fbfcfd;color:#243f58;font-size:12px}
+.login-panel input:focus,.login-panel select:focus{border-color:#7397b4;box-shadow:0 0 0 3px #477da21c}
+.login-panel input::placeholder{color:#a4afb9}
+.password-field{display:flex;align-items:center;gap:6px}
+.password-field input{flex:1;min-width:0}
+.password-field button{height:38px;padding:0 9px;border:0;background:transparent;color:#527895;font-size:10px}
+.login-submit{width:100%;height:44px;display:flex;align-items:center;justify-content:space-between;margin-top:19px;padding:0 15px;border:0;border-radius:7px;background:linear-gradient(110deg,#123a5c,#245f88);color:#fff;font-size:12px;font-weight:700}
+.login-submit span{font-size:17px}
+.login-message{min-height:18px;margin:9px 0 0;color:#a36e32;font-size:10px;line-height:1.8}
+@keyframes login-in{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+@media(max-width:760px){.intro{gap:17px;padding:22px 16px}.intro-main{gap:11px;padding:4px 0}.intro-logo{width:clamp(104px,20vw,132px);height:clamp(104px,20vw,132px)}.intro-copy{width:100%;padding:0}.intro-copy h1{font-size:20px}.portal-grid{width:min(100%,500px);grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.portal-card{min-height:58px;padding:8px 9px}.portal-title{font-size:10px}}
+@media(max-width:420px){body{background-attachment:scroll}.intro{padding:18px 12px;gap:15px}.intro-logo{width:104px;height:104px}.intro-brand-name{font-size:15px}.intro-copy h1{font-size:18px}.portal-card{min-height:55px;padding:7px 8px;gap:6px}.portal-title{font-size:9px}.portal-state{font-size:8px}.login-panel{padding:23px 19px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+.companies-link{display:inline-flex;align-items:center;gap:18px;margin-top:2px;padding:8px 13px;border:1px solid #ffffff70;border-radius:7px;background:#102c4938;color:#fff;text-decoration:none;font-size:11px;transition:background .2s,border-color .2s}.companies-link:hover{background:#ffffff20;border-color:#e0c58f}.companies-link span{font-size:15px;color:#f1d9a9}.company-select{width:min(100%,690px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.company-entry{min-height:74px;display:flex;align-items:center;gap:10px;padding:10px 13px;border:1px solid #ffffff55;border-radius:9px;background:linear-gradient(145deg,#ffffff1c,#ffffff0b);color:#fff;text-decoration:none;backdrop-filter:blur(7px);transition:transform .2s,border-color .2s,background .2s}.company-entry:hover{transform:translateY(-2px);border-color:#d7b77b;background:#ffffff25}.company-entry .portal-index{font-size:11px}.company-entry strong{font-size:12px;font-weight:700;flex:1}.company-entry span:last-child{font-size:17px;color:#f1d9a9}.company-back{color:#f5dfb8;text-decoration:none;font-size:11px;padding:7px 12px;border:1px solid #ffffff50;border-radius:7px}@media(max-width:760px){.company-select{width:min(100%,500px);grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.company-entry{min-height:66px;padding:9px 10px}.company-entry strong{font-size:11px}}@media(max-width:420px){.company-select{gap:7px}.company-entry{min-height:59px;padding:8px}.company-entry strong{font-size:10px}}
+
+@media(max-width:420px){.intro-logo-box{width:132px;height:132px;padding:10px;border-radius:15px}.intro-portals{gap:8px}}
+
+
+/* قاب مستقل لوگو و قاب مستقل مجموعه درگاه‌ها */
+.intro-logo-box .intro-logo{width:100%;height:100%;filter:none}
+.intro-portal-box{width:min(100%,610px);padding:14px;border:1px solid #ffffff85;border-radius:15px;background:linear-gradient(145deg,#ffffff20,#ffffff09);box-shadow:0 12px 36px #061a2b35;backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;gap:10px}
+.intro-portal-box .portal-grid{width:100%}
+.intro-portal-box .companies-link{margin-top:0}
+@media(max-width:420px){.intro-portal-box{padding:9px;border-radius:12px;gap:8px}}
+
+
+/* خوانایی و هماهنگی شیشه‌ای درگاه اینترو */
+.intro-portal-box{background:linear-gradient(145deg,rgba(12,39,63,.56),rgba(15,47,73,.42))!important;border:1px solid rgba(255,255,255,.38)!important;box-shadow:0 16px 38px rgba(3,18,32,.30),inset 0 1px rgba(255,255,255,.18)!important;backdrop-filter:blur(15px) saturate(125%)!important;-webkit-backdrop-filter:blur(15px) saturate(125%)!important}
+.portal-card{background:linear-gradient(145deg,rgba(255,255,255,.17),rgba(255,255,255,.08))!important;border-color:rgba(255,255,255,.38)!important;text-shadow:0 1px 3px rgba(0,0,0,.30)}
+.portal-card:disabled{opacity:.82!important;color:#fff!important}
+.portal-card:disabled .portal-title{color:rgba(255,255,255,.94)!important}
+.portal-card:disabled .portal-state{color:#f2e6cf!important}
+.portal-enabled{background:linear-gradient(135deg,rgba(231,197,133,.30),rgba(255,255,255,.13))!important;border-color:rgba(239,211,161,.82)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),0 4px 12px rgba(0,0,0,.12)}
+.companies-link{background:rgba(255,255,255,.13)!important;border-color:rgba(255,255,255,.48)!important;color:#fff!important;text-shadow:0 1px 3px rgba(0,0,0,.35);font-weight:700}
+.companies-link span{color:#f4dcae!important}
+.login-panel{background:linear-gradient(145deg,#fff 0%,#f3f7fa 100%)!important;border:1px solid #d7e2ea!important;box-shadow:0 24px 70px rgba(0,0,0,.48),inset 0 1px #fff!important}
+.login-panel h2{color:#173a59!important;font-size:20px!important}
+.login-panel label{color:#294a62!important;font-size:12px!important}
+.login-panel input,.login-panel select{background:#fff!important;border:1px solid #b9cbd8!important;color:#173a59!important}
+.login-panel input::placeholder{color:#8193a1!important}
+.login-panel button[type=submit]{background:linear-gradient(135deg,#244e70,#173a59)!important;color:#fff!important;border:1px solid #173a59!important;font-weight:700}
+.login-panel .login-brand{border-color:#dbe4ea!important}
+@media(max-width:420px){.intro-logo-box{background:linear-gradient(145deg,rgba(255,255,255,.25),rgba(210,229,242,.10))!important;backdrop-filter:blur(14px) saturate(145%)!important}}

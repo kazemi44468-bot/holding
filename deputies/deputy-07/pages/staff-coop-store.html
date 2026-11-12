@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f4f6f8">
+<title>مرکز تعاونی مصرف کارکنان | شرکت خدمات شهری شهر بهشت</title>
+<link rel="preload" href="../assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/css/style.css?v=coop-performance-v1">
+<style>
+.coop-page{--coop-blue:#315f7b;--coop-blue2:#6d8da2;--coop-gold:#b48a50;--coop-ink:#344e61;--coop-line:#e1e8ed}
+.coop-page .ops-intro{margin-bottom:16px}
+.coop-note{padding:11px 15px;border:1px solid #e8d9bb;background:#fffaf1;color:#80663b;border-radius:11px;font-size:11px;line-height:1.9;margin:12px 0}
+.coop-kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:11px;margin:16px 0}
+.coop-kpi{background:#fff;border:1px solid var(--coop-line);border-radius:14px;padding:14px;min-width:0;box-shadow:0 3px 12px rgba(38,61,79,.035)}
+.coop-kpi small,.coop-kpi b,.coop-kpi span{display:block}
+.coop-kpi small{font-size:10px;color:#6e8190;font-weight:700}
+.coop-kpi b{font-size:clamp(17px,1.8vw,24px);color:var(--coop-blue);margin:8px 0 4px;overflow-wrap:anywhere}
+.coop-kpi span{font-size:9px;color:#8a98a2;line-height:1.7}
+.coop-panel{background:#fff;border:1px solid var(--coop-line);border-radius:16px;padding:19px;margin:16px 0;box-shadow:0 4px 15px rgba(38,61,79,.035)}
+.coop-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.coop-head h2{font-size:17px;color:#294b64;margin:4px 0}
+.coop-head p{font-size:11px;color:#778896;margin:5px 0 0;line-height:1.8}
+.coop-grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.coop-chart-card{border:1px solid #e7edf1;border-radius:12px;padding:15px;min-width:0}
+.coop-chart-card h3{font-size:12px;color:#526b7d;margin:0 0 12px}
+.coop-bars{display:grid;gap:10px}
+.coop-bar-row{display:grid;grid-template-columns:125px minmax(0,1fr) 75px;gap:8px;align-items:center;font-size:10px;color:#647989}
+.coop-bar-track{height:10px;background:#eef2f5;border-radius:20px;overflow:hidden}
+.coop-bar-track i{display:block;height:100%;background:#66869b;border-radius:20px}
+.coop-bar-row b{font-size:10px;color:#385a71;text-align:left}
+.coop-metric-list{display:grid;gap:10px}
+.coop-metric{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #edf1f4;font-size:11px}
+.coop-metric span{color:#718391}.coop-metric b{color:#385a71}
+.coop-category-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+.coop-category{border:1px solid #e2e9ee;border-radius:13px;padding:14px;background:#fff;min-width:0}
+.coop-category .coop-symbol{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:#edf3f6;color:#426a83;font-size:17px;margin-bottom:9px}
+.coop-category b{display:block;color:#38566c;font-size:12px;margin-bottom:5px}
+.coop-category p{font-size:10px;color:#7a8b97;line-height:1.8;margin:0}
+.coop-product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.coop-product{border:1px solid #e2e9ee;border-radius:13px;padding:14px;min-width:0;display:flex;flex-direction:column;gap:8px}
+.coop-product small{font-size:9px;color:#81909b}
+.coop-product h3{font-size:12px;color:#36566d;margin:0;min-height:34px}
+.coop-product .coop-price{font-size:16px;color:#294f69;font-weight:800}
+.coop-product del{font-size:10px;color:#97a2aa;font-weight:400;margin-right:4px}
+.coop-product p{font-size:10px;color:#778895;line-height:1.7;margin:0}
+.coop-product .coop-product-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:6px}
+.coop-chip{display:inline-block;padding:4px 8px;border-radius:20px;background:#edf3f6;color:#45677d;font-size:9px}
+.coop-chip.gold{background:#fbf3e6;color:#8c6a36}
+.coop-filter{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 13px}
+.coop-filter button{border:1px solid #dce5eb;background:#fff;color:#607789;border-radius:20px;padding:7px 11px;font:inherit;font-size:10px;cursor:pointer}
+.coop-filter button.active{background:#365f7b;color:#fff;border-color:#365f7b}
+.coop-program-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.coop-program{border:1px solid #e4e9ed;border-radius:13px;padding:15px}
+.coop-program h3{font-size:13px;color:#36576e;margin:7px 0}
+.coop-program p{font-size:10px;color:#768895;line-height:1.9;margin:0}
+.coop-program strong{display:block;color:#9a7744;font-size:11px;margin-top:9px}
+.coop-table{width:100%;border-collapse:collapse;white-space:nowrap;font-size:10px}
+.coop-table th,.coop-table td{padding:10px;border-bottom:1px solid #e9eef1;text-align:right}
+.coop-table th{background:#f4f7f9;color:#486479}
+.coop-status{padding:3px 7px;border-radius:6px;background:#edf3f6;color:#496b80;font-size:9px}
+.coop-status.wait{background:#fff5e8;color:#936c35}
+.coop-form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+.coop-form label{display:grid;gap:5px;font-size:10px;color:#5f7586}
+.coop-form input,.coop-form select{width:100%;min-width:0;border:1px solid #d8e1e8;border-radius:9px;padding:9px;background:#fff;color:#334e61;font:inherit}
+.coop-form button,.coop-action{border:0;border-radius:9px;background:#365f7b;color:#fff;padding:10px 15px;font:inherit;font-size:11px;cursor:pointer}
+.coop-form .wide{grid-column:1/-1}
+.coop-inline-actions{display:flex;gap:8px;flex-wrap:wrap}
+.coop-secondary{background:#eef3f6!important;color:#3d5c72!important;border:1px solid #dce5eb!important}
+.coop-edit{border:1px solid #dce5eb;background:#fff;color:#45677d;border-radius:6px;padding:5px 8px;font:inherit;cursor:pointer}
+.coop-privacy{padding:12px 14px;border-right:3px solid #6c879a;background:#f5f8fa;color:#667b8a;border-radius:8px;font-size:10px;line-height:1.9}
+.coop-sample{font-size:9px;color:#886a39;background:#fff7e9;border:1px solid #eddfc5;border-radius:20px;padding:4px 8px}
+@media(max-width:1050px){.coop-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.coop-product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.coop-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.coop-program-grid{grid-template-columns:1fr}.coop-grid-2{grid-template-columns:1fr}.coop-product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.coop-form{grid-template-columns:repeat(2,minmax(0,1fr))}.coop-bar-row{grid-template-columns:100px minmax(0,1fr) 65px}}
+@media(max-width:480px){.coop-kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.coop-kpi{padding:11px}.coop-panel{padding:13px}.coop-product-grid{grid-template-columns:1fr 1fr}.coop-form{grid-template-columns:1fr}.coop-form .wide{grid-column:auto}.coop-bar-row{grid-template-columns:85px minmax(0,1fr) 55px}.coop-bar-row span{font-size:9px}}
+</style>
+</head>
+<body class="ops-page coop-page">
+<header class="ops-header"><div class="ops-header-inner"><a class="ops-brand" href="../dashboard.html"><span class="ops-logo">ش</span><span><b>شرکت خدمات شهری شهر بهشت</b><small>سامانه وضعیت و عملکرد سازمان</small></span></a><nav class="ops-nav" aria-label="ناوبری اصلی"></nav><div class="ops-clock"><span>مرکز تعاونی</span><b id="clock">—</b><small id="date">—</small></div></div></header>
+<main class="ops-main">
+<section class="ops-intro"><div><span class="eyebrow">مرکز تأمین و پشتیبانی معیشت کارکنان</span><h1>تعاونی مصرف کارکنان</h1><p>تأمین کالاهای ضروری خانوار، لوازم خانگی و برقی، نیازهای خودرویی و بسته‌های حمایتی با قیمت ویژه و امکان خرید اقساطی</p></div><div class="intro-stamp"><span>مرکز خدمات کارکنان</span><b>CO-OP</b><small>پایش عملکرد و خدمات</small></div></section>
+
+<section class="coop-kpis" aria-label="شاخص‌های عملکرد تعاونی">
+<article class="coop-kpi"><small>فروش و تأمین انجام‌شده</small><b id="coop-sales">—</b><span>تومان · مجموع سفارش‌های ثبت‌شده</span></article>
+<article class="coop-kpi"><small>کارکنان بهره‌مند</small><b id="coop-members">—</b><span>نفر · دریافت‌کنندگان خدمت</span></article>
+<article class="coop-kpi"><small>صرفه‌جویی ناشی از تخفیف</small><b id="coop-discounts">—</b><span>تومان · اختلاف قیمت پایه و ویژه</span></article>
+<article class="coop-kpi"><small>مانده مطالبات اقساطی</small><b id="coop-installments">—</b><span>تومان · تعهدات وصول‌نشده</span></article>
+<article class="coop-kpi"><small>سفارش‌های ثبت‌شده</small><b id="coop-orders">—</b><span>سفارش · نقدی و اقساطی</span></article>
+<article class="coop-kpi"><small>نرخ تحویل موفق</small><b id="coop-delivery">—</b><span>درصد · سفارش‌های تحویل‌شده</span></article>
+</section>
+<section class="coop-panel"><div class="coop-head"><div><span class="eyebrow">تحلیل عملکرد</span><h2>نمای تجمیعی فروش، حمایت و تسهیلات</h2></div><span class="coop-sample">داده نمونه</span></div>
+<div class="coop-grid-2">
+<div class="coop-chart-card"><h3>سهم گروه‌های کالایی از فروش</h3><div id="coop-category-chart" class="coop-bars"></div></div>
+<div class="coop-chart-card"><h3>وضعیت حمایت و بازپرداخت</h3><div class="coop-metric-list" id="coop-support-metrics"></div></div>
+</div></section>
+<section class="coop-panel"><div class="coop-head"><div><span class="eyebrow">دامنه خدمات</span><h2>گروه‌های اصلی تأمین کالا</h2></div></div>
+<div class="coop-category-grid">
+<article class="coop-category"><div class="coop-symbol">▦</div><b>کالاهای اساسی و معیشتی</b><p>برنج، روغن، حبوبات، گوشت و مرغ، لبنیات، چای، قند، شکر و اقلام پرمصرف.</p></article>
+<article class="coop-category"><div class="coop-symbol">♡</div><b>سبدهای حمایتی خانوار</b><p>بسته معیشتی ماهانه، سبد مناسبتی، بسته ویژه خانواده‌های نیازمند و حمایت‌های موردی.</p></article>
+<article class="coop-category"><div class="coop-symbol">⌂</div><b>لوازم خانگی و برقی</b><p>یخچال، ماشین لباس‌شویی، اجاق، جاروبرقی، تلویزیون، کولر و لوازم ضروری خانه.</p></article>
+<article class="coop-category"><div class="coop-symbol">⚙</div><b>کالاها و خدمات خودرویی</b><p>باتری، لاستیک، روغن موتور، فیلتر، لوازم مصرفی، سرویس دوره‌ای و قطعات منتخب.</p></article>
+<article class="coop-category"><div class="coop-symbol">✧</div><b>بهداشت، نظافت و خانه</b><p>شوینده، محصولات بهداشتی، پوشک، ملزومات نظافت و اقلام مصرفی خانوار.</p></article>
+<article class="coop-category"><div class="coop-symbol">❖</div><b>کالاهای آموزشی و کودک</b><p>نوشت‌افزار، کیف، پوشاک پایه، لوازم آموزشی و بسته آغاز سال تحصیلی.</p></article>
+<article class="coop-category"><div class="coop-symbol">✿</div><b>محصولات محلی و سلامت‌محور</b><p>عسل، خرما، محصولات کشاورزی، خشکبار و تولیدات تعاونی‌ها و تولیدکنندگان معتبر.</p></article>
+<article class="coop-category"><div class="coop-symbol">◷</div><b>تأمین مناسبتی و فصلی</b><p>پوشاک فصلی، لوازم گرمایشی و سرمایشی، اقلام سفر و بسته‌های مناسبتی.</p></article>
+</div></section>
+<section class="coop-panel"><div class="coop-head"><div><span class="eyebrow">سبد کالا و پیشنهادهای عرضه</span><h2>نمونه کالاهای قابل تأمین</h2></div><span class="coop-sample">قیمت‌های نمونه</span></div>
+<div class="coop-filter" id="coop-filters"><button class="active" data-filter="all">همه کالاها</button><button data-filter="food">کالاهای اساسی</button><button data-filter="support">سبد حمایتی</button><button data-filter="home">لوازم خانگی</button><button data-filter="auto">خودرویی</button><button data-filter="care">بهداشت و خانه</button></div>
+<div class="coop-product-grid" id="coop-products"></div></section>
+<section class="coop-panel"><div class="coop-head"><div><span class="eyebrow">طرح‌های حمایتی و خرید گروهی</span><h2>برنامه‌های تأمین و پشتیبانی</h2></div></div>
+<div class="coop-program-grid">
+<article class="coop-program"><span class="coop-chip gold">حمایت معیشتی</span><h3>سبد کالاهای اساسی خانوار</h3><p>بسته‌های ماهانه شامل اقلام پرمصرف با قیمت توافقی، اولویت‌بندی بر اساس تعداد اعضای خانوار و امکان پرداخت مرحله‌ای.</p><strong>هدف: کاهش هزینه تأمین اقلام ضروری</strong></article>
+<article class="coop-program"><span class="coop-chip">خرید اقساطی</span><h3>طرح لوازم خانگی ضروری</h3><p>قرارداد خرید گروهی برای کالاهای بادوام؛ پیش‌پرداخت، تعداد اقساط، مبلغ قسط و هزینه نهایی پیش از سفارش روشن باشد.</p><strong>هدف: دسترسی به کالاهای بادوام بدون فشار نقدی یک‌باره</strong></article>
+<article class="coop-program"><span class="coop-chip">خدمات خودرویی</span><h3>طرح نگهداری خودرو</h3><p>تأمین باتری، لاستیک، روغن و خدمات منتخب با تخفیف قراردادی و امکان پرداخت چندمرحله‌ای طبق ضوابط.</p><strong>هدف: کاهش هزینه نگهداری وسیله نقلیه خانوار</strong></article>
+</div></section>
+<section class="coop-panel"><div class="coop-head"><div><span class="eyebrow">ضوابط خرید و اعتبار</span><h2>مدل فروش نقدی، تخفیفی و اقساطی</h2></div></div>
+<div class="coop-grid-2">
+<div class="coop-metric-list"><div class="coop-metric"><span>قیمت ویژه عضو</span><b>نمایش قیمت پایه، تخفیف و قیمت نهایی</b></div><div class="coop-metric"><span>پیش‌پرداخت</span><b>قابل تعریف برای هر کالا یا طرح</b></div><div class="coop-metric"><span>تعداد اقساط</span><b>متناسب با نوع کالا و مصوبه</b></div><div class="coop-metric"><span>تسویه</span><b>پرداخت مستقیم یا کسر از حقوق با رضایت و مجوز</b></div></div>
+<div class="coop-metric-list"><div class="coop-metric"><span>اعتبار خرید</span><b>سقف فردی بر اساس ضوابط مصوب</b></div><div class="coop-metric"><span>کنترل بدهی</span><b>نمایش مانده و سررسید اقساط</b></div><div class="coop-metric"><span>تأمین‌کننده</span><b>قرارداد، قیمت، کیفیت و زمان تحویل</b></div><div class="coop-metric"><span>حمایت هدفمند</span><b>ثبت بسته‌های حمایتی با ضوابط شفاف</b></div></div>
+</div><p class="coop-privacy">هرگونه کسر از حقوق صرفاً با رضایت آگاهانه کارکنان، قرارداد معتبر و رعایت سقف‌های قانونی انجام می‌شود. گزارش ریاست تجمیعی است؛ جزئیات بدهی و خرید اشخاص فقط در دسترسی مجاز و پرونده خصوصی همان فرد قرار می‌گیرد.</p></section>
+<section class="coop-panel"><div class="coop-head"><div><span class="eyebrow">ثبت عملکرد و به‌روزرسانی آمار</span><h2>ثبت سفارش یا خدمت جدید</h2></div></div>
+<form class="coop-form" id="coop-order-form">
+<label>گروه کالا<select name="category"><option value="food">کالاهای اساسی</option><option value="support">سبد حمایتی</option><option value="home">لوازم خانگی</option><option value="auto">خودرویی</option><option value="care">بهداشت و خانه</option></select></label>
+<label>مبلغ فروش (تومان)<input name="amount" type="number" min="1" required></label>
+<label>مبلغ تخفیف (تومان)<input name="discount" type="number" min="0" value="0" required></label>
+<label>مانده اقساط (تومان)<input name="installment" type="number" min="0" value="0" required></label>
+<label>روش پرداخت<select name="payment"><option value="cash">نقدی</option><option value="installment">اقساطی</option><option value="support">حمایتی / یارانه‌ای</option></select></label>
+<label>وضعیت سفارش<select name="status"><option value="تحویل‌شده">تحویل‌شده</option><option value="در حال آماده‌سازی">در حال آماده‌سازی</option><option value="در انتظار تأمین">در انتظار تأمین</option></select></label>
+<label>تعداد کارکنان بهره‌مند<input name="members" type="number" min="1" value="1" required></label>
+<label>تاریخ ثبت<input name="date" type="text" placeholder="۱۴۰۵/۰۸/۱۷"></label>
+<label class="wide">شرح سفارش / طرح<input name="title" maxlength="120" placeholder="برای مثال سبد معیشتی آبان"></label>
+<div class="wide"><button class="coop-action" type="submit">ثبت عملکرد</button></div>
+</form></section>
+<section class="coop-panel"><div class="coop-head"><div><span class="eyebrow">تنظیم اطلاعات پایه</span><h2>اصلاح ارقام نمونه داشبورد</h2></div></div>
+<form class="coop-form" id="coop-base-form">
+<label>تعداد سفارش‌ها<input name="orders" type="number" min="0" required></label><label>کارکنان بهره‌مند<input name="members" type="number" min="0" required></label><label>فروش کل (تومان)<input name="sales" type="number" min="0" required></label><label>تخفیف کل (تومان)<input name="discounts" type="number" min="0" required></label><label>مانده اقساط (تومان)<input name="installments" type="number" min="0" required></label><label>نرخ تحویل موفق (%)<input name="delivery" type="number" min="0" max="100" required></label><div class="wide"><button class="coop-action coop-secondary" type="submit">ذخیره ارقام پایه</button></div>
+</form></section>
+<section class="coop-panel"><div class="coop-head"><div><span class="eyebrow">ریز عملیات</span><h2>آخرین سفارش‌ها و خدمات ثبت‌شده</h2></div><span id="coop-order-count" class="coop-sample">—</span></div><div class="table-scroll"><table class="coop-table"><thead><tr><th>تاریخ</th><th>شرح</th><th>گروه</th><th>مبلغ</th><th>تخفیف</th><th>پرداخت</th><th>وضعیت</th></tr></thead><tbody id="coop-order-rows"></tbody></table></div></section>
+<footer class="ops-footer"><span>مرکز تعاونی مصرف کارکنان</span><a href="company-services.html">بازگشت به مرکز خدمات ↑</a></footer>
+</main>
+<script src="../assets/js/main.js?v=internal-routing-20261110"></script>
+<script src="../assets/js/staff-coop-store.js?v=coop-performance-v1"></script>
+<script src="../assets/js/mobile-nav.js?v=internal-routing-20261110" defer></script>
+</body></html>

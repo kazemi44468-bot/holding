@@ -1,0 +1,42 @@
+name: Periodic management report catalog
+on:
+  workflow_dispatch:
+    inputs:
+      period:
+        description: Report period
+        required: true
+        type: choice
+        options:
+          - auto
+          - month
+          - quarter
+          - half
+          - year
+  schedule:
+    - cron: "0 3 22 * *"
+permissions:
+  contents: write
+concurrency:
+  group: periodic-report-catalog
+  cancel-in-progress: false
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Generate report catalog
+        run: node scripts/generate-report.js "${{ github.event.inputs.period || 'auto' }}"
+      - name: Commit report archive
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pages/archive/reports pages/report-archive.html
+          if git diff --cached --quiet; then
+            echo "No report changes to commit"
+          else
+            git commit -m "Generate periodic management report catalog"
+            git push
+          fi

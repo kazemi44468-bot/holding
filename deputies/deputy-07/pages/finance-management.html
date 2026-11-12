@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f4f6f8">
+<meta name="description" content="مرکز پایش اعتبار مصوب، تخصیص اعتبارات و هزینه‌کرد شرکت خدمات شهری شهر بهشت">
+<title>مرکز مدیریت مالی | شرکت خدمات شهری شهر بهشت</title>
+<link rel="preload" href="../assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/css/style.css?v=finance-dashboard-v11-20261108-period">
+<style>
+.finance-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0 22px}
+.finance-kpis article{background:#fff;border:1px solid #dce4ea;border-radius:14px;padding:18px 19px;box-shadow:0 3px 12px rgba(38,61,79,.045);min-width:0}
+.finance-kpis small,.finance-kpis b,.finance-kpis span{display:block}
+.finance-kpis small{font-size:12px;color:#617487;font-weight:700}
+.finance-kpis b{font-size:clamp(20px,2.3vw,28px);color:#294d68;margin:8px 0 2px;overflow-wrap:anywhere}
+.finance-kpis span{font-size:10px;color:#83919d}
+.finance-panel{background:#fff;border:1px solid #dce4ea;border-radius:16px;padding:20px;margin:18px 0;box-shadow:0 4px 16px rgba(38,61,79,.04)}
+.finance-section-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:15px}
+.finance-section-head h2{font-size:18px;color:#29465d;margin:4px 0}
+.finance-flow-grid{display:none}
+.finance-ratio-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0}
+.finance-ratio-card{border:1px solid #e1e8ed;border-radius:12px;padding:14px;background:#fbfcfd}
+.finance-ratio-card>div:first-child{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.finance-ratio-card small{font-size:11px;color:#607487}
+.finance-ratio-card b{font-size:22px;color:#315c78}
+.finance-ratio-card span{font-size:10px;color:#788896}
+.finance-ratio-track{height:9px;background:#edf1f4;border-radius:20px;margin:12px 0 8px;overflow:hidden}
+.finance-ratio-track i{display:block;height:100%;border-radius:20px}
+.finance-ratio-track .allocation{background:#477f91}.finance-ratio-track .spending{background:#c28b4e}.finance-ratio-track .approved{background:#647d9c}
+.finance-alert{padding:12px 15px;border:1px solid #ecd3ad;background:#fff8ed;color:#875b26;border-radius:10px;font-size:12px;line-height:1.9;margin-top:12px}
+.finance-two-col{display:grid;grid-template-columns:1fr;gap:16px}
+.finance-chart-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:#627486;margin-bottom:15px}
+.finance-dot{display:inline-block;width:9px;height:9px;border-radius:3px;margin-left:5px}.finance-dot.allocation{background:#477f91}.finance-dot.spending{background:#c28b4e}
+.finance-dept-chart{display:grid;gap:13px}
+.finance-dept-row{padding:12px 0;border-bottom:1px solid #edf1f4}
+.finance-dept-label{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:9px;flex-wrap:wrap}
+.finance-dept-label b{font-size:12px;color:#334f64}.finance-dept-label span{font-size:10px;color:#718293}
+.finance-dept-bars{display:grid;gap:7px}
+.finance-bar-line{display:grid;grid-template-columns:65px 1fr;align-items:center;gap:9px}
+.finance-bar-line small{font-size:10px;color:#6c7d8a}
+.finance-bar-line>div{height:10px;border-radius:20px;background:#edf1f4;overflow:hidden}
+.finance-bar-line i{display:block;height:100%;border-radius:20px;min-width:0}
+.finance-bar-line i.allocation{background:#477f91}.finance-bar-line i.spending{background:#c28b4e}
+.finance-share-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.finance-donut-panel{border:1px solid #e1e8ed;border-radius:13px;padding:16px;min-width:0}
+.finance-donut-panel h3{font-size:13px;color:#405d72;margin:0 0 12px}
+.finance-donut-layout{display:grid;grid-template-columns:145px minmax(0,1fr);gap:14px;align-items:center}
+.finance-donut{width:140px;height:140px;border-radius:50%;display:grid;place-items:center}
+.finance-donut>div{width:94px;height:94px;border-radius:50%;background:#fff;display:grid;align-content:center;justify-items:center;box-shadow:0 1px 5px rgba(0,0,0,.06)}
+.finance-donut b{font-size:15px;color:#294d68;max-width:84px;overflow:hidden;text-overflow:ellipsis}
+.finance-donut small{font-size:9px;color:#718293}
+.finance-donut-legend{display:grid;gap:6px;min-width:0}
+.finance-donut-legend>div{display:grid;grid-template-columns:9px minmax(0,1fr) auto;align-items:center;gap:6px;font-size:9px;color:#667989}
+.finance-donut-legend i{width:8px;height:8px;border-radius:2px}
+.finance-donut-legend span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.finance-donut-legend b{font-size:9px;font-weight:600;white-space:nowrap}
+.finance-donut-legend small{grid-column:2/4;color:#8795a0;font-size:9px}
+.finance-document-grid,.finance-personnel-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.finance-document-grid article,.finance-personnel-grid article{border:1px solid #e3e9ed;border-radius:11px;padding:12px;min-width:0}
+.finance-document-grid small,.finance-document-grid b,.finance-document-grid span,.finance-personnel-grid small,.finance-personnel-grid b,.finance-personnel-grid span{display:block}
+.finance-document-grid small,.finance-personnel-grid small{font-size:10px;color:#718293}
+.finance-document-grid b,.finance-personnel-grid b{font-size:14px;color:#365a72;margin:7px 0;overflow-wrap:anywhere}
+.finance-document-grid span,.finance-personnel-grid span{font-size:9px;color:#8996a0}
+.finance-table{width:100%;border-collapse:collapse;font-size:11px;white-space:nowrap}
+.finance-table th,.finance-table td{padding:10px 11px;border-bottom:1px solid #e9eef1;text-align:right}
+.finance-table th{background:#f4f7f9;color:#456176;font-weight:700}
+.finance-total-row{background:#f3f7fa;color:#294d68}
+.finance-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.finance-form label{display:grid;gap:6px;font-size:11px;color:#526b7d}
+.finance-form input,.finance-form select,.finance-form textarea{width:100%;min-width:0;border:1px solid #d8e1e8;border-radius:9px;padding:10px;background:#fff;color:#334e61;font:inherit}
+.finance-form-wide{grid-column:1/-1}
+.finance-document-check{display:flex!important;align-items:center;grid-column:1/-1}
+.finance-document-check input{width:auto}
+.finance-form-actions{grid-column:1/-1}
+.finance-form-actions button,.finance-secondary-btn{border:0;border-radius:9px;background:#365f7b;color:white;padding:10px 18px;font:inherit;cursor:pointer}
+.finance-secondary-btn{background:#eef3f6;color:#3d5c72;border:1px solid #dce5eb}
+.finance-delete{border:1px solid #e5c9c3;border-radius:7px;padding:5px 9px;background:#fff8f6;color:#a44e42;font:inherit;cursor:pointer}
+.finance-record-count{font-size:11px;color:#718293}
+.finance-period-panel{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:13px 16px;margin:14px 0}.finance-period-panel h2{font-size:14px;color:#34536a;margin:0;white-space:nowrap}.finance-period-panel select{display:none}.finance-period-options{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.finance-period-choice{display:inline-flex;align-items:center;gap:7px;border:1px solid #dce5eb;border-radius:999px;background:#fff;color:#536a7b;padding:8px 13px;font:inherit;font-size:11px;cursor:pointer;transition:background .18s,border-color .18s,color .18s}.finance-period-choice i{display:grid;place-items:center;width:17px;height:17px;border:1px solid #bdcbd5;border-radius:50%;font-size:10px;font-style:normal;color:transparent;background:#fff}.finance-period-choice.is-active{border-color:#547b96;background:#edf4f8;color:#294f69;font-weight:700}.finance-period-choice.is-active i{border-color:#547b96;background:#547b96;color:#fff}.finance-period-choice:focus-visible{outline:2px solid #7b9bb1;outline-offset:2px}
+.finance-sample-note{margin-top:12px;padding:9px 13px;border:1px solid #e7d7b7;border-radius:9px;background:#fffaf1;color:#826638;font-size:11px}.finance-sample-tag{display:inline-block;padding:2px 6px;border-radius:5px;background:#fff3d8;color:#8a6729;font-size:9px}.finance-empty{text-align:center;color:#84929d;padding:20px}
+@media(max-width:900px){.finance-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.finance-document-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.finance-personnel-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.finance-share-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.finance-period-panel{align-items:flex-start;flex-direction:column;gap:10px}.finance-period-options{gap:6px}.finance-period-choice{padding:7px 10px}.finance-panel{padding:14px}.finance-kpis{gap:9px}.finance-kpis article{padding:13px}.finance-ratio-grid{grid-template-columns:1fr}.finance-document-grid,.finance-personnel-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.finance-donut-layout{grid-template-columns:115px minmax(0,1fr);gap:8px}.finance-donut{width:110px;height:110px}.finance-donut>div{width:75px;height:75px}.finance-donut b{font-size:12px}.finance-form{grid-template-columns:1fr}.finance-form-wide{grid-column:auto}.finance-section-head h2{font-size:16px}}
+@media print{.ops-header,.mobile-dock,#finance-entry,#finance-rows,.finance-form-actions,#finance-print{display:none!important}.finance-panel,.finance-kpis article{break-inside:avoid;box-shadow:none}.finance-kpis{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body class="ops-page finance-page">
+<header class="ops-header"><div class="ops-header-inner"><a class="ops-brand" href="../dashboard.html"><span class="ops-logo">ش</span><span><b>شرکت خدمات شهری شهر بهشت</b><small>سامانه وضعیت و عملکرد سازمان</small></span></a><nav class="ops-nav" aria-label="ناوبری اصلی"></nav><div class="ops-clock"><span>مرکز مالی</span><b id="clock">—</b><small id="date">—</small></div></div></header>
+<main class="ops-main" data-finance-center>
+<section class="ops-intro"><div><span class="eyebrow">مدیریت منابع · اعتبارات و هزینه‌کرد</span><h1>مرکز تجمیع و پایش مالی شرکت</h1></div><div class="intro-stamp"><span>گزارش مالی</span><b>۰۱</b><small>نمای کل شرکت</small></div><span class="finance-sample-tag" id="finance-sample-note">ارقام نمونه</span></section>
+<section class="finance-period-panel" aria-label="بازه گزارش مالی"><h2>بازه گزارش</h2><select id="finance-period" aria-hidden="true" tabindex="-1"><option value="year" selected>یک‌ساله اخیر</option><option value="half">شش‌ماهه اخیر</option><option value="quarter">سه‌ماهه اخیر</option><option value="month">یک‌ماهه اخیر</option><option value="week">هفت روز اخیر</option><option value="all">تمام سوابق</option></select><div class="finance-period-options" role="radiogroup" aria-label="انتخاب بازه زمانی"><button type="button" class="finance-period-choice is-active" role="radio" aria-checked="true" data-finance-period="year"><i>✓</i><span>یک‌ساله</span></button><button type="button" class="finance-period-choice" role="radio" aria-checked="false" data-finance-period="half"><i>✓</i><span>شش‌ماهه</span></button><button type="button" class="finance-period-choice" role="radio" aria-checked="false" data-finance-period="quarter"><i>✓</i><span>فصلی</span></button><button type="button" class="finance-period-choice" role="radio" aria-checked="false" data-finance-period="month"><i>✓</i><span>ماهانه</span></button><button type="button" class="finance-period-choice" role="radio" aria-checked="false" data-finance-period="week"><i>✓</i><span>هفتگی</span></button><button type="button" class="finance-period-choice" role="radio" aria-checked="false" data-finance-period="all"><i>✓</i><span>تمام سوابق</span></button></div></section>
+<section class="finance-kpis" aria-label="شاخص‌های کلیدی مالی">
+<article><small>اعتبار مصوب سالیانه شرکت</small><b id="f-approved">۰</b><span>تومان</span></article>
+<article><small>اعتبار تخصیص‌یافته</small><b id="f-allocated">۰</b><span>تومان</span></article>
+<article><small>هزینه‌کرد واقعی</small><b id="f-spent">۰</b><span>تومان</span></article>
+<article><small>مانده تخصیص در بازه</small><b id="f-balance">۰</b><span>تومان</span></article>
+</section>
+<section class="finance-panel">
+<div class="finance-section-head"><div><span class="eyebrow">مؤشرات تحقق مالی</span><h2>نسبت تخصیص و مصرف اعتبار</h2></div></div>
+<div id="finance-ratios" class="finance-ratio-grid"></div><div id="finance-alerts" aria-live="polite"></div>
+</section>
+<section class="finance-panel">
+<div class="finance-section-head"><div><span class="eyebrow">عملکرد واحدها</span><h2>مقایسه تخصیص و هزینه‌کرد اداره‌ها</h2></div></div>
+<div class="finance-chart-legend"><span><i class="finance-dot allocation"></i> اعتبار تخصیص‌یافته</span><span><i class="finance-dot spending"></i> هزینه‌کرد واقعی</span></div>
+<div id="finance-dept-chart" class="finance-dept-chart"></div>
+</section>
+<section class="finance-panel">
+<div class="finance-section-head"><div><span class="eyebrow">سهم اداره‌ها</span><h2>توزیع اعتبارات و هزینه‌ها بین واحدها</h2></div></div>
+<div class="finance-share-grid">
+<div class="finance-donut-panel"><h3>سهم هر اداره از کل تخصیص</h3><div id="finance-allocation-share"></div></div>
+<div class="finance-donut-panel"><h3>سهم هر اداره از کل هزینه‌کرد</h3><div id="finance-spending-share"></div></div>
+</div>
+</section>
+<section class="finance-panel"><div class="finance-section-head"><div><span class="eyebrow">ترکیب هزینه‌ها</span><h2>توزیع هزینه بر اساس موضوع</h2></div></div><div id="finance-category-chart"></div></section>
+<section class="finance-panel"><div class="finance-section-head"><div><span class="eyebrow">کنترل اسناد و پرداخت</span><h2>مستندسازی، فاکتورها و تسویه</h2></div></div><div class="finance-document-grid" id="finance-documents"></div></section>
+<section class="finance-panel"><div class="finance-section-head"><div><span class="eyebrow">هزینه‌های منابع انسانی</span><h2>اضافه‌کاری، کارانه و فوق‌العاده‌ها</h2></div></div><div id="finance-personnel-costs" class="finance-personnel-grid"></div></section>
+<section class="finance-panel"><div class="finance-section-head"><div><span class="eyebrow">مقایسه تفصیلی ادارات</span><h2>جدول تخصیص، هزینه و عملکرد مالی</h2></div><button type="button" class="finance-secondary-btn" id="finance-print">چاپ گزارش</button></div><div class="table-scroll"><table class="finance-table"><thead><tr><th>اداره</th><th>اعتبار تخصیصی</th><th>هزینه‌کرد واقعی</th><th>سهم از کل هزینه</th><th>درصد هزینه‌کرد از تخصیص</th><th>هزینه مستند</th><th>درصد مستندسازی</th></tr></thead><tbody id="finance-dept-rows"></tbody></table></div></section>
+<section class="finance-panel" id="finance-entry"><div class="finance-section-head"><div><span class="eyebrow">دفتر ثبت اطلاعات مالی</span><h2>ثبت اعتبار مصوب، تخصیص یا هزینه</h2></div></div>
+
+<form id="finance-form" class="finance-form"><input type="hidden" name="editId" id="finance-edit-id">
+<label>اداره / واحد<select name="dept"><option value="company">ستاد / کل شرکت</option><option value="1">اداری و پشتیبانی</option><option value="2">تحقیق و توسعه</option><option value="3">پارک‌بان و معبربانان</option><option value="4">تأسیسات فنی و امور نگهداری</option><option value="6">فاوا و خدمات فنی</option><option value="7">جمع‌آوری، نگهداری و بازیافت پسماند</option><option value="8">بازرسی و تحقیقات محلی</option></select></label>
+<label>نوع رویداد مالی<select name="type"><option value="approved">اعتبار مصوب کل شرکت</option><option value="allocated">تخصیص اعتبار به اداره</option><option value="expense">هزینه عمومی / عملیاتی</option><option value="overtime">اضافه‌کاری</option><option value="performance">کارانه</option><option value="allowance">فوق‌العاده و مزایا</option><option value="invoice">فاکتور خرید / خدمات</option><option value="fuel">سوخت و انرژی</option><option value="purchase">خرید و تدارکات</option><option value="damage">خسارت و حوادث</option><option value="contract">قرارداد و تعهدات</option><option value="other">سایر هزینه‌ها</option></select></label>
+<label>دسته‌بندی هزینه<select name="category"><option value="personnel">نیروی انسانی</option><option value="operations">عملیات و خدمات شهری</option><option value="fuel">سوخت و انرژی</option><option value="procurement">خرید و تدارکات</option><option value="maintenance">تعمیرات و نگهداری</option><option value="damages">خسارت و حوادث</option><option value="contracts">قراردادها و پیمانکاران</option><option value="welfare">رفاه و پشتیبانی</option><option value="technology">فناوری و ارتباطات</option><option value="other">سایر</option></select></label>
+<label>مبلغ (تومان)<input name="amount" type="number" min="1" step="1" required placeholder="مبلغ را به تومان وارد کنید"></label>
+<label>وضعیت رویداد<select name="status"><option value="ثبت اولیه">ثبت اولیه</option><option value="در انتظار تأیید">در انتظار تأیید</option><option value="در انتظار پرداخت">در انتظار پرداخت</option><option value="پرداخت‌شده">پرداخت‌شده</option><option value="تسویه‌شده">تسویه‌شده</option><option value="رد شده">رد شده</option></select></label>
+<label>تاریخ ثبت<input name="date" type="text" placeholder="۱۴۰۵/۰۸/۱۷"></label>
+<label>عنوان / شرح رویداد<input name="title" required maxlength="120" placeholder="مثلاً تصویب اعتبار، تخصیص یا خرید قطعات"></label>
+<label>شماره سند / فاکتور<input name="reference" maxlength="80" placeholder="شماره فاکتور، حواله یا سند"></label>
+<label class="finance-form-wide">توضیحات تکمیلی<textarea name="note" rows="2" maxlength="500" placeholder="شرح، مرجع تصویب، پیمانکار، دوره یا توضیحات حسابداری"></textarea></label>
+<label class="finance-document-check"><input type="checkbox" name="documented"><span>دارای مستند مالی معتبر است (فاکتور، رسید، حواله یا سند)</span></label>
+<div class="finance-form-actions"><button type="submit">ثبت و محاسبه مجدد</button></div>
+</form></section>
+<section class="finance-panel"><div class="finance-section-head"><div><span class="eyebrow">دفتر کل رویدادهای ثبت‌شده</span><h2>فهرست گردش مالی و اسناد</h2></div><span class="finance-record-count" id="finance-count">۰ رویداد</span></div><div class="table-scroll"><table class="finance-table"><thead><tr><th>ردیف</th><th>اداره</th><th>نوع رویداد</th><th>شرح</th><th>مبلغ (تومان)</th><th>وضعیت</th><th>مستند</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody id="finance-rows"><tr><td colspan="9">هنوز رویداد مالی ثبت نشده است.</td></tr></tbody></table></div></section>
+<footer class="ops-footer"><span>شرکت خدمات شهری شهر بهشت</span><a href="../dashboard.html">بازگشت به نمای کلان شرکت ↑</a></footer></main>
+<script src="../assets/js/main.js?v=internal-routing-20261110"></script><script src="../assets/js/finance-management.js?v=finance-dashboard-v6-20261108-period"></script><script src="../assets/js/mobile-nav.js?v=internal-routing-20261110" defer></script></body></html>
