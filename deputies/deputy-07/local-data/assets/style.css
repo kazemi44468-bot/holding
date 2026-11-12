@@ -2,3 +2,32 @@
 .attachment-list{display:grid;gap:8px;margin-top:14px}.attachment-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 11px;border:1px solid #e2e9ef;border-radius:9px;background:#fbfcfd;font-size:11px;color:#40566d}.attachment-row span{overflow-wrap:anywhere}.attachment-row button{flex:none}
 
 .brand-flag{width:43px;height:34px;object-fit:cover;border-radius:7px;border:1px solid #d6e0e9;display:block}
+
+
+/* Deputy 7 shared visual language: bright, patterned, and consistent */
+body{background-color:#f3f6f8;background-image:linear-gradient(rgba(44,83,115,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(44,83,115,.025) 1px,transparent 1px);background-size:24px 24px;color:#26394b}
+.ops-header{background:rgba(255,255,255,.96);border-bottom:1px solid #dce5ec;box-shadow:0 3px 16px rgba(34,65,91,.045)}
+.ops-brand b{color:#243e57}
+.ops-brand small{color:#71879a}
+.ops-nav{gap:8px}
+.ops-nav>a,.ops-nav .nav-dropdown>summary{border:1px solid #e0e7ed;border-radius:7px;padding:7px 11px;background:#fff;color:#405c73}
+.ops-nav>a:hover,.ops-nav .nav-dropdown>summary:hover,.ops-nav>a.active,.ops-nav .nav-dropdown>summary.active{background:#edf3f8;border-color:#b8cad8;color:#1f4c70}
+.ops-clock{color:#526b80}
+.ops-clock b{color:#244866}
+.wrap{max-width:1180px}
+.hero{background:linear-gradient(120deg,#e8f0f6,#f8fafc 72%);color:#263f56;border:1px solid #d8e4ed;border-radius:16px;box-shadow:0 8px 24px rgba(38,70,96,.055)}
+.hero h1{color:#1f405e}
+.hero p{color:#60788d}
+.hero .eyebrow{color:#567b98}
+.hero-mark{color:#315d7f;border-color:#c2d3e0;background:rgba(255,255,255,.56)}
+.panel,.stats article{border-color:#dfe7ed;border-radius:14px;box-shadow:0 4px 18px rgba(38,70,96,.045)}
+.panel h2,.backup-grid h3{color:#234765}
+.stats b{color:#285779}
+.mini-icon{background:#edf3f8;color:#315f82}
+button,.file-button{border-radius:9px}
+.primary{background:#285779;border-color:#285779}
+.primary:hover{background:#1f4968}
+.form-row input,.form-row textarea{background:#fbfcfd}
+.empty{background:#f5f8fa;border:1px dashed #d6e1e9}
+.ops-footer{min-height:20px}
+@media(max-width:900px){.ops-header-inner{padding-inline:14px}.ops-clock{display:none}}
