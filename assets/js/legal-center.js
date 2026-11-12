@@ -8,12 +8,21 @@ const now=()=>new Date().toISOString();
 const today=()=>{const d=new Date(),z=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate())};
 const fmtDate=v=>{if(!v)return '—';const d=new Date(v.length===10?v+'T12:00:00':v);return Number.isNaN(d.getTime())?esc(v):new Intl.DateTimeFormat('fa-IR',{dateStyle:'medium'}).format(d)};
 const makeId=p=>p+'-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7);
+const orgRegistry=window.HOLDING_ORG_REGISTRY||{};
+function orgs(){
+ const out=[{id:'HOLDING',label:'ستاد هلدینگ'}];
+ (orgRegistry.deputies||[]).forEach(x=>out.push({id:x.organization_id,label:x.name||x.label||('معاونت '+fa(x.sequence))}));
+ (orgRegistry.companies||[]).forEach(x=>out.push({id:x.organization_id,label:x.name||x.label||'شرکت تابعه'}));
+ (orgRegistry.provincial_branch_managements||[]).forEach(x=>out.push({id:x.organization_id,label:x.name||('مدیریت شعب استانی '+fa(x.sequence))}));
+ return out;
+}
+const orgLabel=id=>orgs().find(x=>x.id===id)?.label||id||'—';
 const blank=()=>({schemaVersion:1,requests:[],cases:[],contracts:[],advice:[],experts:[],risks:[],events:[],updatedAt:now()});
 let db=blank(),tab='overview',editing=null,query='',busy=false;
 const defs={
  requests:{label:'درخواست‌های حقوقی',singular:'درخواست حقوقی',prefix:'REQ',fields:[
  {name:'title',label:'عنوان درخواست',required:true},{name:'serviceType',label:'نوع خدمت',type:'select',options:['مشاوره و اعلام نظر','بررسی قرارداد','پیگیری دعوا','امور ثبتی و شرکتی','حقوق کار و بیمه','املاک و دارایی','خدمات حمایتی کارکنان','سایر']},
- {name:'requester',label:'درخواست‌کننده',required:true},{name:'org',label:'واحد / شرکت مربوط'},
+ {name:'requester',label:'درخواست‌کننده',required:true},{name:'org',label:'واحد / شرکت مربوط',type:'org'},
  {name:'urgency',label:'فوریت',type:'select',options:['عادی','مهم','فوری','بحرانی']},
  {name:'confidentiality',label:'سطح محرمانگی',type:'select',options:['عادی','محرمانه','محرمانه ویژه']},
  {name:'status',label:'وضعیت',type:'select',options:['ثبت‌شده','در حال بررسی','نیازمند تکمیل مدارک','ارجاع به متخصص','پاسخ داده‌شده','مختومه']},
@@ -21,7 +30,7 @@ const defs={
  ]},
  cases:{label:'پرونده‌ها و دعاوی',singular:'پرونده حقوقی',prefix:'CASE',fields:[
  {name:'title',label:'عنوان پرونده',required:true},{name:'caseNumber',label:'شماره پرونده / کلاسه'},
- {name:'org',label:'شخصیت حقوقی ذی‌نفع',required:true},{name:'caseType',label:'نوع پرونده',type:'select',options:['حقوقی','کیفری','اداری و دیوان عدالت','کار و تأمین اجتماعی','ثبتی','ملکی','داوری و میانجیگری','مطالبه وجه','سایر']},
+ {name:'org',label:'شخصیت حقوقی ذی‌نفع',type:'org',required:true},{name:'caseType',label:'نوع پرونده',type:'select',options:['حقوقی','کیفری','اداری و دیوان عدالت','کار و تأمین اجتماعی','ثبتی','ملکی','داوری و میانجیگری','مطالبه وجه','سایر']},
  {name:'forum',label:'مرجع رسیدگی / شعبه'},{name:'opposingParty',label:'طرف مقابل'},
  {name:'lawyer',label:'وکیل / متخصص مسئول'},{name:'owner',label:'مسئول پیگیری داخلی'},
  {name:'status',label:'وضعیت پرونده',type:'select',options:['در حال بررسی اولیه','آماده‌سازی و ثبت','در جریان رسیدگی','در انتظار اقدام مرجع','در مرحله اجرا','در حال مذاکره / سازش','متوقف','مختومه']},
@@ -32,7 +41,7 @@ const defs={
  ]},
  contracts:{label:'قراردادها و تعهدات',singular:'قرارداد',prefix:'CTR',fields:[
  {name:'title',label:'عنوان قرارداد',required:true},{name:'contractNo',label:'شماره قرارداد'},
- {name:'org',label:'شرکت / واحد ذی‌نفع',required:true},{name:'party',label:'طرف قرارداد'},
+ {name:'org',label:'شرکت / واحد ذی‌نفع',type:'org',required:true},{name:'party',label:'طرف قرارداد'},
  {name:'contractType',label:'نوع قرارداد',type:'select',options:['پیمانکاری','خدماتی','مشارکت','خرید و فروش','اجاره','سرمایه‌گذاری','مشاوره','تفاهم‌نامه','سایر']},
  {name:'status',label:'وضعیت',type:'select',options:['پیش‌نویس','در بررسی حقوقی','در انتظار تصویب','آماده امضا','فعال','در حال اجرا','دارای اختلاف','خاتمه‌یافته','فسخ‌شده']},
  {name:'startDate',label:'تاریخ شروع',type:'date'},{name:'endDate',label:'تاریخ پایان / سررسید',type:'date'},
@@ -41,7 +50,7 @@ const defs={
  ]},
  advice:{label:'مشاوره‌ها و نظریات حقوقی',singular:'درخواست مشاوره',prefix:'ADV',fields:[
  {name:'title',label:'موضوع مشاوره',required:true},{name:'requester',label:'درخواست‌کننده',required:true},
- {name:'org',label:'واحد / شرکت مربوط'},{name:'subject',label:'حوزه تخصصی',type:'select',options:['قراردادها','شرکت‌ها و حاکمیت شرکتی','کار و تأمین اجتماعی','املاک و دارایی‌ها','مالی و مطالبات','مقررات و تطبیق','دعاوی و دادرسی','سایر']},
+ {name:'org',label:'واحد / شرکت مربوط',type:'org'},{name:'subject',label:'حوزه تخصصی',type:'select',options:['قراردادها','شرکت‌ها و حاکمیت شرکتی','کار و تأمین اجتماعی','املاک و دارایی‌ها','مالی و مطالبات','مقررات و تطبیق','دعاوی و دادرسی','سایر']},
  {name:'urgency',label:'فوریت',type:'select',options:['عادی','مهم','فوری','بحرانی']},
  {name:'status',label:'وضعیت',type:'select',options:['دریافت‌شده','در حال بررسی','نیازمند اطلاعات تکمیلی','نظر تهیه‌شده','تأیید و ابلاغ','مختومه']},
  {name:'dueDate',label:'مهلت پاسخ',type:'date'},
@@ -57,7 +66,7 @@ const defs={
  {name:'notes',label:'یادداشت ارزیابی و سوابق همکاری',type:'textarea',full:true}
  ]},
  risks:{label:'ریسک‌ها و مهلت‌های حقوقی',singular:'ریسک حقوقی',prefix:'RSK',fields:[
- {name:'title',label:'عنوان ریسک / تعهد',required:true},{name:'org',label:'شرکت / واحد مربوط'},
+ {name:'title',label:'عنوان ریسک / تعهد',required:true},{name:'org',label:'شرکت / واحد مربوط',type:'org'},
  {name:'category',label:'حوزه',type:'select',options:['قراردادی','دعاوی و مطالبات','شرکتی و ثبتی','کار و بیمه','املاک و دارایی','مقررات و انطباق','محرمانگی و داده','سایر']},
  {name:'probability',label:'احتمال وقوع',type:'select',options:['کم','متوسط','زیاد']},
  {name:'impact',label:'شدت اثر',type:'select',options:['کم','متوسط','زیاد','بحرانی']},
@@ -82,11 +91,11 @@ async function syncCalendar(){
  if(!window.HoldingLocalDataVault)return;
  const scope='holding-calendar-events',existing=await window.HoldingLocalDataVault.all(scope),owned=existing.filter(x=>x.sourceCenter==='legal'),desired=[];
  const add=(record,date,title,type,description,status)=>{if(!date)return;desired.push({id:'CAL-LEGAL-'+record.id+'-'+type,title,type:'deadline',scope:record.org||'HOLDING',date,time:'09:00',priority:record.urgency==='بحرانی'||record.priority==='بحرانی'?'high':'normal',status,owner:record.owner||record.requester||record.lawyer||'',reminder:'1440',sourceCenter:'legal',linkedLegalRecordId:record.id,description});};
- db.cases.filter(x=>x.status!=='مختومه').forEach(x=>add(x,x.nextDate,'مهلت / جلسه پرونده حقوقی: '+x.title,'case','پرونده '+x.id+' · '+(x.caseNumber||'بدون شماره')+' · '+(x.summary||''),'planned'));
- db.contracts.filter(x=>!['خاتمه‌یافته','فسخ‌شده'].includes(x.status)).forEach(x=>add(x,x.endDate,'سررسید قرارداد: '+x.title,'contract','قرارداد '+(x.contractNo||x.id)+' · '+(x.obligations||''),'planned'));
- db.requests.filter(x=>!['پاسخ داده‌شده','مختومه'].includes(x.status)).forEach(x=>add(x,x.dueDate,'مهلت پاسخ درخواست حقوقی: '+x.title,'request','درخواست '+x.id+' · '+(x.description||''),'planned'));
- db.advice.filter(x=>!['تأیید و ابلاغ','مختومه'].includes(x.status)).forEach(x=>add(x,x.dueDate,'مهلت پاسخ مشاوره حقوقی: '+x.title,'advice','مشاوره '+x.id+' · '+(x.question||''),'planned'));
- db.risks.filter(x=>!['رفع‌شده','پذیرفته‌شده با مجوز'].includes(x.status)).forEach(x=>add(x,x.dueDate,'مهلت کنترل ریسک حقوقی: '+x.title,'risk','ریسک '+x.id+' · '+(x.mitigation||''),'planned'));
+ db.cases.filter(x=>x.status!=='مختومه').forEach(x=>add(x,x.nextDate,'مهلت / جلسه پرونده حقوقی: '+x.title,'case','قلمرو: '+orgLabel(x.org)+' · پرونده '+x.id+' · '+(x.caseNumber||'بدون شماره')+' · '+(x.summary||''),'planned'));
+ db.contracts.filter(x=>!['خاتمه‌یافته','فسخ‌شده'].includes(x.status)).forEach(x=>add(x,x.endDate,'سررسید قرارداد: '+x.title,'contract','قلمرو: '+orgLabel(x.org)+' · قرارداد '+(x.contractNo||x.id)+' · '+(x.obligations||''),'planned'));
+ db.requests.filter(x=>!['پاسخ داده‌شده','مختومه'].includes(x.status)).forEach(x=>add(x,x.dueDate,'مهلت پاسخ درخواست حقوقی: '+x.title,'request','قلمرو: '+orgLabel(x.org)+' · درخواست '+x.id+' · '+(x.description||''),'planned'));
+ db.advice.filter(x=>!['تأیید و ابلاغ','مختومه'].includes(x.status)).forEach(x=>add(x,x.dueDate,'مهلت پاسخ مشاوره حقوقی: '+x.title,'advice','قلمرو: '+orgLabel(x.org)+' · مشاوره '+x.id+' · '+(x.question||''),'planned'));
+ db.risks.filter(x=>!['رفع‌شده','پذیرفته‌شده با مجوز'].includes(x.status)).forEach(x=>add(x,x.dueDate,'مهلت کنترل ریسک حقوقی: '+x.title,'risk','قلمرو: '+orgLabel(x.org)+' · ریسک '+x.id+' · '+(x.mitigation||''),'planned'));
  const keep=new Set(desired.map(x=>x.id));
  for(const old of owned)if(!keep.has(old.id))await window.HoldingLocalDataVault.remove(old.id);
  for(const item of desired)await window.HoldingLocalDataVault.put(scope,item);
@@ -114,6 +123,7 @@ function fieldHtml(f,value){
  const val=value??'',req=f.required?'required':'',full=f.full?' full':'';
  if(f.type==='textarea')return '<div class="lw-field'+full+'"><label>'+esc(f.label)+(f.required?' *':'')+'</label><textarea name="'+f.name+'" '+req+'>'+esc(val)+'</textarea></div>';
  if(f.type==='select')return '<div class="lw-field'+full+'"><label>'+esc(f.label)+'</label><select name="'+f.name+'">'+(f.options||[]).map(x=>'<option '+(x===val?'selected':'')+'>'+esc(x)+'</option>').join('')+'</select></div>';
+ if(f.type==='org')return '<div class="lw-field'+full+'"><label>'+esc(f.label)+'</label><select name="org">'+orgs().map(x=>'<option value="'+esc(x.id)+'" '+(x.id===val?'selected':'')+'>'+esc(x.label)+'</option>').join('')+'</select></div>';
  return '<div class="lw-field'+full+'"><label>'+esc(f.label)+(f.required?' *':'')+'</label><input name="'+f.name+'" type="'+(f.type||'text')+'" value="'+esc(val)+'" '+req+' '+(f.type==='number'?'min="0" step="any"':'')+'></div>';
 }
 function attachmentList(rec){
@@ -134,7 +144,7 @@ function tableHtml(key){
  const subField={requests:'serviceType',cases:'caseNumber',contracts:'contractNo',advice:'subject',experts:'specialty',risks:'category'}[key];
  const statusField=key==='experts'?'status':'status';
  const dateField={requests:'dueDate',cases:'nextDate',contracts:'endDate',advice:'dueDate',experts:'',risks:'dueDate'}[key];
- return '<div class="lw-table-wrap"><table class="lw-table"><thead><tr><th>عنوان / شناسه</th><th>حوزه / مرجع</th><th>واحد / مسئول</th><th>وضعیت</th><th>تاریخ مهم</th><th>عملیات</th></tr></thead><tbody>'+items.map(x=>'<tr><td><strong>'+esc(x[titleField])+'</strong><small>'+esc(x.id)+'</small></td><td>'+esc(x[subField]||x.caseType||x.contractType||'—')+'</td><td>'+esc(x.org||x.requester||x.owner||x.name||'—')+'</td><td>'+badge(x[statusField])+'</td><td>'+fmtDate(x[dateField])+'</td><td><div class="lw-actions"><button data-action="edit" data-key="'+key+'" data-id="'+esc(x.id)+'">ویرایش</button><button class="delete" data-action="delete" data-key="'+key+'" data-id="'+esc(x.id)+'">حذف</button></div></td></tr>').join('')+'</tbody></table></div>';
+ return '<div class="lw-table-wrap"><table class="lw-table"><thead><tr><th>عنوان / شناسه</th><th>حوزه / مرجع</th><th>واحد / مسئول</th><th>وضعیت</th><th>تاریخ مهم</th><th>عملیات</th></tr></thead><tbody>'+items.map(x=>'<tr><td><strong>'+esc(x[titleField])+'</strong><small>'+esc(x.id)+'</small></td><td>'+esc(x[subField]||x.caseType||x.contractType||'—')+'</td><td>'+esc(orgLabel(x.org)||x.requester||x.owner||x.name||'—')+'</td><td>'+badge(x[statusField])+'</td><td>'+fmtDate(x[dateField])+'</td><td><div class="lw-actions"><button data-action="edit" data-key="'+key+'" data-id="'+esc(x.id)+'">ویرایش</button><button class="delete" data-action="delete" data-key="'+key+'" data-id="'+esc(x.id)+'">حذف</button></div></td></tr>').join('')+'</tbody></table></div>';
 }
 function listView(key){
  const def=defs[key];
