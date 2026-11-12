@@ -16,7 +16,7 @@ const toISO=(jy,jm,jd)=>{
 };
 const parse=v=>{const s=latinDigits(String(v||'').trim()).replace(/[.-]/g,'/');const m=s.match(/^(\d{4})\s*\/\s*(\d{1,2})\s*\/\s*(\d{1,2})$/);if(!m)return '';return toISO(+m[1],+m[2],+m[3]);};
 const fromISO=v=>{const m=String(v||'').match(/^(\d{4})-(\d{2})-(\d{2})/);if(!m)return '';const p=parts(utc(+m[1],+m[2],+m[3]));return faDigits(p.y+'/'+String(p.m).padStart(2,'0')+'/'+String(p.d).padStart(2,'0'));};
-const nowParts=()=>parts(new Date());
+const nowParts=()=>{const d=new Date();return parts(utc(d.getFullYear(),d.getMonth()+1,d.getDate()))};
 const months=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
 const dayNames=['ش','ی','د','س','چ','پ','ج'];
 const add=(iso,n)=>{const [y,m,d]=iso.split('-').map(Number),x=utc(y,m,d);x.setUTCDate(x.getUTCDate()+n);return x.getUTCFullYear()+'-'+String(x.getUTCMonth()+1).padStart(2,'0')+'-'+String(x.getUTCDate()).padStart(2,'0')};
