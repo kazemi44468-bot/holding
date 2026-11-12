@@ -54,3 +54,51 @@ body{padding-top:68px;background:radial-gradient(ellipse at 7% 0%,#eaf2f6 0,tran
 .ma-bottom-nav{position:fixed;display:flex;right:0;left:0;bottom:0;height:61px;z-index:998;background:#fff;border-top:1px solid #dce5eb;box-shadow:0 -5px 20px #1739550c;justify-content:space-around;align-items:center;padding:4px 6px calc(4px + env(safe-area-inset-bottom))}.ma-bottom-nav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;color:#738596;font-size:16px;padding:4px 2px;border-radius:8px}.ma-bottom-nav a.active{color:#315d79;background:#edf3f7}.ma-bottom-nav small{font-size:8px}
 .ma-footer-inner{grid-template-columns:repeat(2,minmax(0,1fr));padding:23px 13px 17px;gap:9px}.ma-footer-brand{grid-column:1/-1}.ma-footer-inner>div:not(.ma-footer-brand){padding:9px}.ma-footer-bottom{margin:0 13px;padding:10px 0;flex-direction:column}}
 @media(max-width:380px){.ma-logo-text small{display:none}.ma-logo-text b{font-size:13px}.ma-portal-link{display:none}.ma-footer-inner{gap:7px}}
+
+
+/* پوسته هم‌خانواده با مراکز هلدینگ؛ هویت بصری مستقل مرکز ارزیابی */
+:root{--ev-shell:#173f50;--ev-shell-2:#285d68;--ev-accent:#bd9561;--ev-purple:#665879;--ev-shell-line:#dce5e9}
+body{padding-top:0;background:radial-gradient(ellipse at 8% 0%,#eaf1f2 0,transparent 34%),radial-gradient(ellipse at 95% 10%,#f5efe8 0,transparent 27%),#f5f7f8;color:#2b414b}
+.topbar{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(112deg,#173b4b 0%,#245766 57%,#4c526d 100%);border-bottom:2px solid var(--ev-accent);color:#fff}
+.topbar:after{content:"";position:absolute;z-index:-1;inset:0;opacity:.13;background:repeating-linear-gradient(135deg,transparent 0 20px,#fff 20px 21px,transparent 21px 43px),radial-gradient(circle at 82% 25%,#fff 0 1px,transparent 2px);pointer-events:none}
+.topinner{max-width:1420px;min-height:76px;margin:auto;padding:11px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brandmark{width:42px;height:42px;flex:0 0 42px;padding:1px;border:0;border-radius:0;background:transparent;display:grid;place-items:center}
+.brandmark .brand-logo{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 1px 2px #0003)}
+.brand-rule{width:1px;height:39px;flex:0 0 1px;background:linear-gradient(180deg,transparent,#d6bd9c,transparent)}
+.brand-copy{min-width:0}
+.brand small{display:block;color:#d7e5e8;font-size:10px}
+.brand h1{margin:0;color:#fff;font-size:18px;line-height:1.6;font-weight:700}
+.brand-subtitle{display:block;color:#d9d9e5;font-size:9px;margin-top:1px}
+.top-actions{display:flex;align-items:center;gap:9px}
+.top-context{font-size:10px;color:#e3d7c5}
+.toplink{display:inline-flex;align-items:center;gap:6px;border:1px solid #ffffff55;border-radius:6px;padding:6px 11px;font-size:10px;color:#fff;white-space:nowrap}
+.toplink:hover{background:#ffffff16;text-decoration:none}
+.topbar-accent{height:3px;display:flex;gap:0}
+.topbar-accent span:nth-child(1){width:33.33%;background:#239f40}
+.topbar-accent span:nth-child(2){width:33.33%;background:#fff}
+.topbar-accent span:nth-child(3){width:33.34%;background:#da0000}
+.navwrap{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid #dfe6e9;box-shadow:0 3px 13px rgba(25,62,75,.05)}
+.nav{direction:rtl;max-width:1420px;margin:auto;padding:0 18px;display:flex;align-items:center;gap:4px;overflow:visible;scrollbar-width:thin}
+.nav a,.nav-group summary{display:flex;align-items:center;gap:7px;white-space:nowrap;padding:10px 12px;color:#657780;font-size:11px;font-weight:600;border:0;border-bottom:2px solid transparent;border-radius:5px 5px 0 0;cursor:pointer}
+.nav a:hover,.nav a.active,.nav-group[open]>summary{background:#edf3f4;color:#245563;border-color:var(--ev-accent);text-decoration:none}
+.nav-symbol{display:inline-grid;place-items:center;min-width:15px;color:#8b806f;font-size:14px;line-height:1}
+.nav-group{position:relative;flex:none}
+.nav-group summary{list-style:none}
+.nav-group summary::-webkit-details-marker{display:none}
+.nav-group summary i{width:6px;height:6px;border-left:1px solid currentColor;border-bottom:1px solid currentColor;transform:rotate(-45deg);margin:0 3px 3px}
+.nav-submenu{position:absolute;top:calc(100% + 1px);right:0;min-width:210px;padding:6px;background:#fff;border:1px solid #dfe6e9;border-radius:0 0 10px 10px;box-shadow:0 14px 30px rgba(25,62,75,.13);display:grid;gap:2px}
+.nav-submenu a{padding:9px 10px;border:0;border-radius:7px;font-size:10px}
+.nav-submenu a:hover,.nav-submenu a.active{background:#f0f4f5;color:#245563}
+.footer{background:linear-gradient(105deg,#173b4b,#263f55 68%,#4c526d);border-top:2px solid var(--ev-accent);padding:15px 20px;color:#e7edf0}
+.footer-inner{max-width:1420px;margin:auto;display:flex;align-items:center;justify-content:center;gap:15px}
+.footer-mark,.footer-endmark{width:27px;height:27px;flex:0 0 27px;border:1px solid #ffffff50;border-radius:50%;position:relative;opacity:.8}
+.footer-mark:before{content:"";position:absolute;inset:5px;border:1px solid #d4b27d;border-radius:50%}
+.footer-endmark{border-radius:5px;border-color:#d4b27d;transform:rotate(45deg);width:19px;height:19px;flex-basis:19px}
+.footer-links{display:flex;align-items:center;justify-content:center;gap:8px 15px;flex-wrap:wrap}
+.footer-links a{font-size:10px;color:#e1e9ed}
+.footer-links a:hover{color:#f0d6a8;text-decoration:none}
+.back-to-top{position:fixed;left:18px;bottom:18px;width:38px;height:38px;border:1px solid #d4e0e5;border-radius:50%;background:#fff;color:#315d6a;box-shadow:0 4px 14px #193b561c;opacity:0;pointer-events:none;transition:.2s;cursor:pointer;z-index:40}
+.back-to-top.visible{opacity:1;pointer-events:auto}
+@media(max-width:900px){.top-context{display:none}.nav{overflow-x:auto;overflow-y:visible;scrollbar-width:thin}.nav a,.nav-group summary{padding:9px 10px;font-size:10px}.nav-submenu{position:fixed;top:auto;right:12px;left:12px;max-width:340px}}
+@media(max-width:680px){.topinner{padding:10px 13px;min-height:68px;align-items:center}.brandmark{width:35px;height:35px;flex-basis:35px}.brand h1{font-size:14px}.brand small{font-size:9px}.brand-subtitle{font-size:8px}.toplink{font-size:9px;padding:5px 7px}.nav{padding:0 8px}.nav a,.nav-group summary{padding:9px 8px;font-size:9px}.footer-inner{gap:8px}.footer-links{gap:7px 11px}.footer-links a{font-size:9px}.footer-mark,.footer-endmark{display:none}}
