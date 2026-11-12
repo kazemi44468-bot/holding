@@ -100,7 +100,7 @@ $('#backup-import')?.addEventListener('change',async e=>{
  try{const data=JSON.parse(await file.text());const incoming=Array.isArray(data.records)?data.records:[];for(const item of incoming)await persist(item);render();status(fa(incoming.length)+' رکورد بازیابی شد.');}catch(err){status('بازیابی ناموفق: '+err.message,true);}e.target.value='';
 });
 $$('[data-view]').forEach(a=>{a.addEventListener('click',()=>{const menu=$('.nav-group');if(menu)menu.removeAttribute('open');});});
-$('.nav-group summary')?.addEventListener('click',e=>{e.currentTarget.parentElement.toggleAttribute('open');});
+
 $('#backTop')?.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 $$('#filter-period,#filter-domain,#filter-unit').forEach(el=>el.addEventListener('change',render));
 load();
