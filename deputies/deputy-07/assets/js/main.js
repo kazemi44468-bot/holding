@@ -254,3 +254,24 @@ document.querySelectorAll('.back-to-top').forEach(node=>node.remove());
  url.searchParams.set('v','neutral-slate-20261105');
  if(link.href!==url.href)link.href=url.href;
 })();
+
+
+/* دسترسی سراسری مرکز داده و مسیر خانه معاونت ۷ */
+(()=>{
+ const inPages=/\\/pages\\//.test(location.pathname);
+ const base=inPages?'../':'./';
+ const nav=document.querySelector('.ops-nav');
+ if(nav&&!nav.querySelector('[data-local-data-center]')){
+  const a=document.createElement('a');
+  a.href=base+'local-data/index.html';
+  a.textContent='مرکز داده و پشتیبان‌گیری';
+  a.setAttribute('data-local-data-center','');
+  nav.appendChild(a);
+ }
+ const brand=document.querySelector('.ops-brand');
+ if(brand){
+  brand.href=inPages?'../dashboard.html':'#overview';
+  const flag=brand.querySelector('.ops-logo');
+  if(flag) flag.src=base+'assets/images/iran-flag.svg';
+ }
+})();
