@@ -408,7 +408,7 @@ function filterProjectHistory(){
  const from=$('#project-history-from'),to=$('#project-history-to'),clear=$('#clear-project-history');
  if(!from||!to)return;
  const apply=()=>{const a=from.dataset.iso||'',b=to.dataset.iso||'';view.querySelectorAll('#project-history-list .pc-event').forEach(row=>{const d=row.dataset.eventDate||'';row.hidden=!!((a&&d<a)||(b&&d>b));});};
- from.addEventListener('change',apply);to.addEventListener('change',apply);
+ from.addEventListener('change',apply);to.addEventListener('change',apply);from.addEventListener('input',apply);to.addEventListener('input',apply);
  if(clear)clear.addEventListener('click',()=>{from.value='';to.value='';from.dataset.iso='';to.dataset.iso='';apply();});
 }
 function formData(form){return Object.fromEntries(new FormData(form).entries());}
