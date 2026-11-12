@@ -39,12 +39,15 @@ document.querySelectorAll('.back-to-top').forEach(node=>node.remove());
  const inPages=location.pathname.includes('/pages/');
  const prefix=inPages?'':'pages/';
  const home=inPages?'../dashboard.html':'#overview';
+  const localData=inPages?'../local-data/index.html':'local-data/index.html';
+  const brand=document.querySelector('.ops-brand');
+  if(brand)brand.href=home;
  const urls={
   departments:['department-1.html','department-2.html','department-3.html','department-4.html','department-6.html','department-7.html','department-8.html'].map(x=>prefix+x),
   finance:prefix+'finance-management.html',workforce:prefix+'workforce.html',profile:prefix+'personnel-profile.html',evaluation:prefix+'performance-evaluation.html',
   followups:prefix+'special-followups.html',notices:prefix+'notifications-center.html',calendar:prefix+'calendar.html',
   catalog:prefix+'report-catalog.html',archive:prefix+'report-archive.html',reports:prefix+'department-reports.html',participation:prefix+'participation.html',
-  services:prefix+'company-services.html',communications:prefix+'internal-communications.html',welfare:prefix+'welfare-center.html',
+  localData:localData,services:prefix+'company-services.html',communications:prefix+'internal-communications.html',welfare:prefix+'welfare-center.html',
   coop:prefix+'staff-coop-store.html',economic:prefix+'employee-economic-center.html',retirees:prefix+'retiree-center.html'
  };
  const nav=document.querySelector('.ops-nav');
@@ -72,8 +75,8 @@ document.querySelectorAll('.back-to-top').forEach(node=>node.remove());
   nav.innerHTML='<a href="'+home+'">نمای کلان</a><details class="nav-dropdown"><summary>ادارات کل</summary><div class="nav-menu">'+
    ['اداره اداری و پشتیبانی','اداره تحقیق و توسعه','اداره پارکبان و معبربانان','اداره تأسیسات فنی و امور نگهداری','اداره فاوا و خدمات فنی','اداره جمع‌آوری و بازیافت پسماند','اداره بازرسی و تحقیقات محلی'].map((n,i)=>'<a href="'+urls.departments[i]+'">'+n+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>مدیریت</summary><div class="nav-menu">'+
-   [[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],[urls.followups,'پیگیری دستورات'],[urls.notices,'اعلانات ریاست'],[urls.calendar,'تقویم شرکت']].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
-   '</div></details><details class="nav-dropdown"><summary>مرکز خدمات</summary><div class="nav-menu">'+
+   [[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],[urls.followups,'پیگیری دستورات'],[urls.notices,'اعلانات ریاست'],[urls.calendar,'تقویم شرکت']].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
+   '</div></details><a href="'+urls.localData+'" data-local-data-center>مرکز داده و پشتیبان‌گیری</a><details class="nav-dropdown"><summary>مرکز خدمات</summary><div class="nav-menu">'+
    [[urls.services,'نمای کلی خدمات'],[urls.communications,'ارتباطات کارکنان'],[urls.welfare,'خدمات رفاهی'],[urls.coop,'فروشگاه تعاونی'],[urls.economic,'برنامه‌ریزی اقتصادی'],[urls.retirees,'خدمات بازنشستگان']].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>گزارش‌ها</summary><div class="nav-menu">'+
    [[urls.reports,'گزارش تلفیقی'],[urls.participation,'نظرسنجی']].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
@@ -253,25 +256,4 @@ document.querySelectorAll('.back-to-top').forEach(node=>node.remove());
  const url=new URL(link.href,document.baseURI);
  url.searchParams.set('v','neutral-slate-20261105');
  if(link.href!==url.href)link.href=url.href;
-})();
-
-
-/* دسترسی سراسری مرکز داده و مسیر خانه معاونت ۷ */
-(()=>{
- const inPages=/\\/pages\\//.test(location.pathname);
- const base=inPages?'../':'./';
- const nav=document.querySelector('.ops-nav');
- if(nav&&!nav.querySelector('[data-local-data-center]')){
-  const a=document.createElement('a');
-  a.href=base+'local-data/index.html';
-  a.textContent='مرکز داده و پشتیبان‌گیری';
-  a.setAttribute('data-local-data-center','');
-  nav.appendChild(a);
- }
- const brand=document.querySelector('.ops-brand');
- if(brand){
-  brand.href=inPages?'../dashboard.html':'#overview';
-  const flag=brand.querySelector('.ops-logo');
-  if(flag) flag.src=base+'assets/images/iran-flag.svg';
- }
 })();
