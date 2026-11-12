@@ -175,7 +175,7 @@ function countOpen(key,closed){return rows(key).filter(x=>!closed.includes(x.sta
 function dateOverdue(x){return x&&x<today()}
 function upcoming(){
  const out=[];
- for(const [key,label,dateKey] of [['cases','پرونده','nextDate'],['contracts','قرارداد','endDate'],['requests','درخواست','dueDate'],['advice','مشاوره','dueDate'],['risks','ریسک','dueDate'],['arbitration','داوری','dueDate'],['employee','حمایت کارکنان','dueDate'],['compliance','انطباق','dueDate']]){
+ for(const [key,label,dateKey] of [['cases','پرونده','nextDate'],['sessions','جلسه تخصصی','sessionDate'],['contracts','قرارداد','endDate'],['requests','درخواست','dueDate'],['advice','مشاوره','dueDate'],['risks','ریسک','dueDate'],['arbitration','داوری','dueDate'],['employee','حمایت کارکنان','dueDate'],['compliance','انطباق','dueDate']]){
   for(const r of rows(key))if(r[dateKey]&&r[dateKey]>=today()&&!(r.status==='مختومه'||r.status==='خاتمه‌یافته'||r.status==='رفع‌شده'||r.status==='پاسخ داده‌شده'||r.status==='تأیید و ابلاغ'||r.status==='منطبق'||r.status==='سازش‌شده'||r.status==='پذیرفته‌شده با مجوز'))out.push({title:r.title||r.name,date:r[dateKey],label,id:r.id,key});
   for(const r of rows(key))if(r[dateKey]&&r[dateKey]<today()&&!(r.status==='مختومه'||r.status==='خاتمه‌یافته'||r.status==='رفع‌شده'||r.status==='پاسخ داده‌شده'||r.status==='تأیید و ابلاغ'))out.push({title:r.title||r.name,date:r[dateKey],label:'معوق · '+label,id:r.id,key,late:true});
  }
@@ -271,7 +271,7 @@ function tableHtml(key){
  const titleField=key==='experts'?'name':'title';
  const subField={requests:'serviceType',cases:'caseNumber',contracts:'contractNo',advice:'subject',arbitration:'method',employee:'serviceType',experts:'specialty',sessions:'specialty',risks:'category',compliance:'category',knowledge:'docType'}[key];
  const statusField='status';
- const dateField={requests:'dueDate',cases:'nextDate',contracts:'endDate',advice:'dueDate',arbitration:'dueDate',employee:'dueDate',experts:'sessionDate',sessions:'sessionDate',risks:'dueDate',compliance:'dueDate',knowledge:'reviewDate'}[key];
+ const dateField={requests:'dueDate',cases:'nextDate',contracts:'endDate',advice:'dueDate',arbitration:'dueDate',employee:'dueDate',experts:'',sessions:'sessionDate',risks:'dueDate',compliance:'dueDate',knowledge:'reviewDate'}[key];
  return '<div class="lw-table-wrap"><table class="lw-table"><thead><tr><th>عنوان / شناسه</th><th>حوزه / مرجع</th><th>واحد / مسئول</th><th>وضعیت</th><th>تاریخ مهم</th><th>عملیات</th></tr></thead><tbody>'+items.map(x=>'<tr><td><strong>'+esc(x[titleField])+'</strong><small>'+esc(x.id)+'</small></td><td>'+esc(x[subField]||x.caseType||x.contractType||'—')+'</td><td>'+esc(x.org?orgLabel(x.org):(x.requester||x.owner||'—'))+'</td><td>'+badge(x[statusField])+(x.demo?'<small class="lw-demo-mark">نمونه نمایشی</small>':'')+'</td><td>'+fmtDate(x[dateField])+(key==='cases'?'<small>'+caseTimeline(x)+'</small>':'')+'</td><td><div class="lw-actions"><button data-action="edit" data-key="'+key+'" data-id="'+esc(x.id)+'">ویرایش</button><button class="delete" data-action="delete" data-key="'+key+'" data-id="'+esc(x.id)+'">حذف</button></div></td></tr>').join('')+'</tbody></table></div>';
 }
 function listView(key){
