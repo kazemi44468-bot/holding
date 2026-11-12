@@ -73,7 +73,7 @@ const defs={
  {name:'owner',label:'مسئول کنترل'},{name:'dueDate',label:'مهلت اقدام / بازبینی',type:'date'},
  {name:'status',label:'وضعیت',type:'select',options:['شناسایی‌شده','در حال کنترل','نیازمند تصمیم','رفع‌شده','پذیرفته‌شده با مجوز']},
  {name:'mitigation',label:'اقدام پیشگیرانه / اصلاحی',type:'textarea',full:true}
- ]}
+ ]},
 
  arbitration:{label:'داوری و حل اختلاف',singular:'پرونده داوری',prefix:'ARB',fields:[
  {name:'title',label:'موضوع اختلاف',required:true},{name:'org',label:'شخصیت حقوقی ذی‌نفع',type:'org',required:true},
