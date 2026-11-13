@@ -36,7 +36,7 @@ document.querySelectorAll('.back-to-top').forEach(node=>node.remove());
 (()=>{
  const body=document.body;
  if(!body.classList.contains('ops-page'))return;
- try{const cfg=JSON.parse(localStorage.getItem("deputy7.identity-access.v1"))?.theme||{};const p={navy:["#285d86","#183b59","#eaf2f8"],blue:["#397aa6","#245a7e","#eaf4fa"],slate:["#526b80","#334d63","#edf1f4"],sand:["#806b4c","#394b5c","#f4f0e8"]};const v=p[cfg.preset]||p.navy;document.documentElement.style.setProperty("--deputy-primary",v[0]);document.documentElement.style.setProperty("--deputy-deep",v[1]);document.documentElement.style.setProperty("--deputy-soft",v[2]);document.documentElement.style.setProperty("--green",v[0]);document.documentElement.style.setProperty("--green-dark",v[1]);document.documentElement.dataset.density=cfg.density||"comfortable";document.documentElement.dataset.corners=cfg.corners||"soft";const themeStyle=document.createElement("style");themeStyle.textContent=`html[data-density="compact"] .ops-main{--space-unit:3px}html[data-density="compact"] .ops-card,html[data-density="compact"] .analytics-panel{padding:14px}html[data-corners="square"] .ops-card,html[data-corners="square"] .analytics-panel,html[data-corners="square"] .report-box{border-radius:5px}html[data-corners="soft"] .ops-card,html[data-corners="soft"] .analytics-panel,html[data-corners="soft"] .report-box{border-radius:14px}`;document.head.appendChild(themeStyle);}catch(e){}
+ try{const cfg=JSON.parse(localStorage.getItem("deputy7.platform.config.v1"))?.theme||JSON.parse(localStorage.getItem("deputy7.identity-access.v1"))?.theme||{};const p={navy:["#285d86","#183b59","#eaf2f8"],sky:["#397aa6","#245a7e","#eaf4fa"],slate:["#526b80","#334d63","#edf1f4"],sand:["#806b4c","#394b5c","#f4f0e8"]};const v=p[cfg.palette||cfg.preset]||p.navy;document.documentElement.style.setProperty("--deputy-primary",v[0]);document.documentElement.style.setProperty("--deputy-deep",v[1]);document.documentElement.style.setProperty("--deputy-soft",v[2]);document.documentElement.style.setProperty("--green",v[0]);document.documentElement.style.setProperty("--green-dark",v[1]);document.documentElement.dataset.density=cfg.density||"comfortable";document.documentElement.dataset.corners=cfg.radius||cfg.corners||"soft";document.documentElement.dataset.width=cfg.width||"wide";}catch(e){}
 const inPages=location.pathname.includes('/pages/');
  const prefix=inPages?'':'pages/';
  const inLocalData=location.pathname.includes('/local-data/');
@@ -44,8 +44,10 @@ const inPages=location.pathname.includes('/pages/');
  const localData=inPages?'../local-data/index.html':(inLocalData?'index.html':'local-data/index.html');
   const brand=document.querySelector('.ops-brand');
   if(brand)brand.href=home;
+ const liveDepartments=(()=>{try{return JSON.parse(localStorage.getItem('deputy7.platform.config.v1'))?.departments||[]}catch{return[]}})();
+ const deptMenu=liveDepartments.length?liveDepartments.filter(d=>d.status!=='inactive'):null;
  const urls={
-  departments:['department-1.html','department-2.html','department-3.html','department-4.html','department-6.html','department-7.html','department-8.html'].map(x=>prefix+x),
+  departments:(deptMenu||[{id:'1'},{id:'2'},{id:'3'},{id:'4'},{id:'6'},{id:'7'},{id:'8'}]).map(d=>prefix+'department-'+d.id+'.html'),
   finance:prefix+'finance-management.html',workforce:prefix+'workforce.html',profile:prefix+'personnel-profile.html',evaluation:prefix+'performance-evaluation.html',
   followups:prefix+'special-followups.html',notices:prefix+'notifications-center.html',calendar:prefix+'calendar.html',
   catalog:prefix+'report-catalog.html',archive:prefix+'report-archive.html',reports:prefix+'department-reports.html',participation:prefix+'participation.html',
@@ -77,7 +79,7 @@ const inPages=location.pathname.includes('/pages/');
   nav.innerHTML='<a href="'+home+'">نمای کلان</a><details class="nav-dropdown"><summary>ادارات کل</summary><div class="nav-menu">'+
    ['اداره اداری و پشتیبانی','اداره تحقیق و توسعه','اداره پارکبان و معبربانان','اداره تأسیسات فنی و امور نگهداری','اداره فاوا و خدمات فنی','اداره جمع‌آوری و بازیافت پسماند','اداره بازرسی و تحقیقات محلی'].map((n,i)=>'<a href="'+urls.departments[i]+'">'+n+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>مدیریت</summary><div class="nav-menu">'+
-   [[urls.users,'کاربران و سطح دسترسی'],[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],[urls.followups,'پیگیری دستورات'],[urls.notices,'اعلانات ریاست'],[urls.calendar,'تقویم شرکت']].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
+   [[urls.users,'کاربران و سطح دسترسی'],[(inPages?'../control-center.html':(inLocalData?'../control-center.html':'control-center.html')),'مرکز کنترل و پیکربندی'],[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],[urls.followups,'پیگیری دستورات'],[urls.notices,'اعلانات ریاست'],[urls.calendar,'تقویم شرکت']].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>مرکز خدمات</summary><div class="nav-menu">'+
    [[urls.services,'نمای کلی خدمات'],[urls.communications,'ارتباطات کارکنان'],[urls.welfare,'خدمات رفاهی'],[urls.coop,'فروشگاه تعاونی'],[urls.economic,'برنامه‌ریزی اقتصادی'],[urls.retirees,'خدمات بازنشستگان']].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>گزارش‌ها</summary><div class="nav-menu">'+
