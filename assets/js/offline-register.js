@@ -1,1 +1,0 @@
-(()=>{'use strict';if(!('serviceWorker' in navigator))return;const script=document.currentScript;if(!script)return;const worker=new URL('../../service-worker.js',script.src);const scope=new URL('../../',script.src).pathname;window.addEventListener('load',()=>navigator.serviceWorker.register(worker.href,{scope}).catch(e=>console.warn('Offline cache registration failed',e)));})();

@@ -1,7 +1,0 @@
-/* قاب تصویری هماهنگ با الگوی ساده صفحه ودجا؛ بدون دست‌کاری فاصله‌گذاری متن‌های داخل قهرمان */
-.hero.has-visual-placeholder{display:grid;grid-template-columns:minmax(0,1fr) 190px;align-items:center;gap:26px}
-.hero.has-visual-placeholder>.page-visual-content{min-width:0}
-.page-visual-slot{width:190px;min-height:190px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;padding:18px;overflow:hidden;border:1px solid rgba(255,255,255,.24);border-radius:22px;background:rgba(255,255,255,.10);box-shadow:inset 0 0 0 1px rgba(255,255,255,.035),0 12px 28px rgba(0,0,0,.08)}
-.page-visual-slot__mark{width:100%;height:150px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.72)}
-.page-visual-slot__mark svg{display:block;width:74px;height:74px;max-width:100%;max-height:100%;fill:none;stroke:currentColor;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
-@media(max-width:760px){.hero.has-visual-placeholder{grid-template-columns:minmax(0,1fr);gap:18px}.page-visual-slot{width:100%;min-height:112px;padding:10px;border-radius:17px}.page-visual-slot__mark{height:88px}.page-visual-slot__mark svg{width:55px;height:55px}}
