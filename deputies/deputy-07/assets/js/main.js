@@ -36,7 +36,8 @@ document.querySelectorAll('.back-to-top').forEach(node=>node.remove());
 (()=>{
  const body=document.body;
  if(!body.classList.contains('ops-page'))return;
- const inPages=location.pathname.includes('/pages/');
+ try{const cfg=JSON.parse(localStorage.getItem("deputy7.identity-access.v1"))?.theme||{};const p={navy:["#285d86","#183b59","#eaf2f8"],blue:["#397aa6","#245a7e","#eaf4fa"],slate:["#526b80","#334d63","#edf1f4"],sand:["#806b4c","#394b5c","#f4f0e8"]};const v=p[cfg.preset]||p.navy;document.documentElement.style.setProperty("--deputy-primary",v[0]);document.documentElement.style.setProperty("--deputy-deep",v[1]);document.documentElement.style.setProperty("--deputy-soft",v[2]);document.documentElement.dataset.density=cfg.density||"comfortable";document.documentElement.dataset.corners=cfg.corners||"soft";}catch(e){}
+const inPages=location.pathname.includes('/pages/');
  const prefix=inPages?'':'pages/';
  const inLocalData=location.pathname.includes('/local-data/');
  const home=(inPages||inLocalData)?'../dashboard.html':(location.pathname.endsWith('/users.html')?'dashboard.html':'#overview');
