@@ -165,3 +165,30 @@ body.control-page{font-family:Vazirmatn,Tahoma,sans-serif;font-size:14px;line-he
 .control-page .cc-mobile-menu{border:1px solid #dfe7dc!important;color:#354c60!important;background:#fff!important}
 @media(max-width:900px){.control-page .ops-header-inner{width:calc(100% - 30px);gap:10px}.control-page .ops-brand{min-width:0;flex:1}.control-page .ops-nav{display:none!important}.control-page .ops-clock{min-width:90px}}
 @media(max-width:560px){.control-page .ops-header{height:66px}.control-page .ops-header-inner{width:calc(100% - 28px)}.control-page .ops-brand b{font-size:11px}.control-page .ops-brand small{font-size:8px}.control-page .ops-logo{width:34px;height:34px}.control-page .ops-clock span,.control-page .ops-clock small{font-size:7px}.control-page .ops-clock b{font-size:10px}.control-page .ops-footer{padding-inline:18px}}
+
+/* اصلاح بدنه: فقط پرداخت ظاهری روی زمینه‌های سفید و روشن */
+.control-page, .control-page body{background:#fff!important;color:#263746!important}
+.control-page .control-wrap,.control-page .control-content{background:transparent!important}
+.control-page .control-sidebar,.control-page .cc-topbar,.control-page .control-hero,
+.control-page .vault-strip,.control-page .cc-card,.control-page .cc-editor,
+.control-page .cc-list-row,.control-page .cc-record,.control-page .cc-note,
+.control-page .cc-metrics article,.control-page .cc-module-list button,
+.control-page .cc-inline-form,.control-page .cc-preview,.control-page .cc-check-field{
+ background:#fff!important;background-image:none!important;
+ border:1px solid #e1e6e9!important;
+ box-shadow:0 2px 9px rgba(38,55,70,.045)!important;
+}
+.control-page .control-sidebar{background:#fff!important}
+.control-page .control-hero{background:#fff!important}
+.control-page .control-hero-mark,.control-page .sidebar-brand-mark{background:#fff!important;color:#42586a!important;border:1px solid #dce3e8!important}
+.control-page .cc-group-head,.control-page .cc-nav,.control-page .cc-nav-link,
+.control-page .cc-nav.active,.control-page .cc-nav:hover,.control-page .cc-nav-link:hover{
+ background:#fff!important;background-image:none!important;
+}
+.control-page .cc-nav.active{border-color:#d7e0e6!important;color:#263746!important}
+.control-page .cc-nav.active>i{color:#526b80!important}
+.control-page .cc-note{background:#fff!important;color:#586a78!important}
+.control-page .cc-module-list button{background:#fff!important}
+.control-page .cc-primary{background:#354c60!important;color:#fff!important}
+.control-page .cc-light,.control-page .cc-link-button{background:#fff!important;color:#354c60!important}
+.control-page .ops-footer{background:#f7f9f6!important}
