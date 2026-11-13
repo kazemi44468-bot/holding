@@ -1,0 +1,170 @@
+/* مرکز حقوقی هلدینگ — میزکار اجرایی */
+.legal-workspace{margin:16px 0 22px;border:1px solid #dce5ed;border-radius:12px;background:#f8fafc;overflow:hidden;box-shadow:0 7px 24px rgba(24,55,80,.055)}
+.lw-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 20px;background:linear-gradient(110deg,#173b59,#285d80);color:#fff}
+.lw-head h2{margin:0;color:#fff;font-size:18px}.lw-head p{margin:4px 0 0;color:#dce8f0;font-size:10.5px;max-width:800px}
+.lw-head-side{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.lw-tag{padding:4px 9px;border:1px solid #ffffff50;border-radius:5px;font-size:9px;color:#f4e7d1;white-space:nowrap}
+.lw-privacy{padding:9px 16px;background:#fbf7ee;border-bottom:1px solid #eadfc9;color:#735f3d;font-size:10px}
+.lw-tabs{display:flex;gap:5px;flex-wrap:wrap;padding:10px 12px;background:#eef3f7;border-bottom:1px solid #dce5ed}
+.lw-tab{border:1px solid transparent;border-radius:6px;padding:7px 11px;background:transparent;color:#4d667c;font:inherit;font-size:10px;cursor:pointer}
+.lw-tab:hover{background:#fff;border-color:#d7e2eb}.lw-tab.active{background:#fff;border-color:#cbd9e4;color:#214f70;font-weight:700;box-shadow:0 2px 6px #244b6810}
+.lw-content{padding:14px}.lw-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.lw-toolbar input,.lw-toolbar select,.lw-field input,.lw-field select,.lw-field textarea{min-width:0;width:100%;border:1px solid #d6e0e8;border-radius:7px;background:#fff;color:#263b50;padding:8px 10px;font:inherit;font-size:10.5px;outline:none}
+.lw-toolbar input{width:auto;min-width:190px}.lw-toolbar select{width:auto;min-width:140px}
+.lw-field input:focus,.lw-field select:focus,.lw-field textarea:focus,.lw-toolbar input:focus{border-color:#7c9bb3;box-shadow:0 0 0 3px #2b668e12}
+.lw-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;border:1px solid #285d81;border-radius:7px;padding:7px 11px;background:#285d81;color:#fff;font:inherit;font-size:10px;cursor:pointer;text-decoration:none}
+.lw-btn:hover{background:#1d496a;color:#fff;text-decoration:none}.lw-btn.light{background:#fff;color:#315d83;border-color:#ccd9e3}.lw-btn.gold{background:#f8f2e7;color:#795f38;border-color:#e6d5b5}.lw-btn.danger{background:#fff;color:#a34f43;border-color:#e8d2cd}
+.lw-btn:disabled{opacity:.55;cursor:not-allowed}.lw-spacer{flex:1}
+.lw-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:13px}
+.lw-metric{background:#fff;border:1px solid #e0e7ed;border-radius:9px;padding:11px 12px;min-width:0}
+.lw-metric small{display:block;color:#7b8c9a;font-size:9px}.lw-metric strong{display:block;color:#244f70;font-size:21px;line-height:1.5}.lw-metric em{font-style:normal;color:#9b7b48;font-size:9px}
+.lw-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.lw-panel{background:#fff;border:1px solid #e0e7ed;border-radius:9px;padding:13px;min-width:0}
+.lw-panel h3{margin:0 0 9px;color:#2c5676;font-size:12px}.lw-panel p{font-size:10px;color:#748596;margin:4px 0}
+.lw-list{display:grid;gap:7px}.lw-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #edf1f4}.lw-row:last-child{border-bottom:0}.lw-row strong{display:block;color:#365a75;font-size:10.5px}.lw-row small{display:block;color:#8593a0;font-size:9px}
+.lw-badge{display:inline-flex;align-items:center;white-space:nowrap;padding:3px 7px;border:1px solid #dce5eb;border-radius:20px;background:#f4f7f9;color:#5c7286;font-size:9px}
+.lw-badge.red{background:#fff1ee;border-color:#efd5cf;color:#a34f43}.lw-badge.gold{background:#faf5e9;border-color:#eadfc5;color:#8a7045}.lw-badge.blue{background:#edf5fa;border-color:#d5e4ee;color:#2e668b}.lw-badge.green{background:#edf7f1;border-color:#d7e9de;color:#47745a}
+.lw-table-wrap{overflow:auto;border:1px solid #e1e8ee;border-radius:8px;background:#fff}
+.lw-table{width:100%;border-collapse:collapse;min-width:760px;font-size:10px}.lw-table th{background:#eff4f7;color:#506b80;text-align:right;padding:9px;border-bottom:1px solid #dce5ec;white-space:nowrap}.lw-table td{padding:9px;border-bottom:1px solid #edf1f4;color:#52697d;vertical-align:middle}.lw-table tr:last-child td{border-bottom:0}.lw-table td strong{display:block;color:#2d536f;font-size:10.5px}.lw-table td small{display:block;color:#8996a2;font-size:9px}
+.lw-actions{display:flex;gap:5px;flex-wrap:wrap}.lw-actions button{border:1px solid #d4dfe7;border-radius:5px;background:#fff;color:#315d83;padding:4px 7px;font:inherit;font-size:9px;cursor:pointer}.lw-actions button:hover{background:#edf4f8}.lw-actions button.delete{color:#a34f43;border-color:#ecd8d3}
+.lw-empty{padding:24px 14px;border:1px dashed #cbd8e2;border-radius:8px;background:#fff;text-align:center;color:#81909e;font-size:10.5px}.lw-empty strong{display:block;color:#476780;margin-bottom:4px}
+.lw-form-wrap{max-width:940px;background:#fff;border:1px solid #dce5ed;border-radius:9px;padding:15px;margin-bottom:13px}
+.lw-form-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}.lw-form-head h3{margin:0;color:#244f70;font-size:13px}
+.lw-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.lw-field{display:grid;gap:4px;min-width:0}.lw-field.full{grid-column:1/-1}.lw-field label{font-size:9.5px;font-weight:700;color:#47637a}.lw-field textarea{min-height:78px;resize:vertical}.lw-field input[type=file]{padding:6px}.lw-help{font-size:9px;color:#8b98a4}
+.lw-form-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px;padding-top:10px;border-top:1px solid #edf1f4}
+.lw-attachment{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 8px;border:1px solid #e4eaf0;border-radius:6px;margin-top:5px;font-size:9px;color:#5c7183}
+.lw-alert{padding:9px 11px;border:1px solid #d9e5ed;border-right:3px solid #315d83;border-radius:7px;background:#f1f6fa;color:#45637b;font-size:10px;margin:10px 0}
+.lw-alert.warn{border-color:#eadfc9;border-right-color:#ad8750;background:#fbf7ee;color:#765f3d}
+.lw-footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:9px 14px;border-top:1px solid #dce5ed;background:#f1f5f8;color:#758696;font-size:9px}
+@media(max-width:900px){.lw-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.lw-head{display:block;padding:15px}.lw-head-side{justify-content:flex-start;margin-top:9px}.lw-content{padding:10px}.lw-grid{grid-template-columns:1fr}.lw-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.lw-form{grid-template-columns:1fr}.lw-field.full{grid-column:auto}.lw-toolbar input,.lw-toolbar select{width:100%;min-width:0}.lw-toolbar .lw-spacer{display:none}.lw-tab{padding:7px 9px;font-size:9px}}
+
+
+/* مرکز حقوقی — هم‌راستا با سامانه‌های عملیاتی هلدینگ */
+:root{--legal-primary:#315d83;--legal-deep:#1b4568;--legal-soft:#edf3f8;--legal-copper:#c49a54}
+.lw-head{background:linear-gradient(110deg,#173a5a,#285d80);border-bottom:2px solid #c49a54}
+.lw-tag{color:#f2dfbd}
+.lw-tab.active{color:#1b4568;border-color:#cbd9e4}
+.lw-btn{background:#315d83;border-color:#315d83}
+.lw-btn:hover{background:#1b4568}
+.lw-btn.light{color:#315d83;border-color:#cbd9e4}
+.lw-btn.gold{background:#fbf6ec;color:#805f32;border-color:#ead9b9}
+.lw-metric strong{color:#315d83}
+.lw-panel h3,.lw-row strong,.lw-table td strong{color:#315d83}
+.lw-badge.blue{background:#edf3f8;border-color:#d7e3ed;color:#315d83}
+.lw-alert{border-color:#d8e4ed;border-right-color:#315d83;background:#edf3f8;color:#3d607c}
+.lw-alert.warn{border-color:#ead9c8;border-right-color:#bd8958;background:#fbf5ef;color:#70553e}
+.lw-actions button{color:#315d83}
+.lw-field input:focus,.lw-field select:focus,.lw-field textarea:focus,.lw-toolbar input:focus{border-color:#7c9bb3;box-shadow:0 0 0 3px #315d8312}
+
+/* ناوبری و صفحه‌بندی هماهنگ با سامانه‌های عملیاتی هلدینگ */
+.lw-tabs{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:11px 12px;background:#f0f4f7;border-bottom:1px solid #dce5ed}
+.lw-tab{min-height:34px;padding:7px 11px;border:1px solid #d9e3eb;border-radius:6px;background:#fff;color:#536c80;font-size:10px;white-space:nowrap}
+.lw-tab.active{background:#e7eff5;border-color:#aebfd0;color:#1b4568;box-shadow:inset 0 -2px #c49a54}
+.lw-content{min-width:0}
+.lw-form-wrap{width:100%;max-width:none}
+.lw-table-wrap{max-width:100%}
+.lw-table th,.lw-table td{line-height:1.8}
+.lw-actions button{min-height:27px}
+.lw-field{min-width:0}
+.lw-head{align-items:center}
+@media(max-width:650px){.lw-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.lw-tab{width:100%;white-space:normal}.lw-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.lw-form-wrap{padding:11px}.lw-table{min-width:700px}}
+.legal-nav .nav-group{position:relative;display:flex;align-items:stretch}.legal-nav .nav-group summary{display:flex;align-items:center;padding:10px 12px;white-space:nowrap;list-style:none;cursor:pointer;color:#596b7c;font-size:11px;border-bottom:2px solid transparent}.legal-nav .nav-submenu{position:absolute;top:100%;right:0;z-index:30;min-width:210px;padding:7px;background:#fff;border:1px solid #dfe7ed;border-radius:8px;box-shadow:0 12px 30px #173a5a20;display:grid;gap:3px}.legal-nav .nav-submenu a{display:block;padding:8px 10px;border:0;border-radius:5px;font-size:10px}.legal-overview{margin-bottom:18px}.legal-overview-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.legal-overview-strip span{padding:10px 12px;border:1px solid #dfe7ed;border-right:3px solid #315d83;border-radius:7px;background:#fff;color:#42627b;font-size:10px}.legal-introduction{margin:20px 0 12px;padding:22px;border:1px solid #dfe7ed;border-radius:11px;background:#fff;box-shadow:0 7px 22px rgba(24,55,80,.045);scroll-margin-top:80px}.legal-intro-heading h2{margin:4px 0 8px;color:#214f70;font-size:20px}.legal-intro-heading>p{margin:0;color:#61778a;font-size:11px;line-height:2.1}.legal-intro-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:17px}.legal-intro-grid article{padding:13px;border:1px solid #e1e8ee;border-radius:8px;background:#fff}.legal-intro-grid article>span{display:grid;place-items:center;width:27px;height:27px;margin-bottom:7px;border-radius:7px;background:#edf3f8;color:#315d83;font-weight:700}.legal-intro-grid h3{margin:0 0 4px;color:#315d83;font-size:11px}.legal-intro-grid p{margin:0;color:#718397;font-size:9.5px;line-height:1.9}.legal-benefit-band{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}.legal-benefit-band>div{padding:11px;border-radius:7px;background:#edf3f8;border:1px solid #dce6ee}.legal-benefit-band strong,.legal-benefit-band span{display:block}.legal-benefit-band strong{color:#315d83;font-size:10px}.legal-benefit-band span{color:#647b8e;font-size:9px}.legal-services-title{margin-top:18px;color:#214f70;font-size:13px}.legal-capabilities{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0 22px}.legal-capability{display:flex;gap:10px;padding:12px;background:#fff;border:1px solid #e1e8ee;border-radius:8px}.legal-capability-mark{width:30px;height:30px;flex:0 0 30px;display:grid;place-items:center;border-radius:7px;background:#edf3f8;color:#315d83;font-weight:700}.legal-capability strong{display:block;color:#294f70;font-size:10.5px}.legal-capability small{display:block;margin-top:3px;color:#788a99;font-size:9px;line-height:1.8}.legal-workspace-section{scroll-margin-top:75px}@media(max-width:850px){.legal-intro-grid,.legal-capabilities{grid-template-columns:repeat(2,minmax(0,1fr))}.legal-overview-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.legal-introduction{padding:14px}.legal-intro-grid,.legal-benefit-band,.legal-capabilities,.legal-overview-strip{grid-template-columns:1fr}.legal-nav{overflow-x:auto}.legal-nav .nav-submenu{position:fixed;right:12px;left:12px;max-height:65vh;overflow:auto}}
+
+/* صفحه‌بندی مستقل مرکز حقوقی و نمودارهای متصل به داده */
+.lw-tabs{display:flex;gap:6px;flex-wrap:wrap;padding:9px 10px;background:#f0f4f7;border-bottom:1px solid #dce5ed}
+.lw-tab{border:1px solid #d9e3eb;border-radius:6px;padding:7px 11px;background:#fff;color:#536c80;font:inherit;font-size:10px;cursor:pointer}
+.lw-tab.active{background:#e7eff5;border-color:#aebfd0;color:#1b4568;box-shadow:inset 0 -2px #c49a54}
+.lw-chart-bars{display:grid;gap:10px}
+.lw-chart-row{display:grid;grid-template-columns:125px minmax(0,1fr) 30px;align-items:center;gap:8px;font-size:9px;color:#61768a}
+.lw-chart-row b{font-size:9px;color:#315d83;text-align:left}
+.lw-chart-track{height:9px;border-radius:10px;background:#edf1f5;overflow:hidden}
+.lw-chart-track span{height:100%;display:block;border-radius:10px;background:#367ba4}
+.legal-data-panel{overflow:hidden}
+.legal-data-panel>.panelhead{margin-bottom:8px}
+.legal-chart-grid{min-width:0}
+@media(max-width:650px){.lw-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.lw-tab{width:100%;white-space:normal}.lw-chart-row{grid-template-columns:95px minmax(0,1fr) 26px}}
+
+
+/* یکپارچگی پوسته مرکز حقوقی با الگوی مرکز مدیریت دانش */
+.legal-nav{max-width:1280px}
+.legal-nav .nav-group{flex:0 0 auto}
+.lw-filter-label{font-size:10px;color:#526a7e;white-space:nowrap}
+.lw-toolbar #legal-org-scope{min-width:220px;max-width:min(420px,100%);border:1px solid #d6e0e8;border-radius:7px;background:#fff;color:#263b50;padding:8px 10px;font:inherit;font-size:10px}
+.lw-muted{font-size:9px;color:#8392a0;margin:0 0 10px}
+.lw-wide{grid-column:1/-1}
+.persian-date-input{direction:ltr;text-align:right;font-variant-numeric:tabular-nums}
+.persian-calendar-pop{z-index:9999;width:260px;padding:9px;border:1px solid #d6e0e8;border-radius:9px;background:#fff;box-shadow:0 12px 34px rgba(27,57,84,.18);direction:rtl}
+.pc-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.pc-head strong{font-size:11px;color:#244f70}
+.pc-head button{width:27px;height:27px;border:1px solid #dce5ed;border-radius:5px;background:#f7f9fb;color:#315d83;font-size:16px;cursor:pointer}
+.pc-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;text-align:center}
+.pc-days span,.pc-days button{min-height:28px;display:grid;place-items:center;font-size:10px}
+.pc-days .pc-week{color:#9a8055;font-weight:700}
+.pc-days button{border:1px solid transparent;border-radius:5px;background:#f6f8fa;color:#415b73;cursor:pointer}
+.pc-days button:hover,.pc-days button.selected{background:#1d4969;color:#fff;border-color:#1d4969}
+@media(max-width:650px){.lw-toolbar #legal-org-scope{min-width:100%;max-width:100%}.lw-filter-label{width:100%}.lw-wide{grid-column:auto}}
+
+/* رنگ‌بندی زنده و خوانا برای شاخص‌ها و نمودارهای مرکز حقوقی */
+.lw-chart-row:nth-child(6n+1) .lw-chart-track span{background:#2686b8}
+.lw-chart-row:nth-child(6n+2) .lw-chart-track span{background:#e39a3b}
+.lw-chart-row:nth-child(6n+3) .lw-chart-track span{background:#26a28a}
+.lw-chart-row:nth-child(6n+4) .lw-chart-track span{background:#8b70c7}
+.lw-chart-row:nth-child(6n+5) .lw-chart-track span{background:#dc7181}
+.lw-chart-row:nth-child(6n) .lw-chart-track span{background:#5b9dce}
+.lw-metric:nth-child(6n+1){border-top:3px solid #2686b8}.lw-metric:nth-child(6n+2){border-top:3px solid #e39a3b}
+.lw-metric:nth-child(6n+3){border-top:3px solid #26a28a}.lw-metric:nth-child(6n+4){border-top:3px solid #8b70c7}
+.lw-metric:nth-child(6n+5){border-top:3px solid #dc7181}.lw-metric:nth-child(6n){border-top:3px solid #5b9dce}
+.lw-metric strong{color:#28749d}.lw-panel h3{color:#286b91}
+.lw-demo-mark{display:inline-block!important;margin-top:3px;padding:1px 6px;border-radius:12px;background:#fff4df;color:#9a6a21!important;font-size:8px!important}
+.legal-simulator{padding:18px}.legal-sim-result{margin-top:18px;padding:16px;border:1px solid #dbe6ed;border-radius:9px;background:#fff}
+.legal-sim-result h3{color:#286b91}.legal-sim-result h4{margin:12px 0 6px;color:#875e9e;font-size:12px}
+.legal-sim-result li{margin:5px 0;color:#536a7c;font-size:10.5px;line-height:2}
+.legal-sim-columns{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.legal-sim-result p{color:#526a7c;font-size:10.5px;line-height:2}
+@media(max-width:650px){.legal-sim-columns{grid-template-columns:1fr}}
+
+/* اصلاح انتخاب دامنه، نمایش جزئیات و افزایش فضای تنفس گزارش‌ها */
+.lw-overview-toolbar{position:relative;z-index:40;align-items:center;gap:14px;margin:0 0 18px;padding:12px 14px;border:1px solid #dce6ed;border-radius:10px;background:#f7fafc}
+.lw-org-picker{position:relative;min-width:250px;max-width:420px;flex:0 1 390px}
+.lw-org-trigger{display:flex;width:100%;align-items:center;justify-content:space-between;gap:14px;padding:9px 13px;border:1px solid #cbd9e4;border-radius:8px;background:#fff;color:#244f70;text-align:right;font:inherit;cursor:pointer;box-shadow:0 2px 7px #183a5610}
+.lw-org-trigger span:first-child{display:grid;gap:3px}.lw-org-trigger small{font-size:9px;color:#7b8e9d}.lw-org-trigger strong{font-size:11px;color:#244f70}.lw-org-chevron{font-size:17px;color:#b18a4e}
+.lw-org-menu{position:absolute;top:calc(100% + 7px);right:0;left:0;z-index:1000;padding:9px;border:1px solid #d4e0e9;border-radius:10px;background:#fff;box-shadow:0 16px 38px #173a5a24}
+.lw-org-menu input{width:100%;min-width:0;margin-bottom:7px;padding:9px 11px;border:1px solid #d9e3eb;border-radius:7px;font:inherit;font-size:10px;outline:none}
+.lw-org-options{display:grid;gap:4px;max-height:300px;overflow-y:auto;overscroll-behavior:contain}
+.lw-org-option{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;padding:8px 10px;border:1px solid transparent;border-radius:6px;background:#fff;text-align:right;font:inherit;cursor:pointer}
+.lw-org-option span{font-size:10px;color:#345a75}.lw-org-option small{font-size:9px;color:#8494a1}.lw-org-option:hover,.lw-org-option.selected{border-color:#d9e5ed;background:#edf4f8}.lw-org-option.selected span{font-weight:700;color:#1b4568}
+.lw-overview-toolbar .lw-spacer{flex:1}
+.lw-overview-toolbar .lw-btn{white-space:nowrap}
+.lw-grid{gap:18px}.lw-panel{padding:17px}.lw-chart-bars{gap:14px}.lw-chart-row{grid-template-columns:145px minmax(0,1fr) 34px;gap:11px}
+.lw-metrics{gap:12px;margin-bottom:18px}.lw-panel.lw-wide{padding:19px}
+.lw-detail-wrap{padding:16px;border:1px solid #dce5ed;border-radius:10px;background:#fff}
+.lw-detail-wrap>header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #e8edf1}
+.lw-detail-wrap>header h3{margin:0 0 4px;color:#244f70;font-size:14px}.lw-detail-wrap>header small{color:#8493a0;font-size:9px}
+.lw-detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.lw-detail-field{min-width:0;padding:10px 11px;border:1px solid #e5ebf0;border-radius:7px;background:#fbfcfd}
+.lw-detail-field small{display:block;margin-bottom:5px;color:#8292a0;font-size:9px}.lw-detail-field div{color:#344f65;font-size:10px;overflow-wrap:anywhere;white-space:pre-wrap}
+.lw-detail-attachments{margin-top:15px;padding:12px;border:1px solid #e5ebf0;border-radius:8px}.lw-detail-attachments h4{margin:0 0 8px;color:#315d83;font-size:11px}
+.lw-detail-wrap .lw-form-actions{display:flex;gap:8px;margin-top:15px}
+@media(max-width:850px){.lw-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.lw-overview-toolbar{align-items:stretch}.lw-org-picker{max-width:none;flex-basis:100%}}
+@media(max-width:600px){.lw-detail-grid{grid-template-columns:1fr}.lw-detail-wrap>header{align-items:flex-start;flex-direction:column}.lw-overview-toolbar .lw-btn{width:100%}.lw-chart-row{grid-template-columns:110px minmax(0,1fr) 30px}.lw-grid{gap:13px}.lw-panel{padding:13px}}
+
+.lw-import-mode-label{display:block;margin-top:10px;color:#526a7e;font-size:10px}.lw-import-mode-label+select{display:block;width:100%;margin-top:5px;padding:9px;border:1px solid #d6e0e8;border-radius:7px;background:#fff;color:#263b50;font:inherit;font-size:10px}
+
+
+/* Mixed chart system: horizontal comparisons, vertical columns and circular composition */
+.lw-column-chart{display:flex;align-items:stretch;gap:10px;min-height:190px;overflow-x:auto;padding:7px 3px 2px;scrollbar-width:thin}
+.lw-column-item{flex:1 0 54px;min-width:0;display:grid;grid-template-rows:20px 126px auto;gap:5px;text-align:center}
+.lw-column-value{font-size:10px;font-weight:800;color:#315d83;white-space:nowrap}
+.lw-column-track{height:126px;display:flex;align-items:flex-end;justify-content:center;border-bottom:1px solid #dce5ec;background:repeating-linear-gradient(to top,transparent 0,transparent 30px,#edf2f6 31px,#edf2f6 32px)}
+.lw-column-track span{display:block;width:min(68%,34px);min-height:0;border-radius:6px 6px 0 0;background:var(--bar-color,#367ba4);box-shadow:0 2px 5px rgba(36,75,105,.12);transition:height .25s ease}
+.lw-column-label{font-size:9px;line-height:1.55;color:#60758a;overflow-wrap:anywhere;min-height:30px}
+.lw-donut-layout{display:grid;grid-template-columns:minmax(125px,.8fr) minmax(0,1.2fr);align-items:center;gap:14px;min-height:170px}
+.lw-donut{width:min(100%,164px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;margin:auto;position:relative;background:#e8eef3}
+.lw-donut-hole{width:58%;height:58%;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 1px 6px rgba(28,61,87,.08)}
+.lw-donut-hole strong{font-size:20px;line-height:1.3;color:#254f70}
+.lw-donut-hole small{font-size:9px;color:#718397}
+.lw-donut-legend{display:grid;gap:8px;min-width:0}
+.lw-donut-legend>div{display:grid;grid-template-columns:10px minmax(0,1fr) auto;align-items:center;gap:7px;font-size:10px;color:#5f7387}
+.lw-donut-legend i{width:9px;height:9px;border-radius:3px;background:var(--legend-color)}
+.lw-donut-legend b{font-size:10px;color:#315d83}
+@media(max-width:650px){.lw-column-chart{gap:7px}.lw-column-item{flex-basis:48px;grid-template-rows:18px 112px auto}.lw-column-track{height:112px}.lw-column-label{font-size:8px}.lw-donut-layout{grid-template-columns: minmax(105px,.75fr) minmax(0,1.25fr);gap:9px}.lw-donut-hole strong{font-size:17px}}
+@media(max-width:380px){.lw-donut-layout{grid-template-columns:1fr}.lw-donut{width:136px}.lw-donut-legend{grid-template-columns:1fr 1fr;gap:7px}}
