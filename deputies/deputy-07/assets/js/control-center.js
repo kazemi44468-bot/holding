@@ -22,18 +22,25 @@ function renderFieldEditor(){const db=state.databases.find(x=>x.id===$("tableDat
 function fieldRow(f={id:"",label:"",type:"text",required:false,options:""}){
 const close=t=>"<"+"/"+t+">";
 const types=[["text","متن"],["number","عدد"],["date","تاریخ"],["textarea","متن بلند"],["select","انتخابی"],["checkbox","بله/خیر"]];
-const opts=types.map(([v,n])=>'<option value="'+v+'" '+(f.type===v?"selected":"")+">'+n+close("option")).join("");
+const opts=types.map(([v,n])=>'<option value="'+v+'" '+(f.type===v?"selected":"")+'>'+n+close("option")).join("");
 return '<div class="cc-field-row"><input data-field-id placeholder="شناسه فیلد" value="'+esc(f.id)+'"><input data-field-label placeholder="عنوان فیلد" value="'+esc(f.label)+'"><select data-field-type>'+opts+close("select")+'<input data-field-options placeholder="گزینه‌ها با ویرگول" value="'+esc(f.options||"")+'"><input type="checkbox" data-field-required '+(f.required?"checked":"")+' title="فیلد الزامی"><button type="button" data-remove-field aria-label="حذف فیلد">×'+close("button")+close("div");
 }
 function dynamicFieldMarkup(f,value=""){
 const close=t=>"<"+"/"+t+">",id=esc(f.id),label=esc(f.label),required=f.required?" required":"";
-if(f.type==="checkbox")return '<label class="cc-check-field"><input type="checkbox" name="'+id+'" '+(value===true||value==="true"||value===1?"checked":"")+required+"> "+label+close("label");
-if(f.type==="textarea")return '<label>'+label+'<textarea name="'+id+'"'+required+">'+esc(value??"")+close("textarea")+close("label");
-if(f.type==="select"){const options=String(f.options||"").split(",").map(x=>x.trim()).filter(Boolean);return '<label>'+label+'<select name="'+id+'"'+required+'><option value="">انتخاب کنید'+close("option")+options.map(o=>'<option value="'+esc(o)+'" '+(String(value??"")===o?"selected":"")+">'+esc(o)+close("option")).join("")+close("select")+close("label");}
-const type=f.type==="number"?"number":f.type==="date"?"date":"text";
-return '<label>'+label+'<input name="'+id+'" type="'+type+'" value="'+esc(value??"")+'"'+required+">"+close("label");
+if(f.type==="checkbox")return '<label class="cc-check-field"><input type="checkbox" name="'+id+'" '+(value===true||value==="true"||value===1?"checked":"")+required+'> '+label+close("label");
+if(f.type==="textarea")return '<label>'+label+'<textarea name="'+id+'"'+required+'>'+esc(value??"")+close("textarea")+close("label");
+if(f.type==="select"){
+const options=String(f.options||"").split(",").map(x=>x.trim()).filter(Boolean);
+return '<label>'+label+'<select name="'+id+'"'+required+'><option value="">انتخاب کنید'+close("option")+options.map(o=>'<option value="'+esc(o)+'" '+(String(value??"")===o?"selected":"")+'>'+esc(o)+close("option")).join("")+close("select")+close("label");
 }
-function dynamicFormValues(form,fields){const values={};fields.forEach(f=>{const el=form.elements.namedItem(f.id);values[f.id]=f.type==="checkbox"?Boolean(el?.checked):(el?.value??"");});return values;}
+const type=f.type==="number"?"number":f.type==="date"?"date":"text";
+return '<label>'+label+'<input name="'+id+'" type="'+type+'" value="'+esc(value??"")+'"'+required+'>'+close("label");
+}
+function dynamicFormValues(form,fields){
+const values={};
+fields.forEach(f=>{const el=form.elements.namedItem(f.id);values[f.id]=f.type==="checkbox"?Boolean(el?.checked):(el?.value??"");});
+return values;
+}
 $("addField").onclick=()=>{$("fieldEditorList").insertAdjacentHTML("beforeend",fieldRow());};
 $("fieldEditorList").onclick=e=>{if(e.target.matches("[data-remove-field]"))e.target.closest(".cc-field-row").remove();};
 $("newDatabase").onclick=()=>{const name=prompt("نام بانک اطلاعاتی جدید؟");if(name?.trim()){state.databases.push({id:uid(),name:name.trim(),tables:[]});persist();renderAll();}};
@@ -42,29 +49,45 @@ $("tableDatabase").onchange=renderTableOptions;
 $("tableEditor").onsubmit=e=>{e.preventDefault();const db=state.databases.find(d=>d.id===$("tableDatabase").value);if(!db)return;const fields=[...$("fieldEditorList").querySelectorAll(".cc-field-row")].map(row=>({id:row.querySelector("[data-field-id]").value.trim(),label:row.querySelector("[data-field-label]").value.trim(),type:row.querySelector("[data-field-type]").value,required:row.querySelector("[data-field-required]")?.checked||false,options:row.querySelector("[data-field-options]")?.value||""})).filter(f=>f.id&&f.label);const name=$("tableName").value.trim(),i=db.tables.findIndex(t=>t.id===name),prior=i>=0?db.tables[i]:null,table={id:name,name,title:$("tableTitle").value.trim(),fields,version:(prior?.version||0)+1,history:[...(prior?.history||[]),...(prior?[{version:prior.version||1,fields:prior.fields,savedAt:new Date().toISOString()}]:[])].slice(-12)};if(!name||!table.title)return;if(i>=0)db.tables[i]=table;else db.tables.push(table);persist();renderAll();alert("تعریف جدول ذخیره شد.");};
 function renderRecords(){const db=state.databases.find(x=>x.id===$("recordDatabase").value)||state.databases[0];if(!db)return;const table=db.tables.find(x=>x.id===$("recordTable").value)||db.tables[0];if(!table)return;const q=$("recordSearch").value.toLowerCase(),rows=records.filter(r=>r.databaseId===db.id&&r.tableId===table.id&&!r.deleted&&JSON.stringify(r.values).toLowerCase().includes(q));$("recordList").innerHTML=rows.map(r=>'<article class="cc-record"><b>'+esc(table.fields.map(f=>r.values[f.id]).find(Boolean)||"رکورد بدون عنوان")+'</b><p>'+esc(table.fields.slice(0,4).map(f=>f.label+": "+(r.values[f.id]??"—")).join(" · "))+'</p><small>شناسه: '+esc(r.id)+'</small><div class="cc-row-actions"><button data-rec-edit="'+r.id+'">ویرایش</button><button class="danger" data-rec-del="'+r.id+'">حذف</button></div></article>').join("")||'<div class="cc-note">رکوردی برای این جدول ثبت نشده است.</div>';}
 function showRecordForm(rec=null){
-const db=state.databases.find(x=>x.id===$("recordDatabase").value)||state.databases[0],table=db?.tables.find(x=>x.id===$("recordTable").value)||db?.tables[0];
+const db=state.databases.find(x=>x.id===$("recordDatabase").value)||state.databases[0];
+const table=db?.tables.find(x=>x.id===$("recordTable").value)||db?.tables[0];
 if(!table){alert("ابتدا یک جدول بسازید.");return;}
 const vals=rec?.values||{},close=t=>"<"+"/"+t+">";
 $("recordEditorHost").innerHTML='<div class="cc-inline-form"><h3>'+(rec?"ویرایش رکورد":"ثبت رکورد جدید")+'</h3><form id="dynamicRecordForm"><input type="hidden" id="dynamicRecordId" value="'+esc(rec?.id||"")+'">'+table.fields.map(f=>dynamicFieldMarkup(f,vals[f.id])).join("")+'<div class="cc-actions wide"><button class="cc-primary">ذخیره رکورد</button><button type="button" class="cc-light" id="cancelRecord">انصراف</button>'+close("div")+close("form")+close("div");
 $("cancelRecord").onclick=()=>$("recordEditorHost").innerHTML="";
-$("dynamicRecordForm").onsubmit=async e=>{e.preventDefault();const values=dynamicFormValues(e.target,table.fields),id=$("dynamicRecordId").value||uid();try{await writeRecord({id,databaseId:db.id,tableId:table.id,values,schemaVersion:table.version||1,updatedAt:new Date().toISOString()});$("recordEditorHost").innerHTML="";renderRecords();}catch(err){alert(err.message);}};
-} $("cancelRecord").onclick=()=>$("recordEditorHost").innerHTML="";$("dynamicRecordForm").onsubmit=async e=>{e.preventDefault();const values={};for(const f of table.fields){const el=e.target.elements.namedItem(f.id);values[f.id]=el?.value??"";}const id=$("dynamicRecordId").value||uid();try{await writeRecord({id,databaseId:db.id,tableId:table.id,values,schemaVersion:table.version||1,updatedAt:new Date().toISOString(),createdBy:"alikazemi"});$("recordEditorHost").innerHTML="";renderRecords();}catch(err){alert(err.message);}};}
+$("dynamicRecordForm").onsubmit=async e=>{
+e.preventDefault();
+const values=dynamicFormValues(e.target,table.fields),id=$("dynamicRecordId").value||uid();
+try{await writeRecord({id,databaseId:db.id,tableId:table.id,values,schemaVersion:table.version||1,updatedAt:new Date().toISOString()});$("recordEditorHost").innerHTML="";renderRecords();}
+catch(err){alert(err.message);}
+};
+}
 $("newRecord").onclick=()=>showRecordForm();$("recordDatabase").onchange=()=>{renderTableOptions();renderRecords();};$("recordTable").onchange=renderRecords;$("recordSearch").oninput=renderRecords;
 $("recordList").onclick=e=>{const b=e.target.closest("button");if(!b)return;const rec=records.find(x=>x.id===b.dataset.recEdit||x.id===b.dataset.recDel);if(!rec)return;if(b.dataset.recEdit)showRecordForm(rec);else if(confirm("این رکورد حذف شود؟"))writeRecord({...rec,deleted:true,updatedAt:new Date().toISOString()},"delete").then(renderRecords).catch(err=>alert(err.message));};
 function renderForms(){ $("formList").innerHTML=state.forms.map(f=>'<div class="cc-list-row"><div><b>'+esc(f.title)+'</b><small>'+esc(f.description||"")+" · "+f.fields.length+" فیلد"+'</small></div><div class="cc-row-actions"><button data-form-run="'+f.id+'">اجرای فرم</button><button data-form-edit="'+f.id+'">ویرایش</button><button data-form-del="'+f.id+'" class="danger">حذف</button></div></div>').join("");}
 $("newForm").onclick=()=>{ $("formId").value="";$("formTitle").value="";$("formDescription").value="";renderFormFieldOptions([]);};
 $("formTable").onchange=()=>renderFormFieldOptions([]);function renderFormFieldOptions(chosen=[]){const [dbId,tableId]=($("formTable").value||"").split("::"),t=currentTable(dbId,tableId);$("formFieldOptions").innerHTML=(t?.fields||[]).map(f=>'<label><input type="checkbox" value="'+esc(f.id)+'" '+(chosen.includes(f.id)?"checked":"")+'> '+esc(f.label)+'</label>').join("");}
 $("formList").onclick=e=>{
-const b=e.target.closest("button");if(!b)return;const f=state.forms.find(x=>x.id===b.dataset.formEdit||x.id===b.dataset.formDel||x.id===b.dataset.formRun);if(!f)return;
+const b=e.target.closest("button");if(!b)return;
+const f=state.forms.find(x=>x.id===b.dataset.formEdit||x.id===b.dataset.formDel||x.id===b.dataset.formRun);if(!f)return;
 if(b.dataset.formRun){
-const t=currentTable(f.databaseId,f.tableId);if(!t)return;const chosen=t.fields.filter(x=>f.fields.includes(x.id)),close=t=>"<"+"/"+t+">";
-let html='<div class="cc-inline-form"><h3>اجرای فرم: '+esc(f.title)+'</h3><form id="runDynamicForm">';chosen.forEach(x=>{html+=dynamicFieldMarkup(x,"");});html+='<div class="cc-actions wide"><button class="cc-primary">ثبت اطلاعات</button>'+close("div")+close("form")+close("div");
+const t=currentTable(f.databaseId,f.tableId);if(!t)return;
+const chosen=t.fields.filter(x=>f.fields.includes(x.id)),close=t=>"<"+"/"+t+">";
+let html='<div class="cc-inline-form"><h3>اجرای فرم: '+esc(f.title)+'</h3><form id="runDynamicForm">';
+chosen.forEach(x=>{html+=dynamicFieldMarkup(x,"");});
+html+='<div class="cc-actions wide"><button class="cc-primary">ثبت اطلاعات</button>'+close("div")+close("form")+close("div");
 $("recordEditorHost").innerHTML=html;
-$("runDynamicForm").onsubmit=async ev=>{ev.preventDefault();const values=dynamicFormValues(ev.target,chosen);try{await writeRecord({id:uid(),databaseId:f.databaseId,tableId:f.tableId,values,sourceForm:f.id,updatedAt:new Date().toISOString()},"upsert");$("recordEditorHost").innerHTML="";showView("records");renderAll();}catch(err){alert(err.message);}};
+$("runDynamicForm").onsubmit=async ev=>{
+ev.preventDefault();
+const values=dynamicFormValues(ev.target,chosen);
+try{await writeRecord({id:uid(),databaseId:f.databaseId,tableId:f.tableId,values,sourceForm:f.id,updatedAt:new Date().toISOString()},"upsert");$("recordEditorHost").innerHTML="";showView("records");renderAll();}
+catch(err){alert(err.message);}
+};
 showView("records");return;
 }
-if(b.dataset.formEdit){$("formId").value=f.id;$("formTitle").value=f.title;$("formDescription").value=f.description||"";$("formTable").value=f.databaseId+"::"+f.tableId;renderFormFieldOptions(f.fields);}
-else if(confirm("فرم حذف شود؟")){state.forms=state.forms.filter(x=>x.id!==f.id);persist();renderForms();}
+if(b.dataset.formEdit){
+$("formId").value=f.id;$("formTitle").value=f.title;$("formDescription").value=f.description||"";$("formTable").value=f.databaseId+"::"+f.tableId;renderFormFieldOptions(f.fields);
+}else if(confirm("فرم حذف شود؟")){state.forms=state.forms.filter(x=>x.id!==f.id);persist();renderForms();}
 };
 $("formEditor").onsubmit=e=>{e.preventDefault();const [databaseId,tableId]=$("formTable").value.split("::"),f={id:$("formId").value||uid(),title:$("formTitle").value.trim(),description:$("formDescription").value.trim(),databaseId,tableId,fields:[...$("formFieldOptions").querySelectorAll("input:checked")].map(x=>x.value)};const i=state.forms.findIndex(x=>x.id===f.id);if(i>=0)state.forms[i]=f;else state.forms.push(f);persist();renderForms();alert("فرم ذخیره شد.");};
 function renderTasks(){const all=records.filter(r=>r.databaseId==="db-ops"&&r.tableId==="tasks"&&!r.deleted),type=$("taskType").value,status=$("taskStatus").value;const rows=all.filter(r=>(type==="all"||r.values.kind===type)&&(status==="all"||r.values.status===status));$("taskList").innerHTML=rows.map(r=>'<div class="cc-list-row"><div><b>'+esc(r.values.title)+'</b><small>'+esc(r.values.department||"بدون اداره")+" · "+esc(r.values.owner||"بدون مسئول")+" · "+esc(r.values.due||"بدون سررسید")+" · "+esc(r.values.status||"در جریان")+'</small></div><div class="cc-row-actions"><button data-task-edit="'+r.id+'">ویرایش</button><button class="danger" data-task-del="'+r.id+'">حذف</button></div></div>').join("")||'<div class="cc-note">هنوز اقدام یا رویدادی ثبت نشده است. می‌توانید از نمونه‌ها یا دکمه افزودن استفاده کنید.</div>';}
