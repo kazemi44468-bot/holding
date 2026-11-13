@@ -190,3 +190,68 @@
  .control-page .ops-clock span{display:none}
 }
 @media(prefers-reduced-motion:reduce){.cc-view{animation:none!important}*{scroll-behavior:auto!important;transition:none!important}}
+
+
+/* Stable workspace geometry + vivid, high-contrast palette */
+:root{
+ --cc-bg:#f7f9fc;--cc-surface:#fff;--cc-surface-soft:#f4f8fc;
+ --cc-ink:#26364b;--cc-muted:#65758b;--cc-line:#dce5ef;
+ --cc-primary:#0f9eaa;--cc-primary-strong:#087b88;
+ --cc-primary-soft:#e2f8f7;--cc-primary-border:#b8e9e6;
+ --cc-cyan:#20b9c5;--cc-cyan-soft:#e4fafa;
+ --cc-amber:#f2b84b;--cc-amber-soft:#fff6df;
+ --cc-violet:#9270e8;--cc-violet-soft:#f2edff;
+ --cc-rose:#f27e72;--cc-rose-soft:#fff0ed;
+ --cc-radius:14px;--cc-shadow:0 5px 18px rgba(40,68,102,.065);
+}
+.control-layout{grid-template-columns:258px minmax(0,1fr)!important;align-items:stretch!important;gap:18px!important}
+.control-sidebar{align-self:start!important;position:sticky!important;top:16px!important;min-width:0!important}
+.control-content{min-width:0!important;width:100%!important;align-self:stretch!important}
+.cc-view{display:none!important;min-width:0!important;width:100%!important;min-height:680px;animation:none!important}
+.cc-view.active{display:block!important}
+.cc-section-head{min-height:76px!important;align-items:center!important}
+.cc-two{align-items:stretch!important}
+.cc-two>.cc-card{min-width:0!important;height:100%!important}
+.cc-card,.cc-metrics article,.cc-editor,.cc-list-row,.cc-record,.cc-preview,.vault-strip{box-shadow:var(--cc-shadow)!important}
+.control-hero{background:linear-gradient(115deg,#ffffff 0%,#e9fbfa 54%,#f4edff 100%)!important;border-color:#cfece9!important}
+.control-hero-mark{background:#ffedcf!important;color:#d47c25!important}
+.hero-status{color:#087f8a!important}
+.hero-status-dot,.sidebar-foot-dot{background:#24b7a8!important;box-shadow:0 0 0 4px #e1f8f3}
+.sidebar-brand-mark{background:linear-gradient(145deg,#18b7bd,#547ce8)!important}
+.cc-nav.active{background:#e5f8f7!important;border-color:#bcece7!important;box-shadow:inset -3px 0 #10a6aa!important}
+.cc-nav.active>i{background:#c8f0ed!important;color:#087b88!important}
+.cc-nav.active b{color:#087b88!important}.cc-nav.active small{color:#398c91!important}
+.cc-nav:hover{background:#f1f8ff!important;border-color:#dceafb!important}
+.cc-metrics article:nth-child(4n+1){border-top:3px solid #22b8b2!important}
+.cc-metrics article:nth-child(4n+2){border-top:3px solid #8c70e8!important}
+.cc-metrics article:nth-child(4n+3){border-top:3px solid #f2b84b!important}
+.cc-metrics article:nth-child(4n){border-top:3px solid #f27e72!important}
+.cc-card h3{color:#34465d!important}
+.cc-module-list button{background:#f3f9fb!important;border-color:#dceef0!important;color:#344e62!important}
+.cc-module-list button:nth-child(2n){background:#f7f3ff!important;border-color:#e9e0ff!important}
+.cc-module-list button b{color:#0b929b!important}
+.cc-note{background:#fff7e4!important;border-color:#f5dfaa!important;color:#80602c!important}
+.cc-primary{background:linear-gradient(120deg,#12aeb0,#318bd5)!important;color:#fff!important;box-shadow:0 3px 9px rgba(21,153,177,.18)!important}
+.cc-primary:hover{filter:saturate(1.12) brightness(.98)!important}
+.cc-light{background:#f0f5ff!important;border-color:#dce7fb!important;color:#4567a0!important}
+.cc-editor{background:linear-gradient(135deg,#fff 0%,#f8fbff 100%)!important}
+.cc-editor input:focus,.cc-editor select:focus,.cc-editor textarea:focus,.cc-card input:focus,.cc-toolbar input:focus,.cc-toolbar select:focus{border-color:#63c9c7!important;box-shadow:0 0 0 3px #e2f8f7!important}
+.cc-list-row{border-color:#e1eaf1!important}
+.cc-list-row:nth-child(3n+2){background:#fcfaff!important}
+.cc-list-row:nth-child(3n){background:#fffdf7!important}
+.cc-bar-track{background:#edf2fa!important}
+.cc-bar-fill{background:linear-gradient(90deg,#20b8b3,#8b75e8,#f2b84b)!important}
+.cc-chip{background:#fff3df!important;border-color:#f6dfb2!important;color:#a86c1e!important}
+.control-page .ops-footer{background:#f2fbfb!important;border-top-color:#ccebe8!important;color:#547b80!important}
+@media(max-width:1120px){
+ .control-layout{grid-template-columns:232px minmax(0,1fr)!important}
+}
+@media(max-width:820px){
+ .control-layout{grid-template-columns:minmax(0,1fr)!important}
+ .control-sidebar{position:relative!important;top:auto!important;align-self:stretch!important}
+ .cc-view{min-height:0!important}
+}
+@media(max-width:600px){
+ .cc-section-head{min-height:0!important}
+ .cc-two>.cc-card{height:auto!important}
+}
