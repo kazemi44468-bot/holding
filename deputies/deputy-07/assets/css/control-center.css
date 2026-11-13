@@ -17,3 +17,5 @@
 #moduleLayoutList label{display:flex;align-items:center;gap:8px;font-size:10px;color:#47657d}
 #moduleLayoutList input{accent-color:#285d86}
 @media(max-width:680px){#zoneEditor.cc-editor{grid-template-columns:1fr}}
+
+.cc-table-chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}.cc-table-chips button{font:inherit;font-size:9px;color:#426987;background:#eef4f8;border:1px solid #dce8ef;border-radius:6px;padding:5px 7px;cursor:pointer}
