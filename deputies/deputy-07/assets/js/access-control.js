@@ -30,6 +30,8 @@ function evaluate(userId,permission,resource={}){
 }
 window.Deputy7Access=Object.freeze({
  can:(userId,permission,resource={})=>evaluate(userId,permission,resource).allowed,
+  currentUser:()=>{const s=read();return (s?.users||[]).find(u=>u.username==="alikazemi"&&u.status==="active")||null;},
+  canCurrent:(permission,resource={})=>{const s=read(),u=(s?.users||[]).find(x=>x.username==="alikazemi"&&x.status==="active");return u?evaluate(u.id,permission,resource).allowed:false;},
  explain:evaluate,
  user:userId=>(read()?.users||[]).find(x=>x.id===userId)||null,
  users:()=>read()?.users||[],
