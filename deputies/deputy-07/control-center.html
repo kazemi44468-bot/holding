@@ -1,19 +1,19 @@
 <!doctype html>
 <html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#fff9f3"><title>مرکز کنترل و پیکربندی | معاونت ۷</title>
 <link rel="preload" href="assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/style.css?v=control-center-03"><link rel="stylesheet" href="assets/css/control-center.css?v=warm-design-features-20261114-5"></head>
+<link rel="stylesheet" href="assets/css/style.css?v=control-center-03"><link rel="stylesheet" href="assets/css/control-center.css?v=creative-tabs-20261115-1"></head>
 <body class="ops-page control-page">
 <header class="ops-header"><div class="ops-header-inner"><a class="ops-brand" href="dashboard.html"><img class="ops-logo" src="assets/images/logo.webp" alt="نشان شرکت"><span><b>شرکت هفت</b><small>سامانه وضعیت و عملکرد سازمان</small></span></a><nav class="ops-nav" aria-label="ناوبری اصلی"></nav><div class="ops-clock"><span>زمان سامانه</span><b id="clock">—</b><small id="date">—</small></div></div></header>
 <main class="control-wrap">
 <section class="control-hero"><div><div class="hero-status"><span class="hero-status-dot"></span>محیط مدیریت و پیکربندی</div><span class="control-eyebrow">مدیریت یکپارچه و توسعه‌پذیر</span><h1>مرکز کنترل سامانه</h1><p>مدیریت ساختار سازمانی، بانک‌های اطلاعاتی، فرم‌ها، عملیات، گزارش‌ها و ظاهر سامانه از یک نقطه مرکزی</p></div><div class="control-hero-mark">۰۷</div></section>
 <section class="vault-strip"><div><b id="vaultTitle">اتصال به مخزن امن اطلاعات</b><small id="vaultStatus">برای ذخیره تغییرات، مخزن محلی را بازگشایی کنید.</small></div><div class="vault-actions"><input id="vaultPass" type="password" autocomplete="current-password" placeholder="گذرواژه اصلی مخزن (حداقل ۱۲ نویسه)"><button id="unlockVault" class="cc-primary">بازگشایی مخزن</button><button id="lockVault" class="cc-light" disabled>قفل</button></div></section>
 <div class="control-layout">
-<aside class="control-sidebar" aria-label="ابزارهای مدیریت">
+<aside class="control-sidebar" role="tablist" aria-label="بخش‌های مرکز کنترل">
 <div class="sidebar-brand"><span class="sidebar-brand-mark">۷</span><div><b>مرکز مدیریت</b><small>ابزارهای معاونت هفت</small></div></div>
 <div class="sidebar-caption">نمایش و پایش</div>
-<button class="cc-nav active" data-view="overview"><i>⌂</i><span><b>نمای کلی</b><small>وضعیت و میانبرها</small></span></button>
+<button class="cc-nav active" role="tab" aria-selected="true" data-view="overview"><i>⌂</i><span><b>نمای کلی</b><small>وضعیت و میانبرها</small></span></button>
 <div class="sidebar-caption">ساختار و اطلاعات</div>
-<button class="cc-nav" data-view="org"><i>▥</i><span><b>ساختار سازمانی</b><small>اداره‌ها و واحدها</small></span></button>
+<button class="cc-nav" role="tab" aria-selected="false" data-view="org"><i>▥</i><span><b>ساختار سازمانی</b><small>اداره‌ها و واحدها</small></span></button>
 <button class="cc-nav" data-view="database"><i>▦</i><span><b>بانک‌ساز</b><small>بانک، جدول و فیلد پویا</small></span></button>
 <button class="cc-nav" data-view="records"><i>▤</i><span><b>مدیریت داده‌ها</b><small>ثبت و ویرایش رکوردها</small></span></button>
 <button class="cc-nav" data-view="forms"><i>▧</i><span><b>فرم‌ساز</b><small>ساخت فرم از فیلدها</small></span></button>
