@@ -129,3 +129,6 @@
 .um-permission-grid label{border-color:#e3edef!important}
 @media(max-width:980px){.um-workspace{grid-template-columns:1fr!important}.um-sidebar{position:static!important}}
 @media(max-width:680px){.users-main{padding:14px 12px 105px!important}.users-hero{padding:17px!important}.um-content{padding:14px!important}}
+
+/* دکمه‌های اصلی با رنگ فیروزه‌ای روشن و نوشته تیره برای خوانایی بیشتر */
+.um-primary{background:#4dbcc6!important;border-color:#4dbcc6!important;color:#17484d!important}.um-primary:hover{background:#38aeb9!important;border-color:#38aeb9!important;color:#123f45!important}
