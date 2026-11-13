@@ -1,25 +1,36 @@
 <!doctype html>
 <html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f7fafb"><title>مرکز کنترل و پیکربندی | معاونت ۷</title>
 <link rel="preload" href="assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/style.css?v=control-center-03"><link rel="stylesheet" href="assets/css/control-center.css?v=turquoise-redesign-20261113-3"></head>
+<link rel="stylesheet" href="assets/css/style.css?v=control-center-03"><link rel="stylesheet" href="assets/css/control-center.css?v=tools-launchpad-20261113-1"></head>
 <body class="ops-page control-page">
 <header class="ops-header"><div class="ops-header-inner"><a class="ops-brand" href="dashboard.html"><img class="ops-logo" src="assets/images/logo.webp" alt="نشان شرکت"><span><b>شرکت هفت</b><small>سامانه وضعیت و عملکرد سازمان</small></span></a><nav class="ops-nav" aria-label="ناوبری اصلی"></nav><div class="ops-clock"><span>زمان سامانه</span><b id="clock">—</b><small id="date">—</small></div></div></header>
 <main class="control-wrap">
 <section class="control-hero"><div><span class="control-eyebrow">مدیریت یکپارچه و توسعه‌پذیر</span><h1>مرکز کنترل سامانه</h1><p>مدیریت ساختار سازمانی، بانک‌های اطلاعاتی، فرم‌ها، عملیات، گزارش‌ها و ظاهر سامانه از یک نقطه مرکزی</p></div><div class="control-hero-mark">۰۷</div></section>
 <section class="vault-strip"><div><b id="vaultTitle">اتصال به مخزن امن اطلاعات</b><small id="vaultStatus">برای ذخیره تغییرات، مخزن محلی را بازگشایی کنید.</small></div><div class="vault-actions"><input id="vaultPass" type="password" autocomplete="current-password" placeholder="گذرواژه اصلی مخزن (حداقل ۱۲ نویسه)"><button id="unlockVault" class="cc-primary">بازگشایی مخزن</button><button id="lockVault" class="cc-light" disabled>قفل</button></div></section>
 <div class="control-layout">
-<aside class="control-sidebar"><div class="sidebar-caption">ابزارهای مدیریت</div>
-<button class="cc-nav active" data-view="overview"><i>⌂</i><span><b>نمای کلی</b><small>وضعیت و میانبرها</small></span></button>
-<button class="cc-nav" data-view="org"><i>▥</i><span><b>ساختار سازمانی</b><small>اداره‌ها و واحدها</small></span></button>
-<button class="cc-nav" data-view="database"><i>▦</i><span><b>بانک‌ساز</b><small>بانک، جدول و فیلد پویا</small></span></button>
-<button class="cc-nav" data-view="records"><i>▤</i><span><b>مدیریت داده‌ها</b><small>ثبت و ویرایش رکوردها</small></span></button>
-<button class="cc-nav" data-view="forms"><i>▧</i><span><b>فرم‌ساز</b><small>ساخت فرم از فیلدها</small></span></button>
-<button class="cc-nav" data-view="workflow"><i>⇄</i><span><b>گردش کار و رویدادها</b><small>اقدام، جلسه و مصوبه</small></span></button>
-<button class="cc-nav" data-view="reports"><i>▥</i><span><b>گزارش و شاخص‌ها</b><small>گزارش پویا از داده‌ها</small></span></button>
-<button class="cc-nav" data-view="appearance"><i>◈</i><span><b>طراحی ظاهر سامانه</b><small>رنگ، تراکم و اجزای صفحه</small></span></button>
-<button class="cc-nav" data-view="layout"><i>▧</i><span><b>طراح چیدمان</b><small>بخش‌های رابط و فضای فیزیکی</small></span></button>
-<button class="cc-nav" data-view="transfer"><i>⇧</i><span><b>انتقال و پشتیبان</b><small>خروجی و بازیابی امن</small></span></button>
-</aside>
+<nav class="control-tools" aria-label="ابزارهای مدیریت">
+<div class="tools-heading"><div><span>مرکز ابزارها</span><h2>از کجا شروع کنیم؟</h2><p>بخش موردنظر را انتخاب کنید؛ ابزارها بر اساس نوع کار کنار هم قرار گرفته‌اند.</p></div><span class="tools-count">۱۰ ابزار مدیریتی</span></div>
+<div class="tools-groups">
+<section class="tools-group tools-group-overview"><div class="tools-group-head"><span class="tools-group-icon">⌂</span><div><b>پایش سامانه</b><small>نمای کلی و وضعیت زیرساخت</small></div></div>
+<button class="cc-nav active" data-view="overview"><i>01</i><span><b>نمای کلی</b><small>وضعیت، آمار و میانبرهای مدیریتی</small></span><em>←</em></button>
+</section>
+<section class="tools-group tools-group-data"><div class="tools-group-head"><span class="tools-group-icon">▦</span><div><b>سازمان و داده</b><small>تعریف ساختار و مدیریت اطلاعات</small></div></div>
+<button class="cc-nav" data-view="org"><i>02</i><span><b>ساختار سازمانی</b><small>اداره‌ها، واحدها و مأموریت‌ها</small></span><em>←</em></button>
+<button class="cc-nav" data-view="database"><i>03</i><span><b>بانک‌ساز</b><small>ساخت بانک، جدول و فیلدهای پویا</small></span><em>←</em></button>
+<button class="cc-nav" data-view="records"><i>04</i><span><b>مدیریت داده‌ها</b><small>ثبت، جست‌وجو و ویرایش اطلاعات</small></span><em>←</em></button>
+<button class="cc-nav" data-view="forms"><i>05</i><span><b>فرم‌ساز</b><small>طراحی فرم‌های ورود اطلاعات</small></span><em>←</em></button>
+</section>
+<section class="tools-group tools-group-operations"><div class="tools-group-head"><span class="tools-group-icon">⇄</span><div><b>عملیات و تحلیل</b><small>پیگیری کارها و ارزیابی عملکرد</small></div></div>
+<button class="cc-nav" data-view="workflow"><i>06</i><span><b>گردش کار و رویدادها</b><small>اقدام‌ها، جلسه‌ها و مصوبه‌ها</small></span><em>←</em></button>
+<button class="cc-nav" data-view="reports"><i>07</i><span><b>گزارش و شاخص‌ها</b><small>تحلیل داده‌ها و سنجش وضعیت</small></span><em>←</em></button>
+</section>
+<section class="tools-group tools-group-design"><div class="tools-group-head"><span class="tools-group-icon">✳</span><div><b>شخصی‌سازی و نگهداری</b><small>تنظیم محیط و حفاظت از اطلاعات</small></div></div>
+<button class="cc-nav" data-view="appearance"><i>08</i><span><b>طراحی ظاهر سامانه</b><small>رنگ‌ها، تراکم و اجزای رابط</small></span><em>←</em></button>
+<button class="cc-nav" data-view="layout"><i>09</i><span><b>طراح چیدمان</b><small>چیدمان رابط و فضاهای فیزیکی</small></span><em>←</em></button>
+<button class="cc-nav" data-view="transfer"><i>10</i><span><b>انتقال و پشتیبان</b><small>خروجی، بازیابی و انتقال امن</small></span><em>←</em></button>
+</section>
+</div>
+</nav>
 <div class="control-content">
 <section class="cc-view active" id="view-overview"><div class="cc-section-head"><div><span>مرکز فرماندهی فنی</span><h2>نمای کلی زیرساخت معاونت ۷</h2><p>نمونه‌های اولیه با برچسب آزمایشی ایجاد شده‌اند و با داده‌های واقعی اشتباه نمی‌شوند.</p></div><span class="cc-chip">مدیر ارشد فنی</span></div>
 <div class="cc-metrics"><article><small>اداره‌های تعریف‌شده</small><b id="metricDepartments">۶</b><span>قابل افزودن و ویرایش</span></article><article><small>بانک‌های اطلاعاتی</small><b id="metricDatabases">۴</b><span>ساختار فراداده‌ای</span></article><article><small>فرم‌های تعریف‌شده</small><b id="metricForms">۴</b><span>قابل توسعه</span></article><article><small>اقدامات نمونه</small><b id="metricTasks">۳</b><span>نمونه‌های آزمایشی</span></article></div>
