@@ -37,3 +37,15 @@
 .um-theme-controls{display:grid;gap:12px}.um-theme-controls select{width:100%}.um-theme-controls .um-primary{justify-self:start}.um-theme-hint{font-size:10px;color:#8493a0;line-height:1.8;margin:0}
 @media(max-width:1050px){.um-workspace{grid-template-columns:1fr}.um-sidebar{position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.um-sidebar-title{grid-column:1/-1}.um-config-grid{grid-template-columns:1fr}}
 @media(max-width:620px){.um-sidebar{grid-template-columns:1fr 1fr;padding:10px}.um-tab{padding:10px 8px;gap:8px}.um-tab small{display:none}.um-tab>span:first-child{width:30px;height:30px;flex-basis:30px}.um-inline-form{grid-template-columns:1fr}.um-inline-form label:nth-child(4){grid-column:auto}.um-config-head{align-items:flex-start;flex-direction:column}.um-department-row{grid-template-columns:38px minmax(0,1fr)}.um-department-actions{grid-column:1/-1;justify-content:flex-end}}
+
+/* ناوبری روشن و خوانا؛ بدون بلوک تیره و سنگین */
+.um-sidebar{background:#edf3f7!important;border:1px solid #d7e3eb!important;box-shadow:0 8px 22px rgba(31,68,94,.06)!important}
+.um-sidebar-title{color:#58758b!important}
+.um-tab{color:#3b5870!important}
+.um-tab b{color:#294d68!important}
+.um-tab small{color:#748b9d!important}
+.um-tab>span:first-child{background:#fff!important;color:#47799a!important;border:1px solid #dce7ee!important}
+.um-tab:hover{background:#e2edf4!important;border-color:#d2e1eb!important}
+.um-tab.active{background:#dceaf3!important;border-color:#bcd2e1!important;box-shadow:inset -3px 0 #397aa6!important}
+.um-tab.active b{color:#204b6b!important}.um-tab.active small{color:#5f7b91!important}
+.um-tab.active>span:first-child{background:#fff!important;color:#285d86!important;border-color:#cbdde9!important}
