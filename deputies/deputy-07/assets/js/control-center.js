@@ -8,14 +8,10 @@ function persist(){state.updatedAt=new Date().toISOString();localStorage.setItem
 function loadConfig(){try{const x=JSON.parse(localStorage.getItem(KEY));if(x&&x.version===1)state={...defaults(),...x};else{state=defaults();persist();}}catch{state=defaults();persist();}}
 async function readVault(){const snap=await Vault.snapshot();records=snap.records.filter(r=>r.entity==="platform-record").map(r=>({id:r.recordId,...r.data,changeId:r.changeId,updatedAt:r.updatedAt}));const cfg=snap.records.find(r=>r.entity==="platform-config"&&r.recordId==="main");let local=null;try{local=JSON.parse(localStorage.getItem(KEY));}catch{}if(cfg?.data?.version===1){const preferred=(local?.updatedAt&&(!cfg.data.updatedAt||local.updatedAt>cfg.data.updatedAt))?local:cfg.data;state={...defaults(),...preferred};localStorage.setItem(KEY,JSON.stringify(state));}}
 async function writeRecord(rec,op="upsert"){if(!unlocked)throw Error("ابتدا مخزن امن را بازگشایی کنید.");await Vault.add("platform-record",rec.id,op,rec);await readVault();}
-function applyTheme(t=state.theme){
- const p=["#287bd8","#2168b7","#eef6fd","#c8ddf2"],root=document.documentElement;
- const vars={"--cc-primary":p[0],"--cc-primary-strong":p[1],"--cc-primary-soft":p[2],"--cc-primary-border":p[3],"--cc-navy":"#20384e","--cc-blue":p[0],"--cc-sky":p[2],"--green":p[0],"--green2":p[0],"--green-dark":p[1],"--cc-radius":"10px"};
- Object.entries(vars).forEach(([k,v])=>root.style.setProperty(k,v,"important"));
- root.dataset.density="comfortable";root.dataset.width="wide";
- const fixed={palette:"adminlogin",density:"comfortable",radius:"soft",width:"wide"};
- state.theme=fixed;
- try{localStorage.setItem("deputy7.identity-access.theme.v1",JSON.stringify(fixed));}catch{}
+function applyTheme(){
+ /* ظاهر مرکز کنترل مستقل و خنثی است؛ تنظیمات رنگ قدیمی عمداً اعمال نمی‌شوند. */
+ document.documentElement.removeAttribute('data-density');
+ document.documentElement.removeAttribute('data-width');
 }
 function showView(v){document.querySelectorAll(".cc-view").forEach(x=>x.classList.toggle("active",x.id==="view-"+v));document.querySelectorAll(".cc-nav[data-view]").forEach(x=>{const active=x.dataset.view===v;x.classList.toggle("active",active);x.setAttribute("aria-selected",active?"true":"false");if(active){const group=x.closest(".cc-nav-group");if(group)group.classList.add("open");const title=x.querySelector("b")?.textContent||"مرکز کنترل";$("ccCurrentTitle").textContent=title;}});document.body.classList.remove("cc-sidebar-open");}
 document.querySelectorAll(".cc-nav[data-view]").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.view)));
