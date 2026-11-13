@@ -431,3 +431,32 @@ html body.ops-page.control-page .ops-footer *{
 html body.ops-page.control-page .ops-footer a{
   color:#8a6e5d!important;
 }
+
+
+/* رنگ‌بندی روشن و گرم برای دو ردیف فعال منوی کناری */
+html body.ops-page.control-page .control-sidebar .cc-group-head{
+  background:#f4eee7!important;
+  background-image:none!important;
+  color:#78695d!important;
+  border:1px solid #e9dfd4!important;
+  border-radius:9px!important;
+}
+html body.ops-page.control-page .control-sidebar .cc-group-head .cc-group-icon,
+html body.ops-page.control-page .control-sidebar .cc-group-head .cc-group-arrow{
+  color:#a77c6c!important;
+}
+html body.ops-page.control-page .control-sidebar .cc-nav.active,
+html body.ops-page.control-page .control-sidebar .cc-nav.active:hover{
+  background:#f2e5df!important;
+  background-image:none!important;
+  color:#76564c!important;
+  border:1px solid #ead6ce!important;
+  box-shadow:inset -3px 0 0 #c18a78!important;
+}
+html body.ops-page.control-page .control-sidebar .cc-nav.active b,
+html body.ops-page.control-page .control-sidebar .cc-nav.active>i{
+  color:#956b5e!important;
+}
+html body.ops-page.control-page .control-sidebar .cc-nav.active small{
+  color:#8b8178!important;
+}
