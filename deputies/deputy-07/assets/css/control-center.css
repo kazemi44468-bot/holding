@@ -114,3 +114,51 @@
 
 /* دکمه‌های اصلی با رنگ فیروزه‌ای روشن و نوشته تیره برای خوانایی بیشتر */
 .cc-primary{background:#4dbcc6!important;border-color:#4dbcc6!important;color:#17484d!important}.cc-primary:hover{background:#38aeb9!important;border-color:#38aeb9!important;color:#123f45!important}
+
+
+/* بازطراحی ابزارهای مدیریت: صفحه آغازین دسته‌بندی‌شده و کارت‌محور */
+.control-layout{display:flex!important;flex-direction:column!important;gap:22px!important}
+.control-tools{display:block;width:100%;background:transparent}
+.tools-heading{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:0 0 12px;padding:0 2px}
+.tools-heading>div>span{font-size:10px;font-weight:800;color:#d18b37;letter-spacing:.2px}
+.tools-heading h2{font-size:20px;line-height:1.5;color:#344c58;margin:2px 0 1px}
+.tools-heading p{font-size:11px;color:#758891;margin:0}
+.tools-count{background:#fff;border:1px solid #e4e9e8;color:#687c82;border-radius:30px;padding:6px 12px;font-size:10px;white-space:nowrap}
+.tools-groups{display:grid;grid-template-columns:.9fr 1.45fr 1.05fr 1.2fr;gap:12px;align-items:stretch}
+.tools-group{min-width:0;background:#fff;border:1px solid #e3e9e8;border-radius:13px;padding:13px;box-shadow:0 4px 14px rgba(43,66,71,.035);border-top:3px solid #8bb8b5}
+.tools-group-overview{border-top-color:#e5b45e}
+.tools-group-data{border-top-color:#68aeb5}
+.tools-group-operations{border-top-color:#8a9fc3}
+.tools-group-design{border-top-color:#c49a70}
+.tools-group-head{display:flex;align-items:center;gap:9px;padding:1px 1px 11px;margin-bottom:6px;border-bottom:1px solid #edf0ef}
+.tools-group-icon{width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center;border-radius:10px;background:#f4f7f5;color:#527b7e;font-size:19px}
+.tools-group-overview .tools-group-icon{background:#fff6e7;color:#b77d27}
+.tools-group-data .tools-group-icon{background:#eaf6f5;color:#39888d}
+.tools-group-operations .tools-group-icon{background:#eef2fa;color:#637ba8}
+.tools-group-design .tools-group-icon{background:#f8f1e9;color:#a47b4e}
+.tools-group-head b,.tools-group-head small{display:block}
+.tools-group-head b{font-size:12px;color:#3e555e}
+.tools-group-head small{font-size:9px;color:#89989d;margin-top:2px}
+.tools-group .cc-nav{position:relative;display:flex;align-items:center;gap:9px;width:100%;min-height:57px;margin:5px 0 0;padding:8px 7px;background:#fff!important;border:1px solid transparent!important;border-radius:9px!important;text-align:right;color:#405861!important;box-shadow:none!important;transition:background .16s,border-color .16s,transform .16s}
+.tools-group .cc-nav>i{width:29px;height:29px;flex:0 0 29px;border:0!important;border-radius:8px!important;background:#f1f5f4!important;color:#70858a!important;font-size:9px;font-style:normal;font-weight:800;direction:ltr}
+.tools-group .cc-nav b{font-size:10px;color:#405861!important;line-height:1.6}
+.tools-group .cc-nav small{font-size:9px;color:#849398!important;line-height:1.6;margin-top:1px;white-space:normal}
+.tools-group .cc-nav em{margin-right:auto;font-size:15px;font-style:normal;color:#a5b3b2;opacity:0;transform:translateX(4px);transition:.16s}
+.tools-group .cc-nav:hover{background:#f7faf9!important;border-color:#e8efed!important;transform:translateY(-1px)}
+.tools-group .cc-nav:hover em{opacity:1;transform:none}
+.tools-group .cc-nav.active{background:#edf7f5!important;border-color:#d4e9e4!important;box-shadow:inset -3px 0 #4b9e91!important}
+.tools-group .cc-nav.active>i{background:#dcefeb!important;color:#28796e!important}
+.tools-group .cc-nav.active b{color:#286e68!important}
+.tools-group .cc-nav.active small{color:#648781!important}
+.control-content{width:100%}
+@media(max-width:1120px){.tools-groups{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){
+ .control-layout{gap:16px!important}
+ .tools-heading{align-items:flex-start;flex-direction:column;gap:7px}
+ .tools-heading h2{font-size:18px}
+ .tools-count{align-self:flex-start}
+ .tools-groups{grid-template-columns:1fr;gap:9px}
+ .tools-group{padding:11px}
+ .tools-group .cc-nav{min-height:54px}
+ .tools-group .cc-nav em{opacity:1;transform:none}
+}
