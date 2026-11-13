@@ -1321,3 +1321,23 @@ body.control-page{margin:0!important;overflow-x:hidden!important}
 
 /* RTL geometry correction: fixed right sidebar, workspace begins beside it */
 @media(min-width:821px){.control-wrap{margin:0 248px 0 0!important;width:calc(100% - 248px)!important}}
+
+
+/* Quick-access tiles: neutral outline only, no filled color */
+.control-page .cc-module-list button,
+.control-page .cc-module-list button:nth-child(n){
+  background:transparent!important;
+  background-image:none!important;
+  border:1px solid #d9e5ee!important;
+  color:#20384e!important;
+  box-shadow:none!important;
+}
+.control-page .cc-module-list button:hover,
+.control-page .cc-module-list button:focus-visible{
+  background:transparent!important;
+  background-image:none!important;
+  border-color:#aebfce!important;
+  color:#20384e!important;
+  box-shadow:none!important;
+}
+.control-page .cc-module-list button b{color:#71869a!important}
