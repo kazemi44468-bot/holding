@@ -49,3 +49,28 @@
 .um-tab.active{background:#dceaf3!important;border-color:#bcd2e1!important;box-shadow:inset -3px 0 #397aa6!important}
 .um-tab.active b{color:#204b6b!important}.um-tab.active small{color:#5f7b91!important}
 .um-tab.active>span:first-child{background:#fff!important;color:#285d86!important;border-color:#cbdde9!important}
+
+
+/* بازطراحی نهایی طیف رنگ: آبی آسمانی شاد، سبک و کم‌اشباع؛ بدون سرمه‌ای */
+:root{--um-blue:#55a8d1;--um-blue-soft:#eaf7fc;--um-ink:#536b7b;--um-muted:#7f929f}
+.users-admin-page{color:#586f7e!important}
+.users-hero{background:linear-gradient(115deg,#fff 0%,#effaff 100%)!important;border-color:#d9edf6!important}
+.users-hero h1,.um-panel-head h2,.um-config-head h3,.um-group-card h3,.um-role-card h3{color:#47738d!important}
+.users-back,.control-header-actions a{color:#4d9ac2!important}
+.um-primary{background:#55a8d1!important;border-color:#55a8d1!important;color:#fff!important}
+.um-primary:hover{background:#398fbd!important}
+.um-secondary{color:#54758a!important;border-color:#d3e7f0!important}
+.um-sidebar{background:#f0f9fd!important;border:1px solid #d7edf6!important;box-shadow:0 8px 22px rgba(75,153,190,.07)!important}
+.um-sidebar-title{color:#6590a7!important}
+.um-tab{color:#58798d!important}
+.um-tab b{color:#4d7187!important}
+.um-tab small{color:#89a2b1!important}
+.um-tab>span:first-child{background:#fff!important;color:#59a5cb!important;border:1px solid #dceef5!important}
+.um-tab:hover{background:#e7f6fc!important;border-color:#d2eaf5!important}
+.um-tab.active{background:#d9f2ff!important;border-color:#bce4f4!important;box-shadow:inset -3px 0 #62b5dc!important}
+.um-tab.active b{color:#3f7898!important}.um-tab.active small{color:#6f98ad!important}
+.um-tab.active>span:first-child{background:#fff!important;color:#4a9fc9!important;border-color:#cce8f3!important}
+.um-stats b{color:#55a1c9!important}.um-avatar,.um-department-code{background:#e8f7fd!important;color:#4a9bc1!important}
+.um-chip.blue{background:#e7f6fc!important;color:#4b94b8!important}
+.um-matrix input,.um-permission-grid input{accent-color:#55a8d1!important}
+.um-scope-note{background:#f0f9fd!important;color:#6b8798!important}
