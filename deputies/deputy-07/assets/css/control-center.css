@@ -111,3 +111,6 @@
 #zoneEditor.cc-editor{background:#f6fafb!important;border-color:#e1eaed!important}
 @media(max-width:1050px){.control-layout{grid-template-columns:1fr!important}.control-sidebar{position:static!important}}
 @media(max-width:680px){.control-wrap{padding:13px 12px 80px!important}.control-hero{padding:17px!important}.control-sidebar{grid-template-columns:repeat(2,minmax(0,1fr))!important}.cc-section-head{align-items:flex-start!important}}
+
+/* دکمه‌های اصلی با رنگ فیروزه‌ای روشن و نوشته تیره برای خوانایی بیشتر */
+.cc-primary{background:#4dbcc6!important;border-color:#4dbcc6!important;color:#17484d!important}.cc-primary:hover{background:#38aeb9!important;border-color:#38aeb9!important;color:#123f45!important}
