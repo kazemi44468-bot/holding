@@ -1,8 +1,13 @@
 <!doctype html>
 <html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff"><title>مرکز کنترل و پیکربندی | معاونت ۷</title>
 <link rel="preload" href="assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/control-center.css?v=minimal-neutral-20261114-1"></head>
+<link rel="stylesheet" href="assets/css/style.css?v=control-center-shared-20261114-1"><link rel="stylesheet" href="assets/css/control-center.css?v=formal-shell-20261114-1"></head>
 <body class="ops-page control-page">
+<header class="ops-header"><div class="ops-header-inner">
+<a class="ops-brand" href="dashboard.html"><img class="ops-logo" src="assets/images/logo.webp" alt="نشان شرکت"><span><b>شرکت هفت</b><small>سامانه وضعیت و عملکرد سازمان</small></span></a>
+<nav class="ops-nav" aria-label="ناوبری اصلی"></nav>
+<div class="ops-clock"><span>زمان سامانه</span><b id="clock">—</b><small id="date">—</small></div>
+</div></header>
 
 <main class="control-wrap">
 <div class="control-layout">
@@ -87,4 +92,4 @@
 <section class="cc-view" id="view-transfer"><div class="cc-section-head"><div><span>Data portability</span><h2>انتقال و پشتیبان‌گیری</h2><p>بسته پشتیبان رمزگذاری‌شده مخزن محلی را ایجاد یا بازیابی کنید.</p></div></div><div class="cc-two"><article class="cc-card"><h3>تهیه نسخه پشتیبان</h3><p>کل تغییرات و داده‌های مخزن با گذرواژه جداگانه رمزگذاری می‌شود.</p><label>گذرواژه بسته (حداقل ۱۲ نویسه)<input id="backupPass" type="password"></label><button class="cc-primary" id="exportBackup">ساخت بسته پشتیبان</button><button class="cc-light" id="migrateLegacy" type="button">انتقال داده‌های قدیمی همین مرورگر به مخزن</button></article><article class="cc-card"><h3>بازیابی / ادغام بسته</h3><p>فایل H7BACKUP را انتخاب کنید. رکوردهای تکراری دوباره وارد نمی‌شوند.</p><label>فایل پشتیبان<input id="backupFile" type="file" accept=".json,application/json"></label><label>گذرواژه بسته<input id="restorePass" type="password"></label><button class="cc-primary" id="importBackup">بازیابی و ادغام</button></article></div><article class="cc-card"><h3>بسته ساختار سامانه</h3><p>بانک‌ها، جدول‌ها، فیلدها، فرم‌ها، اداره‌ها و تنظیمات چیدمان را جدا از داده‌های عملیاتی منتقل کنید.</p><button class="cc-light" id="exportSchema">دریافت بسته ساختار</button><label>بسته ساختار<input id="schemaFile" type="file" accept=".json,application/json"></label><button class="cc-primary" id="importSchema">ورود و جایگزینی ساختار</button></article><div id="transferResult" class="cc-note"></div></section>
 </div></div></main>
 <footer class="ops-footer"></footer>
-<script type="module" src="assets/js/control-center.js?v=minimal-neutral-20261114-1"></script><script src="assets/js/main.js?v=minimal-neutral-20261114-1" defer></script></body></html>
+<script type="module" src="assets/js/control-center.js?v=formal-shell-20261114-1"></script><script src="assets/js/main.js?v=formal-shell-20261114-1" defer></script></body></html>
