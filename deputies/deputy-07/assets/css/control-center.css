@@ -34,3 +34,29 @@
 .cc-nav.active{background:#dceaf3!important;border-color:#bcd2e1!important;box-shadow:inset -3px 0 #397aa6!important}
 .cc-nav.active b{color:#204b6b!important}.cc-nav.active small{color:#5f7b91!important}
 .cc-nav.active>i{background:#fff!important;color:#285d86!important;border-color:#cbdde9!important}
+
+
+/* طیف روشن مرکز کنترل: آبی آسمانی و فیروزه‌ای ملایم، بدون سرمه‌ای */
+:root{--cc-navy:#4b9fc8;--cc-blue:#55a8d1;--cc-sky:#eaf7fc;--cc-ink:#586f7e;--cc-muted:#8195a2;--cc-line:#dcecf3;--cc-bg:#f6fbfd}
+.control-page{color:#586f7e!important}
+.control-hero{background:linear-gradient(115deg,#fff 0%,#edfaff 100%)!important;border-color:#dceef5!important}
+.control-hero h1,.cc-section-head h2,.cc-card h3,.vault-strip b{color:#47758f!important}
+.control-eyebrow,.cc-section-head>div>span{color:#59a4c9!important}
+.control-hero-mark{background:#dff4fc!important;color:#55a8d1!important}
+.control-sidebar{background:#f0f9fd!important;border:1px solid #d7edf6!important;box-shadow:0 8px 22px rgba(75,153,190,.07)!important}
+.sidebar-caption{color:#6590a7!important}
+.cc-nav{color:#58798d!important}
+.cc-nav b{color:#4d7187!important}.cc-nav small{color:#89a2b1!important}
+.cc-nav>i{background:#fff!important;color:#59a5cb!important;border:1px solid #dceef5!important}
+.cc-nav:hover{background:#e7f6fc!important;border-color:#d2eaf5!important}
+.cc-nav.active{background:#d9f2ff!important;border-color:#bce4f4!important;box-shadow:inset -3px 0 #62b5dc!important}
+.cc-nav.active b{color:#3f7898!important}.cc-nav.active small{color:#6f98ad!important}
+.cc-nav.active>i{background:#fff!important;color:#4a9fc9!important;border-color:#cce8f3!important}
+.cc-metrics b{color:#55a1c9!important}
+.cc-primary{background:#55a8d1!important;border-color:#55a8d1!important;color:#fff!important}
+.cc-primary:hover{background:#398fbd!important}
+.cc-light{color:#54758a!important;border-color:#d3e7f0!important}
+.cc-chip,.cc-table-chips button{background:#e8f7fd!important;color:#4b94b8!important;border-color:#d4edf6!important}
+.cc-bar-fill,.done-dot{background:#65b8d9!important}
+#moduleLayoutList input{accent-color:#55a8d1!important}
+.preview-card b{color:#4b9fc8!important}
