@@ -1318,3 +1318,6 @@ body.control-page{margin:0!important;overflow-x:hidden!important}
  .cc-user-chip{display:none!important}
  #monitorMetrics,#followupMetrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
+
+/* RTL geometry correction: fixed right sidebar, workspace begins beside it */
+@media(min-width:821px){.control-wrap{margin:0 248px 0 0!important;width:calc(100% - 248px)!important}}
