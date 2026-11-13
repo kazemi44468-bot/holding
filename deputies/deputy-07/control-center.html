@@ -27,10 +27,32 @@
 <div class="sidebar-foot"><span class="sidebar-foot-dot"></span><span>محیط مستقل معاونت ۷</span></div>
 </aside>
 <div class="control-content">
-<section class="cc-view active" id="view-overview"><div class="cc-section-head"><div><span>مرکز فرماندهی فنی</span><h2>نمای کلی زیرساخت معاونت ۷</h2><p>نمونه‌های اولیه با برچسب آزمایشی ایجاد شده‌اند و با داده‌های واقعی اشتباه نمی‌شوند.</p></div><span class="cc-chip">مدیر ارشد فنی</span></div>
-<div class="cc-metrics"><article><small>اداره‌های تعریف‌شده</small><b id="metricDepartments">۶</b><span>قابل افزودن و ویرایش</span></article><article><small>بانک‌های اطلاعاتی</small><b id="metricDatabases">۴</b><span>ساختار فراداده‌ای</span></article><article><small>فرم‌های تعریف‌شده</small><b id="metricForms">۴</b><span>قابل توسعه</span></article><article><small>اقدامات نمونه</small><b id="metricTasks">۳</b><span>نمونه‌های آزمایشی</span></article></div>
-<div class="cc-two"><article class="cc-card"><h3>ماژول‌های اصلی</h3><div class="cc-module-list"><button data-jump="org">مدیریت ساختار سازمانی <b>ویرایش اداره‌ها ←</b></button><button data-jump="database">سازنده بانک اطلاعاتی <b>تعریف جدول و فیلد ←</b></button><button data-jump="forms">فرم‌ساز پویا <b>ساخت فرم جدید ←</b></button><button data-jump="workflow">گردش کار و رویدادها <b>مدیریت عملیات ←</b></button><button data-jump="appearance">طراحی و شخصی‌سازی <b>تنظیم ظاهر ←</b></button></div></article><article class="cc-card"><h3>وضعیت پیاده‌سازی</h3><ul class="cc-status-list"><li><span class="done-dot"></span>مدیریت پایه کاربران و نقش‌ها</li><li><span class="done-dot"></span>مخزن محلی رمزگذاری‌شده و پشتیبان</li><li><span class="done-dot"></span>هسته اولیه بانک‌ساز و فرم‌ساز</li><li><span class="pending-dot"></span>اتصال همه صفحات قدیمی به داده پویا</li><li><span class="pending-dot"></span>احراز هویت و مجوز سمت سرور</li></ul></article></div>
-<div class="cc-note">این نسخه برای توسعه محلی و آزمایش ساختار است. چون ورود اجباری موقتاً برداشته شده، نباید اطلاعات محرمانه یا شخصی واقعی را در نسخه عمومی GitHub Pages وارد کنید.</div>
+<section class="cc-view active" id="view-overview">
+<div class="cc-dashboard-heading"><div><span>داشبورد مدیریتی</span><h2>مرکز کنترل سامانه</h2><p>نمای کلی ساختار، ابزارهای مدیریتی و وضعیت زیرساخت معاونت ۷</p></div><span class="cc-chip">نمای مدیریتی</span></div>
+<div class="cc-metrics">
+<article><small>اداره‌های تعریف‌شده</small><b id="metricDepartments">۶</b><span>ساختار سازمانی</span></article>
+<article><small>بانک‌های اطلاعاتی</small><b id="metricDatabases">۴</b><span>بانک و جدول‌ها</span></article>
+<article><small>فرم‌های تعریف‌شده</small><b id="metricForms">۴</b><span>فرم‌های قابل استفاده</span></article>
+<article><small>اقدامات ثبت‌شده</small><b id="metricTasks">۰</b><span>اقدام، جلسه و مصوبه</span></article>
+</div>
+<div class="cc-two">
+<article class="cc-card"><div class="cc-card-heading"><h3>دسترسی سریع</h3><span>مدیریت بخش‌های اصلی</span></div><div class="cc-module-list">
+<button data-jump="org"><span>ساختار سازمانی</span><b>مدیریت اداره‌ها ←</b></button>
+<button data-jump="database"><span>بانک‌ساز</span><b>بانک، جدول و فیلد ←</b></button>
+<button data-jump="records"><span>مدیریت داده‌ها</span><b>مشاهده و ثبت رکورد ←</b></button>
+<button data-jump="forms"><span>فرم‌ساز</span><b>تعریف و اجرای فرم ←</b></button>
+<button data-jump="workflow"><span>گردش کار و رویدادها</span><b>اقدامات و مصوبات ←</b></button>
+<button data-jump="reports"><span>گزارش و شاخص‌ها</span><b>تحلیل اطلاعات ←</b></button>
+</div></article>
+<article class="cc-card"><div class="cc-card-heading"><h3>وضعیت زیرساخت</h3><span>نمای کلی پیاده‌سازی</span></div><ul class="cc-status-list">
+<li><span class="status-mark is-ready"></span><span>مدیریت پایه کاربران و نقش‌ها</span><b>پایه موجود</b></li>
+<li><span class="status-mark is-ready"></span><span>مخزن محلی رمزگذاری‌شده و پشتیبان</span><b>پایه موجود</b></li>
+<li><span class="status-mark is-ready"></span><span>هسته بانک‌ساز و فرم‌ساز</span><b>پایه موجود</b></li>
+<li><span class="status-mark is-pending"></span><span>اتصال همه صفحات عملیاتی به داده پویا</span><b>در حال تکمیل</b></li>
+<li><span class="status-mark is-pending"></span><span>احراز هویت و مجوز سمت سرور</span><b>نیازمند توسعه</b></li>
+</ul></article>
+</div>
+<div class="cc-note">برای اطلاعات واقعی و محرمانه، از نسخه محلی و مخزن امن استفاده کنید. نسخه عمومی GitHub Pages برای ورود اطلاعات حساس مناسب نیست.</div>
 </section>
 <section class="cc-view" id="view-org"><div class="cc-section-head"><div><span>مدل سازمانی</span><h2>ساختار سازمانی و اداره‌ها</h2><p>کد، عنوان، مسئولیت و وضعیت هر اداره را مدیریت کنید.</p></div><button class="cc-primary" id="newDepartment">＋ اداره جدید</button></div><form id="departmentEditor" class="cc-editor"><input type="hidden" id="departmentId"><label>کد اداره<input id="departmentCode" required placeholder="مثلاً ۹"></label><label>عنوان اداره<input id="departmentName" required placeholder="عنوان رسمی"></label><label class="wide">شرح مأموریت<input id="departmentMission" placeholder="حوزه مسئولیت و مأموریت اداره"></label><label>وضعیت<select id="departmentStatus"><option value="active">فعال</option><option value="inactive">غیرفعال</option></select></label><div class="cc-actions"><button class="cc-primary">ذخیره</button><button type="button" class="cc-light" id="cancelDepartment">انصراف</button></div></form><div id="departmentList" class="cc-list"></div></section>
 <section class="cc-view" id="view-database"><div class="cc-section-head"><div><span>Metadata-driven database</span><h2>سازنده بانک اطلاعاتی</h2><p>بانک‌ها و جدول‌های جدید بسازید؛ نوع داده، الزام، گزینه‌ها و ارتباط فیلدها را تعریف کنید.</p></div><button class="cc-primary" id="newDatabase">＋ بانک جدید</button></div><div class="cc-two"><article class="cc-card"><h3>بانک‌های اطلاعاتی</h3><div id="databaseList" class="cc-list"></div></article><article class="cc-card"><h3>طراحی جدول و فیلدها</h3><form id="tableEditor" class="cc-editor compact"><label>بانک<select id="tableDatabase"></select></label><label>نام جدول<input id="tableName" required placeholder="مثلاً tasks"></label><label>عنوان جدول<input id="tableTitle" required placeholder="عنوان نمایشی"></label><div class="wide"><b class="cc-field-label">فیلدهای جدول</b><div id="fieldEditorList"></div><button type="button" class="cc-light" id="addField">＋ افزودن فیلد</button></div><div class="cc-actions"><button class="cc-primary">ذخیره جدول</button></div></form></article></div><div class="cc-note">شناسه‌های داخلی و نسخه ساختار نگهداری می‌شوند. تغییر نوع یا حذف فیلدهای دارای داده باید با مهاجرت کنترل‌شده انجام شود؛ این نسخه حذف فیلد را از تعریف جدول انجام می‌دهد و داده تاریخی را خودکار بازنویسی نمی‌کند.</div></section>
