@@ -47,7 +47,7 @@
    <div class="um-group-grid" id="groupsGrid"></div><div class="um-empty" id="groupsEmpty">گروهی ایجاد نشده است. گروه‌هایی مانند «مدیران اداره‌ها»، «کارشناسان ثبت اطلاعات» یا «ناظران» بسازید.</div>
   </section>
   <section class="um-panel" id="panel-roles">
-   <div class="um-panel-head"><div><span class="eyebrow">الگوهای اختیار</span><h2>نقش‌ها و مجوزهای پایه</h2><p>نقش مشخص می‌کند کاربر چه عملیاتی می‌تواند انجام دهد؛ محدوده اداره جداگانه تعیین می‌شود.</p></div></div>
+   <div class="um-panel-head"><div><span class="eyebrow">الگوهای اختیار</span><h2>نقش‌ها و مجوزهای پایه</h2><p>نقش مشخص می‌کند کاربر چه عملیاتی می‌تواند انجام دهد؛ محدوده اداره جداگانه تعیین می‌شود.</p></div><button class="um-primary" id="addRoleBtn" type="button">＋ نقش سفارشی</button></div>
    <div class="um-role-grid" id="rolesGrid"></div>
   </section>
   <section class="um-panel" id="panel-matrix">
@@ -93,7 +93,7 @@
 <dialog class="um-dialog" id="roleDialog"><form id="roleForm" method="dialog">
  <div class="um-dialog-head"><div><span class="eyebrow">تعریف سطح اختیار</span><h2 id="roleDialogTitle">ویرایش نقش</h2></div><button class="um-close" type="button" data-close="roleDialog">×</button></div>
  <input type="hidden" id="editRoleId">
- <div class="um-form-grid"><label>عنوان نقش<input id="roleName" required maxlength="80"></label><label>کد نقش<input id="roleKey" required maxlength="40" pattern="[a-z0-9-]+" placeholder="custom-role"></label><label class="um-wide">شرح نقش<textarea id="roleDescription" rows="2"></textarea></label></div>
+ <div class="um-form-grid"><label>عنوان نقش<input id="roleName" required maxlength="80"></label><label>کد نقش<input id="roleKey" required maxlength="40" pattern="[a-z0-9-]+" placeholder="custom-role"></label><label>محدوده پیش‌فرض<select id="roleScope"><option value="assigned-departments">اداره‌های منتسب</option><option value="assigned-resources">منابع تعیین‌شده</option><option value="all">کل معاونت</option><option value="technical-only">فقط پیکربندی فنی</option></select></label><label class="um-wide">شرح نقش<textarea id="roleDescription" rows="2"></textarea></label></div>
  <h3 class="um-permission-title">مجوزهای این نقش</h3><div class="um-permission-grid" id="rolePermissions"></div>
  <div class="um-dialog-actions"><button class="um-secondary" type="button" data-close="roleDialog">انصراف</button><button class="um-primary" type="submit">ذخیره نقش</button></div>
 </form></dialog>
