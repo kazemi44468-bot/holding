@@ -64,7 +64,7 @@
 
 /* بازطراحی یکپارچه مرکز پیکربندی: سطح‌های سفید، فیروزه‌ای روشن و تایپوگرافی خوانا */
 :root{
- --cc-navy:#168f9d;--cc-blue:#168f9d;--cc-sky:#e8f6f7;
+ --cc-navy:#087f89;--cc-blue:#087f89;--cc-sky:#e8f6f7;
  --cc-ink:#405661;--cc-muted:#788b94;--cc-line:#e1eaed;--cc-bg:#f7fafb;--cc-white:#fff;
 }
 .control-page{background:#f7fafb!important;color:#405661!important}
@@ -72,8 +72,8 @@
 .control-hero{background:#fff!important;border:1px solid #e2ebee!important;border-right:4px solid #42b7bd!important;border-radius:12px!important;box-shadow:0 3px 14px rgba(44,77,88,.045)!important;padding:22px 25px!important}
 .control-hero h1{color:#354d58!important;font-size:clamp(22px,2.4vw,29px)!important}
 .control-hero p{color:#758992!important}
-.control-eyebrow,.cc-section-head>div>span{color:#2698a3!important}
-.control-hero-mark{width:58px!important;height:58px!important;border-radius:12px!important;background:#e1f3f4!important;color:#168f9d!important;font-size:22px!important}
+.control-eyebrow,.cc-section-head>div>span{color:#087f89!important}
+.control-hero-mark{width:58px!important;height:58px!important;border-radius:12px!important;background:#e1f3f4!important;color:#087f89!important;font-size:22px!important}
 .vault-strip{background:#fff!important;border:1px solid #e1eaed!important;border-radius:11px!important;box-shadow:0 2px 8px rgba(44,77,88,.025)!important}
 .vault-strip b{color:#3e606a!important}.vault-strip small{color:#81939a!important}
 .control-layout{grid-template-columns:258px minmax(0,1fr)!important;gap:16px!important}
@@ -81,19 +81,19 @@
 .sidebar-caption{color:#64818a!important;padding:8px 10px 12px!important;font-weight:700}
 .cc-nav{color:#526a73!important;border:1px solid transparent!important;border-radius:8px!important;padding:10px 9px!important;margin:3px 0!important}
 .cc-nav b{color:#405c66!important}.cc-nav small{color:#83979e!important}
-.cc-nav>i{background:#fff!important;color:#2999a5!important;border:1px solid #deebed!important;border-radius:8px!important}
+.cc-nav>i{background:#fff!important;color:#087f89!important;border:1px solid #deebed!important;border-radius:8px!important}
 .cc-nav:hover{background:#e5f3f4!important;border-color:#d6e9eb!important}
 .cc-nav.active{background:#d9f0f1!important;border-color:#bfe2e4!important;box-shadow:inset -3px 0 #25a5ad!important;color:#246b74!important}
 .cc-nav.active b{color:#246b74!important}.cc-nav.active small{color:#668990!important}
-.cc-nav.active>i{background:#fff!important;color:#168f9d!important;border-color:#c9e7e9!important}
+.cc-nav.active>i{background:#fff!important;color:#087f89!important;border-color:#c9e7e9!important}
 .cc-section-head h2{color:#3b5661!important}
 .cc-metrics article,.cc-card,.cc-editor,.cc-record,.cc-inline-form,.cc-list-row{background:#fff!important;border-color:#e1eaed!important;box-shadow:none!important}
-.cc-metrics b{color:#168f9d!important}
+.cc-metrics b{color:#087f89!important}
 .cc-card h3,.cc-inline-form h3{color:#3e606a!important}
 .cc-module-list button{background:#f6fafb!important;border-color:#e5edef!important;color:#4e6871!important}
-.cc-module-list button b{color:#168f9d!important}
+.cc-module-list button b{color:#087f89!important}
 .cc-note{background:#f1f8f9!important;border-color:#dcebed!important;color:#617a82!important}
-.cc-primary{background:#168f9d!important;border-color:#168f9d!important;color:#fff!important;box-shadow:none!important}
+.cc-primary{background:#087f89!important;border-color:#087f89!important;color:#fff!important;box-shadow:none!important}
 .cc-primary:hover{background:#117b88!important}
 .cc-light{background:#fff!important;border-color:#d9e5e8!important;color:#526a73!important}
 .cc-light:hover{background:#f0f8f9!important}
@@ -106,8 +106,8 @@
 .cc-row-actions button{background:#f7fbfb!important;border-color:#deeaec!important;color:#4c7078!important}
 .cc-preview{background:#f6fafb!important;border-color:#cfe3e6!important}
 .preview-card{background:#fff!important;border-color:#e1eaed!important}
-.preview-card b{color:#168f9d!important}
-#moduleLayoutList input{accent-color:#168f9d!important}
+.preview-card b{color:#087f89!important}
+#moduleLayoutList input{accent-color:#087f89!important}
 #zoneEditor.cc-editor{background:#f6fafb!important;border-color:#e1eaed!important}
 @media(max-width:1050px){.control-layout{grid-template-columns:1fr!important}.control-sidebar{position:static!important}}
 @media(max-width:680px){.control-wrap{padding:13px 12px 80px!important}.control-hero{padding:17px!important}.control-sidebar{grid-template-columns:repeat(2,minmax(0,1fr))!important}.cc-section-head{align-items:flex-start!important}}
