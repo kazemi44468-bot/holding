@@ -23,3 +23,14 @@
 #zoneList [data-sort-zone],#moduleLayoutList [data-sort-module]{cursor:grab}#zoneList [data-sort-zone]:active,#moduleLayoutList [data-sort-module]:active{cursor:grabbing}
 
 @media(max-width:680px){.cc-field-row{grid-template-columns:1fr 1fr}.cc-field-row button{min-height:34px}}
+
+/* پوسته روشن و رسمی برای نوار کناری مرکز کنترل */
+.control-sidebar{background:#edf3f7!important;border:1px solid #d7e3eb!important;box-shadow:0 8px 22px rgba(31,68,94,.06)!important}
+.sidebar-caption{color:#58758b!important}
+.cc-nav{color:#3b5870!important}
+.cc-nav b{color:#294d68!important}.cc-nav small{color:#748b9d!important}
+.cc-nav>i{background:#fff!important;color:#47799a!important;border:1px solid #dce7ee!important}
+.cc-nav:hover{background:#e2edf4!important;border-color:#d2e1eb!important}
+.cc-nav.active{background:#dceaf3!important;border-color:#bcd2e1!important;box-shadow:inset -3px 0 #397aa6!important}
+.cc-nav.active b{color:#204b6b!important}.cc-nav.active small{color:#5f7b91!important}
+.cc-nav.active>i{background:#fff!important;color:#285d86!important;border-color:#cbdde9!important}
