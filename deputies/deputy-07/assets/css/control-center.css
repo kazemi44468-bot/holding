@@ -2,17 +2,17 @@
 :root{
  --cc-bg:#faf7f4;--cc-surface:#fff;--cc-surface-soft:#fcfaf8;
  --cc-ink:#4a3829;--cc-muted:#978677;--cc-line:#f0eae4;
- --cc-primary:var(--cc-primary);--cc-primary-strong:var(--cc-primary-strong);--cc-primary-soft:var(--cc-primary-soft);
+ --cc-primary:#ed704f;--cc-primary-strong:#c84f37;--cc-primary-soft:#fff0e9;
  --cc-cyan:#bd7b42;--cc-cyan-soft:#faf1e9;
  --cc-amber:#d99a3e;--cc-amber-soft:#fff5e6;
  --cc-violet:#ca9a70;--cc-violet-soft:#fbf5ef;
  --cc-rose:#d77983;--cc-rose-soft:#fff0f1;
- --cc-radius:13px;--cc-shadow:0 5px 18px rgba(39,54,85,.055);
+ --cc-radius:13px;--cc-shadow:0 5px 18px rgba(112,76,52,.055);
 }
 *{box-sizing:border-box}
 .control-page{margin:0;background:var(--cc-bg)!important;color:var(--cc-ink)!important;font-family:'Vazirmatn',sans-serif}
 .control-page button,.control-page input,.control-page select,.control-page textarea{font-family:inherit}
-.control-page .ops-header{position:relative;z-index:20;background:#fff!important;border-bottom:1px solid var(--cc-line)!important;box-shadow:0 2px 12px rgba(34,49,80,.035)}
+.control-page .ops-header{position:relative;z-index:20;background:#fff!important;border-bottom:1px solid var(--cc-line)!important;box-shadow:0 2px 12px rgba(112,76,52,.035)}
 .control-page .ops-header-inner{max-width:1540px!important;min-height:78px!important;padding:0 25px!important;gap:22px!important}
 .control-page .ops-brand{gap:11px!important}
 .control-page .ops-logo{width:43px!important;height:43px!important;object-fit:contain}
@@ -87,7 +87,7 @@
 .pending-dot{background:#dca54e!important}
 .cc-note{margin-top:12px!important;padding:12px 14px!important;background:#fff8eb!important;border:1px solid #f2e4c9!important;border-radius:10px!important;color:#8b754e!important;font-size:10px!important;line-height:2!important}
 .cc-primary,.cc-light{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;min-height:36px!important;padding:8px 13px!important;border:1px solid transparent!important;border-radius:8px!important;font:inherit!important;font-size:10px!important;font-weight:700!important;cursor:pointer!important;white-space:nowrap!important;transition:background .15s,border-color .15s,transform .15s}
-.cc-primary{background:var(--cc-primary)!important;border-color:var(--cc-primary)!important;color:#fff!important;box-shadow:0 3px 8px rgba(83,105,216,.16)!important}
+.cc-primary{background:var(--cc-primary)!important;border-color:var(--cc-primary)!important;color:#fff!important;box-shadow:0 3px 8px rgba(200,79,55,.16)!important}
 .cc-primary:hover{background:var(--cc-primary-strong)!important;border-color:var(--cc-primary-strong)!important;transform:translateY(-1px)}
 .cc-light{background:#fbf8f6!important;border-color:#f0eae4!important;color:#7e6a58!important}
 .cc-light:hover{background:#f7f2ed!important;border-color:#ebe1d8!important}
@@ -202,7 +202,7 @@
  --cc-amber:#f2b84b;--cc-amber-soft:#fff6df;
  --cc-violet:#e8a870;--cc-violet-soft:#fff5ed;
  --cc-rose:#f27e72;--cc-rose-soft:#fff0ed;
- --cc-radius:14px;--cc-shadow:0 5px 18px rgba(40,68,102,.065);
+ --cc-radius:14px;--cc-shadow:0 5px 18px rgba(112,76,52,.065);
 }
 .control-layout{grid-template-columns:258px minmax(0,1fr)!important;align-items:stretch!important;gap:18px!important}
 .control-sidebar{align-self:start!important;position:sticky!important;top:16px!important;min-width:0!important}
@@ -231,7 +231,7 @@
 .cc-module-list button:nth-child(2n){background:#fff9f3!important;border-color:#ffeee0!important}
 .cc-module-list button b{color:#0b929b!important}
 .cc-note{background:#fff7e4!important;border-color:#f5dfaa!important;color:#80602c!important}
-.cc-primary{background:linear-gradient(120deg,#12aeb0,#d57e31)!important;color:#fff!important;box-shadow:0 3px 9px rgba(21,153,177,.18)!important}
+.cc-primary{background:linear-gradient(120deg,#12aeb0,#d57e31)!important;color:#fff!important;box-shadow:0 3px 9px rgba(237,112,79,.18)!important}
 .cc-primary:hover{filter:saturate(1.12) brightness(.98)!important}
 .cc-light{background:#fff7f0!important;border-color:#fbeadc!important;color:#a06f45!important}
 .cc-editor{background:linear-gradient(135deg,#fff 0%,#fffbf8 100%)!important}
