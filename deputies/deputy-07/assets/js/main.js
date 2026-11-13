@@ -14,6 +14,9 @@ if(clockNode)window.setInterval(updateClock,1000);
 
 const search=document.getElementById('department-search');
 const cards=[...document.querySelectorAll('.ops-card[data-name],.department-card[data-name]')];
+/* اداره‌های تازه‌تعریف‌شده کارت اختصاصی پویا می‌گیرند؛ آمار ثبت‌نشده به‌صورت صفر/خالی نمایش داده می‌شود. */
+try{const cfg=JSON.parse(localStorage.getItem("deputy7.platform.config.v1")),grid=document.getElementById("department-grid"),known=new Set(["1","2","3","4","6","7","8"]);if(grid&&cfg?.departments){cfg.departments.filter(d=>d.status!=="inactive"&&!known.has(String(d.id))).forEach(d=>{const a=document.createElement("a");a.className="ops-card";a.href="pages/department.html?dept="+encodeURIComponent(d.id);a.dataset.name=d.name;const head=document.createElement("div");head.className="ops-card-heading";const title=document.createElement("b");title.textContent=d.name;const code=document.createElement("small");code.textContent="اداره "+d.id;const titleWrap=document.createElement("span");titleWrap.className="ops-card-title";titleWrap.append(code,title);head.append(titleWrap);a.append(head);const desc=document.createElement("p");desc.className="ops-card-desc";desc.textContent=d.mission||"پرونده اداره جدید؛ شاخص‌ها و اقدامات پس از ثبت اطلاعات نمایش داده می‌شوند.";a.append(desc);const empty=document.createElement("div");empty.className="ops-common-stats";empty.textContent="هنوز داده عملیاتی برای این اداره ثبت نشده است.";a.append(empty);const foot=document.createElement("div");foot.className="ops-card-bottom";foot.textContent="ورود به پرونده اداره ←";a.append(foot);grid.append(a);cards.push(a);});}}catch(e){}
+
 const empty=document.getElementById('no-results');
 if(search){
  search.addEventListener('input',()=>{
@@ -47,7 +50,7 @@ const inPages=location.pathname.includes('/pages/');
  const liveDepartments=(()=>{try{return JSON.parse(localStorage.getItem('deputy7.platform.config.v1'))?.departments||[]}catch{return[]}})();
  const deptMenu=liveDepartments.length?liveDepartments.filter(d=>d.status!=='inactive'):null;
  const urls={
-  departments:(deptMenu||[{id:'1'},{id:'2'},{id:'3'},{id:'4'},{id:'6'},{id:'7'},{id:'8'}]).map(d=>prefix+'department-'+d.id+'.html'),
+  departments:(deptMenu||[{id:'1'},{id:'2'},{id:'3'},{id:'4'},{id:'6'},{id:'7'},{id:'8'}]).map(d=>prefix+(['1','2','3','4','6','7','8'].includes(String(d.id))?'department-'+d.id+'.html':'department.html?dept='+encodeURIComponent(d.id))),
   finance:prefix+'finance-management.html',workforce:prefix+'workforce.html',profile:prefix+'personnel-profile.html',evaluation:prefix+'performance-evaluation.html',
   followups:prefix+'special-followups.html',notices:prefix+'notifications-center.html',calendar:prefix+'calendar.html',
   catalog:prefix+'report-catalog.html',archive:prefix+'report-archive.html',reports:prefix+'department-reports.html',participation:prefix+'participation.html',
