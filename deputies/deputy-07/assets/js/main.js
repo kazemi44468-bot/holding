@@ -49,7 +49,7 @@ document.querySelectorAll('.back-to-top').forEach(node=>node.remove());
   followups:prefix+'special-followups.html',notices:prefix+'notifications-center.html',calendar:prefix+'calendar.html',
   catalog:prefix+'report-catalog.html',archive:prefix+'report-archive.html',reports:prefix+'department-reports.html',participation:prefix+'participation.html',
   localData:localData,services:prefix+'company-services.html',communications:prefix+'internal-communications.html',welfare:prefix+'welfare-center.html',
-  coop:prefix+'staff-coop-store.html',economic:prefix+'employee-economic-center.html',retirees:prefix+'retiree-center.html',users:prefix+'users.html'
+  coop:prefix+'staff-coop-store.html',economic:prefix+'employee-economic-center.html',retirees:prefix+'retiree-center.html',users:(inPages||inLocalData)?'../users.html':'users.html'
  };
  const nav=document.querySelector('.ops-nav');
  /* داخل سامانه، نشان و پیوندهای خانه باید به نمای اصلی سامانه برگردند، نه درگاه معرفی. */
@@ -76,7 +76,7 @@ document.querySelectorAll('.back-to-top').forEach(node=>node.remove());
   nav.innerHTML='<a href="'+home+'">نمای کلان</a><details class="nav-dropdown"><summary>ادارات کل</summary><div class="nav-menu">'+
    ['اداره اداری و پشتیبانی','اداره تحقیق و توسعه','اداره پارکبان و معبربانان','اداره تأسیسات فنی و امور نگهداری','اداره فاوا و خدمات فنی','اداره جمع‌آوری و بازیافت پسماند','اداره بازرسی و تحقیقات محلی'].map((n,i)=>'<a href="'+urls.departments[i]+'">'+n+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>مدیریت</summary><div class="nav-menu">'+
-   [[urls.users,'کاربران و سطح دسترسی'],[urls.users,'کاربران و سطح دسترسی'],[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],[urls.followups,'پیگیری دستورات'],[urls.notices,'اعلانات ریاست'],[urls.calendar,'تقویم شرکت']].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
+   [[urls.users,'کاربران و سطح دسترسی'],[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],[urls.followups,'پیگیری دستورات'],[urls.notices,'اعلانات ریاست'],[urls.calendar,'تقویم شرکت']].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>مرکز خدمات</summary><div class="nav-menu">'+
    [[urls.services,'نمای کلی خدمات'],[urls.communications,'ارتباطات کارکنان'],[urls.welfare,'خدمات رفاهی'],[urls.coop,'فروشگاه تعاونی'],[urls.economic,'برنامه‌ریزی اقتصادی'],[urls.retirees,'خدمات بازنشستگان']].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>گزارش‌ها</summary><div class="nav-menu">'+
@@ -98,7 +98,7 @@ document.querySelectorAll('.back-to-top').forEach(node=>node.remove());
  const current=location.pathname.split('/').pop();
  const groups=[
   {id:'departments',label:'ادارات',icon:'▦',links:urls.departments.map((href,i)=>[href,['اداره اداری و پشتیبانی','اداره تحقیق و توسعه','اداره پارکبان و معبربانان','اداره تأسیسات فنی و امور نگهداری','اداره فاوا و خدمات فنی','اداره جمع‌آوری و بازیافت پسماند','اداره بازرسی و تحقیقات محلی'][i]])},
-  {id:'management',label:'مدیریت',icon:'▤',links:[[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],[urls.followups,'پیگیری دستورات ریاست'],[urls.notices,'مرکز اعلانات ریاست'],[urls.calendar,'تقویم شرکت']]},
+  {id:'management',label:'مدیریت',icon:'▤',links:[[urls.users,'کاربران و سطح دسترسی'],[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],[urls.followups,'پیگیری دستورات ریاست'],[urls.notices,'مرکز اعلانات ریاست'],[urls.calendar,'تقویم شرکت']]},
   {id:'services',label:'خدمات',icon:'◇',links:[[urls.services,'نمای کلی مرکز خدمات'],[urls.communications,'ارتباطات کارکنان'],[urls.welfare,'خدمات رفاهی'],[urls.coop,'فروشگاه و تعاونی مصرف'],[urls.economic,'برنامه‌ریزی اقتصادی'],[urls.retirees,'خدمات بازنشستگان']]},
   {id:'reports',label:'گزارش‌ها',icon:'▥',links:[[urls.reports,'گزارش تلفیقی ادارات'],[urls.catalog,'کاتالوگ گزارش‌ها'],[urls.archive,'آرشیو گزارش‌ها'],[urls.participation,'نظرسنجی']]}
  ];
