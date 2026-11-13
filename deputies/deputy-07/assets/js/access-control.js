@@ -2,12 +2,12 @@
    This is a client-side policy helper for gradual module integration, not a security boundary. */
 (()=>{"use strict";
 const KEY="deputy7.identity-access.v1";
-const technicalOnly=new Set(["manageUsers","manageSchema","manageBackup"]);
+const technicalOnly=new Set(["manageUsers","manageSchema","manageBackup","manageDepartments","manageAppearance","manageEvents"]);
 const read=()=>{try{const s=JSON.parse(localStorage.getItem(KEY));return s&&s.version===1?s:null;}catch{return null;}};
 function evaluate(userId,permission,resource={}){
  const s=read();if(!s)return {allowed:false,reason:"policy-store-unavailable"};
  const user=(s.users||[]).find(x=>x.id===userId);if(!user||user.status!=="active")return {allowed:false,reason:"inactive-or-missing-user"};
- const role=(s.roles||[]).find(x=>x.id===user.roleId);if(!role)return {allowed:false,reason:"role-not-found"};
+ const role=(s.roles||[]).find(x=>x.id===user.roleId);if(!role)return {allowed:false,reason:"role-not-found"};if(user.isSuperAdmin||role.superAdmin||role.id==="super-admin")return {allowed:true,reason:"super-admin"};
  const departmentId=resource.departmentId==null?null:String(resource.departmentId);
  const operational=permission==="view"||permission==="create"||permission==="edit"||permission==="delete"||permission==="approve"||permission==="assign"||permission==="export"||permission==="viewSensitive";
  let grants=new Set(role.grants||[]),scope=role.scope||"assigned-departments";
@@ -34,7 +34,7 @@ window.Deputy7Access=Object.freeze({
  user:userId=>(read()?.users||[]).find(x=>x.id===userId)||null,
  users:()=>read()?.users||[],
  roles:()=>read()?.roles||[],
- departments:()=>[{id:"1",name:"اداره اداری و پشتیبانی"},{id:"2",name:"اداره تحقیق و توسعه"},{id:"3",name:"اداره پارکبان و معبربانان"},{id:"4",name:"اداره تأسیسات فنی و امور نگهداری"},{id:"6",name:"اداره فاوا و خدمات فنی"},{id:"7",name:"اداره جمع‌آوری، نگهداری و بازیافت پسماند"},{id:"8",name:"اداره بازرسی و تحقیقات محلی"}],
+ departments:()=>{try{return JSON.parse(localStorage.getItem(KEY))?.departments||[];}catch{return[];}},
  isReady:()=>!!read()
 });
 })();
