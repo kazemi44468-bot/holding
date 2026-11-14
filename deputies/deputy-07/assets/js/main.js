@@ -36,7 +36,7 @@ document.querySelectorAll('.back-to-top').forEach(node=>node.remove());
 
 
 /* ناوبری یکپارچه و منوی دسته‌بندی‌شده موبایل */
-(async()=>{{
+(async()=>{
  const body=document.body;
  if(!body.classList.contains('ops-page'))return;
  if(!window.Deputy7Pages){
