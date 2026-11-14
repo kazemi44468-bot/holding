@@ -62,7 +62,7 @@ const inPages=location.pathname.includes('/pages/');
  const customMenuLinks=menu=>customPages.filter(p=>p.menu===menu).map(p=>[p.href,p.safeTitle]);
  const otherCustomPages=customMenuLinks("سایر صفحات");
  const pageCatalog=(()=>{try{return JSON.parse(localStorage.getItem("deputy7.page-registry.v1"))?.pages||[]}catch{return[]}})();
- const normalizePagePath=value=>String(value||"").split("?")[0].replace(/^\\.\\.\\//,"").replace(/^\\.\\//,"").replace(/^\\//,"");
+ const normalizePagePath=value=>{let path=String(value||"").split("?")[0];while(path.startsWith("../"))path=path.slice(3);if(path.startsWith("./"))path=path.slice(2);while(path.startsWith("/"))path=path.slice(1);return path;};
  const pageMeta=path=>{const raw=normalizePagePath(path),exact=pageCatalog.find(p=>p.kind==="static"&&normalizePagePath(p.path)===raw);if(exact)return exact;const base=raw.split("/").pop();return pageCatalog.find(p=>p.kind==="static"&&String(p.path||"").split("/").pop()===base&&(String(p.path||"").startsWith("pages/")||!inPages));};
  const registeredPageHref=p=>{const path=String(p.path||"");return inPages?(path.startsWith("pages/")?path.slice(6):"../"+path):inLocalData?"../"+path:path;};
  const nav=document.querySelector('.ops-nav');
