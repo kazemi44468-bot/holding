@@ -187,7 +187,7 @@ async function saveMission(asDraft=false){
  if(!asDraft&&!$("missionForm").reportValidity())throw new Error("لطفاً فیلدهای الزامی را تکمیل کنید.");
  if(!asDraft&&$("plannedStart").value&&$("plannedEnd").value&&$("plannedStart").value>$("plannedEnd").value)throw new Error("تاریخ شروع برنامه‌ای نمی‌تواند بعد از مهلت پایان باشد.");
  if(selectedRadio("calendarEnabled")!=="no"&&$("calendarStart").value&&$("calendarEnd").value&&$("calendarStart").value>$("calendarEnd").value)throw new Error("پایان بازه رویداد تقویم نمی‌تواند قبل از شروع آن باشد.");
- const data=collect();if(asDraft&&data.status==="draft")data.status="draft";else if(data.status==="draft")data.status="registered";
+ const data=collect();data.attachments=currentMission?.attachments||[];if(asDraft&&data.status==="draft")data.status="draft";else if(data.status==="draft")data.status="registered";
  data.executionStatus=data.status;data.workflow.stage=data.status;
  const now=new Date().toISOString();
  if(!currentMission){data.missionCode=makeCode();data.createdAt=now;data.progressLog=[{id:crypto.randomUUID(),at:now,progress:data.progress,note:"ثبت اولیه مأموریت",by:"ثبت‌کننده"}];data.workflowLog=[{id:crypto.randomUUID(),at:now,action:"ثبت اولیه",stage:data.status,department:data.executorDepartmentName,owner:data.directOwner||data.assignedExpert||""}];if(data.calendarEvent){data.calendarEvent.id="mission-event:"+data.missionCode;data.calendarEvent.missionCode=data.missionCode;}}
