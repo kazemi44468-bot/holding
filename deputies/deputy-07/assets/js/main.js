@@ -78,7 +78,7 @@ const inPages=location.pathname.includes('/pages/');
  const urls={
   departments:(deptMenu||[{id:'1'},{id:'2'},{id:'3'},{id:'4'},{id:'6'},{id:'7'},{id:'8'}]).map(d=>prefix+(['1','2','3','4','6','7','8'].includes(String(d.id))?'department-'+d.id+'.html':'department.html?dept='+encodeURIComponent(d.id))),
   finance:prefix+'finance-management.html',workforce:prefix+'workforce.html',profile:prefix+'personnel-profile.html',evaluation:prefix+'performance-evaluation.html',
-  followups:prefix+'special-followups.html',notices:prefix+'notifications-center.html',calendar:prefix+'calendar.html',
+  followups:prefix+'special-followups.html',notices:prefix+'notifications-center.html',calendar:prefix+'calendar.html',missions:prefix+'mission-bank.html',
   catalog:prefix+'report-catalog.html',archive:prefix+'report-archive.html',reports:prefix+'department-reports.html',participation:prefix+'participation.html',
   localData:localData,services:prefix+'company-services.html',communications:prefix+'internal-communications.html',welfare:prefix+'welfare-center.html',
   coop:prefix+'staff-coop-store.html',economic:prefix+'employee-economic-center.html',retirees:prefix+'retiree-center.html',users:(inPages||inLocalData)?'../users.html':'users.html',control:(inPages||inLocalData)?'../control-center.html':'control-center.html'
@@ -120,7 +120,7 @@ const inPages=location.pathname.includes('/pages/');
    [[urls.users,'کاربران و سطح دسترسی'],[urls.control,'مرکز کنترل و پیکربندی'],[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],...customMenuLinks("مدیریت")].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>اقدامات</summary><div class="nav-menu">'+
    [[urls.followups,'پیگیری دستورات'],[urls.notices,'اعلانات ریاست'],[urls.calendar,'تقویم و رویدادها'],...customMenuLinks("اقدامات")].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
-   '</div></details><details class="nav-dropdown"><summary>مرکز خدمات</summary><div class="nav-menu">'+
+   '</div></details><details class="nav-dropdown"><summary>ماموریت‌ها</summary><div class="nav-menu"><a href="'+urls.missions+'">بانک مأموریت‌ها</a></div></details><details class="nav-dropdown"><summary>مرکز خدمات</summary><div class="nav-menu">'+
    [[urls.services,'نمای کلی خدمات'],[urls.communications,'ارتباطات کارکنان'],[urls.welfare,'خدمات رفاهی'],[urls.coop,'فروشگاه تعاونی'],[urls.economic,'برنامه‌ریزی اقتصادی'],[urls.retirees,'خدمات بازنشستگان'],...customMenuLinks("خدمات")].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>گزارش‌ها</summary><div class="nav-menu">'+
    [[urls.reports,'گزارش تلفیقی'],[urls.participation,'نظرسنجی'],...customMenuLinks("گزارش‌ها")].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
@@ -150,11 +150,12 @@ const inPages=location.pathname.includes('/pages/');
   {id:'departments',label:'ادارات',icon:'▦',links:urls.departments.map((href,i)=>[href,['اداره اداری و پشتیبانی','اداره تحقیق و توسعه','اداره پارکبان و معبربانان','اداره تأسیسات فنی و امور نگهداری','اداره فاوا و خدمات فنی','اداره جمع‌آوری و بازیافت پسماند','اداره بازرسی و تحقیقات محلی'][i]])},
   {id:'management',label:'مدیریت',icon:'▤',links:[[urls.users,'کاربران و سطح دسترسی'],[urls.control,'مرکز کنترل و پیکربندی'],[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],...customMenuLinks("مدیریت")]},
   {id:'actions',label:'اقدامات',icon:'✓',links:[[urls.followups,'پیگیری دستورات ریاست'],[urls.notices,'مرکز اعلانات ریاست'],[urls.calendar,'تقویم و رویدادها'],...customMenuLinks("اقدامات")]},
+  {id:'missions',label:'ماموریت‌ها',icon:'▣',links:[[urls.missions,'بانک مأموریت‌ها']]},
   {id:'services',label:'خدمات',icon:'◇',links:[[urls.services,'نمای کلی مرکز خدمات'],[urls.communications,'ارتباطات کارکنان'],[urls.welfare,'خدمات رفاهی'],[urls.coop,'فروشگاه و تعاونی مصرف'],[urls.economic,'برنامه‌ریزی اقتصادی'],[urls.retirees,'خدمات بازنشستگان'],...customMenuLinks("خدمات")]},
   {id:'reports',label:'گزارش‌ها',icon:'▥',links:[[urls.reports,'گزارش تلفیقی ادارات'],[urls.catalog,'کاتالوگ گزارش‌ها'],[urls.archive,'آرشیو گزارش‌ها'],[urls.participation,'نظرسنجی'],...customMenuLinks("گزارش‌ها")]},
   ...(otherCustomPages.length||otherStaticPages.length?[{id:'custom-pages',label:'سایر صفحات',icon:'▣',links:otherCustomPages}]:[])
  ];
- const groupForMenu={"ادارات":"departments","مدیریت":"management","اقدامات":"actions","خدمات":"services","گزارش‌ها":"reports","سایر صفحات":"custom-pages"};
+ const groupForMenu={"ادارات":"departments","مدیریت":"management","اقدامات":"actions","خدمات":"services","گزارش‌ها":"reports","ماموریت‌ها":"missions","سایر صفحات":"custom-pages"};
  pageCatalog.filter(p=>p.kind==="static"&&p.id!=="entry"&&p.status==="published"&&!String(p.path||"").endsWith("personnel-registry.html")).forEach(p=>{
   const group=groups.find(g=>g.id===groupForMenu[p.menu]);if(!group)return;
   const href=registeredPageHref(p),key=href.split("?")[0].split("/").pop();
@@ -321,7 +322,7 @@ const inPages=location.pathname.includes('/pages/');
  const link=[...document.querySelectorAll('link[rel="stylesheet"]')].find(el=>/assets\/css\/style\.css(?:\?|$)/.test(el.getAttribute('href')||''));
  if(!link)return;
  const url=new URL(link.href,document.baseURI);
- url.searchParams.set('v','page-studio-20261114-8');
+ url.searchParams.set('v','mission-bank-20261114-1');
  if(link.href!==url.href)link.href=url.href;
 })();
 
