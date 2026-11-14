@@ -76,7 +76,7 @@
  }
  function initProfile(){
   const root=document.querySelector("[data-personnel-profile]");
-  if(!root)return;
+  if(!root||window.PersonnelRegistry?.initProfileBridge)return;
   const input=root.querySelector("[data-personnel-id]"), result=root.querySelector("[data-personnel-result]"), empty=root.querySelector("[data-personnel-empty]");
   const escProfile=value=>String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
   const profileStore=id=>"city-person-profile-"+id;
