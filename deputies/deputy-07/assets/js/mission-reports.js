@@ -6,7 +6,14 @@ let all=[];
 function dateCutoff(period){const d=new Date();if(period==="month")d.setMonth(d.getMonth()-1);if(period==="quarter")d.setMonth(d.getMonth()-3);if(period==="year")d.setFullYear(d.getFullYear(),0,1);return period==="all"?null:d;}
 function filtered(){const cutoff=dateCutoff($("reportPeriod").value),dept=$("reportDept").value;return all.filter(m=>(!dept||String(m.executorDepartment)===dept)&&(!cutoff||new Date(m.createdAt)>=cutoff));}
 function late(m){return m.plannedEnd&&m.plannedEnd<new Date().toISOString().slice(0,10)&&!["completed","closed","cancelled"].includes(m.status);}
-function bars(id,entries){const max=Math.max(1,...entries.map(x=>x.value));$(id).innerHTML=entries.length?entries.map(x=>'<div class="report-bar"><span>'+esc(x.label)+'</span><span class="report-track"><i style="width:'+Math.max(0,x.value/max*100)+'%"></i></span><b>'+fa(x.value)+'</b></div>').join(""):'<span class="profile-hint">داده‌ای برای نمایش وجود ندارد.</span>';}
+function bars(id,entries){
+ const max=Math.max(1,...entries.map(x=>x.value));
+ if(id==="deptBars"){
+  $(id).innerHTML=entries.length?'<div class="report-column-chart" role="list">'+entries.map(x=>'<div class="report-column" role="listitem"><b>'+fa(x.value)+'</b><div class="report-column-track"><i style="height:'+Math.max(0,x.value/max*100)+'%"></i></div><span>'+esc(x.label)+'</span></div>').join("")+'</div>':'<span class="profile-hint">داده‌ای برای نمایش وجود ندارد.</span>';
+  return;
+ }
+ $(id).innerHTML=entries.length?entries.map(x=>'<div class="report-bar"><span>'+esc(x.label)+'</span><span class="report-track"><i style="width:'+Math.max(0,x.value/max*100)+'%"></i></span><b>'+fa(x.value)+'</b></div>').join(""):'<span class="profile-hint">داده‌ای برای نمایش وجود ندارد.</span>';
+}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function render(){
  const rows=filtered(),done=rows.filter(m=>["completed","closed"].includes(m.status)),active=rows.filter(m=>["referred","in-progress","blocked","review","revision"].includes(m.status)),lateRows=rows.filter(late),avg=rows.length?Math.round(rows.reduce((s,m)=>s+Number(m.progress||0),0)/rows.length):0,goal=rows.filter(m=>m.goalAchievement!==null&&m.goalAchievement!==undefined&&m.goalAchievement!=="");
