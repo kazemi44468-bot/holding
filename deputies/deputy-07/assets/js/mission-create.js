@@ -17,7 +17,23 @@ const departmentNames = {
  "HQ":"ستاد معاونت ۷"
 };
 const baseSchema = {
- schemaId:"mission-form", version:1, departments:[
+ schemaId:"mission-form", version:1, options:{
+  communicationType:["نامه رسمی","درخواست شفاهی","مکاتبه داخلی","صورتجلسه","دستور مقام مافوق","گزارش یا اعلام نیاز"],
+  requestChannel:["دبیرخانه","سامانه مکاتبات","ارجاع مستقیم","جلسه","تماس یا اعلام شفاهی","سایر"],
+  requesterType:["ریاست معاونت","معاونت","مرکز","اداره","مدیریت","واحد یا شخص","سازمان بیرونی"],
+  priority:["normal|عادی","important|مهم","urgent|فوری","critical|بحرانی"],
+  confidentiality:["عادی","داخلی","محرمانه","محدود به مدیران"],
+  missionType:["اجرایی","مطالعاتی و پژوهشی","نظارتی و بازرسی","فنی و تعمیراتی","پشتیبانی","برنامه‌ریزی و هماهنگی","خدماتی و عملیاتی","اصلاحی و رفع نقص","توسعه‌ای / پروژه‌ای","سایر"],
+  workNature:["مستمر","مقطعی","مرحله‌ای","پروژه‌ای","اضطراری"],
+  reportFrequency:["روزانه","هفتگی","دو هفته یک‌بار","ماهانه","در نقاط عطف"],
+  costStatus:["بدون هزینه مستقیم","نیازمند برآورد","در انتظار تأمین اعتبار","اعتبار تخصیص‌یافته","دارای هزینه قطعی"],
+  costCurrency:["تومان","ریال"],
+  deliverableType:["گزارش مکتوب","خدمت انجام‌شده","تعمیر / تجهیز آماده بهره‌برداری","سامانه یا قابلیت نرم‌افزاری","طرح و پیشنهاد","داده و مستندات","عملیات میدانی تکمیل‌شده","سایر"],
+  executionStatus:["draft|پیش‌نویس","registered|ثبت‌شده","referred|ارجاع‌شده","in-progress|در حال اجرا","blocked|متوقف / دارای مانع","review|در انتظار بررسی نتیجه","completed|تکمیل‌شده","closed|مختومه","cancelled|لغوشده"],
+  scheduleStatus:["مطابق برنامه","جلوتر از برنامه","دارای تأخیر","متوقف به علت مانع","تمدید مهلت"],
+  riskLevel:["بدون مانع","کم","متوسط","زیاد","بحرانی"],
+  calendarReminder:["بدون یادآوری","یک روز قبل","سه روز قبل","یک هفته قبل"]
+ }, departments:[
   {id:"1",name:departmentNames["1"],fields:[
    {id:"personnelNeed",label:"تعداد نیروی موردنیاز",type:"number",unit:"نفر"},
    {id:"administrativeProcess",label:"فرایند اداری مرتبط",type:"select",options:["استخدام و احکام","حضور و غیاب","آموزش","رفاه و پشتیبانی","امور دبیرخانه","سایر"]},
@@ -87,7 +103,8 @@ const safe = value => String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":
 function makeCode(){const d=new Date(),stamp=[d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("");return "M7-"+stamp+"-"+crypto.randomUUID().slice(0,8).toUpperCase();}
 function statusLabel(status){return ({draft:"پیش‌نویس",registered:"ثبت‌شده",referred:"ارجاع‌شده","in-progress":"در حال اجرا",blocked:"دارای مانع",review:"در انتظار بررسی",completed:"تکمیل‌شده",closed:"مختومه",cancelled:"لغوشده"})[status]||"ثبت‌شده";}
 function defaultConfig(){return structuredClone(baseSchema);}
-async function loadSchema(){schema=await MissionStore.config()||defaultConfig();$("schemaJson").value=JSON.stringify(schema,null,2);renderDepartmentFields();}
+async function loadSchema(){const saved=await MissionStore.config();schema=saved?{...defaultConfig(),...saved,options:{...baseSchema.options,...(saved.options||{})}}:defaultConfig();$("schemaJson").value=JSON.stringify(schema,null,2);applySchemaOptions();renderDepartmentFields();}
+function applySchemaOptions(){for(const [id,values] of Object.entries(schema?.options||{})){const select=$(id);if(!select||select.tagName!=="SELECT"||!Array.isArray(values))continue;const current=select.value;const keepBlank=id==="communicationType";select.replaceChildren();if(keepBlank){const empty=document.createElement("option");empty.value="";empty.textContent="انتخاب کنید";select.append(empty);}for(const item of values){const option=document.createElement("option");const parts=String(item).split("|");option.value=parts.length>1?parts[0]:item;option.textContent=parts.length>1?parts.slice(1).join("|"):item;select.append(option);}if([...select.options].some(o=>o.value===current))select.value=current;}}
 function renderDepartmentFields(){
  const host=$("departmentFields"),dept=$("executorDepartment").value;
  host.querySelectorAll(".generated-field").forEach(x=>x.remove());
@@ -208,5 +225,5 @@ $("saveDraft").addEventListener("click",async()=>{try{if(!$("missionTitle").valu
 $("addProgress").addEventListener("click",async()=>{try{if(!currentMission)throw new Error("ابتدا مأموریت را ذخیره کنید.");const note=$("progressDescription").value.trim();await MissionStore.addProgress(currentMission.id,{progress:Number($("progress").value||0),note,by:$("assignedExpert").value||$("directOwner").value||"ثبت‌کننده",status:$("executionStatus").value});currentMission=await MissionStore.get(currentMission.id);renderProgressHistory(currentMission.progressLog||[]);$("saveResult").textContent="گزارش پیشرفت در تاریخچه مأموریت ثبت شد.";}catch(e){$("saveResult").textContent=e.message;}});
 $("loadSchema").addEventListener("click",()=>{try{$("schemaJson").value=JSON.stringify(schema,null,2);$("schemaResult").textContent="ساختار فعال بارگذاری شد.";}catch(e){$("schemaResult").textContent=e.message;}});
 $("resetSchema").addEventListener("click",()=>{$("schemaJson").value=JSON.stringify(defaultConfig(),null,2);});
-$("saveSchema").addEventListener("click",async()=>{try{const next=JSON.parse($("schemaJson").value);if(!Array.isArray(next.departments))throw new Error("آرایه departments الزامی است.");for(const d of next.departments){if(!d.id||!Array.isArray(d.fields))throw new Error("هر اداره باید شناسه و آرایه fields داشته باشد.");for(const f of d.fields){if(!f.id||!f.label||!["text","textarea","number","date","select"].includes(f.type))throw new Error("هر فیلد باید id، label و نوع معتبر داشته باشد.");}}schema=await MissionStore.saveConfig({...next,schemaId:"mission-form"});$("schemaJson").value=JSON.stringify(schema,null,2);renderDepartmentFields();$("schemaResult").textContent="نسخه "+toFa(schema.version)+" از ساختار فرم ذخیره شد. مأموریت‌های قبلی تعریف نسخه زمان ثبت خود را حفظ می‌کنند.";}catch(e){$("schemaResult").textContent="خطا: "+e.message;}});
+$("saveSchema").addEventListener("click",async()=>{try{const next=JSON.parse($("schemaJson").value);if(!Array.isArray(next.departments))throw new Error("آرایه departments الزامی است.");for(const d of next.departments){if(!d.id||!Array.isArray(d.fields))throw new Error("هر اداره باید شناسه و آرایه fields داشته باشد.");for(const f of d.fields){if(!f.id||!f.label||!["text","textarea","number","date","select"].includes(f.type))throw new Error("هر فیلد باید id، label و نوع معتبر داشته باشد.");}}schema=await MissionStore.saveConfig({...next,schemaId:"mission-form"});$("schemaJson").value=JSON.stringify(schema,null,2);applySchemaOptions();renderDepartmentFields();$("schemaResult").textContent="نسخه "+toFa(schema.version)+" از ساختار فرم ذخیره شد. مأموریت‌های قبلی تعریف نسخه زمان ثبت خود را حفظ می‌کنند.";}catch(e){$("schemaResult").textContent="خطا: "+e.message;}});
 goStep(0);updateProgress();
