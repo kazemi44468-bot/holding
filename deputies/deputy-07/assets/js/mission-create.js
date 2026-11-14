@@ -233,7 +233,7 @@ async function unlock(){
  if(status.exists)await MissionStore.unlock(pass);
  else await MissionStore.unlock(pass);
  unlocked=true;$("vaultPass").value="";$("workArea").classList.remove("hidden");$("authState").textContent="اتصال امن برقرار شد؛ داده‌ها از مخزن رمزگذاری‌شده مشترک معاونت ۷ خوانده می‌شوند.";
- $("unlockVault").disabled=true;$("vaultPass").disabled=true;$("schemaAdmin").hidden=!window.Deputy7Access?.canCurrent("manageSchema",{kind:"configuration"});
+ $("unlockVault").disabled=true;$("vaultPass").disabled=true;const canManageSchema=!!window.Deputy7Access?.canCurrent("manageSchema",{kind:"configuration"});$("schemaAdmin").hidden=!canManageSchema;$("schemaAdmin").classList.toggle("hidden",!canManageSchema);
  await loadSchema();
  if(editingId)await loadMission(editingId);
  else{writeField("requestDate",dateNow());writeField("receivedAt",new Date().toISOString().slice(0,16));}
