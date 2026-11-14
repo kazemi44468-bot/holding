@@ -57,6 +57,7 @@ const inPages=location.pathname.includes('/pages/');
   localData:localData,services:prefix+'company-services.html',communications:prefix+'internal-communications.html',welfare:prefix+'welfare-center.html',
   coop:prefix+'staff-coop-store.html',economic:prefix+'employee-economic-center.html',retirees:prefix+'retiree-center.html',personnel:prefix+'personnel-registry.html',users:(inPages||inLocalData)?'../users.html':'users.html',control:(inPages||inLocalData)?'../control-center.html':'control-center.html'
  };
+ const customPages=(()=>{try{const x=JSON.parse(localStorage.getItem("deputy7.page-registry.v1"));return (x?.pages||[]).filter(p=>p.kind==="custom"&&p.status==="published").map(p=>({...p,href:(inPages?p.path.replace(/^pages\\//,""):inLocalData?"../"+p.path:p.path)}));}catch{return[]}})();
  const nav=document.querySelector('.ops-nav');
  /* داخل سامانه، نشان و پیوندهای خانه باید به نمای اصلی سامانه برگردند، نه درگاه معرفی. */
  document.querySelectorAll('a[href="../index.html"],a[href="index.html"]').forEach(link=>{link.href=home;});
@@ -89,7 +90,7 @@ const inPages=location.pathname.includes('/pages/');
    [[urls.services,'نمای کلی خدمات'],[urls.communications,'ارتباطات کارکنان'],[urls.welfare,'خدمات رفاهی'],[urls.coop,'فروشگاه تعاونی'],[urls.economic,'برنامه‌ریزی اقتصادی'],[urls.retirees,'خدمات بازنشستگان']].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>گزارش‌ها</summary><div class="nav-menu">'+
    [[urls.reports,'گزارش تلفیقی'],[urls.participation,'نظرسنجی']].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
-   '</div></details>';
+   '</div></details>'+(customPages.length?'<details class="nav-dropdown"><summary>صفحات اختصاصی</summary><div class="nav-menu">'+customPages.map(p=>'<a href="'+p.href+'">'+p.title+'</a>').join('')+'</div></details>':'');
   nav.classList.add('ops-nav-framed');
   const current=location.pathname.split('/').pop();
   nav.querySelectorAll('.nav-dropdown').forEach(menu=>{if(menu.querySelector('a[href$="'+current+'"]'))menu.querySelector('summary').classList.add('active')});
@@ -104,7 +105,8 @@ const inPages=location.pathname.includes('/pages/');
   {id:'management',label:'مدیریت',icon:'▤',links:[[urls.users,'کاربران و سطح دسترسی'],[urls.control,'مرکز کنترل و پیکربندی'],[urls.personnel,'بانک مرکزی پرسنل'],[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد']]},
   {id:'actions',label:'اقدامات',icon:'✓',links:[[urls.followups,'پیگیری دستورات ریاست'],[urls.notices,'مرکز اعلانات ریاست'],[urls.calendar,'تقویم شرکت']]},
   {id:'services',label:'خدمات',icon:'◇',links:[[urls.services,'نمای کلی مرکز خدمات'],[urls.communications,'ارتباطات کارکنان'],[urls.welfare,'خدمات رفاهی'],[urls.coop,'فروشگاه و تعاونی مصرف'],[urls.economic,'برنامه‌ریزی اقتصادی'],[urls.retirees,'خدمات بازنشستگان']]},
-  {id:'reports',label:'گزارش‌ها',icon:'▥',links:[[urls.reports,'گزارش تلفیقی ادارات'],[urls.catalog,'کاتالوگ گزارش‌ها'],[urls.archive,'آرشیو گزارش‌ها'],[urls.participation,'نظرسنجی']]}
+  {id:'reports',label:'گزارش‌ها',icon:'▥',links:[[urls.reports,'گزارش تلفیقی ادارات'],[urls.catalog,'کاتالوگ گزارش‌ها'],[urls.archive,'آرشیو گزارش‌ها'],[urls.participation,'نظرسنجی']]},
+  ...(customPages.length?[{id:'custom-pages',label:'صفحات',icon:'▣',links:customPages.map(p=>[p.href,p.title])}]:[])
  ];
  const dock=document.createElement('nav');
  dock.className='mobile-dock';
