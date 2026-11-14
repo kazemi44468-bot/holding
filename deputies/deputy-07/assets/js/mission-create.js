@@ -123,6 +123,24 @@ function renderDepartmentFields(){
   wrap.append(label,input);host.append(wrap);
  }
 }
+function addMilestoneRow(item={}){
+ const host=$("milestoneRows"),row=document.createElement("div");row.className="milestone-row";
+ const make=(type,placeholder,value)=>{const el=document.createElement("input");el.type=type;el.placeholder=placeholder;if(value!==undefined&&value!==null)el.value=value;if(type==="number"){el.min="0";el.max="100";}return el;};
+ const title=make("text","عنوان نقطه عطف",item.title||"");
+ const due=make("date","موعد",item.due||"");
+ const owner=make("text","مسئول / کد پرسنلی",item.owner||"");
+ const weight=make("number","وزن",item.weight??1);weight.title="وزن در محاسبه پیشرفت";
+ const progress=make("number","درصد",item.progress??0);progress.title="درصد پیشرفت نقطه عطف";
+ const status=document.createElement("select");["در انتظار","در حال اجرا","تکمیل‌شده","متوقف"].forEach(label=>{const o=document.createElement("option");o.value=label;o.textContent=label;status.append(o);});status.value=item.status||"در انتظار";
+ const remove=document.createElement("button");remove.type="button";remove.textContent="×";remove.title="حذف نقطه عطف";remove.addEventListener("click",()=>row.remove());
+ row.append(title,due,owner,status,weight,progress,remove);host.append(row);
+}
+function renderMilestones(rows){
+ const host=$("milestoneRows");if(!host)return;host.replaceChildren();
+ if(typeof rows==="string"&&rows.trim())rows=rows.split("\n").map(line=>({title:line.split("|")[0].trim()}));
+ (Array.isArray(rows)?rows:[]).forEach(item=>addMilestoneRow(item));
+}
+function readMilestones(){return [...document.querySelectorAll("#milestoneRows .milestone-row")].map(row=>{const inputs=row.querySelectorAll("input");return {title:inputs[0].value.trim(),due:inputs[1].value,owner:inputs[2].value.trim(),status:row.querySelector("select").value,weight:Number(inputs[3].value||1),progress:Math.max(0,Math.min(100,Number(inputs[4].value||0))) };}).filter(item=>item.title);}
 function readCustom(){const out={};document.querySelectorAll("[data-custom-id]").forEach(el=>{out[el.dataset.customId]=el.type==="number"?(el.value===""?null:Number(el.value)):el.value.trim();});return out;}
 function writeCustom(values){Object.entries(values||{}).forEach(([id,value])=>{const el=document.querySelector('[data-custom-id="'+CSS.escape(id)+'"]');if(el&&value!==null&&value!==undefined)el.value=value;});}
 function goStep(index){activeStep=Math.max(0,Math.min(sections.length-1,index));sections.forEach((s,i)=>s.classList.toggle("active",i===activeStep));tabs.forEach((t,i)=>t.setAttribute("aria-selected",String(i===activeStep)));$("prevStep").disabled=activeStep===0;$("nextStep").classList.toggle("hidden",activeStep===sections.length-1);$("saveMission").textContent=editingId?"ذخیره تغییرات مأموریت":"ثبت و ذخیره مأموریت";tabs[activeStep].scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"});}
@@ -141,6 +159,7 @@ function collect(){
   start:data.calendarStart||data.plannedStart||dateNow(),end:data.calendarEnd||data.plannedEnd||data.calendarStart||data.plannedStart||dateNow(),
   dept:data.executorDepartment||"all",description:data.calendarDescription||data.missionSubject||"",reminder:data.calendarReminder||"بدون یادآوری"
  }:null;
+ data.milestones=readMilestones();
  data.departmentFields={...(currentMission?.departmentFields||{}),...readCustom()};
  data.schemaSnapshot=currentMission?.schemaSnapshot||structuredClone(schema||defaultConfig());
  data.schemaVersion=Number(schema?.version||1);
@@ -221,6 +240,9 @@ $("unlockVault").addEventListener("click",async()=>{try{await unlock();}catch(e)
 $("executorDepartment").addEventListener("change",renderDepartmentFields);
 document.querySelectorAll('input[name="hasPrevious"]').forEach(el=>el.addEventListener("change",()=>$("previousFields").classList.toggle("hidden",selectedRadio("hasPrevious")!=="yes")));
 $("progress").addEventListener("input",updateProgress);$("executionStatus").addEventListener("change",updateProgress);
+$("addMilestone").addEventListener("click",()=>addMilestoneRow());
+$("calculateMilestoneProgress").addEventListener("click",()=>{const rows=readMilestones();const weight=rows.reduce((s,x)=>s+Math.max(0,x.weight),0);if(!weight){$("saveResult").textContent="برای محاسبه، وزن نقاط عطف را وارد کنید.";return;}const value=Math.round(rows.reduce((s,x)=>s+Math.max(0,x.weight)*x.progress,0)/weight);$("progress").value=value;updateProgress();$("saveResult").textContent="پیشرفت وزنی نقاط عطف محاسبه شد: "+toFa(value)+"٪";});
+
 tabs.forEach((tab,index)=>tab.addEventListener("click",()=>goStep(index)));
 $("prevStep").addEventListener("click",()=>goStep(activeStep-1));
 $("nextStep").addEventListener("click",()=>goStep(activeStep+1));
