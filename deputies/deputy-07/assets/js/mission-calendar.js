@@ -11,6 +11,8 @@ if(!status.exists) {
     await MissionStore.unlock(pass);
   }
   const missions=await MissionStore.list();
+  const config=await MissionStore.config();
+  const currentDepartmentNames=Object.fromEntries((config?.departments||[]).map(d=>[String(d.id),d.name]));
   const events=[];
   for(const mission of missions){
     const source=mission.calendarEvent;
@@ -23,7 +25,7 @@ if(!status.exists) {
     let count=0;
     while(cursor<=last&&count<366){
       const date=[cursor.getFullYear(),String(cursor.getMonth()+1).padStart(2,"0"),String(cursor.getDate()).padStart(2,"0")].join("-");
-      events.push({date,type:"mission",dept:String(mission.executorDepartment||"all"),departmentName:mission.executorDepartmentName||"",title:source.title||mission.missionTitle||"مأموریت",detail:[source.description||mission.missionSubject||"", "کد مأموریت: "+(mission.missionCode||mission.id), "پیشرفت: "+Number(mission.progress||0)+"٪", "وضعیت: "+(mission.status||"ثبت‌شده")].filter(Boolean).join(" · "),time:"",place:"بازه اجرای مأموریت",missionCode:mission.missionCode});
+      events.push({date,type:"mission",dept:String(mission.executorDepartment||"all"),departmentName:currentDepartmentNames[String(mission.executorDepartment)]||mission.executorDepartmentName||"",title:source.title||mission.missionTitle||"مأموریت",detail:[source.description||mission.missionSubject||"", "کد مأموریت: "+(mission.missionCode||mission.id), "پیشرفت: "+Number(mission.progress||0)+"٪", "وضعیت: "+(mission.status||"ثبت‌شده")].filter(Boolean).join(" · "),time:"",place:"بازه اجرای مأموریت",missionCode:mission.missionCode});
       cursor.setDate(cursor.getDate()+1);count++;
     }
   }
