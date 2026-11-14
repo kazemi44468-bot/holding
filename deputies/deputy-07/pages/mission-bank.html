@@ -9,34 +9,7 @@
 <link rel="preload" href="../assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../assets/css/style.css?v=mission-suite-20261114-12">
-<style>
 
-/* بانک مأموریت‌ها — پوسته روشن با رنگ‌های تفکیک‌کننده */
-body.ops-page:has(.mission-bank-panel){background:#f3f8fc!important;color:#40566a}
-body.ops-page:has(.mission-bank-panel) .ops-intro{background:linear-gradient(115deg,#fff,#eaf7ff 62%,#eefbf9)!important;border-color:#d9ebf5!important;box-shadow:0 5px 18px rgba(71,145,185,.06)}
-body.ops-page:has(.mission-bank-panel) .ops-intro h1{color:#356d91!important}
-body.ops-page:has(.mission-bank-panel) .mission-bank-panel{border-color:#dceaf2!important;border-radius:15px!important;box-shadow:0 5px 18px rgba(79,139,174,.055)!important}
-body.ops-page:has(.mission-bank-panel) .mission-kpis article{background:#fff!important;border-color:#dceaf2!important;box-shadow:0 3px 10px rgba(79,139,174,.04)!important}
-body.ops-page:has(.mission-bank-panel) .mission-kpis article:nth-child(5n+1){background:#f1f8ff!important}
-body.ops-page:has(.mission-bank-panel) .mission-kpis article:nth-child(5n+2){background:#effbf9!important}
-body.ops-page:has(.mission-bank-panel) .mission-kpis article:nth-child(5n+3){background:#fff9ed!important}
-body.ops-page:has(.mission-bank-panel) .mission-kpis article:nth-child(5n+4){background:#f7f3ff!important}
-body.ops-page:has(.mission-bank-panel) .mission-kpis article:nth-child(5n){background:#fff3f5!important}
-body.ops-page:has(.mission-bank-panel) .mission-kpis b{color:#398db9!important}
-body.ops-page:has(.mission-bank-panel) .mission-bank-filters{background:#f1f8fd!important;border-color:#dcebf4!important}
-body.ops-page:has(.mission-bank-panel) .mission-bank-filters input,body.ops-page:has(.mission-bank-panel) .mission-bank-filters select{background:#fff!important;border-color:#d7e8f1!important}
-body.ops-page:has(.mission-bank-panel) .mission-table thead th{background:#eaf5fc!important;color:#4b7189!important}
-body.ops-page:has(.mission-bank-panel) .mission-table tbody tr:nth-child(even){background:#f8fcff!important}
-body.ops-page:has(.mission-bank-panel) .mission-table tbody tr:hover{background:#edf8ff!important}
-body.ops-page:has(.mission-bank-panel) .mission-table tbody td{color:#526d80!important}
-body.ops-page:has(.mission-bank-panel) .mission-table td b{color:#3d789d!important}
-body.ops-page:has(.mission-bank-panel) .mission-table .progress-track{background:#e8f1f6!important}
-body.ops-page:has(.mission-bank-panel) .mission-table .progress-track i{background:linear-gradient(90deg,#67bce1,#67c9b5)!important}
-body.ops-page:has(.mission-bank-panel) .primary-link{background:#55acd2!important;color:#fff!important}
-body.ops-page:has(.mission-bank-panel) .mission-auth{background:#f1f9ff!important;border-color:#d8eaf5!important}
-body.ops-page:has(.mission-bank-panel) .mission-bank-toolbar button{background:#f1f8fd!important;border-color:#d8e9f3!important;color:#4d7893!important}
-
-</style>
 </head>
 <body class="ops-page">
 <header class="ops-header">
@@ -100,6 +73,34 @@ body.ops-page:has(.mission-bank-panel) .mission-table a{color:#4d7d87;font-weigh
 body.ops-page:has(.mission-bank-panel) .mission-bank-toolbar button{border:1px solid #dfe7e9;background:#f5f8f8;color:#50656d;border-radius:8px;padding:8px 12px;font-size:11px}
 @media(max-width:850px){body.ops-page:has(.mission-bank-panel) .mission-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}body.ops-page:has(.mission-bank-panel) .mission-bank-filters{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){body.ops-page:has(.mission-bank-panel) .mission-bank-panel{padding:12px}body.ops-page:has(.mission-bank-panel) .mission-kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}body.ops-page:has(.mission-bank-panel) .mission-kpis article{padding:10px}body.ops-page:has(.mission-bank-panel) .mission-bank-filters{grid-template-columns:1fr;padding:8px}body.ops-page:has(.mission-bank-panel) .mission-bank-toolbar{align-items:stretch}}
+
+</style>
+<style>
+
+/* بانک مأموریت‌ها — پوسته روشن با رنگ‌های تفکیک‌کننده */
+body.ops-page:has(.mission-bank-panel){background:#f3f8fc!important;color:#40566a}
+body.ops-page:has(.mission-bank-panel) .ops-intro{background:linear-gradient(115deg,#fff,#eaf7ff 62%,#eefbf9)!important;border-color:#d9ebf5!important;box-shadow:0 5px 18px rgba(71,145,185,.06)}
+body.ops-page:has(.mission-bank-panel) .ops-intro h1{color:#356d91!important}
+body.ops-page:has(.mission-bank-panel) .mission-bank-panel{border-color:#dceaf2!important;border-radius:15px!important;box-shadow:0 5px 18px rgba(79,139,174,.055)!important}
+body.ops-page:has(.mission-bank-panel) .mission-kpis article{background:#fff!important;border-color:#dceaf2!important;box-shadow:0 3px 10px rgba(79,139,174,.04)!important}
+body.ops-page:has(.mission-bank-panel) .mission-kpis article:nth-child(5n+1){background:#f1f8ff!important}
+body.ops-page:has(.mission-bank-panel) .mission-kpis article:nth-child(5n+2){background:#effbf9!important}
+body.ops-page:has(.mission-bank-panel) .mission-kpis article:nth-child(5n+3){background:#fff9ed!important}
+body.ops-page:has(.mission-bank-panel) .mission-kpis article:nth-child(5n+4){background:#f7f3ff!important}
+body.ops-page:has(.mission-bank-panel) .mission-kpis article:nth-child(5n){background:#fff3f5!important}
+body.ops-page:has(.mission-bank-panel) .mission-kpis b{color:#398db9!important}
+body.ops-page:has(.mission-bank-panel) .mission-bank-filters{background:#f1f8fd!important;border-color:#dcebf4!important}
+body.ops-page:has(.mission-bank-panel) .mission-bank-filters input,body.ops-page:has(.mission-bank-panel) .mission-bank-filters select{background:#fff!important;border-color:#d7e8f1!important}
+body.ops-page:has(.mission-bank-panel) .mission-table thead th{background:#eaf5fc!important;color:#4b7189!important}
+body.ops-page:has(.mission-bank-panel) .mission-table tbody tr:nth-child(even){background:#f8fcff!important}
+body.ops-page:has(.mission-bank-panel) .mission-table tbody tr:hover{background:#edf8ff!important}
+body.ops-page:has(.mission-bank-panel) .mission-table tbody td{color:#526d80!important}
+body.ops-page:has(.mission-bank-panel) .mission-table td b{color:#3d789d!important}
+body.ops-page:has(.mission-bank-panel) .mission-table .progress-track{background:#e8f1f6!important}
+body.ops-page:has(.mission-bank-panel) .mission-table .progress-track i{background:linear-gradient(90deg,#67bce1,#67c9b5)!important}
+body.ops-page:has(.mission-bank-panel) .primary-link{background:#55acd2!important;color:#fff!important}
+body.ops-page:has(.mission-bank-panel) .mission-auth{background:#f1f9ff!important;border-color:#d8eaf5!important}
+body.ops-page:has(.mission-bank-panel) .mission-bank-toolbar button{background:#f1f8fd!important;border-color:#d8e9f3!important;color:#4d7893!important}
 
 </style>
  <footer class="ops-footer"></footer>
