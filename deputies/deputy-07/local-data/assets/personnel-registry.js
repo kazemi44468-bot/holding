@@ -116,7 +116,7 @@ function initProfileBridge(){
  host.innerHTML='<div class="dept-panel-head"><div><span class="eyebrow">بانک مرکزی پرسنل</span><h2>پرونده متصل به کد پرسنلی</h2><p data-pr-profile-status>برای جست‌وجو، مخزن رمزگذاری‌شده را بازگشایی کنید.</p></div><button type="button" class="pr-row-action" data-pr-profile-unlock>بازگشایی بانک</button></div>';
  root.insertBefore(host,empty||result);
  const status=host.querySelector("[data-pr-profile-status]"),unlock=host.querySelector("[data-pr-profile-unlock]");
- const fa=v=>String(v??"").replace(/\\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[Number(d)]);
+ const fa=v=>String(v??"").replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[Number(d)]);
  const set=(key,value)=>result.querySelectorAll("[data-person-"+key+"]").forEach(node=>node.textContent=value||"ثبت نشده");
  const deptName=id=>departments.find(d=>d[0]===String(id))?.[1]||"اداره تعیین نشده";
  const years=date=>{if(!date)return "ثبت نشده";const d=new Date(date+"T12:00:00");if(Number.isNaN(d.getTime()))return "ثبت نشده";const n=Math.max(0,(Date.now()-d.getTime())/31557600000);return n.toFixed(1).replace(".", "٫")+" سال";};
@@ -127,7 +127,7 @@ function initProfileBridge(){
  }
  async function find(){
   const code=normalizeCode(input.value);if(!code){status.textContent="کد پرسنلی را وارد کنید.";return;}
-  if(!/^\\d{4}$/.test(code)||Number(code)<MIN_CODE||Number(code)>=MIN_CODE+SLOT_COUNT){status.textContent="کد باید در بازه ۱۰۰۰ تا ۱۲۴۹ باشد.";return;}
+  if(!/^\d{4}$/.test(code)||Number(code)<MIN_CODE||Number(code)>=MIN_CODE+SLOT_COUNT){status.textContent="کد باید در بازه ۱۰۰۰ تا ۱۲۴۹ باشد.";return;}
   input.value=code;search.disabled=true;unlock.disabled=true;status.textContent="در حال دریافت پرونده…";
   try{
    if(!await ensureUnlocked())return;await initialize();const person=await get(code);
