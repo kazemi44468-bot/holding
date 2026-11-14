@@ -31,7 +31,7 @@
   <button class="um-tab" data-tab="groups"><span>▦</span><span><b>گروه‌های دسترسی</b><small>دسته‌بندی و اعمال گروهی</small></span></button>
   <button class="um-tab" data-tab="roles"><span>▤</span><span><b>نقش‌ها و مجوزها</b><small>تعریف سطح و اختیارات</small></span></button>
   <button class="um-tab" data-tab="matrix"><span>▥</span><span><b>ماتریس دسترسی ادارات</b><small>محدوده سازمانی و عملیات</small></span></button>
-  
+  <button class="um-tab" data-tab="page-access"><span>▣</span><span><b>دسترسی به صفحه‌ها</b><small>مجوز هر نقش در هر صفحه</small></span></button>
   <button class="um-tab" data-tab="audit"><span>◷</span><span><b>سوابق تغییرات</b><small>ردیابی تغییرات مدیریتی</small></span></button>
  </aside>
  <div class="um-content">
@@ -39,7 +39,7 @@
    <div class="um-panel-head"><div><span class="eyebrow">حساب‌های سازمانی</span><h2>کاربران معاونت ۷</h2><p>هر حساب به یک یا چند اداره، نقش و گروه دسترسی منتسب می‌شود.</p></div><button class="um-primary" id="addUserBtn2" type="button">＋ کاربر جدید</button></div>
    <div class="um-toolbar"><label class="um-search">⌕ <input id="userSearch" type="search" placeholder="جست‌وجوی نام، نام کاربری یا سمت"></label><select id="filterDepartment"><option value="">همه اداره‌ها</option></select><select id="filterRole"><option value="">همه نقش‌ها</option></select><select id="filterStatus"><option value="">همه وضعیت‌ها</option><option value="active">فعال</option><option value="suspended">تعلیق‌شده</option></select></div>
    <div class="um-bulkbar"><label><input id="selectAllUsers" type="checkbox"> انتخاب همه نتایج</label><select id="bulkGroup"><option value="">انتساب به گروه انتخاب‌شده...</option></select><button id="bulkAssignBtn" type="button" class="um-secondary">اعمال گروهی</button><span id="selectedCount">۰ کاربر انتخاب شده</span></div>
-   <div class="um-table-wrap"><table class="um-table"><thead><tr><th></th><th>کاربر</th><th>نقش</th><th>محدوده اداره</th><th>گروه‌ها</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody id="usersTableBody"></tbody></table><div class="um-empty" id="usersEmpty">هنوز کاربری تعریف نشده است. برای شروع، حساب رئیس، مدیر فنی و مدیران اداره‌ها را اضافه کنید.</div></div>
+   <div class="um-table-wrap"><table class="um-table"><thead><tr><th></th><th>کاربر</th><th>کد پرسنلی</th><th>نقش</th><th>محدوده اداره</th><th>گروه‌ها</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody id="usersTableBody"></tbody></table><div class="um-empty" id="usersEmpty">هنوز کاربری تعریف نشده است. برای شروع، حساب رئیس، مدیر فنی و مدیران اداره‌ها را اضافه کنید.</div></div>
   </section>
   <section class="um-panel" id="panel-groups">
    <div class="um-panel-head"><div><span class="eyebrow">دسته‌بندی کاربران</span><h2>گروه‌های دسترسی</h2><p>با گروه‌ها می‌توان مجموعه‌ای از کاربران را به یک محدوده و الگوی مجوز مشترک متصل کرد.</p></div><button class="um-primary" id="addGroupBtn" type="button">＋ گروه جدید</button></div>
@@ -55,6 +55,12 @@
    <div class="um-scope-note"><b>قاعده محدوده:</b> رئیس در سطح کل معاونت؛ مدیر اداره فقط اداره‌های منتسب؛ کارشناس فقط اداره/واحد منتسب و رکوردهای مجاز؛ مدیر فنی اختیار پیکربندی فنی دارد و دسترسی محتوایی او مستقل و قابل ثبت است.</div>
   </section>
   
+  <section class="um-panel" id="panel-page-access">
+   <div class="um-panel-head"><div><span class="eyebrow">PAGE-LEVEL AUTHORIZATION</span><h2>ماتریس دسترسی صفحه‌ای</h2><p>برای هر نقش تعیین کنید به کدام صفحه و با چه عملیاتی دسترسی داشته باشد. مجوزهای این بخش مستقل از مجوزهای عمومی نقش هستند.</p></div><button type="button" class="um-secondary" id="pageAccessReset">بازنشانی نقش به الگوی پایه</button></div>
+   <div class="um-toolbar"><label>نقش سازمانی<select id="pageAccessRole"></select></label><label class="um-search">⌕ <input id="pageAccessSearch" type="search" placeholder="جست‌وجوی عنوان یا مسیر صفحه"></label><span id="pageAccessSummary"></span></div>
+   <div class="um-matrix-wrap"><table class="um-table page-access-table"><thead><tr><th>صفحه</th><th>دسته</th><th>مشاهده</th><th>ایجاد</th><th>ویرایش</th><th>حذف</th><th>تأیید</th><th>خروجی</th><th>مدیریت</th></tr></thead><tbody id="pageAccessRows"></tbody></table></div>
+   <div class="um-scope-note"><b>نکته اجرایی:</b> این ماتریس سیاست دسترسی را برای نقش‌ها ذخیره می‌کند. در نسخه فعلی وب ایستا، اعمال آن در رابط کاربری است؛ برای امنیت قطعی در برابر دسترسی مستقیم به فایل‌ها، احراز هویت و کنترل مجوز باید در سرویس محلی/سرور نیز اجرا شود.</div>
+  </section>
   <section class="um-panel" id="panel-audit">
    <div class="um-panel-head"><div><span class="eyebrow">ردپای مدیریتی</span><h2>سوابق تغییرات</h2><p>ایجاد، ویرایش، تعلیق و تغییر گروه‌ها و نقش‌ها در این مرورگر ثبت می‌شود.</p></div><button id="clearAuditBtn" class="um-secondary" type="button">پاک‌سازی سوابق محلی</button></div>
    <div class="um-audit-list" id="auditList"></div><div class="um-empty" id="auditEmpty">هنوز رویدادی ثبت نشده است.</div>
@@ -70,6 +76,7 @@
  <div class="um-form-grid">
   <label>نام و نام خانوادگی<input id="userName" required maxlength="100" placeholder="نام کامل کاربر"></label>
   <label>نام کاربری سازمانی<input id="userUsername" required maxlength="60" placeholder="شناسه ورود پیشنهادی"></label>
+  <label>کد پرسنلی مرجع<input id="userPersonnelCode" inputmode="numeric" maxlength="12" placeholder="کد از بانک مرکزی پرسنل"></label>
   <label>سمت / عنوان شغلی<input id="userTitle" maxlength="100" placeholder="مثلاً کارشناس برنامه‌ریزی"></label>
   <label>نقش سازمانی<select id="userRole" required></select></label>
   <label class="um-wide">اداره‌های مجاز<select id="userDepartments" multiple size="5"></select><small>برای انتخاب چند اداره، کلید Ctrl یا Command را نگه دارید. محدوده دسترسی مستقل از نقش است.</small></label>
@@ -100,7 +107,9 @@
 </form></dialog>
 </main>
 <footer class="ops-footer"></footer>
-<script src="assets/js/access-control.js?v=users-restored-content-20261114-2" defer></script>
-<script src="assets/js/main.js?v=nav-actions-20261114-3" defer></script>
-<script src="assets/js/user-management.js?v=users-restored-content-20261114-2" defer></script>
+<script src="assets/js/page-registry-core.js?v=pages-20261114"></script>
+<script src="assets/js/access-control.js?v=pages-20261114" defer></script>
+<script src="assets/js/main.js?v=pages-20261114" defer></script>
+<script src="assets/js/user-management.js?v=pages-20261114" defer></script>
+<script src="assets/js/page-access-management.js?v=pages-20261114" defer></script>
 </body></html>
