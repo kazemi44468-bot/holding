@@ -137,6 +137,7 @@
  };
  window.addEventListener("deputy7:mission-calendar",event=>{
   const incoming=Array.isArray(event.detail)?event.detail:[];
+  incoming.forEach(item=>{if(item.dept&&item.departmentName)departments[String(item.dept)]=item.departmentName;});
   events.splice(0,events.length,...events.filter(item=>item.source!=="mission-vault"),...incoming.map(item=>({...item,source:"mission-vault"})));
   root.querySelectorAll("[data-calendar-count]").forEach(node=>node.textContent=fmt(events.filter(item=>item.type===node.dataset.calendarCount).length));
   const total=root.querySelector("[data-calendar-total]");if(total)total.textContent=fmt(events.length);
