@@ -76,7 +76,7 @@
  <div class="um-form-grid">
   <label>نام و نام خانوادگی<input id="userName" required maxlength="100" placeholder="نام کامل کاربر"></label>
   <label>نام کاربری سازمانی<input id="userUsername" required maxlength="60" placeholder="شناسه ورود پیشنهادی"></label>
-  <label>کد پرسنلی مرجع<input id="userPersonnelCode" inputmode="numeric" maxlength="12" placeholder="کد از بانک مرکزی پرسنل"></label>
+  <label>کد پرسنلی مرجع<input id="userPersonnelCode" inputmode="numeric" maxlength="12" placeholder="کد از بانک مرکزی پرسنل"><button type="button" class="um-secondary" id="userPersonnelLookup">فراخوانی مشخصات از بانک پرسنل</button></label>
   <label>سمت / عنوان شغلی<input id="userTitle" maxlength="100" placeholder="مثلاً کارشناس برنامه‌ریزی"></label>
   <label>نقش سازمانی<select id="userRole" required></select></label>
   <label class="um-wide">اداره‌های مجاز<select id="userDepartments" multiple size="5"></select><small>برای انتخاب چند اداره، کلید Ctrl یا Command را نگه دارید. محدوده دسترسی مستقل از نقش است.</small></label>
@@ -111,5 +111,5 @@
 <script src="assets/js/access-control.js?v=pages-20261114" defer></script>
 <script src="assets/js/main.js?v=pages-20261114" defer></script>
 <script src="assets/js/user-management.js?v=pages-20261114" defer></script>
-<script src="assets/js/page-access-management.js?v=pages-20261114" defer></script>
+<script src="assets/js/page-access-management.js?v=pages-20261114" defer></script><script type="module" src="local-data/assets/personnel-registry.js?v=personnel-registry-20261114"></script><script type="module" src="assets/js/user-personnel-link.js?v=personnel-registry-20261114"></script>
 </body></html>
