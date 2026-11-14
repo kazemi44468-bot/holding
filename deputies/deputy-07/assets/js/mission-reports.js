@@ -1,7 +1,7 @@
 import { MissionStore, MissionVault } from "./mission-store.js";
 const $=id=>document.getElementById(id),fa=n=>Number(n||0).toLocaleString("fa-IR");
 const depts={"1":"اداری و پشتیبانی","2":"تحقیق و توسعه","3":"پارکبان و معبربانان","4":"تأسیسات فنی و نگهداری","6":"فاوا و خدمات فنی","7":"جمع‌آوری و بازیافت پسماند","8":"بازرسی و تحقیقات محلی","HQ":"ستاد معاونت ۷"};
-const statuses={draft:"پیش‌نویس",registered:"ثبت‌شده",referred:"ارجاع‌شده","in-progress":"در حال اجرا",blocked:"دارای مانع",review:"در انتظار بررسی",completed:"تکمیل‌شده",closed:"مختومه",cancelled:"لغوشده"};
+const statuses={draft:"پیش‌نویس",registered:"ثبت‌شده",referred:"ارجاع‌شده","in-progress":"در حال اجرا",blocked:"دارای مانع",review:"در انتظار بررسی",revision:"نیازمند اصلاح",completed:"تکمیل‌شده",closed:"مختومه",cancelled:"لغوشده"};
 let all=[];
 function dateCutoff(period){const d=new Date();if(period==="month")d.setMonth(d.getMonth()-1);if(period==="quarter")d.setMonth(d.getMonth()-3);if(period==="year")d.setFullYear(d.getFullYear(),0,1);return period==="all"?null:d;}
 function filtered(){const cutoff=dateCutoff($("reportPeriod").value),dept=$("reportDept").value;return all.filter(m=>(!dept||String(m.executorDepartment)===dept)&&(!cutoff||new Date(m.createdAt)>=cutoff));}
