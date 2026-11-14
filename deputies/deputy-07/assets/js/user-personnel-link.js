@@ -1,4 +1,4 @@
-import {getPersonnel,ensurePersonnelUnlocked,normalizePersonnelCode} from "../../local-data/assets/personnel-registry.js?v=personnel-registry-20261114-6";
+import {getPersonnel,ensurePersonnelUnlocked,normalizePersonnelCode} from "../../local-data/assets/personnel-registry.js?v=personnel-registry-20261114-7";
 (()=>{"use strict";
 const $=id=>document.getElementById(id),button=$("userPersonnelLookup"),form=$("userForm");
 async function resolveCode(showMessage=false){
