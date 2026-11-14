@@ -6,6 +6,7 @@ const editingId = params.get("id");
 const sections = [...document.querySelectorAll("[data-section]")];
 const tabs = [...document.querySelectorAll("[data-tab]")];
 let activeStep = 0, unlocked = false, currentMission = null, schema = null;
+const departmentDraftValues = {};
 const departmentNames = {
  "1":"اداره ۱ · اداری و پشتیبانی",
  "2":"اداره ۲ · تحقیق و توسعه",
@@ -93,8 +94,10 @@ const fieldIds = [
  "documentRegister","meetingMinutes","meetingActions",
  "headOfDepartmentOrder","headOfDepartmentBy","headOfDepartmentAt","deputyOrder","deputyBy","deputyAt","calendarTitle","calendarStart","calendarEnd","calendarReminder","calendarDescription"
 ];
-const readField = id => { const el=$(id); return el ? (el.type==="number" ? (el.value===""?null:Number(el.value)) : el.value.trim()) : null; };
-const writeField = (id,value) => { const el=$(id); if(el&&value!==undefined&&value!==null)el.value=value; };
+function readControl(el,type){if(!el)return null;if(type==="checkbox")return !!el.checked;if(type==="yesno")return el.value===""?null:el.value==="true";if(type==="checklist")return [...el.querySelectorAll('input[type="checkbox"]:checked')].map(x=>x.value);if(type==="number")return el.value===""?null:Number(el.value);return typeof el.value==="string"?el.value.trim():null;}
+function writeControl(el,value,type){if(!el||value===undefined||value===null)return;if(type==="checkbox"){el.checked=value===true||["true","1","yes","بله","checked"].includes(String(value).toLowerCase());return;}if(type==="yesno"){el.value=value===true||["true","1","yes","بله"].includes(String(value).toLowerCase())?"true":value===false||["false","0","no","خیر"].includes(String(value).toLowerCase())?"false":"";return;}if(type==="checklist"){const values=Array.isArray(value)?value:[String(value)];el.querySelectorAll('input[type="checkbox"]').forEach(x=>x.checked=values.includes(x.value));return;}el.value=String(value);}
+const readField=id=>readControl($(id),schema?.coreFields?.[id]?.type||fieldControlType($(id)));
+const writeField=(id,value)=>writeControl($(id),value,schema?.coreFields?.[id]?.type||fieldControlType($(id)));
 const selectedRadio = name => document.querySelector('input[name="'+name+'"]:checked')?.value || "";
 const setRadio = (name,value) => { const el=document.querySelector('input[name="'+name+'"][value="'+value+'"]');if(el)el.checked=true; };
 const dateNow = () => new Date().toISOString().slice(0,10);
@@ -106,8 +109,9 @@ function defaultConfig(){return structuredClone(baseSchema);}
 async function loadSchema(){const saved=await MissionStore.config();schema=saved?{...defaultConfig(),...saved,coreFields:{...(saved.coreFields||{})},extraFields:Array.isArray(saved.extraFields)?saved.extraFields:[],options:{...baseSchema.options,...(saved.options||{})}}:defaultConfig();$("schemaJson").value=JSON.stringify(schema,null,2);applySchemaOptions();applyCoreFields();renderDepartmentFields();renderExtraFields();decorateFormFields();}
 function applySchemaOptions(){for(const [id,values] of Object.entries(schema?.options||{})){const select=$(id);if(!select||select.tagName!=="SELECT"||!Array.isArray(values))continue;const current=select.value;const keepBlank=id==="communicationType";select.replaceChildren();if(keepBlank){const empty=document.createElement("option");empty.value="";empty.textContent="انتخاب کنید";select.append(empty);}for(const item of values){const option=document.createElement("option");const parts=String(item).split("|");option.value=parts.length>1?parts[0]:item;option.textContent=parts.length>1?parts.slice(1).join("|"):item;select.append(option);}if([...select.options].some(o=>o.value===current))select.value=current;}const deptSelect=$("executorDepartment"),selected=deptSelect.value;deptSelect.replaceChildren();const blank=document.createElement("option");blank.value="";blank.textContent="انتخاب اداره";deptSelect.append(blank);for(const d of schema?.departments||[]){departmentNames[String(d.id)]=d.name;const option=document.createElement("option");option.value=String(d.id);option.textContent=d.name;deptSelect.append(option);}if([...deptSelect.options].some(o=>o.value===selected))deptSelect.value=selected;}
 function renderDepartmentFields(){
- const host=$("departmentFields"),dept=$("executorDepartment").value;
- host.querySelectorAll(".generated-field").forEach(x=>x.remove());
+ const host=$("departmentFields"),dept=$("executorDepartment").value,priorDept=host.dataset.activeDepartment;
+ if(priorDept)departmentDraftValues[priorDept]={...(departmentDraftValues[priorDept]||{}),...readCustom()};
+ host.querySelectorAll(".generated-field").forEach(x=>x.remove());host.dataset.activeDepartment=dept;
  const definition=(schema?.departments||[]).find(x=>String(x.id)===String(dept));
  const heading=host.querySelector("h3");
  heading.textContent=definition?.name ? "اطلاعات اختصاصی · "+definition.name : "اطلاعات اختصاصی اداره انتخاب‌شده";
@@ -115,17 +119,27 @@ function renderDepartmentFields(){
  for(const field of definition.fields.filter(item=>item.active!==false)){
   const wrap=document.createElement("div");wrap.className="field generated-field";
   const label=document.createElement("label");label.htmlFor="custom_"+field.id;label.textContent=field.label+(field.unit?" ("+field.unit+")":"")+(field.required?" *":"");
-  let input;
-  if(field.type==="select"){input=document.createElement("select");const empty=document.createElement("option");empty.value="";empty.textContent="انتخاب کنید";input.append(empty);(field.options||[]).forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;input.append(o);});}
-  else if(field.type==="textarea"){input=document.createElement("textarea");input.rows=3;}
-  else{input=document.createElement("input");input.type=["number","date"].includes(field.type)?field.type:"text";}
-  input.id="custom_"+field.id;input.dataset.customId=field.id;input.dataset.customType=field.type;input.placeholder=field.placeholder||"";input.required=!!field.required;
-  wrap.append(label,input);
+  const input=buildFieldControl(field,"custom_"+field.id,departmentDraftValues[dept]?.[field.id]??currentMission?.departmentFields?.[field.id]??"");
+  input.dataset.customId=field.id;input.dataset.customType=field.type;input.classList.add("custom-field-control");wrap.append(label,input);applyConditionToWrap(wrap,field.condition);
   const tools=document.createElement("div");tools.className="field-tools";const edit=document.createElement("button");edit.type="button";edit.className="field-edit-btn";edit.textContent="ویرایش فیلد";edit.addEventListener("click",()=>openFieldEditor({kind:"dept",id:field.id,departmentId:dept}));tools.append(edit);wrap.append(tools);host.append(wrap);
  }
 }
 
-function fieldControlType(el){if(!el)return "text";if(el.tagName==="TEXTAREA")return "textarea";if(el.tagName==="SELECT")return "select";return ["number","date"].includes(el.type)?el.type:"text";}
+function fieldControlType(el){if(!el)return "text";if(el.dataset?.fieldType)return el.dataset.fieldType;if(el.dataset?.jalaliOriginalType)return el.dataset.jalaliOriginalType;if(el.tagName==="TEXTAREA")return "textarea";if(el.tagName==="SELECT")return "select";return ["number","date","datetime-local","checkbox"].includes(el.type)?el.type:"text";}
+function buildFieldControl(meta,id,value=""){
+ const type=meta.type||"text";let el;
+ if(type==="textarea"){el=document.createElement("textarea");el.rows=3;}
+ else if(type==="select"||type==="yesno"){el=document.createElement("select");const empty=document.createElement("option");empty.value="";empty.textContent="انتخاب کنید";el.append(empty);const opts=type==="yesno"?[{value:"true",label:"بله"},{value:"false",label:"خیر"}]:(meta.options||[]).map(v=>({value:String(v),label:String(v)}));opts.forEach(x=>{const o=document.createElement("option");o.value=x.value;o.textContent=x.label;el.append(o);});}
+ else if(type==="checklist"){el=document.createElement("div");el.className="field-checklist";(meta.options||[]).forEach(v=>{const l=document.createElement("label"),c=document.createElement("input"),s=document.createElement("span");c.type="checkbox";c.value=String(v);s.textContent=String(v);l.append(c,s);el.append(l);});if(value&&!Array.isArray(value)&&!(meta.options||[]).includes(String(value))){const l=document.createElement("label"),c=document.createElement("input"),s=document.createElement("span");c.type="checkbox";c.value=String(value);s.textContent=String(value)+" (مقدار قبلی)";l.append(c,s);el.append(l);}}
+ else{el=document.createElement("input");el.type=type==="checkbox"?"checkbox":type;}
+ el.id=id;el.dataset.fieldType=type;el.required=!!meta.required;el.placeholder=meta.placeholder||"";
+ if(type==="select"&&value!==""&&value!==null&&![...el.options].some(o=>o.value===String(value))){const o=document.createElement("option");o.value=String(value);o.textContent=String(value)+" (مقدار قبلی)";el.append(o);}
+ if(type==="checklist"&&Array.isArray(value))el.querySelectorAll('input[type="checkbox"]').forEach(c=>c.checked=value.includes(c.value));else writeControl(el,value,type);return el;
+}
+function applyConditionToWrap(wrap,condition){if(condition?.fieldKey){wrap.dataset.conditionField=condition.fieldKey;wrap.dataset.conditionOperator=condition.operator||"equals";wrap.dataset.conditionValue=condition.value??"";}else{delete wrap.dataset.conditionField;delete wrap.dataset.conditionOperator;delete wrap.dataset.conditionValue;}}
+function fieldDefinitions(){const defs=[];document.querySelectorAll("#missionForm .field label[for]").forEach(l=>{const id=l.htmlFor;if($(id)&&$(id).type!=="file")defs.push({key:"core:"+id,label:fieldMeta(id,l.closest(".field")).label});});const dept=String($("executorDepartment")?.value||"");(schema?.departments||[]).filter(d=>String(d.id)===dept).forEach(d=>(d.fields||[]).filter(f=>f.active!==false).forEach(f=>defs.push({key:"dept:"+dept+":"+f.id,label:f.label})));(schema?.extraFields||[]).filter(f=>f.active!==false).forEach(f=>defs.push({key:"extra:"+f.id,label:f.label}));return defs;}
+function valueForFieldKey(key){const p=String(key||"").split(":");if(p[0]==="core")return readField(p[1]);if(p[0]==="extra")return readExtraFields()[p[1]];if(p[0]==="dept")return readCustom()[p[2]];return null;}
+function applyFieldConditions(){document.querySelectorAll("#missionForm .field[data-condition-field]").forEach(w=>{const a=valueForFieldKey(w.dataset.conditionField),v=w.dataset.conditionValue||"",op=w.dataset.conditionOperator||"equals";let show=true;if(op==="not-empty")show=a!==null&&a!==undefined&&a!==""&&a!==false&&(!Array.isArray(a)||a.length>0);else if(op==="equals")show=Array.isArray(a)?a.includes(v):String(a??"")===v;else if(op==="not-equals")show=Array.isArray(a)?!a.includes(v):String(a??"")!==v;w.hidden=!show;w.querySelectorAll("input,select,textarea").forEach(e=>{if(e.dataset.conditionRequired===undefined)e.dataset.conditionRequired=String(e.required);e.required=show&&e.dataset.conditionRequired==="true";});});}
 function fieldOptions(el){return el&&el.tagName==="SELECT"?[...el.options].filter(o=>o.value!=="").map(o=>o.textContent):[];}
 function fieldMeta(id,wrap){
  const label=wrap?.querySelector("label[for]"),control=$(id);
@@ -135,13 +149,7 @@ function fieldMeta(id,wrap){
 function applyCoreFields(){
  document.querySelectorAll("#missionForm .field label[for]").forEach(label=>{
   const id=label.htmlFor,wrap=label.closest(".field"),el=$(id);if(!wrap||!el||el.type==="file")return;
-  const meta=fieldMeta(id,wrap);wrap.hidden=meta.active===false;
-  const required=!!meta.required;
-  label.textContent=meta.label+(required?" *":"");
-  el.required=required;
-  if(meta.type==="textarea"&&el.tagName!=="TEXTAREA"){const next=document.createElement("textarea");next.id=id;next.name=el.name;next.value=el.value;next.rows=3;el.replaceWith(next);}
-  else if(meta.type!=="textarea"&&meta.type!=="select"&&el.tagName!=="INPUT"){const next=document.createElement("input");next.id=id;next.name=el.name;next.type=meta.type;next.value=el.value;next.placeholder=meta.placeholder||"";el.replaceWith(next);}
-  const target=$(id);if(target){target.required=required;if(target.tagName==="INPUT")target.type=meta.type==="select"?"text":meta.type;target.placeholder=meta.placeholder||"";if(meta.type==="select"){let select=target;if(select.tagName!=="SELECT"){select=document.createElement("select");select.id=id;select.name=target.name;target.replaceWith(select);}const value=select.value;select.replaceChildren();const empty=document.createElement("option");empty.value="";empty.textContent="انتخاب کنید";select.append(empty);(meta.options||[]).forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;select.append(o);});if(value&&!([...select.options].some(o=>o.value===value))){const legacy=document.createElement("option");legacy.value=value;legacy.textContent=value+" (مقدار قبلی)";select.append(legacy);}if([...select.options].some(o=>o.value===value))select.value=value;}}
+  const meta=fieldMeta(id,wrap),oldValue=readControl(el,fieldControlType(el));wrap.hidden=meta.active===false;label.textContent=meta.label+(meta.required?" *":"");const next=buildFieldControl(meta,id,oldValue);next.name=el.name||id;el.replaceWith(next);applyConditionToWrap(wrap,meta.condition);
  });
 }
 function decorateFormFields(){
@@ -158,21 +166,9 @@ function decorateFormFields(){
   btn.addEventListener("click",()=>openFieldEditor({kind:"new",section:section.dataset.section}));head.append(btn);
  });
 }
-function renderExtraFields(values){
- document.querySelectorAll(".extra-field").forEach(el=>el.remove());
- const savedValues=values||currentMission?.extraFields||{};
- (schema.extraFields||[]).filter(f=>f.active!==false).forEach(field=>{
-  const section=document.querySelector('.mission-section[data-section="'+CSS.escape(field.section||"general")+'"] .form-grid');
-  if(!section)return;
-  const wrap=document.createElement("div");wrap.className="field extra-field"+(field.full?" full":"");
-  const label=document.createElement("label");label.htmlFor="extra_"+field.id;label.textContent=field.label+(field.required?" *":"");
-  let el;if(field.type==="textarea"){el=document.createElement("textarea");el.rows=3;}else if(field.type==="select"){el=document.createElement("select");const empty=document.createElement("option");empty.value="";empty.textContent="انتخاب کنید";el.append(empty);(field.options||[]).forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;el.append(o);});}else{el=document.createElement("input");el.type=field.type||"text";}
-  el.id="extra_"+field.id;el.dataset.extraFieldId=field.id;el.required=!!field.required;el.placeholder=field.placeholder||"";el.value=savedValues[field.id]??"";
-  wrap.append(label,el);
-  const tools=document.createElement("div");tools.className="field-tools";const edit=document.createElement("button");edit.type="button";edit.className="field-edit-btn";edit.textContent="ویرایش فیلد";edit.addEventListener("click",()=>openFieldEditor({kind:"extra",id:field.id,section:field.section}));tools.append(edit);wrap.append(tools);section.append(wrap);
- });
-}
-function readExtraFields(){const out={...(currentMission?.extraFields||{})};document.querySelectorAll("[data-extra-field-id]").forEach(el=>out[el.dataset.extraFieldId]=el.type==="number"?(el.value===""?null:Number(el.value)):el.value.trim());return out;}
+function renderExtraFields(values){document.querySelectorAll(".extra-field").forEach(el=>el.remove());const savedValues=values||currentMission?.extraFields||{};
+ (schema.extraFields||[]).filter(f=>f.active!==false).forEach(field=>{const section=document.querySelector('.mission-section[data-section="'+CSS.escape(field.section||"general")+'"] .form-grid');if(!section)return;const wrap=document.createElement("div");wrap.className="field extra-field"+(field.full?" full":"");const label=document.createElement("label");label.htmlFor="extra_"+field.id;label.textContent=field.label+(field.required?" *":"");const el=buildFieldControl(field,"extra_"+field.id,savedValues[field.id]??"");el.dataset.extraFieldId=field.id;el.dataset.extraFieldControl="true";wrap.append(label,el);applyConditionToWrap(wrap,field.condition);const tools=document.createElement("div");tools.className="field-tools";const edit=document.createElement("button");edit.type="button";edit.className="field-edit-btn";edit.textContent="ویرایش فیلد";edit.addEventListener("click",()=>openFieldEditor({kind:"extra",id:field.id,section:field.section}));tools.append(edit);wrap.append(tools);section.append(wrap);});applyFieldConditions();}
+function readExtraFields(){const out={...(currentMission?.extraFields||{})};document.querySelectorAll("[data-extra-field-id]").forEach(el=>out[el.dataset.extraFieldId]=readControl(el,el.dataset.fieldType||"text"));return out;}
 let editingField=null;
 function openFieldEditor(target){
  editingField=target;let meta;
@@ -233,8 +229,8 @@ function renderMilestones(rows){
  (Array.isArray(rows)?rows:[]).forEach(item=>addMilestoneRow(item));
 }
 function readMilestones(){return [...document.querySelectorAll("#milestoneRows .milestone-row")].map(row=>{const inputs=row.querySelectorAll("input");return {title:inputs[0].value.trim(),due:inputs[1].value,owner:inputs[2].value.trim(),status:row.querySelector("select").value,weight:Number(inputs[3].value||1),progress:Math.max(0,Math.min(100,Number(inputs[4].value||0))) };}).filter(item=>item.title);}
-function readCustom(){const out={};document.querySelectorAll("[data-custom-id]").forEach(el=>{out[el.dataset.customId]=el.type==="number"?(el.value===""?null:Number(el.value)):el.value.trim();});return out;}
-function writeCustom(values){Object.entries(values||{}).forEach(([id,value])=>{const el=document.querySelector('[data-custom-id="'+CSS.escape(id)+'"]');if(el&&value!==null&&value!==undefined)el.value=value;});}
+function readCustom(){const out={};document.querySelectorAll("[data-custom-id]").forEach(el=>out[el.dataset.customId]=readControl(el,el.dataset.fieldType||el.dataset.customType||"text"));return out;}
+function writeCustom(values){Object.entries(values||{}).forEach(([id,value])=>{const el=document.querySelector('[data-custom-id="'+CSS.escape(id)+'"]');if(el)writeControl(el,value,el.dataset.fieldType||el.dataset.customType||"text");});applyFieldConditions();}
 function goStep(index){activeStep=Math.max(0,Math.min(sections.length-1,index));sections.forEach((s,i)=>s.classList.toggle("active",i===activeStep));tabs.forEach((t,i)=>t.setAttribute("aria-selected",String(i===activeStep)));$("prevStep").disabled=activeStep===0;$("nextStep").classList.toggle("hidden",activeStep===sections.length-1);$("saveMission").textContent=editingId?"ذخیره تغییرات مأموریت":"ثبت و ذخیره مأموریت";tabs[activeStep].scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"});}
 function updateProgress(){const value=Math.max(0,Math.min(100,Number($("progress").value||0)));$("progressBar").style.width=value+"%";$("progressText").textContent="پیشرفت ثبت‌شده: "+toFa(value)+"٪ · وضعیت: "+statusLabel($("executionStatus").value);}
 function collect(){
