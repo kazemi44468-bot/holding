@@ -303,7 +303,7 @@ const inPages=location.pathname.includes('/pages/');
  const link=[...document.querySelectorAll('link[rel="stylesheet"]')].find(el=>/assets\/css\/style\.css(?:\?|$)/.test(el.getAttribute('href')||''));
  if(!link)return;
  const url=new URL(link.href,document.baseURI);
- url.searchParams.set('v','page-studio-20261114-7');
+ url.searchParams.set('v','page-studio-20261114-8');
  if(link.href!==url.href)link.href=url.href;
 })();
 
