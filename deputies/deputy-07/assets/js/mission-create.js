@@ -123,7 +123,7 @@ function renderDepartmentFields(){
   const label=document.createElement("label");label.htmlFor="custom_"+field.id;label.textContent=field.label+(field.unit?" ("+field.unit+")":"")+(field.required?" *":"");
   const input=buildFieldControl(field,"custom_"+field.id,departmentDraftValues[dept]?.[field.id]??currentMission?.departmentFields?.[field.id]??"");
   input.dataset.customId=field.id;input.dataset.customType=field.type;input.classList.add("custom-field-control");wrap.append(label,input);applyConditionToWrap(wrap,field.condition);
-  const tools=document.createElement("div");tools.className="field-tools";const edit=document.createElement("button");edit.type="button";edit.className="field-edit-btn";edit.textContent="ویرایش فیلد";edit.addEventListener("click",()=>openFieldEditor({kind:"dept",id:field.id,departmentId:dept}));tools.append(edit);wrap.append(tools);host.append(wrap);
+  const tools=document.createElement("div");tools.className="field-tools";const edit=document.createElement("button");edit.type="button";edit.className="field-edit-btn";edit.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z"/></svg>';edit.setAttribute("aria-label","ویرایش فیلد");edit.title="ویرایش فیلد";edit.addEventListener("click",()=>openFieldEditor({kind:"dept",id:field.id,departmentId:dept}));tools.append(edit);wrap.append(tools);host.append(wrap);
  }
 }
 
@@ -175,7 +175,7 @@ function decorateFormFields(){
   const label=wrap.querySelector(":scope > label[for]");if(!label||wrap.querySelector(":scope > .field-tools"))return;
   const id=label.htmlFor;if(!$(id)||$(id).type==="file")return;
   const tools=document.createElement("div");tools.className="field-tools";
-  const edit=document.createElement("button");edit.type="button";edit.className="field-edit-btn";edit.textContent="ویرایش فیلد";edit.addEventListener("click",()=>openFieldEditor({kind:"core",id,wrap}));
+  const edit=document.createElement("button");edit.type="button";edit.className="field-edit-btn";edit.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z"/></svg>';edit.setAttribute("aria-label","ویرایش فیلد");edit.title="ویرایش فیلد";edit.addEventListener("click",()=>openFieldEditor({kind:"core",id,wrap}));
   tools.append(edit);label.after(tools);
  });
  document.querySelectorAll("#missionForm .mission-section").forEach(section=>{
@@ -185,7 +185,7 @@ function decorateFormFields(){
  });
 }
 function renderExtraFields(values){document.querySelectorAll(".extra-field").forEach(el=>el.remove());const savedValues=values||currentMission?.extraFields||{};
- (schema.extraFields||[]).filter(f=>f.active!==false).forEach(field=>{const section=document.querySelector('.mission-section[data-section="'+CSS.escape(field.section||"general")+'"] .form-grid');if(!section)return;const wrap=document.createElement("div");wrap.className="field extra-field"+(field.full?" full":"");const label=document.createElement("label");label.htmlFor="extra_"+field.id;label.textContent=field.label+(field.required?" *":"");const el=buildFieldControl(field,"extra_"+field.id,savedValues[field.id]??"");el.dataset.extraFieldId=field.id;el.dataset.extraFieldControl="true";wrap.append(label,el);applyConditionToWrap(wrap,field.condition);const tools=document.createElement("div");tools.className="field-tools";const edit=document.createElement("button");edit.type="button";edit.className="field-edit-btn";edit.textContent="ویرایش فیلد";edit.addEventListener("click",()=>openFieldEditor({kind:"extra",id:field.id,section:field.section}));tools.append(edit);wrap.append(tools);section.append(wrap);});applyFieldConditions();}
+ (schema.extraFields||[]).filter(f=>f.active!==false).forEach(field=>{const section=document.querySelector('.mission-section[data-section="'+CSS.escape(field.section||"general")+'"] .form-grid');if(!section)return;const wrap=document.createElement("div");wrap.className="field extra-field"+(field.full?" full":"");const label=document.createElement("label");label.htmlFor="extra_"+field.id;label.textContent=field.label+(field.required?" *":"");const el=buildFieldControl(field,"extra_"+field.id,savedValues[field.id]??"");el.dataset.extraFieldId=field.id;el.dataset.extraFieldControl="true";wrap.append(label,el);applyConditionToWrap(wrap,field.condition);const tools=document.createElement("div");tools.className="field-tools";const edit=document.createElement("button");edit.type="button";edit.className="field-edit-btn";edit.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z"/></svg>';edit.setAttribute("aria-label","ویرایش فیلد");edit.title="ویرایش فیلد";edit.addEventListener("click",()=>openFieldEditor({kind:"extra",id:field.id,section:field.section}));tools.append(edit);wrap.append(tools);section.append(wrap);});applyFieldConditions();}
 function readExtraFields(){const out={...(currentMission?.extraFields||{})};document.querySelectorAll("[data-extra-field-id]").forEach(el=>out[el.dataset.extraFieldId]=readControl(el,el.dataset.fieldType||"text"));return out;}
 let editingField=null;
 function openFieldEditor(target){
