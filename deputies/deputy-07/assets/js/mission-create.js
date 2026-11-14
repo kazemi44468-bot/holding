@@ -120,7 +120,7 @@ function collect(){
  data.progress=Number(data.progress||0);
  data.workflow={stage:data.status,assignedDepartment:data.executorDepartment,assignedManager:data.directOwner,assignedExpert:data.assignedExpert,updatedAt:new Date().toISOString()};
  data.calendarEvent=data.calendarEnabled?{
-  id:"mission-event:"+ (currentMission?.id||"new"),type:"mission",missionCode:currentMission?.missionCode||"",title:data.calendarTitle||data.missionTitle,
+  id:"mission-event:"+ (currentMission?.missionCode||data.missionCode||"new"),type:"mission",missionCode:currentMission?.missionCode||data.missionCode||"",title:data.calendarTitle||data.missionTitle,
   start:data.calendarStart||data.plannedStart||dateNow(),end:data.calendarEnd||data.plannedEnd||data.calendarStart||data.plannedStart||dateNow(),
   dept:data.executorDepartment||"all",description:data.calendarDescription||data.missionSubject||"",reminder:data.calendarReminder||"بدون یادآوری"
  }:null;
@@ -176,7 +176,7 @@ async function unlock(){
  if(status.exists)await MissionStore.unlock(pass);
  else await MissionStore.unlock(pass);
  unlocked=true;$("vaultPass").value="";$("workArea").classList.remove("hidden");$("authState").textContent="اتصال امن برقرار شد؛ داده‌ها از مخزن رمزگذاری‌شده مشترک معاونت ۷ خوانده می‌شوند.";
- $("unlockVault").disabled=true;$("vaultPass").disabled=true;
+ $("unlockVault").disabled=true;$("vaultPass").disabled=true;$("schemaAdmin").hidden=false;
  await loadSchema();
  if(editingId)await loadMission(editingId);
  else{writeField("requestDate",dateNow());writeField("receivedAt",new Date().toISOString().slice(0,16));writeField("calendarStart",dateNow());writeField("calendarEnd",dateNow());}
