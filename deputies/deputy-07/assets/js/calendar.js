@@ -106,7 +106,6 @@
  const personSummary=root.querySelector("[data-calendar-person-summary]");
  const summary=root.querySelector("[data-calendar-department-summary]");
  let centralPeople=[];
- const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  function renderPersonnelSummary(){
   if(!personSummary)return;
   const people=centralPeople;
