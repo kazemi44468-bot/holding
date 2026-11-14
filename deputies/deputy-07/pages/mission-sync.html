@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f3f6f1">
+<meta name="description" content="پشتیبان‌گیری و تبادل آفلاین اطلاعات مأموریت‌های معاونت ۷">
+<title>پشتیبان‌گیری و بروزرسانی مأموریت‌ها | معاونت ۷</title>
+<link rel="preload" href="../assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/css/style.css?v=mission-sync-20261114-1">
+<style>
+.sync-panel{padding:24px;margin-top:20px}.sync-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.sync-stat{padding:16px;border:1px solid var(--line,#dce4df);border-radius:12px;background:#fff}.sync-stat small{display:block;color:var(--muted);margin-bottom:8px}.sync-stat b{font-size:22px}.sync-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.sync-note{padding:14px;border:1px solid #d7e5e5;border-radius:10px;background:#f3f8f8;line-height:1.9}.sync-status{margin-top:12px;color:var(--muted);line-height:1.9}.sync-list{display:grid;gap:8px;margin-top:14px}.sync-row{padding:12px;border:1px solid var(--line,#dce4df);border-radius:10px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.sync-row small{color:var(--muted)}.sync-actions button,.sync-actions .file-button{cursor:pointer}
+</style>
+</head>
+<body class="ops-page">
+<header class="ops-header"><div class="ops-header-inner">
+<a class="ops-brand" href="../dashboard.html"><img class="ops-logo" src="../assets/images/iran-flag.svg" alt="پرچم ایران"><span><b>معاونت ۷</b><small>سامانه وضعیت و عملکرد</small></span></a>
+<nav class="ops-nav" aria-label="منوی اصلی"></nav><div class="ops-clock"><span>زمان سامانه</span><b id="clock">—</b><small id="date">—</small></div>
+</div></header>
+<main class="ops-main">
+<section class="ops-intro"><div><span class="eyebrow">ماموریت‌ها · زیرساخت آفلاین</span><h1>پشتیبان‌گیری و بروزرسانی مأموریت‌ها</h1><p>مدیریت نسخه‌های اطلاعات و تبادل امن تغییرات بین رایانه‌های معاونت ۷</p></div></section>
+<section class="dept-panel sync-panel">
+<div class="dept-panel-head"><div><span class="eyebrow">اتصال به پایگاه داده محلی</span><h2>وضعیت مخزن مأموریت‌ها</h2></div><span id="lockBadge" class="status">قفل است</span></div>
+<p id="vaultState" class="sync-status">برای اتصال، گذرواژه اصلی مخزن محلی را وارد کنید. اگر هنوز مخزنی ساخته نشده باشد، در اولین بازگشایی ایجاد می‌شود.</p>
+<div class="form-row"><label for="passphrase">گذرواژه اصلی مخزن محلی</label><input id="passphrase" type="password" autocomplete="current-password" placeholder="حداقل ۱۲ نویسه"></div>
+<div class="sync-actions"><button id="unlockBtn" class="primary">ایجاد / بازگشایی مخزن</button><button id="lockBtn" class="quiet" disabled>قفل‌کردن مخزن</button><a class="file-button" href="../local-data/index.html">رفتن به مرکز داده و پشتیبان‌گیری</a></div>
+</section>
+<section class="stats sync-grid">
+<article class="sync-stat"><small>مأموریت‌های ثبت‌شده</small><b id="missionCount">—</b></article>
+<article class="sync-stat"><small>تعارض‌های مأموریت</small><b id="conflictCount">—</b></article>
+<article class="sync-stat"><small>کل تغییرات مخزن</small><b id="changeCount">—</b></article>
+<article class="sync-stat"><small>شناسه این رایانه</small><b id="deviceId">—</b></article>
+</section>
+<section class="dept-panel sync-panel">
+<div class="dept-panel-head"><div><span class="eyebrow">تبادل آفلاین</span><h2>تهیه و دریافت بسته بروزرسانی</h2></div></div>
+<div class="sync-note">برای انتقال اطلاعات بین رایانه‌ها، از هر رایانه بسته پشتیبان تهیه کنید و با فلش یا شبکه داخلی به رایانه مقصد ببرید. هنگام دریافت، تغییرات جدید ادغام می‌شوند؛ موارد تکراری دوباره ثبت نمی‌شوند و تعارض‌ها بدون حذف شاخه‌ها گزارش می‌شوند.</div>
+<div class="sync-actions"><button id="exportBtn" class="primary" disabled>ساخت بسته پشتیبان و بروزرسانی</button><label class="file-button" for="importFile">دریافت بسته رایانه دیگر</label><input id="importFile" type="file" accept=".h7backup,.json,application/json" hidden disabled></div>
+<p id="transferResult" class="sync-status" aria-live="polite">ابتدا مخزن را بازگشایی کنید.</p>
+</section>
+<section class="dept-panel sync-panel">
+<div class="dept-panel-head"><div><span class="eyebrow">داده‌های مشترک</span><h2>آخرین مأموریت‌های موجود در مخزن</h2></div><button id="refreshBtn" class="quiet" disabled>بروزرسانی فهرست</button></div>
+<div id="missionList" class="sync-list">برای مشاهده اطلاعات، مخزن را بازگشایی کنید.</div>
+</section>
+<section class="dept-panel sync-panel">
+<div class="dept-panel-head"><div><h2>روش کار هماهنگ چند رایانه</h2></div></div>
+<ol><li>در هر رایانه، نسخه آفلاین سامانه و همین مخزن را با گذرواژه اصلی بازگشایی کنید.</li><li>مأموریت‌ها در بانک محلی همان رایانه ثبت و ویرایش می‌شوند.</li><li>پس از پایان کار، بسته پشتیبان رمزگذاری‌شده بسازید.</li><li>بسته را به رایانه تجمیع‌کننده منتقل و وارد کنید.</li><li>تعارض‌های احتمالی را بررسی کنید و سپس بسته جامع جدید را به سایر رایانه‌ها برسانید.</li></ol>
+<p class="sync-note">قالب داده مأموریت نسخه‌دار است و از طریق لایه واسط <code>MissionStore</code> به مخزن متصل می‌شود. در توسعه بعدی، می‌توان همین واسط را به پایگاه داده مرکزی متصل کرد. تا آن زمان، نسخه وب از IndexedDB همین مرورگر و نسخه دسکتاپ از مخزن محلی برنامه استفاده می‌کند.</p>
+</section>
+<footer class="ops-footer"></footer>
+</main>
+<script src="../assets/js/main.js?v=mission-sync-20261114-1"></script>
+<script type="module" src="../assets/js/mission-sync.js"></script>
+</body></html>
