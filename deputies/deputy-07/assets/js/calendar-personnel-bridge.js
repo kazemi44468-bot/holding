@@ -1,4 +1,4 @@
-import {list,initialize,ensurePersonnelUnlocked} from "../../local-data/assets/personnel-registry.js";
+import {list,initialize,ensurePersonnelUnlocked} from "../../local-data/assets/personnel-registry.js?v=personnel-registry-20261114-3";
 (()=>{"use strict";const root=document.querySelector("[data-org-calendar]");if(!root)return;const button=root.querySelector("[data-calendar-personnel-sync]"),status=root.querySelector("[data-calendar-personnel-status]");if(!button)return;
 const departments={"1":"اداره اداری و پشتیبانی","2":"اداره تحقیق و توسعه","3":"اداره پارک‌بان و معبربانان","4":"اداره تأسیسات فنی و امور نگهداری","6":"اداره فاوا و خدمات فنی","7":"اداره جمع‌آوری، نگهداری و بازیافت پسماند","8":"اداره بازرسی و تحقیقات محلی"};
 const dateFor=(raw,annual)=>{if(!raw)return"";const parts=String(raw).slice(0,10).split("-");if(parts.length!==3)return"";const year=annual?new Date().getFullYear():Number(parts[0]);return [year,parts[1],parts[2]].join("-");};
