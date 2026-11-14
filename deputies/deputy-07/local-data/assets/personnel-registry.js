@@ -59,6 +59,7 @@ async function changeCode(oldCode,newCode){
  await Vault.add("personnel-audit",crypto.randomUUID(),"upsert",{action:"recode",oldCode,newCode,at:new Date().toISOString()});
  return moved;
 }
+function canManagePersonnel(){try{const s=JSON.parse(localStorage.getItem("deputy7.identity-access.v1")||"null"),u=(s?.users||[]).find(x=>x.username==="alikazemi"&&x.status==="active"),r=(s?.roles||[]).find(x=>x.id===u?.roleId);return !!(u?.isSuperAdmin||r?.superAdmin||r?.id==="technical-admin"||r?.grants?.includes("managePersonnel"));}catch{return false;}}
 function initRegistryPage(){
  const root=document.querySelector("[data-personnel-registry]");if(!root)return;
  const $=s=>root.querySelector(s);let rows=[],page=1,editing=null;
@@ -83,7 +84,7 @@ function initRegistryPage(){
   field("birthDate").value=p.birthDate||"";field("gender").value=p.gender||"";field("mobile").value=p.mobile||"";field("phone").value=p.phone||"";field("email").value=p.email||"";field("address").value=p.address||"";
   field("departmentId").value=p.departmentId||"";field("unit").value=p.unit||"";field("jobTitle").value=p.jobTitle||"";field("employmentType").value=p.employmentType||"";field("hireDate").value=p.hireDate||"";field("contractEnd").value=p.contractEnd||"";
   field("education").value=p.education||"";field("fieldOfStudy").value=p.fieldOfStudy||"";field("specialty").value=p.specialty||"";field("supervisorCode").value=p.supervisorCode||"";field("workLocation").value=p.workLocation||"";field("notes").value=p.notes||"";
-  field("code").readOnly=!r; $("[data-pr-dialog-title]").textContent=r?"ویرایش پرونده پرسنلی":"تکمیل پرونده پرسنلی";$("[data-pr-recode]").hidden=!r||r.status==="empty";
+  field("code").readOnly=!r; $("[data-pr-dialog-title]").textContent=r?"ویرایش پرونده پرسنلی":"تکمیل پرونده پرسنلی";$("[data-pr-recode]").hidden=!r||r.status==="empty"||!canManagePersonnel();
   $("[data-pr-dialog]").showModal();
  }
  async function reload(){if(!await ensureUnlocked())return;const result=await initialize();rows=result.records;render();$("[data-pr-vault]").textContent="مخزن رمزگذاری‌شده باز است · "+fa(result.created)+" کد جدید رزرو شد";}
@@ -92,11 +93,12 @@ function initRegistryPage(){
  $("[data-personnel-status]").addEventListener("change",()=>{page=1;render();});
  $("[data-personnel-department]").addEventListener("change",()=>{page=1;render();});
  $("[data-pr-prev]").onclick=()=>{page--;render();};$("[data-pr-next]").onclick=()=>{page++;render();};
- $("[data-pr-new]").onclick=()=>{const empty=rows.find(r=>r.status==="empty");if(!empty){alert("همه کدهای رزروشده تکمیل شده‌اند.");return;}setForm(empty);};
+ $("[data-pr-new]").hidden=!canManagePersonnel();
+ $("[data-pr-new]").onclick=()=>{if(!canManagePersonnel())return alert("برای ویرایش بانک پرسنل، مجوز مدیر فنی لازم است.");const empty=rows.find(r=>r.status==="empty");if(!empty){alert("همه کدهای رزروشده تکمیل شده‌اند.");return;}setForm(empty);};
  tbody.addEventListener("click",e=>{const b=e.target.closest("[data-edit]");if(b)setForm(rows.find(r=>r.code===b.dataset.edit));});
  $("[data-pr-close]").onclick=()=>{$("[data-pr-dialog]").close();};
  $("[data-pr-recode]").onclick=async()=>{const old=field("code").value,newCode=prompt("کد جدید را وارد کنید. این تغییر در ارجاعات شناخته‌شده تمام رکوردهای مخزن اعمال می‌شود:",old);if(!newCode||newCode===old)return;if(!confirm("کد "+old+" به "+newCode+" تغییر کند؟ ارجاعات پرسنلی ثبت‌شده در مخزن نیز به‌روزرسانی می‌شوند."))return;try{const moved=await changeCode(old,newCode);await initialize();rows=await list();setForm(moved);render();alert("کد و ارجاعات ثبت‌شده به‌روزرسانی شد.");}catch(e){alert(e.message);}};
- form.addEventListener("submit",async e=>{e.preventDefault();try{let code=field("code").value.trim();const profile={};for(const name of ["firstName","lastName","nationalCode","birthDate","gender","mobile","phone","email","address","departmentId","unit","jobTitle","employmentType","hireDate","contractEnd","education","fieldOfStudy","specialty","supervisorCode","workLocation","notes"])profile[name]=field(name).value.trim();const saved=await save(code,profile);rows=await list();$("[data-pr-dialog]").close();render();alert("پرونده "+saved.code+" ذخیره شد.");}catch(err){alert(err.message);}});
+ form.addEventListener("submit",async e=>{e.preventDefault();if(!canManagePersonnel())return alert("برای ثبت یا ویرایش پرونده، مجوز مدیریت بانک پرسنل لازم است.");try{let code=field("code").value.trim();const profile={};for(const name of ["firstName","lastName","nationalCode","birthDate","gender","mobile","phone","email","address","departmentId","unit","jobTitle","employmentType","hireDate","contractEnd","education","fieldOfStudy","specialty","supervisorCode","workLocation","notes"])profile[name]=field(name).value.trim();const saved=await save(code,profile);rows=await list();$("[data-pr-dialog]").close();render();alert("پرونده "+saved.code+" ذخیره شد.");}catch(err){alert(err.message);}});
  render();
 }
 function initProfileBridge(){
