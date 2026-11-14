@@ -25,8 +25,9 @@ async function initialize(){
 async function save(code,profile){
  Vault.ensure();code=String(code).trim();if(!/^\d{4,}$/.test(code)||Number(code)<MIN_CODE)throw Error("کد پرسنلی باید عددی و از ۱۰۰۰ به بالا باشد.");
  const prior=await get(code);if(!prior)throw Error("کد پرسنلی در بانک رزروشده پیدا نشد.");
- const nationalCode=String(profile.nationalCode||"").trim();if(nationalCode&&(await list()).some(r=>r.code!==code&&r.profile?.nationalCode===nationalCode))throw Error("این کد ملی قبلاً در پرونده دیگری ثبت شده است.");
- const clean={...blank(code),...prior,profile:{...blank(code).profile,...(prior.profile||{}),...profile},status:(profile.firstName||profile.lastName)?"active":(prior.status==="inactive"?"inactive":"empty"),updatedAt:new Date().toISOString(),revision:(prior.revision||0)+1};
+ if(!String(profile.firstName||"").trim()||!String(profile.lastName||"").trim())throw Error("نام و نام خانوادگی الزامی است.");
+ const nationalCode=String(profile.nationalCode||"").trim();if(nationalCode&&nationalCode.length!==10)throw Error("کد ملی باید ۱۰ رقم باشد.");if(nationalCode&&(await list()).some(r=>r.code!==code&&r.profile?.nationalCode===nationalCode))throw Error("این کد ملی قبلاً در پرونده دیگری ثبت شده است.");
+ const clean={...blank(code),...prior,profile:{...blank(code).profile,...(prior.profile||{}),...profile},status:profile.recordStatus==="inactive"?"inactive":(profile.firstName||profile.lastName)?"active":(prior.status==="inactive"?"inactive":"empty"),updatedAt:new Date().toISOString(),revision:(prior.revision||0)+1};
  await Vault.add(ENTITY,code,"upsert",clean);
  try{const key="deputy7.identity-access.v1",s=JSON.parse(localStorage.getItem(key)||"null");if(s?.users){s.users=s.users.map(u=>u.personnelCode===code?{...u,name:(clean.profile.firstName+" "+clean.profile.lastName).trim()||u.name,title:clean.profile.jobTitle||u.title,unit:clean.profile.unit||u.unit,departments:clean.profile.departmentId?[clean.profile.departmentId]:u.departments}:u);localStorage.setItem(key,JSON.stringify(s));}}catch{}
  await Vault.add("personnel-audit",crypto.randomUUID(),"upsert",{action:"save",code,at:new Date().toISOString()});
@@ -39,7 +40,7 @@ function replaceRefs(value,oldCode,newCode,key=""){
 }
 async function changeCode(oldCode,newCode){
  Vault.ensure();oldCode=String(oldCode);newCode=String(newCode).trim();
- if(!/^\d{4,}$/.test(newCode)||Number(newCode)<MIN_CODE)throw Error("کد جدید باید عددی و از ۱۰۰۰ به بالا باشد.");
+ if(!/^\d{4,}$/.test(newCode)||Number(newCode)<MIN_CODE||Number(newCode)>=MIN_CODE+SLOT_COUNT)throw Error("کد جدید باید در بازه ۱۰۰۰ تا ۱۲۴۹ باشد.");
  if(oldCode===newCode)return await get(oldCode);
  const source=await get(oldCode);if(!source)throw Error("کد فعلی پیدا نشد.");
  const target=await get(newCode);if(target&&target.status!=="empty")throw Error("کد جدید قبلاً به فرد دیگری تخصیص یافته است.");if(target)await Vault.add(ENTITY,newCode,"delete",target);
@@ -80,11 +81,11 @@ function initRegistryPage(){
  }
  function setForm(r){
   editing=r;const p=r?.profile||blank("1000").profile;
-  field("code").value=r?.code||"";field("firstName").value=p.firstName||"";field("lastName").value=p.lastName||"";field("nationalCode").value=p.nationalCode||"";
+  field("code").value=r?.code||"";field("recordStatus").value=r?.status==="inactive"?"inactive":"active";field("firstName").value=p.firstName||"";field("lastName").value=p.lastName||"";field("nationalCode").value=p.nationalCode||"";
   field("birthDate").value=p.birthDate||"";field("gender").value=p.gender||"";field("mobile").value=p.mobile||"";field("phone").value=p.phone||"";field("email").value=p.email||"";field("address").value=p.address||"";
   field("departmentId").value=p.departmentId||"";field("unit").value=p.unit||"";field("jobTitle").value=p.jobTitle||"";field("employmentType").value=p.employmentType||"";field("hireDate").value=p.hireDate||"";field("contractEnd").value=p.contractEnd||"";
   field("education").value=p.education||"";field("fieldOfStudy").value=p.fieldOfStudy||"";field("specialty").value=p.specialty||"";field("supervisorCode").value=p.supervisorCode||"";field("workLocation").value=p.workLocation||"";field("notes").value=p.notes||"";
-  field("code").readOnly=!r; $("[data-pr-dialog-title]").textContent=r?"ویرایش پرونده پرسنلی":"تکمیل پرونده پرسنلی";$("[data-pr-recode]").hidden=!r||r.status==="empty"||!canManagePersonnel();
+  field("code").readOnly=true; $("[data-pr-dialog-title]").textContent=r?"ویرایش پرونده پرسنلی":"تکمیل پرونده پرسنلی";$("[data-pr-recode]").hidden=!r||r.status==="empty"||!canManagePersonnel();
   $("[data-pr-dialog]").showModal();
  }
  async function reload(){if(!await ensureUnlocked())return;const result=await initialize();rows=result.records;render();$("[data-pr-vault]").textContent="مخزن رمزگذاری‌شده باز است · "+fa(result.created)+" کد جدید رزرو شد";}
@@ -98,7 +99,7 @@ function initRegistryPage(){
  tbody.addEventListener("click",e=>{const b=e.target.closest("[data-edit]");if(b)setForm(rows.find(r=>r.code===b.dataset.edit));});
  $("[data-pr-close]").onclick=()=>{$("[data-pr-dialog]").close();};
  $("[data-pr-recode]").onclick=async()=>{const old=field("code").value,newCode=prompt("کد جدید را وارد کنید. این تغییر در ارجاعات شناخته‌شده تمام رکوردهای مخزن اعمال می‌شود:",old);if(!newCode||newCode===old)return;if(!confirm("کد "+old+" به "+newCode+" تغییر کند؟ ارجاعات پرسنلی ثبت‌شده در مخزن نیز به‌روزرسانی می‌شوند."))return;try{const moved=await changeCode(old,newCode);await initialize();rows=await list();setForm(moved);render();alert("کد و ارجاعات ثبت‌شده به‌روزرسانی شد.");}catch(e){alert(e.message);}};
- form.addEventListener("submit",async e=>{e.preventDefault();if(!canManagePersonnel())return alert("برای ثبت یا ویرایش پرونده، مجوز مدیریت بانک پرسنل لازم است.");try{let code=field("code").value.trim();const profile={};for(const name of ["firstName","lastName","nationalCode","birthDate","gender","mobile","phone","email","address","departmentId","unit","jobTitle","employmentType","hireDate","contractEnd","education","fieldOfStudy","specialty","supervisorCode","workLocation","notes"])profile[name]=field(name).value.trim();const saved=await save(code,profile);rows=await list();$("[data-pr-dialog]").close();render();alert("پرونده "+saved.code+" ذخیره شد.");}catch(err){alert(err.message);}});
+ form.addEventListener("submit",async e=>{e.preventDefault();if(!canManagePersonnel())return alert("برای ثبت یا ویرایش پرونده، مجوز مدیریت بانک پرسنل لازم است.");try{let code=field("code").value.trim();const profile={};for(const name of ["recordStatus","firstName","lastName","nationalCode","birthDate","gender","mobile","phone","email","address","departmentId","unit","jobTitle","employmentType","hireDate","contractEnd","education","fieldOfStudy","specialty","supervisorCode","workLocation","notes"])profile[name]=field(name).value.trim();const saved=await save(code,profile);rows=await list();$("[data-pr-dialog]").close();render();alert("پرونده "+saved.code+" ذخیره شد.");}catch(err){alert(err.message);}});
  render();
 }
 function initProfileBridge(){
