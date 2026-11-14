@@ -5,13 +5,13 @@
  const departments={"1":"اداره اداری و پشتیبانی","2":"اداره تحقیق و توسعه","3":"اداره پارک بان و معبربانان","4":"اداره تأسیسات فنی و امور نگهداری","6":"اداره فاوا و خدمات فنی","7":"اداره جمع‌آوری، نگهداری و بازیافت پسماند","8":"اداره بازرسی و تحقیقات محلی"};
  const events=[
   {date:"2026-11-22",type:"meeting",dept:"all",title:"نشست راهبری و مرور اولویت‌های شرکت",detail:"بررسی وضعیت اقدامات جاری، موانع اجرایی و تصمیم‌های بین‌اداره‌ای",time:"۰۹:۰۰",place:"اتاق جلسات ستاد"},
-  {date:"2026-11-04",type:"meeting",dept:"1",personId:"10001",title:"جلسه بررسی امور پرسنلی",detail:"بررسی درخواست‌ها و برنامه‌های امور اداری",time:"۱۰:۰۰",place:"اداره اداری و پشتیبانی"},
-  {date:"2026-11-06",type:"session",dept:"2",personId:"10006",title:"نشست بررسی طرح‌های پژوهشی",detail:"ارزیابی پیشرفت طرح‌ها و تعیین گام‌های بعدی",time:"۱۱:۰۰",place:"اداره تحقیق و توسعه"},
-  {date:"2026-11-05",type:"meeting",dept:"3",personId:"10002",title:"جلسه هماهنگی عملیات میدانی",detail:"هماهنگی سرپرستان و برنامه عملیات مناطق",time:"۰۸:۳۰",place:"اداره پارک بان و معبربانان"},
-  {date:"2026-11-07",type:"meeting",dept:"4",personId:"10004",title:"جلسه برنامه نگهداری تأسیسات",detail:"مرور برنامه تعمیرات و اولویت‌بندی تجهیزات",time:"۰۹:۳۰",place:"اداره تأسیسات فنی"},
-  {date:"2026-11-08",type:"meeting",dept:"6",personId:"10003",title:"جلسه پایش زیرساخت و سامانه‌ها",detail:"بررسی پایداری خدمات و برنامه ارتقای زیرساخت",time:"۱۰:۰۰",place:"اداره فاوا"},
-  {date:"2026-11-09",type:"meeting",dept:"7",personId:"10005",title:"جلسه هماهنگی عملیات پسماند",detail:"هماهنگی برنامه جمع‌آوری و مدیریت مسیرها",time:"۰۸:۰۰",place:"اداره پسماند"},
-  {date:"2026-11-11",type:"action",dept:"1",personId:"10001",title:"کارگاه آموزش و توسعه کارکنان",detail:"اجرای برنامه آموزشی دوره و ثبت حضور کارکنان",time:"۰۹:۰۰",place:"سالن آموزش"},
+  {date:"2026-11-04",type:"meeting",dept:"1",title:"جلسه بررسی امور پرسنلی",detail:"بررسی درخواست‌ها و برنامه‌های امور اداری",time:"۱۰:۰۰",place:"اداره اداری و پشتیبانی"},
+  {date:"2026-11-06",type:"session",dept:"2",title:"نشست بررسی طرح‌های پژوهشی",detail:"ارزیابی پیشرفت طرح‌ها و تعیین گام‌های بعدی",time:"۱۱:۰۰",place:"اداره تحقیق و توسعه"},
+  {date:"2026-11-05",type:"meeting",dept:"3",title:"جلسه هماهنگی عملیات میدانی",detail:"هماهنگی سرپرستان و برنامه عملیات مناطق",time:"۰۸:۳۰",place:"اداره پارک بان و معبربانان"},
+  {date:"2026-11-07",type:"meeting",dept:"4",title:"جلسه برنامه نگهداری تأسیسات",detail:"مرور برنامه تعمیرات و اولویت‌بندی تجهیزات",time:"۰۹:۳۰",place:"اداره تأسیسات فنی"},
+  {date:"2026-11-08",type:"meeting",dept:"6",title:"جلسه پایش زیرساخت و سامانه‌ها",detail:"بررسی پایداری خدمات و برنامه ارتقای زیرساخت",time:"۱۰:۰۰",place:"اداره فاوا"},
+  {date:"2026-11-09",type:"meeting",dept:"7",title:"جلسه هماهنگی عملیات پسماند",detail:"هماهنگی برنامه جمع‌آوری و مدیریت مسیرها",time:"۰۸:۰۰",place:"اداره پسماند"},
+  {date:"2026-11-11",type:"action",dept:"1",title:"کارگاه آموزش و توسعه کارکنان",detail:"اجرای برنامه آموزشی دوره و ثبت حضور کارکنان",time:"۰۹:۰۰",place:"سالن آموزش"},
   {date:"2026-11-10",type:"session",dept:"3",title:"نشست سرپرستان مناطق",detail:"بررسی گزارش‌های میدانی و هماهنگی عملیات",time:"۰۹:۰۰",place:"اداره پارک بان و معبربانان"},
   {date:"2026-11-12",type:"action",dept:"4",title:"بازدید فنی دوره‌ای",detail:"کنترل وضعیت تجهیزات و ثبت موارد نیازمند اقدام",time:"۰۸:۰۰",place:"محدوده عملیاتی"},
   {date:"2026-11-13",type:"meeting",dept:"2",title:"جلسه شورای تحقیق و توسعه",detail:"ارائه نتایج مطالعات و تعیین اولویت‌های پژوهشی",time:"۱۱:۰۰",place:"اداره تحقیق و توسعه"},
@@ -21,38 +21,34 @@
   {date:"2026-11-17",type:"action",dept:"1",title:"بازبینی پرونده‌های استخدامی",detail:"کنترل و تکمیل سوابق اداری",time:"۰۹:۰۰",place:"اداره اداری و پشتیبانی"},
   {date:"2026-11-18",type:"action",dept:"6",title:"اجرای برنامه ارتقای تجهیزات",detail:"به‌روزرسانی و تحویل تجهیزات برنامه‌ریزی‌شده",time:"۰۸:۳۰",place:"اداره فاوا"},
   {date:"2026-11-19",type:"action",dept:"2",title:"ارائه نتایج مطالعات دوره‌ای",detail:"جمع‌بندی گزارش پژوهشی و ارائه به مدیریت",time:"۱۱:۰۰",place:"اداره تحقیق و توسعه"},
-  {date:"2026-11-20",type:"action",dept:"4",personId:"10004",title:"کنترل وضعیت تجهیزات و تأسیسات",detail:"بازبینی فنی و ثبت گزارش نگهداری",time:"۰۸:۰۰",place:"اداره تأسیسات فنی"},
-  {date:"2026-11-21",type:"action",dept:"7",personId:"10005",title:"پایش برنامه تفکیک و بازیافت",detail:"ارزیابی شاخص‌های اجرایی و ثبت گزارش",time:"۰۷:۰۰",place:"اداره پسماند"},
-  {date:"2026-11-11",type:"personal",dept:"2",personId:"10006",title:"مناسبت تولد همکاران",detail:"۲ مناسبت پرسنلی در این بازه",personCount:2,time:"",place:"اداره تحقیق و توسعه"},
-  {date:"2026-11-18",type:"personal",dept:"1",personId:"10001",title:"سالگرد ازدواج همکاران",detail:"۱ مناسبت پرسنلی در این بازه",personCount:1,time:"",place:"اداره اداری و پشتیبانی"},
-  {date:"2026-11-26",type:"personal",dept:"3",personId:"10002",title:"مناسبت ازدواج همکاران",detail:"۱ مناسبت پرسنلی در این بازه",personCount:1,time:"",place:"اداره پارک بان و معبربانان"},
-  {date:"2026-11-29",type:"personal",dept:"7",personId:"10005",title:"مناسبت تولد همکاران",detail:"۱ مناسبت پرسنلی در این بازه",personCount:1,time:"",place:"اداره پسماند"},
+  {date:"2026-11-20",type:"action",dept:"4",title:"کنترل وضعیت تجهیزات و تأسیسات",detail:"بازبینی فنی و ثبت گزارش نگهداری",time:"۰۸:۰۰",place:"اداره تأسیسات فنی"},
+  {date:"2026-11-21",type:"action",dept:"7",title:"پایش برنامه تفکیک و بازیافت",detail:"ارزیابی شاخص‌های اجرایی و ثبت گزارش",time:"۰۷:۰۰",place:"اداره پسماند"},
   {date:"2026-11-03",type:"resolution",dept:"1",orderId:"R-1405-021",title:"مصوبه یکپارچه‌سازی گزارش عملکرد ماهانه",detail:"",time:"",place:""},
   {date:"2026-11-06",type:"resolution",dept:"4",orderId:"R-1405-022",title:"مصوبه اولویت‌بندی تعمیرات تجهیزات",detail:"",time:"",place:""},
   {date:"2026-11-07",type:"resolution",dept:"7",orderId:"R-1405-025",title:"مصوبه بازنگری مسیرهای جمع‌آوری پسماند",detail:"",time:"",place:""}
  ];
  events.push(
   /* برنامه جلسات ریاست با مدیران ادارات و برنامه‌های تکمیلی زمان‌دار */
-  {date:"2026-11-10",type:"meeting",dept:"all",personId:"10001",title:"جلسه رئیس شرکت با اداره اداری و پشتیبانی",detail:"مرور وضعیت نیروی انسانی، مکاتبات، پشتیبانی و تصمیم‌گیری درباره درخواست‌های ارجاعی",time:"۰۸:۳۰",place:"اتاق جلسات ریاست"},
-  {date:"2026-11-11",type:"meeting",dept:"all",personId:"10006",title:"جلسه رئیس شرکت با اداره تحقیق و توسعه",detail:"ارائه گزارش طرح‌های پژوهشی، اولویت‌بندی مطالعات و تعیین خروجی‌های قابل تحویل",time:"۰۹:۰۰",place:"اتاق جلسات ریاست"},
-  {date:"2026-11-12",type:"meeting",dept:"all",personId:"10002",title:"جلسه رئیس شرکت با اداره پارکبان و معبربانان",detail:"بررسی پوشش مناطق، وضعیت نیروهای میدانی، انضباط عملیاتی و نیازهای تجهیزاتی",time:"۰۸:۳۰",place:"اتاق جلسات ریاست"},
-  {date:"2026-11-15",type:"meeting",dept:"all",personId:"10004",title:"جلسه رئیس شرکت با اداره تأسیسات فنی و امور نگهداری",detail:"بررسی خرابی‌های باز، برنامه نگهداری پیشگیرانه و اولویت تعمیرات",time:"۰۹:۰۰",place:"اتاق جلسات ریاست"},
-  {date:"2026-11-16",type:"meeting",dept:"all",personId:"10003",title:"جلسه رئیس شرکت با اداره فاوا و خدمات فنی",detail:"مرور پایداری سامانه‌ها، امنیت اطلاعات، پشتیبانی کاربران و برنامه توسعه زیرساخت",time:"۰۹:۰۰",place:"اتاق جلسات ریاست"},
-  {date:"2026-11-17",type:"meeting",dept:"all",personId:"10005",title:"جلسه رئیس شرکت با اداره جمع‌آوری و بازیافت پسماند",detail:"ارزیابی ناوگان، مسیرهای جمع‌آوری، شاخص‌های پاکیزگی و برنامه بازیافت",time:"۰۸:۳۰",place:"اتاق جلسات ریاست"},
+  {date:"2026-11-10",type:"meeting",dept:"all",title:"جلسه رئیس شرکت با اداره اداری و پشتیبانی",detail:"مرور وضعیت نیروی انسانی، مکاتبات، پشتیبانی و تصمیم‌گیری درباره درخواست‌های ارجاعی",time:"۰۸:۳۰",place:"اتاق جلسات ریاست"},
+  {date:"2026-11-11",type:"meeting",dept:"all",title:"جلسه رئیس شرکت با اداره تحقیق و توسعه",detail:"ارائه گزارش طرح‌های پژوهشی، اولویت‌بندی مطالعات و تعیین خروجی‌های قابل تحویل",time:"۰۹:۰۰",place:"اتاق جلسات ریاست"},
+  {date:"2026-11-12",type:"meeting",dept:"all",title:"جلسه رئیس شرکت با اداره پارکبان و معبربانان",detail:"بررسی پوشش مناطق، وضعیت نیروهای میدانی، انضباط عملیاتی و نیازهای تجهیزاتی",time:"۰۸:۳۰",place:"اتاق جلسات ریاست"},
+  {date:"2026-11-15",type:"meeting",dept:"all",title:"جلسه رئیس شرکت با اداره تأسیسات فنی و امور نگهداری",detail:"بررسی خرابی‌های باز، برنامه نگهداری پیشگیرانه و اولویت تعمیرات",time:"۰۹:۰۰",place:"اتاق جلسات ریاست"},
+  {date:"2026-11-16",type:"meeting",dept:"all",title:"جلسه رئیس شرکت با اداره فاوا و خدمات فنی",detail:"مرور پایداری سامانه‌ها، امنیت اطلاعات، پشتیبانی کاربران و برنامه توسعه زیرساخت",time:"۰۹:۰۰",place:"اتاق جلسات ریاست"},
+  {date:"2026-11-17",type:"meeting",dept:"all",title:"جلسه رئیس شرکت با اداره جمع‌آوری و بازیافت پسماند",detail:"ارزیابی ناوگان، مسیرهای جمع‌آوری، شاخص‌های پاکیزگی و برنامه بازیافت",time:"۰۸:۳۰",place:"اتاق جلسات ریاست"},
   {date:"2026-11-18",type:"meeting",dept:"all",title:"جلسه شورای مدیران و جمع‌بندی عملکرد ادارات",detail:"ارائه گزارش هفت اداره، بررسی انحراف برنامه‌ها و تصویب اقدامات اصلاحی",time:"۱۰:۰۰",place:"سالن جلسات مرکزی"},
-  {date:"2026-11-19",type:"meeting",dept:"1",personId:"10001",title:"جلسه هفتگی هماهنگی اداره اداری و پشتیبانی",detail:"تقسیم کار هفتگی، وضعیت درخواست‌ها و مرور پرونده‌های دارای مهلت",time:"۰۹:۰۰",place:"اتاق اداره"},
-  {date:"2026-11-19",type:"meeting",dept:"2",personId:"10006",title:"جلسه هفتگی شورای پژوهش",detail:"کنترل نقاط عطف طرح‌ها و بررسی مستندات مطالعاتی",time:"۱۱:۰۰",place:"اتاق اداره"},
-  {date:"2026-11-20",type:"meeting",dept:"3",personId:"10002",title:"جلسه هفتگی سرپرستان مناطق",detail:"توزیع برنامه شیفت‌ها، مرور گزارش‌های میدانی و رفع موانع",time:"۰۸:۰۰",place:"اتاق عملیات"},
-  {date:"2026-11-21",type:"meeting",dept:"4",personId:"10004",title:"جلسه کنترل برنامه نگهداری پیشگیرانه",detail:"بررسی چک‌لیست تجهیزات و زمان‌بندی تعمیرات هفته آینده",time:"۰۹:۳۰",place:"کارگاه فنی"},
-  {date:"2026-11-22",type:"meeting",dept:"6",personId:"10003",title:"جلسه تغییرات و انتشار سامانه‌ها",detail:"بررسی درخواست‌های تغییر، پنجره‌های نگهداری و برنامه پشتیبان‌گیری",time:"۱۰:۰۰",place:"اتاق فاوا"},
-  {date:"2026-11-23",type:"meeting",dept:"7",personId:"10005",title:"جلسه برنامه‌ریزی ناوگان و مسیرها",detail:"تنظیم برنامه خودروها، مسیرهای پرتردد و شیفت‌های عملیاتی",time:"۰۸:۰۰",place:"اتاق عملیات پسماند"},
-  {date:"2026-11-10",type:"training",dept:"1",personId:"10001",title:"دوره آموزش مکاتبات و اتوماسیون اداری",detail:"آموزش گردش مکاتبات، ثبت سوابق و استانداردهای بایگانی",time:"۱۰:۰۰",place:"سالن آموزش"},
-  {date:"2026-11-13",type:"training",dept:"3",personId:"10002",title:"دوره ایمنی و مدیریت عملیات میدانی",detail:"مرور اصول ایمنی، ارتباطات میدانی و مدیریت شرایط غیرعادی",time:"۰۸:۰۰",place:"سالن آموزش"},
-  {date:"2026-11-18",type:"training",dept:"6",personId:"10003",title:"کارگاه امنیت اطلاعات و حفاظت داده",detail:"آشنایی با کنترل دسترسی، گذرواژه امن و گزارش رخدادهای امنیتی",time:"۱۳:۰۰",place:"آزمایشگاه فاوا"},
-  {date:"2026-11-24",type:"training",dept:"4",personId:"10004",title:"آموزش نگهداری ایمن تجهیزات فنی",detail:"چک‌لیست بازدید، ثبت خرابی و اصول ایمنی کارگاه",time:"۰۹:۰۰",place:"کارگاه فنی"},
-  {date:"2026-11-26",type:"training",dept:"7",personId:"10005",title:"کارگاه مدیریت پسماند و تفکیک در مبدأ",detail:"آموزش روش‌های اجرایی، کنترل کیفیت و ثبت شاخص‌های بازیافت",time:"۰۹:۰۰",place:"سالن آموزش"},
-  {date:"2026-11-25",type:"action",dept:"1",personId:"10001",title:"مهلت نهایی جمع‌بندی گزارش ماهانه ادارات",detail:"دریافت و کنترل گزارش‌ها و آماده‌سازی بسته مدیریتی",time:"۱۴:۰۰",place:"دبیرخانه ریاست"},
-  {date:"2026-11-27",type:"action",dept:"4",personId:"10004",title:"بازدید مشترک ایمنی و تأسیسات",detail:"ثبت نواقص، تعیین مسئول رفع و زمان‌بندی اقدام اصلاحی",time:"۰۸:۰۰",place:"محدوده عملیاتی"},
+  {date:"2026-11-19",type:"meeting",dept:"1",title:"جلسه هفتگی هماهنگی اداره اداری و پشتیبانی",detail:"تقسیم کار هفتگی، وضعیت درخواست‌ها و مرور پرونده‌های دارای مهلت",time:"۰۹:۰۰",place:"اتاق اداره"},
+  {date:"2026-11-19",type:"meeting",dept:"2",title:"جلسه هفتگی شورای پژوهش",detail:"کنترل نقاط عطف طرح‌ها و بررسی مستندات مطالعاتی",time:"۱۱:۰۰",place:"اتاق اداره"},
+  {date:"2026-11-20",type:"meeting",dept:"3",title:"جلسه هفتگی سرپرستان مناطق",detail:"توزیع برنامه شیفت‌ها، مرور گزارش‌های میدانی و رفع موانع",time:"۰۸:۰۰",place:"اتاق عملیات"},
+  {date:"2026-11-21",type:"meeting",dept:"4",title:"جلسه کنترل برنامه نگهداری پیشگیرانه",detail:"بررسی چک‌لیست تجهیزات و زمان‌بندی تعمیرات هفته آینده",time:"۰۹:۳۰",place:"کارگاه فنی"},
+  {date:"2026-11-22",type:"meeting",dept:"6",title:"جلسه تغییرات و انتشار سامانه‌ها",detail:"بررسی درخواست‌های تغییر، پنجره‌های نگهداری و برنامه پشتیبان‌گیری",time:"۱۰:۰۰",place:"اتاق فاوا"},
+  {date:"2026-11-23",type:"meeting",dept:"7",title:"جلسه برنامه‌ریزی ناوگان و مسیرها",detail:"تنظیم برنامه خودروها، مسیرهای پرتردد و شیفت‌های عملیاتی",time:"۰۸:۰۰",place:"اتاق عملیات پسماند"},
+  {date:"2026-11-10",type:"training",dept:"1",title:"دوره آموزش مکاتبات و اتوماسیون اداری",detail:"آموزش گردش مکاتبات، ثبت سوابق و استانداردهای بایگانی",time:"۱۰:۰۰",place:"سالن آموزش"},
+  {date:"2026-11-13",type:"training",dept:"3",title:"دوره ایمنی و مدیریت عملیات میدانی",detail:"مرور اصول ایمنی، ارتباطات میدانی و مدیریت شرایط غیرعادی",time:"۰۸:۰۰",place:"سالن آموزش"},
+  {date:"2026-11-18",type:"training",dept:"6",title:"کارگاه امنیت اطلاعات و حفاظت داده",detail:"آشنایی با کنترل دسترسی، گذرواژه امن و گزارش رخدادهای امنیتی",time:"۱۳:۰۰",place:"آزمایشگاه فاوا"},
+  {date:"2026-11-24",type:"training",dept:"4",title:"آموزش نگهداری ایمن تجهیزات فنی",detail:"چک‌لیست بازدید، ثبت خرابی و اصول ایمنی کارگاه",time:"۰۹:۰۰",place:"کارگاه فنی"},
+  {date:"2026-11-26",type:"training",dept:"7",title:"کارگاه مدیریت پسماند و تفکیک در مبدأ",detail:"آموزش روش‌های اجرایی، کنترل کیفیت و ثبت شاخص‌های بازیافت",time:"۰۹:۰۰",place:"سالن آموزش"},
+  {date:"2026-11-25",type:"action",dept:"1",title:"مهلت نهایی جمع‌بندی گزارش ماهانه ادارات",detail:"دریافت و کنترل گزارش‌ها و آماده‌سازی بسته مدیریتی",time:"۱۴:۰۰",place:"دبیرخانه ریاست"},
+  {date:"2026-11-27",type:"action",dept:"4",title:"بازدید مشترک ایمنی و تأسیسات",detail:"ثبت نواقص، تعیین مسئول رفع و زمان‌بندی اقدام اصلاحی",time:"۰۸:۰۰",place:"محدوده عملیاتی"},
   {date:"2026-11-28",type:"session",dept:"all",title:"نشست هماهنگی برنامه هفته آینده",detail:"تطبیق تقویم ادارات، جلسات ریاست، آموزش‌ها و مأموریت‌های میدانی",time:"۱۰:۳۰",place:"دبیرخانه مدیریت"},
   {date:"2026-11-30",type:"meeting",dept:"all",title:"جلسه ماهانه پایش تعهدات و مصوبات",detail:"بررسی وضعیت مصوبات، موارد معوق و تعیین برنامه پیگیری ماه بعد",time:"۰۹:۰۰",place:"اتاق جلسات مرکزی"}
  );
@@ -107,28 +103,35 @@
  root.querySelectorAll("[data-calendar-count]").forEach(n=>{n.textContent=new Intl.NumberFormat("fa-IR").format(events.filter(e=>e.type===n.dataset.calendarCount).length);});
  const totalNode=root.querySelector("[data-calendar-total]");if(totalNode)totalNode.textContent=fmt(events.length);
  const personSummary=root.querySelector("[data-calendar-person-summary]");
- if(personSummary&&shared){
-  personSummary.innerHTML=shared.people.map(p=>{
-   const personalEvents=events.filter(e=>e.personId===p.id);
-   const assigned=shared.orders.filter(o=>o.targetPerson===p.name);
-   const meetings=personalEvents.filter(e=>e.type==="meeting"||e.type==="session").length;
-   const trainings=personalEvents.filter(e=>e.type==="training").length;
-   const actions=assigned.length+personalEvents.filter(e=>e.type==="action"||e.type==="resolution").length;
-   const milestones=personalEvents.filter(e=>e.type==="personal").length;
-   return "<tr><td>"+p.name+" · "+p.id+"</td><td>"+shared.byId(p.dept).name+"</td><td>"+fmt(meetings)+"</td><td>"+fmt(trainings)+"</td><td>"+fmt(actions)+"</td><td>"+fmt(milestones)+"</td><td>"+fmt(meetings+trainings+actions+milestones)+"</td></tr>";
-  }).join("");
- }
  const summary=root.querySelector("[data-calendar-department-summary]");
- if(summary){
-  const staff={"1":24,"2":12,"3":86,"4":31,"6":17,"7":78,"8":0};
-  summary.innerHTML=Object.entries(departments).map(([id,name])=>{
-   const list=events.filter(e=>e.dept===id||(e.dept==="all"&&e.personId&&shared&&shared.people.some(p=>p.id===e.personId&&p.dept==="d"+id)));
-   const sessions=list.filter(e=>e.type==="meeting"||e.type==="session").length;
-   const trainings=list.filter(e=>e.type==="training").length;
-   const actions=list.filter(e=>e.type==="action"||e.type==="resolution").length;
-   const milestones=list.filter(e=>e.type==="personal").reduce((n,e)=>n+(e.personCount||1),0);
-   return "<tr><td>"+name+"</td><td>"+staff[id]+"</td><td>"+list.length+"</td><td>"+sessions+"</td><td>"+trainings+"</td><td>"+actions+"</td><td>"+milestones+"</td></tr>";
+ let centralPeople=[];
+ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ function renderPersonnelSummary(){
+  if(!personSummary)return;
+  const people=centralPeople.length?centralPeople:(shared?.people||[]);
+  personSummary.innerHTML=people.map(p=>{
+   const code=p.code||p.id,name=p.name||((p.profile?.firstName||"")+" "+(p.profile?.lastName||"")).trim(),dept=String(p.profile?.departmentId||p.dept||"").replace(/^d/,"");
+   const personalEvents=events.filter(e=>String(e.personnelCode||e.personId||"")===String(code));
+   const assigned=(shared?.orders||[]).filter(o=>o.targetPerson===name);
+   const meetings=personalEvents.filter(e=>e.type==="meeting"||e.type==="session").length,trainings=personalEvents.filter(e=>e.type==="training").length,actions=assigned.length+personalEvents.filter(e=>e.type==="action"||e.type==="resolution").length,milestones=personalEvents.filter(e=>e.type==="personal").length;
+   return "<tr><td>"+esc(name)+" · "+esc(code)+"</td><td>"+esc(departments[dept]||"—")+"</td><td>"+fmt(meetings)+"</td><td>"+fmt(trainings)+"</td><td>"+fmt(actions)+"</td><td>"+fmt(milestones)+"</td><td>"+fmt(meetings+trainings+actions+milestones)+"</td></tr>";
   }).join("");
  }
- render();renderPersonal();
-})();
+ function renderDepartmentSummary(){
+  if(!summary)return;
+  const staff=centralPeople.length?Object.fromEntries(Object.keys(departments).map(id=>[id,centralPeople.filter(p=>String(p.profile?.departmentId||p.dept||"").replace(/^d/,"")===id).length])):{"1":24,"2":12,"3":86,"4":31,"6":17,"7":78,"8":0};
+  summary.innerHTML=Object.entries(departments).map(([id,name])=>{
+   const list=events.filter(e=>e.dept===id||(e.dept==="all"&&e.personnelCode&&centralPeople.some(p=>p.code===e.personnelCode&&String(p.profile?.departmentId)===id)));
+   const sessions=list.filter(e=>e.type==="meeting"||e.type==="session").length,trainings=list.filter(e=>e.type==="training").length,actions=list.filter(e=>e.type==="action"||e.type==="resolution").length,milestones=list.filter(e=>e.type==="personal").length;
+   return "<tr><td>"+name+"</td><td>"+fmt(staff[id]||0)+"</td><td>"+fmt(list.length)+"</td><td>"+fmt(sessions)+"</td><td>"+fmt(trainings)+"</td><td>"+fmt(actions)+"</td><td>"+fmt(milestones)+"</td></tr>";
+  }).join("");
+ }
+ window.setPersonnelCalendarData=(people,personalEvents)=>{
+  centralPeople=people||[];
+  events.splice(0,events.length,...events.filter(e=>e.source!=="personnel-registry"),...(personalEvents||[]));
+  root.querySelectorAll("[data-calendar-count]").forEach(n=>n.textContent=fmt(events.filter(e=>e.type===n.dataset.calendarCount).length));
+  const total=root.querySelector("[data-calendar-total]");if(total)total.textContent=fmt(events.length);
+  render();renderPersonal();renderPersonnelSummary();renderDepartmentSummary();
+ };
+ render();renderPersonal();renderPersonnelSummary();renderDepartmentSummary();
+})();();
