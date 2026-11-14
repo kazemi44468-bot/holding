@@ -2,6 +2,7 @@
  const root=document.querySelector("[data-org-calendar]");
  if(!root)return;
  const fmt=n=>Number(n||0).toLocaleString("fa-IR");
+ const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
  const departments={"1":"اداره اداری و پشتیبانی","2":"اداره تحقیق و توسعه","3":"اداره پارک بان و معبربانان","4":"اداره تأسیسات فنی و امور نگهداری","6":"اداره فاوا و خدمات فنی","7":"اداره جمع‌آوری، نگهداری و بازیافت پسماند","8":"اداره بازرسی و تحقیقات محلی"};
  const events=[
   {date:"2026-11-22",type:"meeting",dept:"all",title:"نشست راهبری و مرور اولویت‌های شرکت",detail:"بررسی وضعیت اقدامات جاری، موانع اجرایی و تصمیم‌های بین‌اداره‌ای",time:"۰۹:۰۰",place:"اتاق جلسات ستاد"},
@@ -56,7 +57,7 @@
  const localToday=()=>{const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-");};
  const hrActionLabel=e=>!e.actionRequired?"اقدامی تعریف نشده":e.actionStatus==="done"?"انجام شده":e.actionDue&&e.actionDue<localToday()?"معوق · موعد گذشته":e.actionDue===localToday()?"موعد امروز":e.actionStatus==="in-progress"?"در حال انجام":"انجام نشده";
  const hrEvents=[];
- for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i);if(!key||!key.startsWith("city-person-events-"))continue;try{const personId=key.slice("city-person-events-".length);const rows=JSON.parse(localStorage.getItem(key)||"[]");if(Array.isArray(rows))rows.forEach(e=>hrEvents.push({...e,type:"personal",personId,dept:String(e.dept||"").replace(/^d/,""),hrEventType:e.eventType||"other",actionLabel:hrActionLabel(e),personName:e.personName||""}));}catch(e){}}
+ for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i);if(!key||!key.startsWith("city-person-events-"))continue;try{const personnelCode=key.slice("city-person-events-".length);if(!/^\\d{4}$/.test(personnelCode)||Number(personnelCode)<1000||Number(personnelCode)>1249)continue;const rows=JSON.parse(localStorage.getItem(key)||"[]");if(Array.isArray(rows))rows.forEach(e=>hrEvents.push({...e,type:"personal",personnelCode,dept:String(e.dept||"").replace(/^d/,""),hrEventType:e.eventType||"other",actionLabel:hrActionLabel(e),personName:e.personName||""}));}catch(e){}}
  events.push(...hrEvents.map(e=>({...e,detail:[e.detail||"",e.personName||"",e.actionRequired?"اقدام: "+e.actionLabel:""].filter(Boolean).join(" · ")})));
  const shared=window.CITY_ORG_DATA;
  if(shared)events.forEach(e=>{if(e.orderId){const o=shared.orders.find(x=>x.id===e.orderId);if(o){e.title=o.title;e.detail="مخاطب اجرا: "+shared.byId(o.dept).name+" · مسئول: "+o.owner+" · پرونده "+o.id;e.place="مهلت "+o.deadline+" · "+o.status;}}});
@@ -108,18 +109,18 @@
  const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  function renderPersonnelSummary(){
   if(!personSummary)return;
-  const people=centralPeople.length?centralPeople:(shared?.people||[]);
+  const people=centralPeople;
   personSummary.innerHTML=people.map(p=>{
    const code=p.code||p.id,name=p.name||((p.profile?.firstName||"")+" "+(p.profile?.lastName||"")).trim(),dept=String(p.profile?.departmentId||p.dept||"").replace(/^d/,"");
    const personalEvents=events.filter(e=>String(e.personnelCode||e.personId||"")===String(code));
-   const assigned=(shared?.orders||[]).filter(o=>o.targetPerson===name);
+   const assigned=[];
    const meetings=personalEvents.filter(e=>e.type==="meeting"||e.type==="session").length,trainings=personalEvents.filter(e=>e.type==="training").length,actions=assigned.length+personalEvents.filter(e=>e.type==="action"||e.type==="resolution").length,milestones=personalEvents.filter(e=>e.type==="personal").length;
    return "<tr><td>"+esc(name)+" · "+esc(code)+"</td><td>"+esc(departments[dept]||"—")+"</td><td>"+fmt(meetings)+"</td><td>"+fmt(trainings)+"</td><td>"+fmt(actions)+"</td><td>"+fmt(milestones)+"</td><td>"+fmt(meetings+trainings+actions+milestones)+"</td></tr>";
   }).join("");
  }
  function renderDepartmentSummary(){
   if(!summary)return;
-  const staff=centralPeople.length?Object.fromEntries(Object.keys(departments).map(id=>[id,centralPeople.filter(p=>String(p.profile?.departmentId||p.dept||"").replace(/^d/,"")===id).length])):{"1":24,"2":12,"3":86,"4":31,"6":17,"7":78,"8":0};
+  const staff=Object.fromEntries(Object.keys(departments).map(id=>[id,centralPeople.filter(p=>String(p.profile?.departmentId||p.dept||"").replace(/^d/,"")===id).length]));
   summary.innerHTML=Object.entries(departments).map(([id,name])=>{
    const list=events.filter(e=>e.dept===id||(e.dept==="all"&&e.personnelCode&&centralPeople.some(p=>p.code===e.personnelCode&&String(p.profile?.departmentId)===id)));
    const sessions=list.filter(e=>e.type==="meeting"||e.type==="session").length,trainings=list.filter(e=>e.type==="training").length,actions=list.filter(e=>e.type==="action"||e.type==="resolution").length,milestones=list.filter(e=>e.type==="personal").length;
@@ -134,4 +135,4 @@
   render();renderPersonal();renderPersonnelSummary();renderDepartmentSummary();
  };
  render();renderPersonal();renderPersonnelSummary();renderDepartmentSummary();
-})();();
+})();
