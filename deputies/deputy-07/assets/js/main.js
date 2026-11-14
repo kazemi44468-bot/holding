@@ -1,5 +1,5 @@
 /* هویت واحد معاونت ۷ در عنوان و متن صفحات داخلی */
-document.title=document.title.replaceAll("شرکت هفت","معاونت ۷").replaceAll("شهر بهشت","معاونت ۷");
+document.title=document.title.replaceAll("شرکت هفت","معاونت ۷").replaceAll("شهر بهشت","معاونت ۷").replace(/(?<![آ-ی])شرکت(?![آ-ی])/g,"معاونت");
 if(document.body){
  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
  let node;
@@ -10,8 +10,11 @@ if(document.body){
    .replaceAll("نمای کلان شرکت","نمای کلان معاونت ۷")
    .replaceAll("تقویم شرکت","تقویم و رویدادها")
    .replaceAll("مرکز خدمات شرکت","مرکز خدمات معاونت ۷")
-   .replaceAll("شهر بهشت","معاونت ۷");
+   .replaceAll("شهر بهشت","معاونت ۷")
+   .replace(/(?<![آ-ی])شرکت(?![آ-ی])/g,"معاونت");
  }
+ document.querySelectorAll("[alt],[title]").forEach(el=>{if(el.hasAttribute("alt"))el.setAttribute("alt",el.getAttribute("alt").replaceAll("شرکت هفت","معاونت ۷").replaceAll("نشان شرکت","نشان معاونت ۷"));if(el.hasAttribute("title"))el.setAttribute("title",el.getAttribute("title").replaceAll("شرکت هفت","معاونت ۷"));});
+ const description=document.querySelector('meta[name="description"]');if(description)description.content=description.content.replaceAll("شرکت هفت","معاونت ۷");
 }
 const toggle=document.querySelector('.menu-toggle');
 const nav=document.querySelector('.dash-nav')||document.querySelector('.main-nav');
