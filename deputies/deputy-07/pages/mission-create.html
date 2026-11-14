@@ -111,7 +111,7 @@ body.ops-page:has(#missionForm) .mission-admin{background:#fbfcfc}
   <div id="fieldEditorConditionFields" class="field-editor-condition-grid" hidden>
    <label>فیلد مرجع<select id="fieldEditorConditionField"></select></label>
    <label>قاعده<select id="fieldEditorConditionOperator"><option value="equals">برابر باشد با</option><option value="not-equals">برابر نباشد با</option><option value="not-empty">خالی نباشد</option></select></label>
-   <label>مقدار شرط<input id="fieldEditorConditionValue" placeholder="مثلاً بله یا مقدار انتخابی"></label>
+   <label>مقدار شرط<input id="fieldEditorConditionValue" list="fieldEditorConditionSuggestions" placeholder="مقدار دقیق گزینه انتخابی"><datalist id="fieldEditorConditionSuggestions"></datalist></label>
   </div>
  </div>
  <div class="field-editor-actions">
