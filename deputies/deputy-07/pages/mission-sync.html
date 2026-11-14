@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#f3f6f1">
 <meta name="description" content="پشتیبان‌گیری و تبادل آفلاین اطلاعات مأموریت‌های معاونت ۷">
 <title>پشتیبان‌گیری و بروزرسانی مأموریت‌ها | معاونت ۷</title>
+<link rel="manifest" href="../offline.webmanifest">
 <link rel="preload" href="../assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../assets/css/style.css?v=mission-sync-20261114-1">
@@ -51,4 +52,5 @@
 </main>
 <script src="../assets/js/main.js?v=mission-sync-20261114-1"></script>
 <script type="module" src="../assets/js/mission-sync.js"></script>
+<script>if("serviceWorker" in navigator)navigator.serviceWorker.register("../sw.js").catch(()=>{});</script>
 </body></html>
