@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff"><title>مرکز کنترل و پیکربندی | معاونت ۷</title>
 <link rel="preload" href="assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/style.css?v=control-center-shared-20261114-1"><link rel="stylesheet" href="assets/css/control-center.css?v=formal-shell-20261114-1"></head>
+<link rel="stylesheet" href="assets/css/style.css?v=control-center-shared-20261114-1"><link rel="stylesheet" href="assets/css/control-center.css?v=formal-shell-20261114-1"><link rel="stylesheet" href="assets/css/user-management.css?v=integrated-warm-20261114-1"></head>
 <body class="ops-page control-page">
 <header class="ops-header"><div class="ops-header-inner">
 <a class="ops-brand" href="dashboard.html"><img class="ops-logo" src="assets/images/logo.webp" alt="نشان شرکت"><span><b>شرکت هفت</b><small>سامانه وضعیت و عملکرد سازمان</small></span></a>
@@ -31,7 +31,7 @@
 <button class="cc-nav" role="tab" aria-selected="false" data-view="forms"><i>▧</i><span><b>فرم‌ساز</b><small>ساخت فرم‌های پویا</small></span></button>
 </div></div>
 <div class="cc-nav-group"><button class="cc-group-head" type="button"><span class="cc-group-icon">♙</span><b>کاربران و امنیت</b><span class="cc-group-arrow">⌄</span></button><div class="cc-group-items">
-<a class="cc-nav cc-nav-link" href="users.html"><i>♙</i><span><b>کاربران و سطح دسترسی</b><small>حساب‌ها، نقش‌ها و مجوزها</small></span></a>
+<button class="cc-nav" role="tab" aria-selected="false" data-view="users"><i>♙</i><span><b>مدیریت کاربران</b><small>حساب‌ها، نقش‌ها و مجوزها</small></span></button>
 <button class="cc-nav" role="tab" aria-selected="false" data-view="transfer"><i>⇧</i><span><b>پشتیبان و انتقال امن</b><small>خروجی و بازیابی داده‌ها</small></span></button>
 </div></div>
 <div class="cc-nav-group"><button class="cc-group-head" type="button"><span class="cc-group-icon">⚙</span><b>تنظیمات سامانه</b><span class="cc-group-arrow">⌄</span></button><div class="cc-group-items">
@@ -70,12 +70,12 @@
 <li><span class="status-mark is-pending"></span><span>احراز هویت و مجوز سمت سرور</span><b>نیازمند توسعه</b></li>
 </ul></article>
 </div>
-<div class="cc-note">برای اطلاعات واقعی و محرمانه، از نسخه محلی و مخزن امن استفاده کنید. نسخه عمومی GitHub Pages برای ورود اطلاعات حساس مناسب نیست.</div>
+
 </section><section class="cc-view" id="view-monitor">
 <div class="cc-section-head"><div><span>MONITORING CENTER</span><h2>مرکز نظارت و پایش معاونت</h2><p>نمای عملیاتی بر پایه رکوردهای ثبت‌شده در مخزن معاونت ۷؛ داده ثبت‌نشده به‌عنوان آمار واقعی نمایش داده نمی‌شود.</p></div><button class="cc-light" id="refreshMonitor" type="button">به‌روزرسانی</button></div>
 <div class="cc-metrics" id="monitorMetrics"></div>
 <div class="cc-two"><article class="cc-card"><div class="cc-card-heading"><h3>وضعیت اقدامات</h3><span>بر اساس وضعیت ثبت‌شده</span></div><div id="monitorStatusChart" class="cc-bars"></div></article><article class="cc-card"><div class="cc-card-heading"><h3>پراکندگی اقدامات در اداره‌ها</h3><span>تعداد رکوردهای مرتبط</span></div><div id="monitorDepartmentChart" class="cc-bars"></div></article></div>
-<div class="cc-two"><article class="cc-card"><div class="cc-card-heading"><h3>آخرین اقدامات ثبت‌شده</h3><span>آخرین به‌روزرسانی‌ها</span></div><div id="monitorLatest" class="cc-list"></div></article><article class="cc-card"><div class="cc-card-heading"><h3>وضعیت کاربران و دسترسی</h3><span>خلاصه پیکربندی کاربران</span></div><div id="monitorAccess" class="cc-list"></div><a class="cc-primary cc-link-button" href="users.html">ورود به مدیریت کاربران و مجوزها ←</a></article></div>
+<div class="cc-two"><article class="cc-card"><div class="cc-card-heading"><h3>آخرین اقدامات ثبت‌شده</h3><span>آخرین به‌روزرسانی‌ها</span></div><div id="monitorLatest" class="cc-list"></div></article><article class="cc-card"><div class="cc-card-heading"><h3>وضعیت کاربران و دسترسی</h3><span>خلاصه پیکربندی کاربران</span></div><div id="monitorAccess" class="cc-list"></div><button class="cc-primary cc-link-button" type="button" data-jump="users">مدیریت کاربران و مجوزها ←</button></article></div>
 <div id="monitorVaultNote" class="cc-note">برای مشاهده داده‌های عملیاتی، ابتدا مخزن امن را بازگشایی کنید.</div>
 </section>
 <section class="cc-view" id="view-org"><div class="cc-section-head"><div><span>مدل سازمانی</span><h2>ساختار سازمانی و اداره‌ها</h2><p>کد، عنوان، مسئولیت و وضعیت هر اداره را مدیریت کنید.</p></div><button class="cc-primary" id="newDepartment">＋ اداره جدید</button></div><form id="departmentEditor" class="cc-editor"><input type="hidden" id="departmentId"><label>کد اداره<input id="departmentCode" required placeholder="مثلاً ۹"></label><label>عنوان اداره<input id="departmentName" required placeholder="عنوان رسمی"></label><label class="wide">شرح مأموریت<input id="departmentMission" placeholder="حوزه مسئولیت و مأموریت اداره"></label><label>وضعیت<select id="departmentStatus"><option value="active">فعال</option><option value="inactive">غیرفعال</option></select></label><div class="cc-actions"><button class="cc-primary">ذخیره</button><button type="button" class="cc-light" id="cancelDepartment">انصراف</button></div></form><div id="departmentList" class="cc-list"></div></section>
@@ -91,7 +91,89 @@
 <section class="cc-view" id="view-reports"><div class="cc-section-head"><div><span>Data insights</span><h2>گزارش و شاخص‌ها</h2><p>خلاصه تعداد رکوردها، وضعیت اقدامات و توزیع اطلاعات بر اساس اداره.</p></div><button class="cc-light" id="refreshReports">به‌روزرسانی گزارش</button></div><div id="reportMetrics" class="cc-metrics"></div><div class="cc-two"><article class="cc-card"><h3>توزیع اقدامات بر اساس وضعیت</h3><div id="statusChart" class="cc-bars"></div></article><article class="cc-card"><h3>رکوردها بر اساس اداره</h3><div id="departmentChart" class="cc-bars"></div></article></div></section>
 <section class="cc-view" id="view-appearance"><div class="cc-section-head"><div><span>Design system</span><h2>طراحی و شخصی‌سازی ظاهر</h2><p>پوسته پایه را برای همه صفحات متصل به پوسته مشترک تغییر دهید.</p></div></div><form id="appearanceEditor" class="cc-editor"><label>رنگ‌بندی<select id="appearancePalette"><option value="teal">فیروزه‌ای ملایم</option><option value="sky">آبی آسمانی روشن</option><option value="gray">خاکستری خنثی</option></select></label><label>تراکم محتوا<select id="appearanceDensity"><option value="comfortable">استاندارد</option><option value="compact">فشرده</option></select></label><label>گردی کارت‌ها<select id="appearanceRadius"><option value="soft">گرد ملایم</option><option value="square">کم‌گرد</option></select></label><label>عرض محتوای صفحه<select id="appearanceWidth"><option value="wide">گسترده</option><option value="normal">استاندارد</option></select></label><div class="cc-actions"><button class="cc-primary">ذخیره و اعمال پوسته</button></div></form><div class="cc-preview"><div class="preview-head">پیش‌نمایش کارت و اجزای رابط</div><div class="preview-card"><b>نمونه کارت مدیریتی</b><p>رنگ، فاصله‌گذاری، گوشه‌ها و کنتراست در این بخش نمایش داده می‌شود.</p><button class="cc-primary" type="button">دکمه اصلی</button></div></div></section>
 <section class="cc-view" id="view-layout"><div class="cc-section-head"><div><span>Layout studio</span><h2>طراح چیدمان رابط و فضای فیزیکی</h2><p>تعریف بخش‌های محیط، طبقات، فضاها و جایگاه‌ها؛ ساختار قابل توسعه برای نقشه‌های دقیق‌تر.</p></div><button class="cc-primary" id="newZone">＋ فضای جدید</button></div><div class="cc-two"><article class="cc-card"><h3>فضاها و موقعیت‌های فیزیکی</h3><p>فضاها را تعریف کنید، نوع کاربری و اداره بهره‌بردار را مشخص کنید و ترتیب آن‌ها را تغییر دهید.</p><form id="zoneEditor" class="cc-editor"><input type="hidden" id="zoneId"><label>عنوان فضا<input id="zoneName" required placeholder="مثلاً ساختمان اداری"></label><label>نوع فضا<select id="zoneType"><option>ساختمان</option><option>طبقه</option><option>اتاق</option><option>محوطه</option><option>انبار</option><option>تأسیسات</option><option>پارکینگ</option></select></label><label>اداره بهره‌بردار<select id="zoneDepartment"></select></label><label>موقعیت / کد مکانی<input id="zoneLocation" placeholder="مثلاً بلوک A · طبقه ۲"></label><div class="cc-actions"><button class="cc-primary">ذخیره فضا</button><button type="button" class="cc-light" id="cancelZone">انصراف</button></div></form><div id="zoneList" class="cc-list"></div></article><article class="cc-card"><h3>چیدمان بخش‌های سامانه</h3><p>ترتیب و نمایش بخش‌های کلیدی در نمای مدیریتی را تنظیم کنید. این تنظیمات در پیکربندی ذخیره می‌شوند.</p><div id="moduleLayoutList" class="cc-list"></div><button class="cc-primary" id="saveModuleLayout">ذخیره چیدمان</button><p class="cc-note">اتصال کامل این ترتیب به تمام صفحات و بخش‌های قدیمی در مرحله مهاجرت رابط‌ها انجام می‌شود.</p></article></div></section>
+<section class="cc-view" id="view-users">
+<div class="cc-section-head"><div><span>مدیریت هویت و دسترسی</span><h2>مدیریت کاربران و مجوزها</h2><p>حساب‌های سازمانی، گروه‌ها، نقش‌ها و ماتریس دسترسی در همین مرکز کنترل مدیریت می‌شوند.</p></div><button class="um-primary" id="addUserBtn" type="button">＋ افزودن کاربر</button></div>
+<section class="um-stats" aria-label="خلاصه کاربران">
+ <article><small>کل کاربران تعریف‌شده</small><b id="statUsers">۰</b><span>حساب‌های ثبت‌شده</span></article>
+ <article><small>کاربران فعال</small><b id="statActive">۰</b><span>دارای وضعیت فعال</span></article>
+ <article><small>گروه‌های دسترسی</small><b id="statGroups">۰</b><span>گروه‌های تعریف‌شده</span></article>
+ <article><small>نقش‌های سازمانی</small><b id="statRoles">۷</b><span>قالب‌های نقش پایه</span></article>
+</section>
+<section class="um-workspace">
+ <aside class="um-sidebar">
+  <div class="um-sidebar-title">مرکز کنترل دسترسی</div>
+  <button class="um-tab active" data-tab="users"><span>♙</span><span><b>فهرست کاربران</b><small>افزودن، ویرایش و وضعیت حساب</small></span></button>
+  <button class="um-tab" data-tab="groups"><span>▦</span><span><b>گروه‌های دسترسی</b><small>دسته‌بندی و اعمال گروهی</small></span></button>
+  <button class="um-tab" data-tab="roles"><span>▤</span><span><b>نقش‌ها و مجوزها</b><small>تعریف سطح و اختیارات</small></span></button>
+  <button class="um-tab" data-tab="matrix"><span>▥</span><span><b>ماتریس دسترسی ادارات</b><small>محدوده سازمانی و عملیات</small></span></button>
+  
+  <button class="um-tab" data-tab="audit"><span>◷</span><span><b>سوابق تغییرات</b><small>ردیابی تغییرات مدیریتی</small></span></button>
+ </aside>
+ <div class="um-content">
+  <section class="um-panel active" id="panel-users">
+   <div class="um-panel-head"><div><span class="eyebrow">حساب‌های سازمانی</span><h2>کاربران معاونت ۷</h2><p>هر حساب به یک یا چند اداره، نقش و گروه دسترسی منتسب می‌شود.</p></div><button class="um-primary" id="addUserBtn2" type="button">＋ کاربر جدید</button></div>
+   <div class="um-toolbar"><label class="um-search">⌕ <input id="userSearch" type="search" placeholder="جست‌وجوی نام، نام کاربری یا سمت"></label><select id="filterDepartment"><option value="">همه اداره‌ها</option></select><select id="filterRole"><option value="">همه نقش‌ها</option></select><select id="filterStatus"><option value="">همه وضعیت‌ها</option><option value="active">فعال</option><option value="suspended">تعلیق‌شده</option></select></div>
+   <div class="um-bulkbar"><label><input id="selectAllUsers" type="checkbox"> انتخاب همه نتایج</label><select id="bulkGroup"><option value="">انتساب به گروه انتخاب‌شده...</option></select><button id="bulkAssignBtn" type="button" class="um-secondary">اعمال گروهی</button><span id="selectedCount">۰ کاربر انتخاب شده</span></div>
+   <div class="um-table-wrap"><table class="um-table"><thead><tr><th></th><th>کاربر</th><th>نقش</th><th>محدوده اداره</th><th>گروه‌ها</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody id="usersTableBody"></tbody></table><div class="um-empty" id="usersEmpty">هنوز کاربری تعریف نشده است. برای شروع، حساب رئیس، مدیر فنی و مدیران اداره‌ها را اضافه کنید.</div></div>
+  </section>
+  <section class="um-panel" id="panel-groups">
+   <div class="um-panel-head"><div><span class="eyebrow">دسته‌بندی کاربران</span><h2>گروه‌های دسترسی</h2><p>با گروه‌ها می‌توان مجموعه‌ای از کاربران را به یک محدوده و الگوی مجوز مشترک متصل کرد.</p></div><button class="um-primary" id="addGroupBtn" type="button">＋ گروه جدید</button></div>
+   <div class="um-group-grid" id="groupsGrid"></div><div class="um-empty" id="groupsEmpty">گروهی ایجاد نشده است. گروه‌هایی مانند «مدیران اداره‌ها»، «کارشناسان ثبت اطلاعات» یا «ناظران» بسازید.</div>
+  </section>
+  <section class="um-panel" id="panel-roles">
+   <div class="um-panel-head"><div><span class="eyebrow">الگوهای اختیار</span><h2>نقش‌ها و مجوزهای پایه</h2><p>نقش مشخص می‌کند کاربر چه عملیاتی می‌تواند انجام دهد؛ محدوده اداره جداگانه تعیین می‌شود.</p></div><button class="um-primary" id="addRoleBtn" type="button">＋ نقش سفارشی</button></div>
+   <div class="um-role-grid" id="rolesGrid"></div>
+  </section>
+  <section class="um-panel" id="panel-matrix">
+   <div class="um-panel-head"><div><span class="eyebrow">کنترل دسترسی</span><h2>ماتریس دسترسی سازمانی</h2><p>محدوده هر نقش در اداره‌ها و عملیات اصلی؛ مجوز نهایی با ترکیب نقش، گروه، کاربر و محدوده داده محاسبه می‌شود.</p></div></div>
+   <div class="um-matrix-wrap"><table class="um-table um-matrix"><thead><tr><th>نقش</th><th>مشاهده</th><th>ثبت</th><th>ویرایش</th><th>حذف</th><th>ارجاع کار</th><th>تأیید</th><th>گزارش/خروجی</th><th>مدیریت کاربران</th><th>مدیریت ساختار</th><th>پشتیبان‌گیری</th><th>اطلاعات حساس</th></tr></thead><tbody id="matrixBody"></tbody></table></div>
+   <div class="um-scope-note"><b>قاعده محدوده:</b> رئیس در سطح کل معاونت؛ مدیر اداره فقط اداره‌های منتسب؛ کارشناس فقط اداره/واحد منتسب و رکوردهای مجاز؛ مدیر فنی اختیار پیکربندی فنی دارد و دسترسی محتوایی او مستقل و قابل ثبت است.</div>
+  </section>
+  
+  <section class="um-panel" id="panel-audit">
+   <div class="um-panel-head"><div><span class="eyebrow">ردپای مدیریتی</span><h2>سوابق تغییرات</h2><p>ایجاد، ویرایش، تعلیق و تغییر گروه‌ها و نقش‌ها در این مرورگر ثبت می‌شود.</p></div><button id="clearAuditBtn" class="um-secondary" type="button">پاک‌سازی سوابق محلی</button></div>
+   <div class="um-audit-list" id="auditList"></div><div class="um-empty" id="auditEmpty">هنوز رویدادی ثبت نشده است.</div>
+  </section>
+ </div>
+</section>
+
+</section>
 <section class="cc-view" id="view-transfer"><div class="cc-section-head"><div><span>Data portability</span><h2>انتقال و پشتیبان‌گیری</h2><p>بسته پشتیبان رمزگذاری‌شده مخزن محلی را ایجاد یا بازیابی کنید.</p></div></div><div class="cc-two"><article class="cc-card"><h3>تهیه نسخه پشتیبان</h3><p>کل تغییرات و داده‌های مخزن با گذرواژه جداگانه رمزگذاری می‌شود.</p><label>گذرواژه بسته (حداقل ۱۲ نویسه)<input id="backupPass" type="password"></label><button class="cc-primary" id="exportBackup">ساخت بسته پشتیبان</button><button class="cc-light" id="migrateLegacy" type="button">انتقال داده‌های قدیمی همین مرورگر به مخزن</button></article><article class="cc-card"><h3>بازیابی / ادغام بسته</h3><p>فایل H7BACKUP را انتخاب کنید. رکوردهای تکراری دوباره وارد نمی‌شوند.</p><label>فایل پشتیبان<input id="backupFile" type="file" accept=".json,application/json"></label><label>گذرواژه بسته<input id="restorePass" type="password"></label><button class="cc-primary" id="importBackup">بازیابی و ادغام</button></article></div><article class="cc-card"><h3>بسته ساختار سامانه</h3><p>بانک‌ها، جدول‌ها، فیلدها، فرم‌ها، اداره‌ها و تنظیمات چیدمان را جدا از داده‌های عملیاتی منتقل کنید.</p><button class="cc-light" id="exportSchema">دریافت بسته ساختار</button><label>بسته ساختار<input id="schemaFile" type="file" accept=".json,application/json"></label><button class="cc-primary" id="importSchema">ورود و جایگزینی ساختار</button></article><div id="transferResult" class="cc-note"></div></section>
-</div></div></main>
+</div></div>
+<dialog class="um-dialog" id="userDialog"><form id="userForm" method="dialog">
+ <div class="um-dialog-head"><div><span class="eyebrow">حساب سازمانی</span><h2 id="userDialogTitle">افزودن کاربر</h2></div><button class="um-close" type="button" data-close="userDialog">×</button></div>
+ <input type="hidden" id="editUserId">
+ <div class="um-form-grid">
+  <label>نام و نام خانوادگی<input id="userName" required maxlength="100" placeholder="نام کامل کاربر"></label>
+  <label>نام کاربری سازمانی<input id="userUsername" required maxlength="60" placeholder="شناسه ورود پیشنهادی"></label>
+  <label>سمت / عنوان شغلی<input id="userTitle" maxlength="100" placeholder="مثلاً کارشناس برنامه‌ریزی"></label>
+  <label>نقش سازمانی<select id="userRole" required></select></label>
+  <label class="um-wide">اداره‌های مجاز<select id="userDepartments" multiple size="5"></select><small>برای انتخاب چند اداره، کلید Ctrl یا Command را نگه دارید. محدوده دسترسی مستقل از نقش است.</small></label>
+  <label>واحد / گروه کاری<input id="userUnit" maxlength="100" placeholder="واحد یا گروه سازمانی"></label>
+  <label>وضعیت حساب<select id="userStatus"><option value="active">فعال</option><option value="suspended">تعلیق‌شده</option></select></label>
+  <label class="um-wide">عضویت در گروه‌ها<select id="userGroups" multiple size="4"></select></label>
+  <label class="um-wide">یادداشت مدیریتی<textarea id="userNotes" rows="2" placeholder="توضیحات غیرمحرمانه و سازمانی"></textarea></label>
+ </div>
+ <div class="um-dialog-actions"><button class="um-secondary" type="button" data-close="userDialog">انصراف</button><button class="um-primary" type="submit">ذخیره اطلاعات کاربر</button></div>
+</form></dialog>
+<dialog class="um-dialog" id="groupDialog"><form id="groupForm" method="dialog">
+ <div class="um-dialog-head"><div><span class="eyebrow">دسته‌بندی سازمانی</span><h2 id="groupDialogTitle">ایجاد گروه دسترسی</h2></div><button class="um-close" type="button" data-close="groupDialog">×</button></div>
+ <input type="hidden" id="editGroupId">
+ <div class="um-form-grid">
+  <label>نام گروه<input id="groupName" required maxlength="90" placeholder="مثلاً کارشناسان ثبت اطلاعات"></label>
+  <label>الگوی نقش<select id="groupRole"></select></label>
+  <label class="um-wide">محدوده اداره‌ها<select id="groupDepartments" multiple size="5"></select></label>
+  <label class="um-wide">توضیحات گروه<textarea id="groupDescription" rows="3"></textarea></label>
+ </div>
+ <div class="um-dialog-actions"><button class="um-secondary" type="button" data-close="groupDialog">انصراف</button><button class="um-primary" type="submit">ذخیره گروه</button></div>
+</form></dialog>
+<dialog class="um-dialog" id="roleDialog"><form id="roleForm" method="dialog">
+ <div class="um-dialog-head"><div><span class="eyebrow">تعریف سطح اختیار</span><h2 id="roleDialogTitle">ویرایش نقش</h2></div><button class="um-close" type="button" data-close="roleDialog">×</button></div>
+ <input type="hidden" id="editRoleId">
+ <div class="um-form-grid"><label>عنوان نقش<input id="roleName" required maxlength="80"></label><label>کد نقش<input id="roleKey" required maxlength="40" pattern="[a-z0-9-]+" placeholder="custom-role"></label><label>محدوده پیش‌فرض<select id="roleScope"><option value="assigned-departments">اداره‌های منتسب</option><option value="assigned-resources">منابع تعیین‌شده</option><option value="all">کل معاونت</option><option value="technical-only">فقط پیکربندی فنی</option></select></label><label class="um-wide">شرح نقش<textarea id="roleDescription" rows="2"></textarea></label></div>
+ <h3 class="um-permission-title">مجوزهای این نقش</h3><div class="um-permission-grid" id="rolePermissions"></div>
+ <div class="um-dialog-actions"><button class="um-secondary" type="button" data-close="roleDialog">انصراف</button><button class="um-primary" type="submit">ذخیره نقش</button></div>
+</form></dialog>
+</main>
 <footer class="ops-footer"></footer>
-<script type="module" src="assets/js/control-center.js?v=formal-shell-20261114-1"></script><script src="assets/js/main.js?v=formal-shell-20261114-1" defer></script></body></html>
+<script type="module" src="assets/js/control-center.js?v=formal-shell-20261114-1"></script><script src="assets/js/main.js?v=formal-shell-20261114-1" defer></script><script src="assets/js/access-control.js?v=integrated-users-20261114-1" defer></script><script src="assets/js/user-management.js?v=integrated-warm-20261114-1" defer></script></body></html>
