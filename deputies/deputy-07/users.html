@@ -1,5 +1,116 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=control-center.html#view-users"><title>مدیریت کاربران | مرکز کنترل معاونت ۷</title></head>
-<body><p>مدیریت کاربران به مرکز کنترل و پیکربندی منتقل شده است. <a href="control-center.html#view-users">ورود به مدیریت کاربران</a></p><script>location.replace("control-center.html#view-users");</script></body>
-</html>
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f7fafb"><meta name="description" content="مدیریت کاربران، گروه‌ها و سطوح دسترسی معاونت ۷">
+<title>مدیریت کاربران و دسترسی‌ها | معاونت ۷</title>
+<link rel="preload" href="assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/style.css?v=users-center-20261113">
+<link rel="stylesheet" href="assets/css/user-management.css?v=users-isolated-20261114-1">
+</head>
+<body class="ops-page users-admin-page">
+<header class="ops-header"><div class="ops-header-inner">
+<a class="ops-brand" href="control-center.html"><img class="ops-logo" src="assets/images/logo.webp" alt="نشان شرکت"><span><b>شرکت هفت</b><small>سامانه وضعیت و عملکرد سازمان</small></span></a>
+<nav class="ops-nav" aria-label="ناوبری اصلی"></nav><div class="ops-clock"><span>زمان سامانه</span><b id="clock">—</b><small id="date">—</small></div>
+</div></header>
+<main class="ops-main users-main">
+<section class="users-hero">
+ <div><span class="eyebrow">مدیریت سازمانی · معاونت ۷</span><h1>مدیریت کاربران و سطح دسترسی</h1><p>تعریف کاربران، انتساب به اداره‌ها، ساخت گروه‌های دسترسی و تنظیم مجوزهای عملیاتی</p></div>
+ <div class="users-hero-actions"><a class="users-back" href="control-center.html">بازگشت به نمای کلان ←</a><button class="um-primary" id="addUserBtn" type="button">＋ افزودن کاربر</button></div>
+</section>
+<section class="um-notice" aria-label="وضعیت زیرساخت"><span class="um-notice-icon">i</span><div><b>وضعیت فعلی: مدیریت پیکربندی محلی</b><p>اطلاعات این بخش در مرورگر همین دستگاه نگهداری می‌شود. این نسخه برای تعریف و بررسی ساختار کاربران و مجوزهاست؛ ورود امن، رمز عبور مستقل، اعمال اجباری مجوز در همه صفحات و همگام‌سازی بین دستگاه‌ها تا اتصال سرویس هویت مرکزی فعال نشده‌اند.</p></div></section>
+<section class="um-stats" aria-label="خلاصه کاربران">
+ <article><small>کل کاربران تعریف‌شده</small><b id="statUsers">۰</b><span>حساب‌های ثبت‌شده</span></article>
+ <article><small>کاربران فعال</small><b id="statActive">۰</b><span>دارای وضعیت فعال</span></article>
+ <article><small>گروه‌های دسترسی</small><b id="statGroups">۰</b><span>گروه‌های تعریف‌شده</span></article>
+ <article><small>نقش‌های سازمانی</small><b id="statRoles">۷</b><span>قالب‌های نقش پایه</span></article>
+</section>
+<section class="um-workspace">
+ <aside class="um-sidebar">
+  <div class="um-sidebar-title">مرکز کنترل دسترسی</div>
+  <button class="um-tab active" data-tab="users"><span>♙</span><span><b>فهرست کاربران</b><small>افزودن، ویرایش و وضعیت حساب</small></span></button>
+  <button class="um-tab" data-tab="groups"><span>▦</span><span><b>گروه‌های دسترسی</b><small>دسته‌بندی و اعمال گروهی</small></span></button>
+  <button class="um-tab" data-tab="roles"><span>▤</span><span><b>نقش‌ها و مجوزها</b><small>تعریف سطح و اختیارات</small></span></button>
+  <button class="um-tab" data-tab="matrix"><span>▥</span><span><b>ماتریس دسترسی ادارات</b><small>محدوده سازمانی و عملیات</small></span></button>
+  <button class="um-tab" data-tab="structure"><span>▦</span><span><b>ساختار و ظاهر سامانه</b><small>مدیریت اداره‌ها و پوسته سایت</small></span></button>
+  <button class="um-tab" data-tab="audit"><span>◷</span><span><b>سوابق تغییرات</b><small>ردیابی تغییرات مدیریتی</small></span></button>
+ </aside>
+ <div class="um-content">
+  <section class="um-panel active" id="panel-users">
+   <div class="um-panel-head"><div><span class="eyebrow">حساب‌های سازمانی</span><h2>کاربران معاونت ۷</h2><p>هر حساب به یک یا چند اداره، نقش و گروه دسترسی منتسب می‌شود.</p></div><button class="um-primary" id="addUserBtn2" type="button">＋ کاربر جدید</button></div>
+   <div class="um-toolbar"><label class="um-search">⌕ <input id="userSearch" type="search" placeholder="جست‌وجوی نام، نام کاربری یا سمت"></label><select id="filterDepartment"><option value="">همه اداره‌ها</option></select><select id="filterRole"><option value="">همه نقش‌ها</option></select><select id="filterStatus"><option value="">همه وضعیت‌ها</option><option value="active">فعال</option><option value="suspended">تعلیق‌شده</option></select></div>
+   <div class="um-bulkbar"><label><input id="selectAllUsers" type="checkbox"> انتخاب همه نتایج</label><select id="bulkGroup"><option value="">انتساب به گروه انتخاب‌شده...</option></select><button id="bulkAssignBtn" type="button" class="um-secondary">اعمال گروهی</button><span id="selectedCount">۰ کاربر انتخاب شده</span></div>
+   <div class="um-table-wrap"><table class="um-table"><thead><tr><th></th><th>کاربر</th><th>نقش</th><th>محدوده اداره</th><th>گروه‌ها</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody id="usersTableBody"></tbody></table><div class="um-empty" id="usersEmpty">هنوز کاربری تعریف نشده است. برای شروع، حساب رئیس، مدیر فنی و مدیران اداره‌ها را اضافه کنید.</div></div>
+  </section>
+  <section class="um-panel" id="panel-groups">
+   <div class="um-panel-head"><div><span class="eyebrow">دسته‌بندی کاربران</span><h2>گروه‌های دسترسی</h2><p>با گروه‌ها می‌توان مجموعه‌ای از کاربران را به یک محدوده و الگوی مجوز مشترک متصل کرد.</p></div><button class="um-primary" id="addGroupBtn" type="button">＋ گروه جدید</button></div>
+   <div class="um-group-grid" id="groupsGrid"></div><div class="um-empty" id="groupsEmpty">گروهی ایجاد نشده است. گروه‌هایی مانند «مدیران اداره‌ها»، «کارشناسان ثبت اطلاعات» یا «ناظران» بسازید.</div>
+  </section>
+  <section class="um-panel" id="panel-roles">
+   <div class="um-panel-head"><div><span class="eyebrow">الگوهای اختیار</span><h2>نقش‌ها و مجوزهای پایه</h2><p>نقش مشخص می‌کند کاربر چه عملیاتی می‌تواند انجام دهد؛ محدوده اداره جداگانه تعیین می‌شود.</p></div><button class="um-primary" id="addRoleBtn" type="button">＋ نقش سفارشی</button></div>
+   <div class="um-role-grid" id="rolesGrid"></div>
+  </section>
+  <section class="um-panel" id="panel-matrix">
+   <div class="um-panel-head"><div><span class="eyebrow">کنترل دسترسی</span><h2>ماتریس دسترسی سازمانی</h2><p>محدوده هر نقش در اداره‌ها و عملیات اصلی؛ مجوز نهایی با ترکیب نقش، گروه، کاربر و محدوده داده محاسبه می‌شود.</p></div></div>
+   <div class="um-matrix-wrap"><table class="um-table um-matrix"><thead><tr><th>نقش</th><th>مشاهده</th><th>ثبت</th><th>ویرایش</th><th>حذف</th><th>ارجاع کار</th><th>تأیید</th><th>گزارش/خروجی</th><th>مدیریت کاربران</th><th>مدیریت ساختار</th><th>پشتیبان‌گیری</th><th>اطلاعات حساس</th></tr></thead><tbody id="matrixBody"></tbody></table></div>
+   <div class="um-scope-note"><b>قاعده محدوده:</b> رئیس در سطح کل معاونت؛ مدیر اداره فقط اداره‌های منتسب؛ کارشناس فقط اداره/واحد منتسب و رکوردهای مجاز؛ مدیر فنی اختیار پیکربندی فنی دارد و دسترسی محتوایی او مستقل و قابل ثبت است.</div>
+  </section>
+  <section class="um-panel" id="panel-structure">
+   <div class="um-panel-head"><div><span class="eyebrow">پیکربندی قابل تغییر</span><h2>ساختار سازمانی و ظاهر سامانه</h2><p>اداره‌ها را اضافه، ویرایش یا غیرفعال کنید و رنگ و تراکم نمای سامانه را تنظیم کنید.</p></div></div>
+   <div class="um-config-grid">
+    <section class="um-config-card"><div class="um-config-head"><div><h3>مدیریت اداره‌ها</h3><p>تغییر نام و کد، افزودن اداره جدید و حذف اداره‌های غیر‌فعال</p></div><button class="um-primary" id="addDepartmentBtn" type="button">＋ اداره جدید</button></div>
+     <form id="departmentForm" class="um-inline-form"><input type="hidden" id="editDepartmentId"><label>کد اداره<input id="departmentCode" required maxlength="12" placeholder="مثلاً ۹"></label><label>عنوان اداره<input id="departmentName" required maxlength="120" placeholder="عنوان رسمی اداره"></label><label>توضیح کوتاه<input id="departmentDescription" maxlength="180" placeholder="حوزه مسئولیت"></label><button class="um-primary" type="submit">ذخیره اداره</button><button class="um-secondary" id="cancelDepartmentEdit" type="button">پاک‌کردن فرم</button></form>
+     <div id="departmentsManager" class="um-department-list"></div>
+    </section>
+    <section class="um-config-card"><div class="um-config-head"><div><h3>تنظیمات ظاهری</h3><p>تنظیمات اولیه پوسته مشترک؛ بدون تغییر محتوای صفحات</p></div></div>
+     <div class="um-theme-controls"><label>رنگ اصلی سامانه<select id="themePreset"><option value="sky">آبی آسمانی</option><option value="slate">آبی خاکستری روشن</option><option value="sand">کرم و طلایی ملایم</option></select></label><label>تراکم نمایش<select id="themeDensity"><option value="comfortable">استاندارد</option><option value="compact">فشرده</option></select></label><label>گوشه کارت‌ها<select id="themeCorners"><option value="soft">گرد ملایم</option><option value="square">گوشه کم‌گرد</option></select></label><button class="um-primary" id="saveThemeBtn" type="button">اعمال تنظیمات ظاهری</button><p class="um-theme-hint" id="themeStatus">تنظیمات روی همین مرورگر اعمال می‌شود.</p></div>
+    </section>
+   </div>
+  </section>
+  <section class="um-panel" id="panel-audit">
+   <div class="um-panel-head"><div><span class="eyebrow">ردپای مدیریتی</span><h2>سوابق تغییرات</h2><p>ایجاد، ویرایش، تعلیق و تغییر گروه‌ها و نقش‌ها در این مرورگر ثبت می‌شود.</p></div><button id="clearAuditBtn" class="um-secondary" type="button">پاک‌سازی سوابق محلی</button></div>
+   <div class="um-audit-list" id="auditList"></div><div class="um-empty" id="auditEmpty">هنوز رویدادی ثبت نشده است.</div>
+  </section>
+ </div>
+</section>
+</main>
+<footer class="ops-footer"></footer>
+<dialog class="um-dialog" id="userDialog"><form id="userForm" method="dialog">
+ <div class="um-dialog-head"><div><span class="eyebrow">حساب سازمانی</span><h2 id="userDialogTitle">افزودن کاربر</h2></div><button class="um-close" type="button" data-close="userDialog">×</button></div>
+ <input type="hidden" id="editUserId">
+ <div class="um-form-grid">
+  <label>نام و نام خانوادگی<input id="userName" required maxlength="100" placeholder="نام کامل کاربر"></label>
+  <label>نام کاربری سازمانی<input id="userUsername" required maxlength="60" placeholder="شناسه ورود پیشنهادی"></label>
+  <label>سمت / عنوان شغلی<input id="userTitle" maxlength="100" placeholder="مثلاً کارشناس برنامه‌ریزی"></label>
+  <label>نقش سازمانی<select id="userRole" required></select></label>
+  <label class="um-wide">اداره‌های مجاز<select id="userDepartments" multiple size="5"></select><small>برای انتخاب چند اداره، کلید Ctrl یا Command را نگه دارید. محدوده دسترسی مستقل از نقش است.</small></label>
+  <label>واحد / گروه کاری<input id="userUnit" maxlength="100" placeholder="واحد یا گروه سازمانی"></label>
+  <label>وضعیت حساب<select id="userStatus"><option value="active">فعال</option><option value="suspended">تعلیق‌شده</option></select></label>
+  <label class="um-wide">عضویت در گروه‌ها<select id="userGroups" multiple size="4"></select></label>
+  <label class="um-wide">یادداشت مدیریتی<textarea id="userNotes" rows="2" placeholder="توضیحات غیرمحرمانه و سازمانی"></textarea></label>
+ </div>
+ <div class="um-dialog-actions"><button class="um-secondary" type="button" data-close="userDialog">انصراف</button><button class="um-primary" type="submit">ذخیره اطلاعات کاربر</button></div>
+</form></dialog>
+<dialog class="um-dialog" id="groupDialog"><form id="groupForm" method="dialog">
+ <div class="um-dialog-head"><div><span class="eyebrow">دسته‌بندی سازمانی</span><h2 id="groupDialogTitle">ایجاد گروه دسترسی</h2></div><button class="um-close" type="button" data-close="groupDialog">×</button></div>
+ <input type="hidden" id="editGroupId">
+ <div class="um-form-grid">
+  <label>نام گروه<input id="groupName" required maxlength="90" placeholder="مثلاً کارشناسان ثبت اطلاعات"></label>
+  <label>الگوی نقش<select id="groupRole"></select></label>
+  <label class="um-wide">محدوده اداره‌ها<select id="groupDepartments" multiple size="5"></select></label>
+  <label class="um-wide">توضیحات گروه<textarea id="groupDescription" rows="3"></textarea></label>
+ </div>
+ <div class="um-dialog-actions"><button class="um-secondary" type="button" data-close="groupDialog">انصراف</button><button class="um-primary" type="submit">ذخیره گروه</button></div>
+</form></dialog>
+<dialog class="um-dialog" id="roleDialog"><form id="roleForm" method="dialog">
+ <div class="um-dialog-head"><div><span class="eyebrow">تعریف سطح اختیار</span><h2 id="roleDialogTitle">ویرایش نقش</h2></div><button class="um-close" type="button" data-close="roleDialog">×</button></div>
+ <input type="hidden" id="editRoleId">
+ <div class="um-form-grid"><label>عنوان نقش<input id="roleName" required maxlength="80"></label><label>کد نقش<input id="roleKey" required maxlength="40" pattern="[a-z0-9-]+" placeholder="custom-role"></label><label>محدوده پیش‌فرض<select id="roleScope"><option value="assigned-departments">اداره‌های منتسب</option><option value="assigned-resources">منابع تعیین‌شده</option><option value="all">کل معاونت</option><option value="technical-only">فقط پیکربندی فنی</option></select></label><label class="um-wide">شرح نقش<textarea id="roleDescription" rows="2"></textarea></label></div>
+ <h3 class="um-permission-title">مجوزهای این نقش</h3><div class="um-permission-grid" id="rolePermissions"></div>
+ <div class="um-dialog-actions"><button class="um-secondary" type="button" data-close="roleDialog">انصراف</button><button class="um-primary" type="submit">ذخیره نقش</button></div>
+</form></dialog>
+<script src="assets/js/access-control.js?v=control-center-03"></script>
+<script src="assets/js/main.js?v=sky-blue-20261113"></script>
+<script src="assets/js/user-management.js?v=sky-blue-20261113-2"></script>
+</body></html>
