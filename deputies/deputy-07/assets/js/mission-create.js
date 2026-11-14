@@ -112,15 +112,16 @@ function renderDepartmentFields(){
  const heading=host.querySelector("h3");
  heading.textContent=definition?.name ? "اطلاعات اختصاصی · "+definition.name : "اطلاعات اختصاصی اداره انتخاب‌شده";
  if(!definition?.fields?.length){const p=document.createElement("p");p.className="hint generated-field";p.textContent="برای این واحد هنوز فیلد اختصاصی تعریف نشده است.";host.append(p);return;}
- for(const field of definition.fields){
+ for(const field of definition.fields.filter(item=>item.active!==false)){
   const wrap=document.createElement("div");wrap.className="field generated-field";
-  const label=document.createElement("label");label.htmlFor="custom_"+field.id;label.textContent=field.label+(field.unit?" ("+field.unit+")":"");
+  const label=document.createElement("label");label.htmlFor="custom_"+field.id;label.textContent=field.label+(field.unit?" ("+field.unit+")":"")+(field.required?" *":"");
   let input;
   if(field.type==="select"){input=document.createElement("select");const empty=document.createElement("option");empty.value="";empty.textContent="انتخاب کنید";input.append(empty);(field.options||[]).forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;input.append(o);});}
   else if(field.type==="textarea"){input=document.createElement("textarea");input.rows=3;}
   else{input=document.createElement("input");input.type=["number","date"].includes(field.type)?field.type:"text";}
-  input.id="custom_"+field.id;input.dataset.customId=field.id;input.dataset.customType=field.type;input.placeholder=field.placeholder||"";
-  wrap.append(label,input);host.append(wrap);
+  input.id="custom_"+field.id;input.dataset.customId=field.id;input.dataset.customType=field.type;input.placeholder=field.placeholder||"";input.required=!!field.required;
+  wrap.append(label,input);
+  const tools=document.createElement("div");tools.className="field-tools";const edit=document.createElement("button");edit.type="button";edit.className="field-edit-btn";edit.textContent="ویرایش فیلد";edit.addEventListener("click",()=>openFieldEditor({kind:"dept",id:field.id,departmentId:dept}));tools.append(edit);wrap.append(tools);host.append(wrap);
  }
 }
 
@@ -177,6 +178,7 @@ function openFieldEditor(target){
  editingField=target;let meta;
  if(target.kind==="core"){const wrap=target.wrap||$(target.id)?.closest(".field");meta=fieldMeta(target.id,wrap);}
  else if(target.kind==="extra"){meta=(schema.extraFields||[]).find(f=>f.id===target.id)||{};}
+ else if(target.kind==="dept"){meta=(schema.departments.find(d=>String(d.id)===String(target.departmentId))?.fields||[]).find(f=>f.id===target.id)||{};}
  else meta={label:"",type:"text",required:false,placeholder:"",options:[],section:target.section};
  $("fieldEditorHeading").textContent=target.kind==="new"?"افزودن فیلد جدید":"ویرایش فیلد";
  $("fieldEditorLabel").value=meta.label||"";$("fieldEditorType").value=meta.type||"text";$("fieldEditorPlaceholder").value=meta.placeholder||"";
@@ -198,8 +200,9 @@ $("fieldEditorSave").addEventListener("click",async()=>{
   const meta={label,type,required,placeholder,options,active:true};
   if(editingField.kind==="core"){schema.coreFields=schema.coreFields||{};schema.coreFields[editingField.id]={...fieldMeta(editingField.id,editingField.wrap),...meta};}
   else if(editingField.kind==="extra"){const f=schema.extraFields.find(x=>x.id===editingField.id);Object.assign(f,meta);}
+  else if(editingField.kind==="dept"){const f=(schema.departments.find(d=>String(d.id)===String(editingField.departmentId))?.fields||[]).find(x=>x.id===editingField.id);Object.assign(f,meta);}
   else{schema.extraFields=schema.extraFields||[];const id="f_"+crypto.randomUUID().replace(/-/g,"").slice(0,12);schema.extraFields.push({id,section:editingField.section,...meta,full:false});}
-  await persistFieldSchema();applyCoreFields();renderExtraFields();decorateFormFields();$("fieldEditor").hidden=true;editingField=null;$("fieldEditorStatus").textContent="";$("schemaResult").textContent="تغییر ساختار فرم ذخیره شد.";
+  const extraValues=readExtraFields();await persistFieldSchema();applyCoreFields();renderDepartmentFields();renderExtraFields(extraValues);decorateFormFields();$("fieldEditor").hidden=true;editingField=null;$("fieldEditorStatus").textContent="";$("schemaResult").textContent="تغییر ساختار فرم ذخیره شد.";
  }catch(e){$("fieldEditorStatus").textContent=e.message;}
 });
 $("fieldEditorDelete").addEventListener("click",async()=>{
@@ -207,8 +210,9 @@ $("fieldEditorDelete").addEventListener("click",async()=>{
   if(!editingField||editingField.kind==="new")return;
   if(!confirm("این فیلد از فرم‌های جدید و ویرایش حذف شود؟ مقدارهای ذخیره‌شده قبلی پاک نمی‌شوند."))return;
   if(editingField.kind==="core"){schema.coreFields=schema.coreFields||{};schema.coreFields[editingField.id]={...fieldMeta(editingField.id,$(editingField.id)?.closest(".field")),active:false};}
-  else{const f=schema.extraFields.find(x=>x.id===editingField.id);if(f)f.active=false;}
-  await persistFieldSchema();applyCoreFields();renderExtraFields();$("fieldEditor").hidden=true;editingField=null;$("schemaResult").textContent="فیلد از فرم پنهان شد؛ داده‌های قبلی حفظ شدند.";
+  else if(editingField.kind==="extra"){const f=schema.extraFields.find(x=>x.id===editingField.id);if(f)f.active=false;}
+  else if(editingField.kind==="dept"){const f=(schema.departments.find(d=>String(d.id)===String(editingField.departmentId))?.fields||[]).find(x=>x.id===editingField.id);if(f)f.active=false;}
+  const extraValues=readExtraFields();await persistFieldSchema();applyCoreFields();renderDepartmentFields();renderExtraFields(extraValues);$("fieldEditor").hidden=true;editingField=null;$("schemaResult").textContent="فیلد از فرم پنهان شد؛ داده‌های قبلی حفظ شدند.";
  }catch(e){$("fieldEditorStatus").textContent=e.message;}
 });
 function addMilestoneRow(item={}){
