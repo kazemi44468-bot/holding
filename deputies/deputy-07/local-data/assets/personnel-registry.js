@@ -1,5 +1,6 @@
 import {Vault} from "./engine.js";
 const ENTITY="personnel",MIN_CODE=1000,SLOT_COUNT=250,REF_KEYS=new Set(["personnelCode","staffCode","employeeCode","personnelId","personId","employeeId","staffId","supervisorCode","managerPersonnelCode","ownerCode","assigneeCode","assignedToCode","assignedByCode","recipientCode","reviewerCode","operatorCode","authorCode","targetPersonCode","createdByPersonnelCode","replacedBy"]);
+const DEPARTMENTS=[["1","اداری و پشتیبانی"],["2","تحقیق و توسعه"],["3","پارک‌بان و معبربانان"],["4","تأسیسات فنی و امور نگهداری"],["6","فاوا و خدمات فنی"],["7","جمع‌آوری، نگهداری و بازیافت پسماند"],["8","بازرسی و تحقیقات محلی"]];
 const normalizeCode=v=>String(v??"").trim().replace(/[۰-۹]/g,d=>String("۰۱۲۳۴۵۶۷۸۹".indexOf(d))).replace(/[٠-٩]/g,d=>String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));
 const recordKey=code=>"personnel:"+String(code);
 const blank=(code)=>({code:String(code),status:"empty",profile:{firstName:"",lastName:"",nationalCode:"",birthDate:"",marriageDate:"",gender:"",mobile:"",phone:"",email:"",address:"",departmentId:"",unit:"",jobTitle:"",employmentType:"",hireDate:"",contractEnd:"",education:"",fieldOfStudy:"",specialty:"",supervisorCode:"",workLocation:"",notes:""},createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),revision:1});
@@ -118,7 +119,7 @@ function initProfileBridge(){
  const status=host.querySelector("[data-pr-profile-status]"),unlock=host.querySelector("[data-pr-profile-unlock]");
  const fa=v=>String(v??"").replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[Number(d)]);
  const set=(key,value)=>result.querySelectorAll("[data-person-"+key+"]").forEach(node=>node.textContent=value||"ثبت نشده");
- const deptName=id=>departments.find(d=>d[0]===String(id))?.[1]||"اداره تعیین نشده";
+ const deptName=id=>DEPARTMENTS.find(d=>d[0]===String(id))?.[1]||"اداره تعیین نشده";
  const years=date=>{if(!date)return "ثبت نشده";const d=new Date(date+"T12:00:00");if(Number.isNaN(d.getTime()))return "ثبت نشده";const n=Math.max(0,(Date.now()-d.getTime())/31557600000);return n.toFixed(1).replace(".", "٫")+" سال";};
  function clearLegacyPanels(){
   ["orders","pay-breakdown","leave-breakdown","skill-list","assets-list","asset-types","certificates","history","presence","competency","career","access","welfare","event-list"].forEach(key=>result.querySelectorAll("[data-person-"+key+"]").forEach(node=>{node.textContent="اطلاعاتی در بانک مرجع ثبت نشده است.";}));
