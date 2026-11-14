@@ -132,7 +132,7 @@
   centralPeople=people||[];
   events.splice(0,events.length,...events.filter(e=>e.source!=="personnel-registry"),...(personalEvents||[]));
   root.querySelectorAll("[data-calendar-count]").forEach(n=>n.textContent=fmt(events.filter(e=>e.type===n.dataset.calendarCount).length));
-  const total=root.querySelector("[data-calendar-total]");if(total)total.textContent=fmt(events.length);
+  const total=root.querySelector("[data-calendar-total]");if(total)total.textContent=fmt(countAll());
   render();renderPersonal();renderPersonnelSummary();renderDepartmentSummary();
  };
  window.addEventListener("deputy7:mission-calendar",event=>{
