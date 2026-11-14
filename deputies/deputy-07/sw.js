@@ -34,12 +34,12 @@ self.addEventListener("fetch",event=>{
   event.respondWith((async()=>{
    const cache=await caches.open(CACHE_NAME);
    const cached=await cache.match(request);
-   const refresh=fetch(request).then(response=>{
+   if(cached)return cached;
+   try{
+    const response=await fetch(request);
     if(response&&response.ok)cache.put(request,response.clone()).catch(()=>{});
     return response;
-   }).catch(()=>null);
-   if(cached){event.waitUntil(refresh.then(()=>undefined));return cached;}
-   return (await refresh)||Response.error();
+   }catch(error){return Response.error();}
   })());
   return;
  }
