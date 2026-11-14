@@ -156,6 +156,10 @@ body.ops-page:has(#missionForm) .mission-tab .section-title-edit{flex:0 0 18px;w
  <div class="section-head"><div><h3 id="fieldEditorHeading">تنظیم فیلد</h3><p>عنوان و مشخصات فیلد را تغییر دهید؛ شناسه داخلی برای حفظ اطلاعات قبلی ثابت می‌ماند.</p></div></div>
  <div class="field-editor-grid">
   <label>عنوان فیلد<input id="fieldEditorLabel" maxlength="100"></label>
+  <label>تب مقصد / دسته‌بندی<select id="fieldEditorDestination">
+   <option value="general">اطلاعات عمومی</option><option value="routing">دسته‌بندی و ارجاع</option><option value="schedule">زمان‌بندی و اجرا</option><option value="history">سوابق و گردش کار</option><option value="costs">هزینه‌ها و منابع</option><option value="people">نیروی انسانی</option><option value="outputs">خروجی‌ها و نتایج</option><option value="evaluation">ارزیابی و کیفیت</option><option value="documents">پیوست و جلسات</option><option value="approvals">پاراف و گردش</option>
+  </select></label>
+  <label>جایگاه در تب<input id="fieldEditorOrder" type="number" min="1" step="1" value="1"></label>
   <label>نوع فیلد<select id="fieldEditorType"><option value="text">متن کوتاه</option><option value="textarea">متن چندخطی</option><option value="number">عدد</option><option value="date">تاریخ</option><option value="select">فهرست انتخابی (تک‌گزینه‌ای)</option><option value="checkbox">چک‌باکس بله / خیر</option><option value="yesno">انتخاب بله / خیر</option><option value="checklist">چک‌لیست چندگزینه‌ای</option><option value="datetime-local">تاریخ و ساعت</option></select></label>
   <label>متن راهنما<input id="fieldEditorPlaceholder" maxlength="180"></label>
   <label id="fieldEditorOptionsWrap">گزینه‌ها (هر گزینه در یک سطر)<textarea id="fieldEditorOptions" rows="3"></textarea></label>
@@ -170,7 +174,8 @@ body.ops-page:has(#missionForm) .mission-tab .section-title-edit{flex:0 0 18px;w
  </div>
  <div class="field-editor-actions">
   <button type="button" id="fieldEditorSave" class="primary">ذخیره تنظیمات فیلد</button>
-  <button type="button" id="fieldEditorDelete" class="quiet">حذف از فرم</button>
+  <button type="button" id="fieldEditorCopy" class="quiet">کپی فیلد</button>
+  <button type="button" id="fieldEditorDelete" class="quiet">حذف فیلد از فرم</button>
   <button type="button" id="fieldEditorCancel" class="quiet">انصراف</button>
  </div>
  <div id="fieldEditorStatus" class="mission-status"></div>
