@@ -74,4 +74,4 @@ $("importFile").addEventListener("change", async event => {
   finally { event.target.value = ""; }
 });
 const status = await MissionVault.status();
-if (status.exists) show("vaultState", "مخزن قبلاً ایجاد شده است. با همان گذرواژه اصلی مرکز داده آن را بازگشایی کنید.");
+if (status.needsMigration) show("vaultState", "مخزن قدیمی رمزگذاری شده است؛ رمز قبلی را فقط یک‌بار وارد کنید. پس از انتقال، دیگر رمز لازم نیست."); else show("vaultState", "مخزن محلی بدون رمز آماده استفاده است؛ برای شروع دکمه اتصال را بزنید.");
