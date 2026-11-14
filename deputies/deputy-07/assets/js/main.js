@@ -42,7 +42,7 @@ document.querySelectorAll('.back-to-top').forEach(node=>node.remove());
  if(!window.Deputy7Pages){
   const nestedPath=location.pathname.includes("/pages/")||location.pathname.includes("/local-data/");
   await new Promise(resolve=>{
-   const s=document.createElement("script");s.src=(nestedPath?"../assets/js/":"assets/js/")+"page-registry-core.js?v=page-studio-20261114-6";
+   const s=document.createElement("script");s.src=(nestedPath?"../assets/js/":"assets/js/")+"page-registry-core.js?v=page-studio-20261114-7";
    s.onload=resolve;s.onerror=resolve;document.head.append(s);
   });
  }
@@ -175,7 +175,7 @@ const inPages=location.pathname.includes('/pages/');
  document.addEventListener('click',event=>{if(!dock.contains(event.target)){panel.hidden=true;dock.querySelectorAll('.dock-group').forEach(b=>{b.setAttribute('aria-expanded','false');b.classList.remove('selected')})}});
  document.addEventListener('keydown',event=>{if(event.key==='Escape'){panel.hidden=true;dock.querySelectorAll('.dock-group').forEach(b=>{b.setAttribute('aria-expanded','false');b.classList.remove('selected')})}});
  const contentBridge=document.createElement("script");
- contentBridge.src=(inPages||inLocalData?"../assets/js/":"assets/js/")+"page-content-bridge.js?v=page-studio-20261114-6";
+ contentBridge.src=(inPages||inLocalData?"../assets/js/":"assets/js/")+"page-content-bridge.js?v=page-studio-20261114-7";
  document.head.append(contentBridge);
 
 })();
@@ -301,7 +301,7 @@ const inPages=location.pathname.includes('/pages/');
  const link=[...document.querySelectorAll('link[rel="stylesheet"]')].find(el=>/assets\/css\/style\.css(?:\?|$)/.test(el.getAttribute('href')||''));
  if(!link)return;
  const url=new URL(link.href,document.baseURI);
- url.searchParams.set('v','page-studio-20261114-6');
+ url.searchParams.set('v','page-studio-20261114-7');
  if(link.href!==url.href)link.href=url.href;
 })();
 
