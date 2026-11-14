@@ -62,7 +62,7 @@
 <div class="field"><label for="assignedExpert">کارشناس یا نفر معرفی‌شده</label><input id="assignedExpert" placeholder="نام یا کد پرسنلی کارشناس"></div>
 <div class="field"><label for="missionType">نوع اقدام مأموریت</label><select id="missionType"><option>اجرایی</option><option>مطالعاتی و پژوهشی</option><option>نظارتی و بازرسی</option><option>فنی و تعمیراتی</option><option>پشتیبانی</option><option>برنامه‌ریزی و هماهنگی</option><option>خدماتی و عملیاتی</option><option>اصلاحی و رفع نقص</option><option>توسعه‌ای / پروژه‌ای</option><option>سایر</option></select></div>
 <div class="field"><label for="workNature">ماهیت کار</label><select id="workNature"><option>مستمر</option><option>مقطعی</option><option>مرحله‌ای</option><option>پروژه‌ای</option><option>اضطراری</option></select></div>
-<div class="field full"><label for="routingNote">دستور ارجاع و شرح انتظارات از اداره مجری</label><textarea id="routingNote" placeholder="اقدام مورد انتظار، حدود اختیار، خروجی لازم و نحوه گزارش‌دهی"></textarea></div>
+<div class="field full"><label for="routingNote">دستور ارجاع و شرح انتظارات از اداره مجری</label><textarea id="routingNote" placeholder="اقدام مورد انتظار، حدود اختیار، خروجی لازم و نحوه گزارش‌دهی"></textarea></div><div class="field full"><button type="button" id="referMission" class="primary">ثبت و ارجاع مأموریت به اداره مجری</button><small>پس از تکمیل اطلاعات پایه، مأموریت با وضعیت ارجاع‌شده و نام مدیر / کارشناس مسئول در پرونده ثبت می‌شود.</small></div>
 </div>
 <div class="custom-fields" id="departmentFields"><h3>اطلاعات اختصاصی اداره انتخاب‌شده</h3><p class="hint">با انتخاب اداره، فرم تخصصی همان اداره در این قسمت نمایش داده می‌شود.</p></div>
 </section>
@@ -167,7 +167,7 @@
 <div class="field"><label for="calendarReminder">یادآوری</label><select id="calendarReminder"><option>بدون یادآوری</option><option>یک روز قبل</option><option>سه روز قبل</option><option>یک هفته قبل</option></select></div>
 <div class="field full"><label for="calendarDescription">توضیحات رویداد تقویم</label><textarea id="calendarDescription"></textarea></div>
 </div>
-<div class="repeat-note">مأموریت به‌صورت یک رویداد بازه‌ای در تقویم نمایش داده می‌شود؛ نقاط عطف، جلسه هماهنگی و موعد تحویل نیز به‌عنوان نقاط کنترل مرتبط با همان کد مأموریت قابل نمایش خواهند بود.</div>
+<div class="repeat-note">مأموریت به‌صورت یک رویداد بازه‌ای در تقویم نمایش داده می‌شود؛ نقاط عطف، جلسه هماهنگی و موعد تحویل نیز به‌عنوان نقاط کنترل مرتبط با همان کد مأموریت قابل نمایش خواهند بود.</div><div class="field full"><label>تاریخچه گردش و ارجاع</label><div id="workflowHistory" class="repeat-note">پس از ثبت مأموریت، تاریخچه گردش این پرونده نمایش داده می‌شود.</div></div>
 </section>
 <div class="mission-actions"><div class="right"><button type="button" id="prevStep" class="quiet">مرحله قبل</button><button type="button" id="nextStep" class="primary">مرحله بعد</button></div><div class="left"><button type="button" id="saveDraft" class="quiet">ذخیره پیش‌نویس</button><button type="submit" id="saveMission" class="primary">ثبت و ذخیره مأموریت</button></div></div>
 <div id="saveResult" class="toast" role="status"></div>
