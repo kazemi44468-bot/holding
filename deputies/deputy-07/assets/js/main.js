@@ -279,7 +279,18 @@ const inPages=location.pathname.includes('/pages/');
   if(node.matches('input[readonly],input[disabled],output')){if(/[0-9٠-٩]/.test(node.value))node.value=localize(node.value);}
   node.childNodes.forEach(process);
  };
- if(document.body){process(document.body);new MutationObserver(records=>records.forEach(record=>{record.addedNodes.forEach(process);if(record.type==='characterData')process(record.target)})).observe(document.body,{subtree:true,childList:true,characterData:true});}
+ if(document.body){
+  process(document.body);
+  const pending=new Set();let scheduled=false;
+  const flush=()=>{scheduled=false;pending.forEach(process);pending.clear();};
+  new MutationObserver(records=>{
+   records.forEach(record=>{
+    if(record.type==='characterData')pending.add(record.target);
+    record.addedNodes.forEach(node=>{if(node.nodeType===Node.ELEMENT_NODE||node.nodeType===Node.TEXT_NODE)pending.add(node);});
+   });
+   if(pending.size&&!scheduled){scheduled=true;requestAnimationFrame(flush);}
+  }).observe(document.body,{subtree:true,childList:true,characterData:true});
+ }
  document.body.dataset.page=location.pathname.split('/').pop().replace('.html','')||'home';
 })();
 
