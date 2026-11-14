@@ -1,4 +1,4 @@
-const CACHE_NAME = "deputy-07-missions-v5";
+const CACHE_NAME = "deputy-07-missions-v6";
 const FILES = [
   "./pages/mission-bank.html",
   "./pages/mission-create.html",
@@ -37,5 +37,5 @@ self.addEventListener("fetch", event => {
       caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
     }
     return response;
-  }).catch(async () => (await caches.match(event.request)) || (event.request.mode === "navigate" ? caches.match("./pages/mission-bank.html") : Response.error())));
+  }).catch(async () => (await caches.match(event.request,{ignoreSearch:true})) || (event.request.mode === "navigate" ? caches.match("./pages/mission-bank.html") : Response.error())));
 });
