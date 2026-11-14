@@ -172,7 +172,7 @@ function fill(data){
  setRadio("hasPrevious",data.hasPrevious?"yes":"no");
  setRadio("calendarEnabled",data.calendarEnabled===false?"no":"yes");
  $("previousFields").classList.toggle("hidden",!data.hasPrevious);
- renderDepartmentFields();writeCustom(data.departmentFields);
+ renderDepartmentFields();writeCustom(data.departmentFields);renderMilestones(data.milestones||[]);
 }
 function renderWorkflowHistory(log=[]){
  const host=$("workflowHistory");if(!host)return;
