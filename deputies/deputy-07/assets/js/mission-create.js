@@ -123,7 +123,7 @@ function renderDepartmentFields(){
   const label=document.createElement("label");label.htmlFor="custom_"+field.id;label.textContent=field.label+(field.unit?" ("+field.unit+")":"")+(field.required?" *":"");
   const input=buildFieldControl(field,"custom_"+field.id,departmentDraftValues[dept]?.[field.id]??currentMission?.departmentFields?.[field.id]??"");
   input.dataset.customId=field.id;input.dataset.customType=field.type;input.classList.add("custom-field-control");wrap.append(label,input);applyConditionToWrap(wrap,field.condition);
-  const tools=document.createElement("div");tools.className="field-tools";const edit=document.createElement("button");edit.type="button";edit.className="field-edit-btn";edit.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z"/></svg>';edit.setAttribute("aria-label","ویرایش فیلد");edit.title="ویرایش فیلد";edit.addEventListener("click",()=>openFieldEditor({kind:"dept",id:field.id,departmentId:dept}));label.append(edit);host.append(wrap);
+  addInlineFieldEditor(label,()=>openFieldEditor({kind:"dept",id:field.id,departmentId:dept}));host.append(wrap);
  }
 }
 
@@ -166,7 +166,7 @@ function fieldMeta(id,wrap){
 }
 function applyCoreFields(){
  document.querySelectorAll("#missionForm .field label[for]").forEach(label=>{
-  const id=label.htmlFor,wrap=label.closest(".field"),el=$(id);if(!wrap||!el||el.type==="file")return;
+  const id=label.htmlFor,wrap=label.closest(".field"),el=$(id);if(!wrap||wrap.classList.contains("extra-field")||wrap.classList.contains("generated-field")||!el||el.type==="file")return;
   const meta=fieldMeta(id,wrap),oldValue=readControl(el,fieldControlType(el));wrap.hidden=meta.active===false;wrap.dataset.fieldOrder=String(meta.order||9999);label.textContent=meta.label+(meta.required?" *":"");const next=buildFieldControl(meta,id,oldValue);next.name=el.name||id;if(el.parentElement?.classList.contains("jalali-picker"))el.parentElement.replaceWith(next);else el.replaceWith(next);const target=document.querySelector('.mission-section[data-section="'+CSS.escape(meta.section||"general")+'"] .form-grid');if(target&&wrap.parentElement!==target)target.append(wrap);applyConditionToWrap(wrap,meta.condition);
  });
 }
@@ -243,7 +243,7 @@ function openFieldEditor(target){
  editingField=target;let meta;
  if(target.kind==="core"){const wrap=target.wrap||$(target.id)?.closest(".field");meta=fieldMeta(target.id,wrap);}
  else if(target.kind==="extra"){meta=(schema.extraFields||[]).find(f=>f.id===target.id)||{};}
- else if(target.kind==="dept"){meta=(schema.departments.find(d=>String(d.id)===String(target.departmentId))?.fields||[]).find(f=>f.id===target.id)||{};}
+ else if(target.kind==="dept"){const fields=schema.departments.find(d=>String(d.id)===String(target.departmentId))?.fields||[],index=fields.findIndex(f=>f.id===target.id);meta={...(fields[index]||{}),section:"routing",order:(fields[index]||{}).order??index+1};}
  else meta={label:"",type:"text",required:false,placeholder:"",options:[],section:target.section};
  $("fieldEditorHeading").textContent=target.kind==="new"?"افزودن فیلد جدید":"ویرایش فیلد";
  const destination=$("fieldEditorDestination");if(destination){destination.value=meta.section||target.section||"general";if(![...destination.options].some(o=>o.value===destination.value))destination.value="general";}
