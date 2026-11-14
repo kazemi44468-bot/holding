@@ -193,3 +193,151 @@
   .users-admin-page .users-hero{padding:17px!important}
   .users-admin-page .um-content{padding:14px!important}
 }
+
+/* مدیریت کاربران در مرکز کنترل — هماهنگ با پالت خنثی روشن */
+html body.ops-page.control-page #view-users{
+  color:#171717!important;
+}
+html body.ops-page.control-page #view-users .um-stats article,
+html body.ops-page.control-page #view-users .um-content,
+html body.ops-page.control-page #view-users .um-group-card,
+html body.ops-page.control-page #view-users .um-role-card,
+html body.ops-page.control-page #view-users .um-config-card{
+  background:#fff!important;
+  background-image:none!important;
+  color:#171717!important;
+  border-color:#e2ded7!important;
+  box-shadow:0 2px 9px rgba(30,27,23,.045)!important;
+}
+html body.ops-page.control-page #view-users .um-sidebar{
+  background:#f5f3ef!important;
+  border-color:#e2ded7!important;
+  box-shadow:none!important;
+}
+html body.ops-page.control-page #view-users .um-sidebar-title,
+html body.ops-page.control-page #view-users .um-tab,
+html body.ops-page.control-page #view-users .um-tab b,
+html body.ops-page.control-page #view-users .um-tab small,
+html body.ops-page.control-page #view-users .um-panel-head h2,
+html body.ops-page.control-page #view-users .um-panel-head p,
+html body.ops-page.control-page #view-users .eyebrow,
+html body.ops-page.control-page #view-users .um-stats small,
+html body.ops-page.control-page #view-users .um-stats span,
+html body.ops-page.control-page #view-users .um-stats b{
+  color:#171717!important;
+}
+html body.ops-page.control-page #view-users .um-tab{
+  background:#f9f8f5!important;
+  border:1px solid #e4e0d9!important;
+  border-radius:7px!important;
+}
+html body.ops-page.control-page #view-users .um-tab>span:first-child{
+  background:#eae7e0!important;
+  color:#171717!important;
+}
+html body.ops-page.control-page #view-users .um-tab.active,
+html body.ops-page.control-page #view-users .um-tab.active>span:first-child{
+  background:#e5e1d9!important;
+  color:#111!important;
+  border-color:#d5cfc5!important;
+}
+html body.ops-page.control-page #view-users .um-primary,
+html body.ops-page.control-page #view-users .um-secondary,
+html body.ops-page.control-page #view-users .um-icon-btn{
+  background:#eae7e0!important;
+  background-image:none!important;
+  color:#171717!important;
+  border:1px solid #d8d2c8!important;
+  box-shadow:none!important;
+}
+html body.ops-page.control-page #view-users .um-primary:hover,
+html body.ops-page.control-page #view-users .um-secondary:hover,
+html body.ops-page.control-page #view-users .um-icon-btn:hover{
+  background:#e1ddd5!important;
+  color:#111!important;
+}
+html body.ops-page.control-page #view-users .um-toolbar select,
+html body.ops-page.control-page #view-users .um-search,
+html body.ops-page.control-page #view-users .um-bulkbar select,
+html body.ops-page.control-page #view-users .um-form-grid input,
+html body.ops-page.control-page #view-users .um-form-grid select,
+html body.ops-page.control-page #view-users .um-form-grid textarea{
+  background:#fff!important;
+  color:#171717!important;
+  border-color:#dcd7ce!important;
+}
+html body.ops-page.control-page #view-users .um-bulkbar,
+html body.ops-page.control-page #view-users .um-table th,
+html body.ops-page.control-page #view-users .um-scope-note,
+html body.ops-page.control-page #view-users .um-inline-form{
+  background:#f5f3ef!important;
+  background-image:none!important;
+  color:#24211e!important;
+  border-color:#e0dcd4!important;
+}
+html body.ops-page.control-page #view-users .um-table,
+html body.ops-page.control-page #view-users .um-table td,
+html body.ops-page.control-page #view-users .um-table th,
+html body.ops-page.control-page #view-users .um-user-cell b,
+html body.ops-page.control-page #view-users .um-user-cell small,
+html body.ops-page.control-page #view-users .um-role-card h3,
+html body.ops-page.control-page #view-users .um-group-card h3,
+html body.ops-page.control-page #view-users .um-role-card p,
+html body.ops-page.control-page #view-users .um-group-card p,
+html body.ops-page.control-page #view-users .um-card-meta,
+html body.ops-page.control-page #view-users .um-empty,
+html body.ops-page.control-page #view-users .um-audit-item,
+html body.ops-page.control-page #view-users .um-audit-item *{
+  color:#24211e!important;
+}
+html body.ops-page.control-page #view-users .um-table tbody tr:hover{
+  background:#f9f8f5!important;
+}
+html body.ops-page.control-page #view-users .um-avatar,
+html body.ops-page.control-page #view-users .um-chip,
+html body.ops-page.control-page #view-users .um-chip.blue,
+html body.ops-page.control-page #view-users .um-chip.gold,
+html body.ops-page.control-page #view-users .um-department-code,
+html body.ops-page.control-page #view-users .um-close{
+  background:#eae7e0!important;
+  color:#171717!important;
+  border-color:#dcd7ce!important;
+}
+html body.ops-page.control-page #view-users .um-status,
+html body.ops-page.control-page #view-users .um-status.off{
+  color:#24211e!important;
+}
+html body.ops-page.control-page #view-users .um-matrix input,
+html body.ops-page.control-page #view-users .um-permission-grid input{
+  accent-color:#777168!important;
+}
+html body.ops-page.control-page .um-dialog{
+  background:#fff!important;
+  color:#171717!important;
+  border:1px solid #dcd7ce!important;
+  border-radius:12px!important;
+  box-shadow:0 18px 55px rgba(30,27,23,.16)!important;
+}
+html body.ops-page.control-page .um-dialog::backdrop{
+  background:rgba(35,32,28,.28)!important;
+}
+html body.ops-page.control-page .um-dialog h2,
+html body.ops-page.control-page .um-dialog h3,
+html body.ops-page.control-page .um-dialog label,
+html body.ops-page.control-page .um-dialog small,
+html body.ops-page.control-page .um-dialog .eyebrow{
+  color:#171717!important;
+}
+html body.ops-page.control-page .um-dialog input,
+html body.ops-page.control-page .um-dialog select,
+html body.ops-page.control-page .um-dialog textarea{
+  background:#fff!important;
+  color:#171717!important;
+  border-color:#dcd7ce!important;
+}
+html body.ops-page.control-page #view-users .um-form-grid input:focus,
+html body.ops-page.control-page #view-users .um-form-grid select:focus,
+html body.ops-page.control-page #view-users .um-form-grid textarea:focus{
+  outline:2px solid #e5e1d9!important;
+  border-color:#aaa398!important;
+}
