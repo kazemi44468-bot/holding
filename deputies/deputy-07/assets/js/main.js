@@ -62,7 +62,9 @@ const inPages=location.pathname.includes('/pages/');
  const customMenuLinks=menu=>customPages.filter(p=>p.menu===menu).map(p=>[p.href,p.safeTitle]);
  const otherCustomPages=customMenuLinks("سایر صفحات");
  const pageCatalog=(()=>{try{return JSON.parse(localStorage.getItem("deputy7.page-registry.v1"))?.pages||[]}catch{return[]}})();
- const pageMeta=path=>pageCatalog.find(p=>p.kind==="static"&&String(p.path||"").split("?")[0].split("/").pop()===String(path||"").split("?")[0].split("/").pop());
+ const normalizePagePath=value=>String(value||"").split("?")[0].replace(/^\\.\\.\\//,"").replace(/^\\.\\//,"").replace(/^\\//,"");
+ const pageMeta=path=>{const raw=normalizePagePath(path),exact=pageCatalog.find(p=>p.kind==="static"&&normalizePagePath(p.path)===raw);if(exact)return exact;const base=raw.split("/").pop();return pageCatalog.find(p=>p.kind==="static"&&String(p.path||"").split("/").pop()===base&&(String(p.path||"").startsWith("pages/")||!inPages));};
+ const registeredPageHref=p=>{const path=String(p.path||"");return inPages?(path.startsWith("pages/")?path.slice(6):"../"+path):inLocalData?"../"+path:path;};
  const nav=document.querySelector('.ops-nav');
  /* داخل سامانه، نشان و پیوندهای خانه باید به نمای اصلی سامانه برگردند، نه درگاه معرفی. */
  document.querySelectorAll('a[href="../index.html"],a[href="index.html"]').forEach(link=>{link.href=home;});
@@ -96,6 +98,15 @@ const inPages=location.pathname.includes('/pages/');
    '</div></details><details class="nav-dropdown"><summary>گزارش‌ها</summary><div class="nav-menu">'+
    [[urls.reports,'گزارش تلفیقی'],[urls.participation,'نظرسنجی'],...customMenuLinks("گزارش‌ها")].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
    '</div></details>'+(otherCustomPages.length?'<details class="nav-dropdown"><summary>سایر صفحات</summary><div class="nav-menu">'+otherCustomPages.map(([href,label])=>'<a href="'+href+'">'+label+'</a>').join('')+'</div></details>':'');
+  const navPathKey=href=>normalizePagePath(href).split("/").pop();
+  pageCatalog.filter(p=>p.kind==="static"&&p.id!=="entry"&&p.status==="published").forEach(p=>{
+   const href=registeredPageHref(p),key=navPathKey(href);
+   if([...nav.querySelectorAll("a")].some(a=>navPathKey(a.getAttribute("href"))===key))return;
+   const menuName=p.menu==="ادارات"?"ادارات کل":(p.menu||"مدیریت");
+   let dropdown=[...nav.querySelectorAll(".nav-dropdown")].find(d=>d.querySelector("summary")?.textContent.trim()===menuName);
+   if(!dropdown&&menuName==="سایر صفحات"){dropdown=document.createElement("details");dropdown.className="nav-dropdown";const summary=document.createElement("summary");summary.textContent=menuName;const box=document.createElement("div");box.className="nav-menu";dropdown.append(summary,box);nav.append(dropdown);}
+   const box=dropdown?.querySelector(".nav-menu");if(box){const a=document.createElement("a");a.href=href;a.textContent=p.title;box.append(a);}
+  });
   nav.querySelectorAll('a').forEach(a=>{const meta=pageMeta(a.getAttribute('href'));if(meta){a.textContent=meta.title||a.textContent;if(meta.status!=="published")a.hidden=true;}});
   nav.classList.add('ops-nav-framed');
   const current=location.pathname.split('/').pop();
@@ -114,6 +125,12 @@ const inPages=location.pathname.includes('/pages/');
   {id:'reports',label:'گزارش‌ها',icon:'▥',links:[[urls.reports,'گزارش تلفیقی ادارات'],[urls.catalog,'کاتالوگ گزارش‌ها'],[urls.archive,'آرشیو گزارش‌ها'],[urls.participation,'نظرسنجی'],...customMenuLinks("گزارش‌ها")]},
   ...(otherCustomPages.length?[{id:'custom-pages',label:'سایر صفحات',icon:'▣',links:otherCustomPages}]:[])
  ];
+ const groupForMenu={"ادارات":"departments","مدیریت":"management","اقدامات":"actions","خدمات":"services","گزارش‌ها":"reports"};
+ pageCatalog.filter(p=>p.kind==="static"&&p.id!=="entry"&&p.status==="published").forEach(p=>{
+  const group=groups.find(g=>g.id===groupForMenu[p.menu]);if(!group)return;
+  const href=registeredPageHref(p),key=href.split("?")[0].split("/").pop();
+  if(!group.links.some(([existing])=>existing.split("?")[0].split("/").pop()===key))group.links.push([href,p.title]);
+ });
  groups.forEach(g=>{g.links=g.links.filter(([href])=>{const meta=pageMeta(href);return !meta||meta.status==="published";});});
  const dock=document.createElement('nav');
  dock.className='mobile-dock';
@@ -268,6 +285,19 @@ const inPages=location.pathname.includes('/pages/');
  const link=[...document.querySelectorAll('link[rel="stylesheet"]')].find(el=>/assets\/css\/style\.css(?:\?|$)/.test(el.getAttribute('href')||''));
  if(!link)return;
  const url=new URL(link.href,document.baseURI);
- url.searchParams.set('v','nav-actions-20261114-3');
+ url.searchParams.set('v','page-studio-20261114-5');
  if(link.href!==url.href)link.href=url.href;
+})();
+
+/* صفحه‌های ثابت نیز از بلوک‌های تکمیلی ثبت‌شده در مدیریت صفحه‌ها استفاده می‌کنند. */
+(()=> {
+ const nested=location.pathname.includes("/pages/")||location.pathname.includes("/local-data/");
+ const base=nested?"../assets/js/":"assets/js/";
+ const load=src=>new Promise((resolve,reject)=>{
+  const existing=[...document.scripts].find(s=>s.src&&s.src.includes(src.split("?")[0]));
+  if(existing){if(existing.dataset.loaded==="true"||existing.readyState==="complete")return resolve();existing.addEventListener("load",resolve,{once:true});existing.addEventListener("error",reject,{once:true});return;}
+  const s=document.createElement("script");s.src=base+src;s.defer=true;s.onload=()=>{s.dataset.loaded="true";resolve();};s.onerror=reject;document.head.append(s);
+ });
+ const bridge=()=>load("page-content-bridge.js?v=page-studio-20261114-5").catch(()=>{});
+ if(window.Deputy7Pages)bridge();else load("page-registry-core.js?v=page-studio-20261114-5").then(bridge).catch(()=>{});
 })();
