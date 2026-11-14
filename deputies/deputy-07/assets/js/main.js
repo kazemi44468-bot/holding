@@ -36,9 +36,17 @@ document.querySelectorAll('.back-to-top').forEach(node=>node.remove());
 
 
 /* ناوبری یکپارچه و منوی دسته‌بندی‌شده موبایل */
-(()=>{
+(async()=>{{
  const body=document.body;
  if(!body.classList.contains('ops-page'))return;
+ if(!window.Deputy7Pages){
+  const nestedPath=location.pathname.includes("/pages/")||location.pathname.includes("/local-data/");
+  await new Promise(resolve=>{
+   const s=document.createElement("script");s.src=(nestedPath?"../assets/js/":"assets/js/")+"page-registry-core.js?v=page-studio-20261114-6";
+   s.onload=resolve;s.onerror=resolve;document.head.append(s);
+  });
+ }
+
  if(!body.classList.contains("control-page"))try{const cfg=JSON.parse(localStorage.getItem("deputy7.platform.config.v1"))?.theme||JSON.parse(localStorage.getItem("deputy7.identity-access.v1"))?.theme||{};const p={navy:["#55a8d1","#398fbd","#eaf7fc"],sky:["#55a8d1","#398fbd","#eaf7fc"],slate:["#6e91a5","#52758a","#eff7fa"],sand:["#b58b59","#927044","#faf4e9"]};const v=p[cfg.palette||cfg.preset]||p.sky;document.documentElement.style.setProperty("--deputy-primary",v[0]);document.documentElement.style.setProperty("--deputy-deep",v[1]);document.documentElement.style.setProperty("--deputy-soft",v[2]);document.documentElement.style.setProperty("--green",v[0]);document.documentElement.style.setProperty("--green2",v[0]);document.documentElement.style.setProperty("--green-dark",v[1]);document.documentElement.dataset.density=cfg.density||"comfortable";document.documentElement.dataset.corners=cfg.radius||cfg.corners||"soft";document.documentElement.dataset.width=cfg.width||"wide";const ts=document.createElement("style");ts.textContent="html[data-density=compact] .ops-card,html[data-density=compact] .analytics-panel{padding:14px}html[data-corners=square] .ops-card,html[data-corners=square] .analytics-panel,html[data-corners=square] .report-box{border-radius:5px}html[data-corners=soft] .ops-card,html[data-corners=soft] .analytics-panel,html[data-corners=soft] .report-box{border-radius:14px}html[data-width=normal] .ops-main{max-width:1180px}";document.head.appendChild(ts);}catch(e){}
 const inPages=location.pathname.includes('/pages/');
  const prefix=inPages?'':'pages/';
@@ -61,7 +69,7 @@ const inPages=location.pathname.includes('/pages/');
  const customPages=(()=>{try{const x=JSON.parse(localStorage.getItem("deputy7.page-registry.v1"));return (x?.pages||[]).filter(p=>p.kind==="custom"&&p.status==="published").map(p=>({...p,href:(inPages?"custom-page.html?id="+encodeURIComponent(p.id):inLocalData?"../pages/custom-page.html?id="+encodeURIComponent(p.id):"pages/custom-page.html?id="+encodeURIComponent(p.id)),safeTitle:escapeNav(p.title)}));}catch{return[]}})();
  const customMenuLinks=menu=>customPages.filter(p=>p.menu===menu).map(p=>[p.href,p.safeTitle]);
  const otherCustomPages=customMenuLinks("سایر صفحات");
- const pageCatalog=(()=>{try{return JSON.parse(localStorage.getItem("deputy7.page-registry.v1"))?.pages||[]}catch{return[]}})();
+ const pageCatalog=window.Deputy7Pages?.all()||[];
  const normalizePagePath=value=>{let path=String(value||"").split("?")[0];while(path.startsWith("../"))path=path.slice(3);if(path.startsWith("./"))path=path.slice(2);while(path.startsWith("/"))path=path.slice(1);return path;};
  const pageMeta=path=>{const raw=normalizePagePath(path),exact=pageCatalog.find(p=>p.kind==="static"&&normalizePagePath(p.path)===raw);if(exact)return exact;const base=raw.split("/").pop();return pageCatalog.find(p=>p.kind==="static"&&String(p.path||"").split("/").pop()===base&&(String(p.path||"").startsWith("pages/")||!inPages));};
  const registeredPageHref=p=>{const path=String(p.path||"");return inPages?(path.startsWith("pages/")?path.slice(6):"../"+path):inLocalData?"../"+path:path;};
@@ -166,6 +174,10 @@ const inPages=location.pathname.includes('/pages/');
  dock.appendChild(panel);body.appendChild(dock);
  document.addEventListener('click',event=>{if(!dock.contains(event.target)){panel.hidden=true;dock.querySelectorAll('.dock-group').forEach(b=>{b.setAttribute('aria-expanded','false');b.classList.remove('selected')})}});
  document.addEventListener('keydown',event=>{if(event.key==='Escape'){panel.hidden=true;dock.querySelectorAll('.dock-group').forEach(b=>{b.setAttribute('aria-expanded','false');b.classList.remove('selected')})}});
+ const contentBridge=document.createElement("script");
+ contentBridge.src=(inPages||inLocalData?"../assets/js/":"assets/js/")+"page-content-bridge.js?v=page-studio-20261114-6";
+ document.head.append(contentBridge);
+
 })();
 
 /* گزارش‌ساز تعاملی و نمودارهای متحرک */
@@ -293,15 +305,3 @@ const inPages=location.pathname.includes('/pages/');
  if(link.href!==url.href)link.href=url.href;
 })();
 
-/* صفحه‌های ثابت نیز از بلوک‌های تکمیلی ثبت‌شده در مدیریت صفحه‌ها استفاده می‌کنند. */
-(()=> {
- const nested=location.pathname.includes("/pages/")||location.pathname.includes("/local-data/");
- const base=nested?"../assets/js/":"assets/js/";
- const load=src=>new Promise((resolve,reject)=>{
-  const existing=[...document.scripts].find(s=>s.src&&s.src.includes(src.split("?")[0]));
-  if(existing){if(existing.dataset.loaded==="true"||existing.readyState==="complete")return resolve();existing.addEventListener("load",resolve,{once:true});existing.addEventListener("error",reject,{once:true});return;}
-  const s=document.createElement("script");s.src=base+src;s.defer=true;s.onload=()=>{s.dataset.loaded="true";resolve();};s.onerror=reject;document.head.append(s);
- });
- const bridge=()=>load("page-content-bridge.js?v=page-studio-20261114-6").catch(()=>{});
- if(window.Deputy7Pages)bridge();else load("page-registry-core.js?v=page-studio-20261114-6").then(bridge).catch(()=>{});
-})();
