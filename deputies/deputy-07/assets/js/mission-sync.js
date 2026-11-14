@@ -52,22 +52,22 @@ $("lockBtn").addEventListener("click", () => {
 $("refreshBtn").addEventListener("click", async () => { try { await refresh(); } catch (error) { show("transferResult", error.message); } });
 $("exportBtn").addEventListener("click", async () => {
   try {
-    const pass = prompt("برای بسته انتقال، گذرواژه‌ای با حداقل ۱۲ نویسه تعیین کنید. این گذرواژه برای واردکردن بسته در رایانه مقصد لازم است:");
-    if (!pass) return;
-    const content = await MissionVault.export(pass);
+    const content = await MissionVault.export();
     const name = "deputy-07-offline-update-" + new Date().toISOString().slice(0,10) + ".h7backup";
     const blob = new Blob([content], { type: "application/json" });
     const url = URL.createObjectURL(blob), a = document.createElement("a");
     a.href = url; a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1500);
-    show("transferResult", "بسته رمزگذاری‌شده ساخته شد. این بسته شامل کل مخزن مرکز داده معاونت ۷ است تا اطلاعات مشترک بین ماژول‌ها ناسازگار نشود.");
+    show("transferResult", "بسته تبادل بدون رمز ساخته شد. این بسته شامل کل مخزن مرکز داده معاونت ۷ است؛ آن را فقط در مسیر انتقال مورد اعتماد نگهداری کنید.");
   } catch (error) { show("transferResult", error.message); }
 });
 $("importFile").addEventListener("change", async event => {
   const file = event.target.files?.[0]; if (!file) return;
   try {
-    const pass = prompt("گذرواژه‌ای را وارد کنید که بسته پشتیبان با آن ساخته شده است:");
-    if (!pass) return;
-    const result = await MissionVault.import(await file.text(), pass);
+    const raw = await file.text();
+    const legacy = JSON.parse(raw);
+    let pass = "";
+    if (legacy.version === 1) { pass = prompt("این بسته قدیمی رمزگذاری‌شده است؛ رمز همان بسته را وارد کنید:") || ""; if (!pass) return; }
+    const result = await MissionVault.import(raw, pass);
     show("transferResult", "ادغام انجام شد: " + fmt(result.added) + " تغییر جدید، " + fmt(result.duplicates) + " مورد تکراری، " + fmt(result.conflicts) + " تعارض و " + fmt(result.records) + " رکورد قابل استفاده.");
     await refresh();
   } catch (error) { show("transferResult", error.message); }
