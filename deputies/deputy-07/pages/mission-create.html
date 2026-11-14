@@ -1,31 +1,189 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#f3f6f1">
-<title>ایجاد مأموریت جدید | معاونت ۷</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f3f6f8">
+<title>ایجاد و مدیریت مأموریت | معاونت ۷</title>
 <link rel="manifest" href="../offline.webmanifest">
 <link rel="preload" href="../assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/css/style.css?v=mission-bank-20261114-2">
+<link rel="stylesheet" href="../assets/css/style.css?v=mission-workflow-20261114-1">
+<style>
+.mission-shell{margin-top:20px}.mission-auth,.mission-card,.mission-admin{background:#fff;border:1px solid var(--line,#dce5ec);border-radius:15px;padding:20px;margin-bottom:16px}.mission-auth{display:flex;gap:12px;align-items:end;flex-wrap:wrap}.mission-auth .field{flex:1;min-width:230px}.field{display:grid;gap:6px;margin:10px 0}.field label{font-size:12px;font-weight:700;color:#405b72}.field input,.field select,.field textarea,.mission-admin textarea{width:100%;border:1px solid #d8e3eb;border-radius:9px;padding:10px 12px;font:inherit;font-size:13px;background:#fbfdfe;color:#263c50}.field textarea{min-height:82px;resize:vertical}.field small,.hint{font-size:11px;color:#71869a}.mission-tabs{display:flex;gap:7px;overflow:auto;padding:4px 2px 12px;position:sticky;top:0;z-index:4;background:#f3f6f8}.mission-tab{white-space:nowrap;border:1px solid #d7e2e9;background:#fff;color:#526d83;border-radius:9px;padding:9px 13px;font:inherit;font-size:12px;cursor:pointer}.mission-tab[aria-selected=true]{background:#e7f1f7;border-color:#9ebbd0;color:#1d4c70;font-weight:700}.step-count{display:inline-grid;place-items:center;width:21px;height:21px;border-radius:50%;background:#edf3f7;margin-left:5px;font-size:10px}.mission-section{display:none}.mission-section.active{display:block}.section-head{display:flex;justify-content:space-between;gap:12px;align-items:start;border-bottom:1px solid #e7edf1;padding-bottom:13px;margin-bottom:15px}.section-head h2{font-size:17px;margin:0;color:#244a68}.section-head p{font-size:11px;color:#7b8c9b;margin:4px 0 0}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 18px}.field.full{grid-column:1/-1}.choice-row{display:flex;gap:15px;flex-wrap:wrap}.choice-row label{display:flex;align-items:center;gap:7px;font-size:12px}.mission-actions{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:18px}.mission-actions .right,.mission-actions .left{display:flex;gap:8px;flex-wrap:wrap}.mission-progress{height:8px;border-radius:10px;background:#e8eef2;overflow:hidden;margin:12px 0}.mission-progress span{display:block;height:100%;background:#4e91b2;width:0;transition:width .2s}.mission-status{font-size:12px;color:#60788c;line-height:1.9}.mission-admin{border-style:dashed}.mission-admin summary{font-weight:700;color:#345a76;cursor:pointer}.mission-admin textarea{min-height:280px;direction:ltr;text-align:left;font-family:Consolas,monospace;font-size:12px}.custom-fields{border-top:1px dashed #d8e3eb;margin-top:18px;padding-top:12px}.custom-fields h3{font-size:14px;color:#2d5573}.repeat-note{padding:11px 13px;border-radius:9px;background:#f1f6f9;border:1px solid #dce8ef;font-size:11px;color:#5d7488;line-height:1.9}.req{color:#b45b4b}.toast{margin-top:10px;color:#2e7055;font-size:12px}.danger{color:#a14f48}.hidden{display:none!important}@media(max-width:700px){.form-grid{grid-template-columns:1fr}.mission-card,.mission-auth{padding:14px}.mission-tabs{top:0}.section-head{display:block}}
+</style>
 </head>
 <body class="ops-page">
-<header class="ops-header"><div class="ops-header-inner">
-<a class="ops-brand" href="../dashboard.html"><img class="ops-logo" src="../assets/images/iran-flag.svg" alt="پرچم ایران"><span><b>معاونت ۷</b><small>سامانه وضعیت و عملکرد</small></span></a>
-<nav class="ops-nav" aria-label="منوی اصلی"></nav><div class="ops-clock"><span>زمان سامانه</span><b id="clock">—</b><small id="date">—</small></div>
-</div></header>
+<header class="ops-header"><div class="ops-header-inner"><a class="ops-brand" href="../dashboard.html"><img class="ops-logo" src="../assets/images/iran-flag.svg" alt="پرچم ایران"><span><b>معاونت ۷</b><small>سامانه وضعیت و عملکرد</small></span></a><nav class="ops-nav" aria-label="منوی اصلی"></nav><div class="ops-clock"><span>زمان سامانه</span><b id="clock">—</b><small id="date">—</small></div></div></header>
 <main class="ops-main">
-<section class="ops-intro"><div><span class="eyebrow">ماموریت‌ها · ثبت</span><h1>ایجاد مأموریت جدید</h1><p>صفحه اختصاصی برای تعریف و ثبت مأموریت جدید در معاونت ۷</p></div></section>
-<section class="dept-panel" style="padding:28px;margin-top:22px">
-<div class="dept-panel-head"><div><span class="eyebrow">مرحله آماده‌سازی</span><h2>فرم ثبت مأموریت در حال طراحی است</h2></div></div>
-<p style="color:var(--muted);margin:10px 0 0">فیلدهای ثبت مأموریت پس از تعیین اطلاعات ضروری، انواع مأموریت، مبادی ارجاع و سطوح مسئولیت با هماهنگی شما طراحی می‌شود. در این مرحله هیچ فرم ناقص یا فیلد حدسی برای ثبت اطلاعات قرار نگرفته است.</p>
+<section class="ops-intro"><div><span class="eyebrow">مدیریت چرخه عمر مأموریت</span><h1 id="pageTitle">ایجاد مأموریت جدید</h1><p>ثبت درخواست، ارجاع تخصصی، برنامه‌ریزی، اجرا، پایش پیشرفت و تحویل نتیجه در یک پرونده یکپارچه</p></div></section>
+<section class="mission-auth"><div class="field"><label for="vaultPass">رمز امنیتی پایگاه داده معاونت ۷</label><input id="vaultPass" type="password" autocomplete="current-password" placeholder="رمز پایگاه داده را وارد کنید"></div><button id="unlockVault" class="primary">اتصال به پایگاه داده</button><span id="authState" class="mission-status">برای ثبت یا مشاهده مأموریت، ابتدا پایگاه داده را باز کنید.</span></section>
+<div id="workArea" class="hidden">
+<div class="mission-card">
+<div class="section-head"><div><h2>پرونده مأموریت</h2><p id="missionMeta">پیش‌نویس جدید · کد مأموریت پس از ذخیره تولید می‌شود</p></div><div><span id="statusLabel" class="status">پیش‌نویس</span></div></div>
+<div class="mission-progress"><span id="progressBar"></span></div><div class="mission-status" id="progressText">پیشرفت ثبت‌شده: ۰٪ · وضعیت: آماده ثبت اولیه</div>
+</div>
+<nav class="mission-tabs" id="missionTabs" aria-label="بخش‌های فرم مأموریت">
+<button class="mission-tab" data-tab="general" aria-selected="true"><span class="step-count">۱</span>اطلاعات عمومی</button>
+<button class="mission-tab" data-tab="routing" aria-selected="false"><span class="step-count">۲</span>دسته‌بندی و ارجاع</button>
+<button class="mission-tab" data-tab="schedule" aria-selected="false"><span class="step-count">۳</span>مدیریت زمان</button>
+<button class="mission-tab" data-tab="history" aria-selected="false"><span class="step-count">۴</span>سوابق قبلی</button>
+<button class="mission-tab" data-tab="costs" aria-selected="false"><span class="step-count">۵</span>هزینه‌ها</button>
+<button class="mission-tab" data-tab="people" aria-selected="false"><span class="step-count">۶</span>نفرات و مسئولیت</button>
+<button class="mission-tab" data-tab="outputs" aria-selected="false"><span class="step-count">۷</span>نتایج و محصولات</button>
+<button class="mission-tab" data-tab="evaluation" aria-selected="false"><span class="step-count">۸</span>سنجش و ارزیابی</button>
+<button class="mission-tab" data-tab="documents" aria-selected="false"><span class="step-count">۹</span>پیوست و جلسات</button>
+<button class="mission-tab" data-tab="approvals" aria-selected="false"><span class="step-count">۱۰</span>پاراف، تقویم و گردش</button>
+</nav>
+<form id="missionForm" novalidate>
+<section class="mission-card mission-section active" data-section="general">
+<div class="section-head"><div><h2>۱. اطلاعات عمومی و منشأ درخواست</h2><p>مشخصات مکاتبه و موضوع مأموریت</p></div></div>
+<div class="form-grid">
+<div class="field"><label for="communicationType">نوع اعلام / مکاتبه <span class="req">*</span></label><select id="communicationType" required><option value="">انتخاب کنید</option><option>نامه رسمی</option><option>درخواست شفاهی</option><option>مکاتبه داخلی</option><option>صورتجلسه</option><option>دستور مقام مافوق</option><option>گزارش یا اعلام نیاز</option></select></div>
+<div class="field"><label for="requestNumber">شماره درخواست / نامه</label><input id="requestNumber" placeholder="شماره نامه یا شناسه درخواست"></div>
+<div class="field"><label for="requestDate">تاریخ درخواست</label><input id="requestDate" type="date"></div>
+<div class="field"><label for="requestChannel">نحوه وصول</label><select id="requestChannel"><option>دبیرخانه</option><option>سامانه مکاتبات</option><option>ارجاع مستقیم</option><option>جلسه</option><option>تماس یا اعلام شفاهی</option><option>سایر</option></select></div>
+<div class="field full"><label for="missionTitle">نام و عنوان مأموریت <span class="req">*</span></label><input id="missionTitle" required placeholder="عنوان کوتاه، دقیق و قابل گزارش مأموریت"></div>
+<div class="field full"><label for="missionSubject">شرح موضوع، ضرورت و مسئله اصلی <span class="req">*</span></label><textarea id="missionSubject" required placeholder="شرح درخواست، مسئله، ضرورت اقدام و وضعیت موجود"></textarea></div>
+<div class="field full"><label for="expectedPurpose">هدف و نتیجه مورد انتظار</label><textarea id="expectedPurpose" placeholder="مشخص کنید در پایان مأموریت چه نتیجه‌ای باید حاصل شود"></textarea></div>
+<div class="field"><label for="priority">اولویت</label><select id="priority"><option value="normal">عادی</option><option value="important">مهم</option><option value="urgent">فوری</option><option value="critical">بحرانی</option></select></div>
+<div class="field"><label for="confidentiality">سطح دسترسی</label><select id="confidentiality"><option>عادی</option><option>داخلی</option><option>محرمانه</option><option>محدود به مدیران</option></select></div>
+</div>
 </section>
+<section class="mission-card mission-section" data-section="routing">
+<div class="section-head"><div><h2>۲. دسته‌بندی، درخواست‌کننده و ارجاع</h2><p>تعیین مبدأ، مجری و زنجیره مسئولیت مأموریت</p></div></div>
+<div class="form-grid">
+<div class="field"><label for="requesterType">نوع درخواست‌کننده</label><select id="requesterType"><option>ریاست معاونت</option><option>معاونت</option><option>مرکز</option><option>اداره</option><option>مدیریت</option><option>واحد یا شخص</option><option>سازمان بیرونی</option></select></div>
+<div class="field"><label for="requesterName">نام معاونت / مرکز / اداره / مدیریت</label><input id="requesterName" placeholder="نام مرجع درخواست‌کننده"></div>
+<div class="field"><label for="requesterPerson">نفر مسئول مستقیم درخواست‌کننده</label><input id="requesterPerson" placeholder="نام یا کد پرسنلی"></div>
+<div class="field"><label for="requesterContact">راه ارتباطی / سمت</label><input id="requesterContact" placeholder="سمت، داخلی یا توضیح"></div>
+<div class="field"><label for="executorDepartment">اداره مجری مأموریت <span class="req">*</span></label><select id="executorDepartment" required><option value="">انتخاب اداره</option><option value="1">اداره ۱ · اداری و پشتیبانی</option><option value="2">اداره ۲ · تحقیق و توسعه</option><option value="3">اداره ۳ · پارکبان و معبربانان</option><option value="4">اداره ۴ · تأسیسات فنی و امور نگهداری</option><option value="6">اداره ۶ · فاوا و خدمات فنی</option><option value="7">اداره ۷ · جمع‌آوری، نگهداری و بازیافت پسماند</option><option value="8">اداره ۸ · بازرسی و تحقیقات محلی</option><option value="HQ">ستاد معاونت ۷</option></select></div>
+<div class="field"><label for="executorSubunit">زیراداره / واحد تخصصی</label><input id="executorSubunit" placeholder="واحد یا حوزه مسئول اجرا"></div>
+<div class="field"><label for="directOwner">مدیر اداره / مسئول مستقیم</label><input id="directOwner" placeholder="نام یا کد پرسنلی مدیر مسئول"></div>
+<div class="field"><label for="assignedExpert">کارشناس یا نفر معرفی‌شده</label><input id="assignedExpert" placeholder="نام یا کد پرسنلی کارشناس"></div>
+<div class="field"><label for="missionType">نوع اقدام مأموریت</label><select id="missionType"><option>اجرایی</option><option>مطالعاتی و پژوهشی</option><option>نظارتی و بازرسی</option><option>فنی و تعمیراتی</option><option>پشتیبانی</option><option>برنامه‌ریزی و هماهنگی</option><option>خدماتی و عملیاتی</option><option>اصلاحی و رفع نقص</option><option>توسعه‌ای / پروژه‌ای</option><option>سایر</option></select></div>
+<div class="field"><label for="workNature">ماهیت کار</label><select id="workNature"><option>مستمر</option><option>مقطعی</option><option>مرحله‌ای</option><option>پروژه‌ای</option><option>اضطراری</option></select></div>
+<div class="field full"><label for="routingNote">دستور ارجاع و شرح انتظارات از اداره مجری</label><textarea id="routingNote" placeholder="اقدام مورد انتظار، حدود اختیار، خروجی لازم و نحوه گزارش‌دهی"></textarea></div>
+</div>
+<div class="custom-fields" id="departmentFields"><h3>اطلاعات اختصاصی اداره انتخاب‌شده</h3><p class="hint">با انتخاب اداره، فرم تخصصی همان اداره در این قسمت نمایش داده می‌شود.</p></div>
+</section>
+<section class="mission-card mission-section" data-section="schedule">
+<div class="section-head"><div><h2>۳. مدیریت زمان و نقاط کنترل</h2><p>ثبت تاریخ‌های کلیدی و بازه اجرای مأموریت</p></div></div>
+<div class="form-grid">
+<div class="field"><label for="receivedAt">تاریخ و زمان وصول درخواست</label><input id="receivedAt" type="datetime-local"></div>
+<div class="field"><label for="deliveredToDeputyAt">تحویل به معاونت</label><input id="deliveredToDeputyAt" type="datetime-local"></div>
+<div class="field"><label for="referredAt">ارجاع به اداره مربوطه</label><input id="referredAt" type="datetime-local"></div>
+<div class="field"><label for="coordinationAt">صورتجلسه / جلسه هماهنگی</label><input id="coordinationAt" type="datetime-local"></div>
+<div class="field"><label for="plannedStart">تاریخ شروع برنامه‌ای</label><input id="plannedStart" type="date"></div>
+<div class="field"><label for="actualStart">تاریخ شروع واقعی</label><input id="actualStart" type="date"></div>
+<div class="field"><label for="plannedEnd">مهلت / تاریخ اتمام برنامه‌ای <span class="req">*</span></label><input id="plannedEnd" type="date" required></div>
+<div class="field"><label for="actualEnd">تاریخ اتمام واقعی</label><input id="actualEnd" type="date"></div>
+<div class="field"><label for="reportFrequency">تناوب گزارش پیشرفت</label><select id="reportFrequency"><option>روزانه</option><option selected>هفتگی</option><option>دو هفته یک‌بار</option><option>ماهانه</option><option>در نقاط عطف</option></select></div>
+<div class="field"><label for="durationEstimate">مدت برآوردی (روز)</label><input id="durationEstimate" type="number" min="0" placeholder="خودکار از تاریخ‌ها قابل محاسبه است"></div>
+<div class="field full"><label for="milestones">نقاط عطف و موعدهای میانی</label><textarea id="milestones" placeholder="هر سطر: عنوان نقطه عطف | تاریخ هدف | مسئول"></textarea></div>
+</div>
+</section>
+<section class="mission-card mission-section" data-section="history">
+<div class="section-head"><div><h2>۴. سابقه مأموریت مشابه</h2><p>اتصال مأموریت جدید به سوابق قبلی برای جلوگیری از دوباره‌کاری</p></div></div>
+<div class="field"><label>آیا سابقه انجام مأموریت مشابه وجود دارد؟</label><div class="choice-row"><label><input type="radio" name="hasPrevious" value="no" checked> خیر</label><label><input type="radio" name="hasPrevious" value="yes"> بله</label></div></div>
+<div id="previousFields" class="form-grid hidden">
+<div class="field"><label for="previousMissionCode">کد مأموریت قبلی</label><input id="previousMissionCode" placeholder="کد پرونده قبلی"></div>
+<div class="field"><label for="previousMissionTitle">نام مأموریت قبلی</label><input id="previousMissionTitle"></div>
+<div class="field"><label for="previousPeriod">بازه زمانی انجام</label><input id="previousPeriod" placeholder="از تاریخ ... تا تاریخ ..."></div>
+<div class="field full"><label for="previousNotes">توضیحات و نتایج قابل استفاده</label><textarea id="previousNotes"></textarea></div>
+</div>
+</section>
+<section class="mission-card mission-section" data-section="costs">
+<div class="section-head"><div><h2>۵. هزینه‌ها و منابع مالی</h2><p>برآورد، تخصیص، هزینه واقعی و اسناد مالی</p></div></div>
+<div class="form-grid">
+<div class="field"><label for="costStatus">وضعیت نیاز مالی</label><select id="costStatus"><option>بدون هزینه مستقیم</option><option>نیازمند برآورد</option><option>در انتظار تأمین اعتبار</option><option>اعتبار تخصیص‌یافته</option><option>دارای هزینه قطعی</option></select></div>
+<div class="field"><label for="costCurrency">واحد پول</label><select id="costCurrency"><option>تومان</option><option>ریال</option></select></div>
+<div class="field"><label for="estimatedCost">هزینه برآوردی</label><input id="estimatedCost" type="number" min="0"></div>
+<div class="field"><label for="approvedBudget">اعتبار مصوب / تخصیص‌یافته</label><input id="approvedBudget" type="number" min="0"></div>
+<div class="field"><label for="actualCost">هزینه واقعی</label><input id="actualCost" type="number" min="0"></div>
+<div class="field"><label for="costCenter">مرکز هزینه / ردیف اعتبار</label><input id="costCenter"></div>
+<div class="field full"><label for="costBreakdown">ریز هزینه‌ها (هر سطر: عنوان | مبلغ | توضیح)</label><textarea id="costBreakdown" placeholder="خرید قطعه | ۰ | شرح هزینه"></textarea></div>
+<div class="field full"><label for="financialNotes">توضیحات مالی و تعهدات</label><textarea id="financialNotes"></textarea></div>
+</div>
+</section>
+<section class="mission-card mission-section" data-section="people">
+<div class="section-head"><div><h2>۶. نفرات، نقش‌ها و مسئولیت‌ها</h2><p>ثبت تیم مأموریت، مسئولیت و سهم مشارکت</p></div></div>
+<div class="form-grid">
+<div class="field"><label for="teamLead">مسئول / مدیر مأموریت</label><input id="teamLead" placeholder="کد پرسنلی یا نام"></div>
+<div class="field"><label for="supervisor">ناظر و مقام پاسخ‌خواه</label><input id="supervisor"></div>
+<div class="field full"><label for="teamMembers">اعضای تیم (هر سطر: کد پرسنلی | نقش | مسئولیت)</label><textarea id="teamMembers" placeholder="۱۰۰۰ | کارشناس | تهیه گزارش تخصصی"></textarea></div>
+<div class="field full"><label for="externalParticipants">همکاران یا عوامل بیرونی</label><textarea id="externalParticipants"></textarea></div>
+<div class="field full"><label for="responsibilityMatrix">تقسیم مسئولیت و تحویل‌دادنی هر نفر</label><textarea id="responsibilityMatrix" placeholder="نام/کد | مسئولیت | موعد | معیار تحویل"></textarea></div>
+</div>
+</section>
+<section class="mission-card mission-section" data-section="outputs">
+<div class="section-head"><div><h2>۷. نتایج، محصولات و تحویل‌دادنی‌ها</h2><p>آنچه باید در پایان مأموریت تحویل و مستند شود</p></div></div>
+<div class="form-grid">
+<div class="field"><label for="deliverableType">نوع محصول اصلی</label><select id="deliverableType"><option>گزارش مکتوب</option><option>خدمت انجام‌شده</option><option>تعمیر / تجهیز آماده بهره‌برداری</option><option>سامانه یا قابلیت نرم‌افزاری</option><option>طرح و پیشنهاد</option><option>داده و مستندات</option><option>عملیات میدانی تکمیل‌شده</option><option>سایر</option></select></div>
+<div class="field"><label for="deliveryDate">تاریخ تحویل نتیجه</label><input id="deliveryDate" type="date"></div>
+<div class="field full"><label for="expectedDeliverables">فهرست خروجی‌های مورد انتظار</label><textarea id="expectedDeliverables" placeholder="هر سطر یک خروجی قابل سنجش"></textarea></div>
+<div class="field full"><label for="actualResults">نتایج و محصولات واقعی</label><textarea id="actualResults" placeholder="نتایج حاصل‌شده، اقلام تحویل‌شده، تعداد و مشخصات"></textarea></div>
+<div class="field full"><label for="handoverTo">تحویل به / دریافت‌کننده نتیجه</label><input id="handoverTo"></div>
+<div class="field full"><label for="handoverNotes">صورت تحویل، نواقص باقی‌مانده و ملاحظات</label><textarea id="handoverNotes"></textarea></div>
+</div>
+</section>
+<section class="mission-card mission-section" data-section="evaluation">
+<div class="section-head"><div><h2>۸. سنجش، ارزیابی و پیشرفت</h2><p>درصد پیشرفت، کیفیت خروجی و میزان تحقق هدف</p></div></div>
+<div class="form-grid">
+<div class="field"><label for="progress">درصد پیشرفت واقعی</label><input id="progress" type="number" min="0" max="100" value="0"></div>
+<div class="field"><label for="executionStatus">وضعیت اجرا</label><select id="executionStatus"><option value="draft">پیش‌نویس</option><option value="registered">ثبت‌شده</option><option value="referred">ارجاع‌شده</option><option value="in-progress">در حال اجرا</option><option value="blocked">متوقف / دارای مانع</option><option value="review">در انتظار بررسی نتیجه</option><option value="completed">تکمیل‌شده</option><option value="closed">مختومه</option><option value="cancelled">لغوشده</option></select></div>
+<div class="field"><label for="qualityScore">امتیاز کیفیت (از ۱۰۰)</label><input id="qualityScore" type="number" min="0" max="100"></div>
+<div class="field"><label for="goalAchievement">میزان تحقق هدف (درصد)</label><input id="goalAchievement" type="number" min="0" max="100"></div>
+<div class="field"><label for="scheduleStatus">وضعیت زمان‌بندی</label><select id="scheduleStatus"><option>مطابق برنامه</option><option>جلوتر از برنامه</option><option>دارای تأخیر</option><option>متوقف به علت مانع</option><option>تمدید مهلت</option></select></div>
+<div class="field"><label for="riskLevel">سطح ریسک / مانع</label><select id="riskLevel"><option>بدون مانع</option><option>کم</option><option>متوسط</option><option>زیاد</option><option>بحرانی</option></select></div>
+<div class="field full"><label for="progressDescription">گزارش آخرین پیشرفت و اقدامات انجام‌شده</label><textarea id="progressDescription"></textarea></div>
+<div class="field full"><label for="obstacles">موانع، وابستگی‌ها و تصمیم موردنیاز</label><textarea id="obstacles"></textarea></div>
+<div class="field full"><label for="evaluationNotes">نظر ارزیاب و جمع‌بندی نهایی</label><textarea id="evaluationNotes"></textarea></div>
+</div>
+<div class="mission-actions"><div class="right"><button type="button" id="addProgress" class="quiet">ثبت گزارش پیشرفت در تاریخچه</button></div></div>
+<div id="progressHistory" class="repeat-note">گزارش‌های پیشرفت پس از ذخیره مأموریت در تاریخچه ثبت می‌شوند.</div>
+</section>
+<section class="mission-card mission-section" data-section="documents">
+<div class="section-head"><div><h2>۹. پیوست‌ها، مستندات و کاربرگ جلسات</h2><p>نگهداری مستندات مأموریت در مخزن رمزگذاری‌شده مشترک</p></div></div>
+<div class="form-grid">
+<div class="field full"><label for="missionFiles">انتخاب پیوست‌ها</label><input id="missionFiles" type="file" multiple><small>پیوست‌ها پس از ذخیره پرونده در مخزن امن معاونت ۷ نگهداری می‌شوند.</small></div>
+<div class="field full"><label for="documentRegister">فهرست اسناد و ارجاعات (هر سطر: نوع سند | شماره | تاریخ | توضیح)</label><textarea id="documentRegister"></textarea></div>
+<div class="field full"><label for="meetingMinutes">کاربرگ جلسات و صورتجلسات</label><textarea id="meetingMinutes" placeholder="تاریخ جلسه | حاضران | دستور جلسه | تصمیم‌ها | مسئول هر اقدام | موعد"></textarea></div>
+<div class="field full"><label for="meetingActions">اقدامات حاصل از جلسات و پیگیری مصوبات</label><textarea id="meetingActions"></textarea></div>
+</div>
+</section>
+<section class="mission-card mission-section" data-section="approvals">
+<div class="section-head"><div><h2>۱۰. پاراف‌ها، دستور مقام‌ها و تقویم</h2><p>ثبت گردش اداری، تأییدها و رویداد زمان‌دار مأموریت</p></div></div>
+<div class="form-grid">
+<div class="field full"><label for="headOfDepartmentOrder">دستور / پاراف رئیس اداره</label><textarea id="headOfDepartmentOrder"></textarea></div>
+<div class="field"><label for="headOfDepartmentBy">نام یا کد رئیس اداره</label><input id="headOfDepartmentBy"></div>
+<div class="field"><label for="headOfDepartmentAt">تاریخ دستور رئیس اداره</label><input id="headOfDepartmentAt" type="datetime-local"></div>
+<div class="field full"><label for="deputyOrder">دستور / پاراف معاون</label><textarea id="deputyOrder"></textarea></div>
+<div class="field"><label for="deputyBy">نام یا کد معاون</label><input id="deputyBy"></div>
+<div class="field"><label for="deputyAt">تاریخ دستور معاون</label><input id="deputyAt" type="datetime-local"></div>
+<div class="field"><label>ثبت در تقویم مرکزی</label><div class="choice-row"><label><input type="radio" name="calendarEnabled" value="yes" checked> بله</label><label><input type="radio" name="calendarEnabled" value="no"> خیر</label></div></div>
+<div class="field"><label for="calendarTitle">عنوان رویداد تقویم</label><input id="calendarTitle" placeholder="به‌صورت پیش‌فرض نام مأموریت"></div>
+<div class="field"><label for="calendarStart">شروع بازه رویداد</label><input id="calendarStart" type="date"></div>
+<div class="field"><label for="calendarEnd">پایان بازه رویداد</label><input id="calendarEnd" type="date"></div>
+<div class="field"><label for="calendarReminder">یادآوری</label><select id="calendarReminder"><option>بدون یادآوری</option><option>یک روز قبل</option><option>سه روز قبل</option><option>یک هفته قبل</option></select></div>
+<div class="field full"><label for="calendarDescription">توضیحات رویداد تقویم</label><textarea id="calendarDescription"></textarea></div>
+</div>
+<div class="repeat-note">مأموریت به‌صورت یک رویداد بازه‌ای در تقویم نمایش داده می‌شود؛ نقاط عطف، جلسه هماهنگی و موعد تحویل نیز به‌عنوان نقاط کنترل مرتبط با همان کد مأموریت قابل نمایش خواهند بود.</div>
+</section>
+<div class="mission-actions"><div class="right"><button type="button" id="prevStep" class="quiet">مرحله قبل</button><button type="button" id="nextStep" class="primary">مرحله بعد</button></div><div class="left"><button type="button" id="saveDraft" class="quiet">ذخیره پیش‌نویس</button><button type="submit" id="saveMission" class="primary">ثبت و ذخیره مأموریت</button></div></div>
+<div id="saveResult" class="toast" role="status"></div>
+</form>
+</div>
+<details class="mission-admin" id="schemaAdmin"><summary>مدیریت ساختار فرم و فیلدهای اختصاصی (ویژه مدیر ارشد فنی)</summary>
+<p class="hint">ساختار فرم به‌صورت JSON نسخه‌دار ذخیره می‌شود. برای افزودن، حذف یا تغییر فیلدهای اختصاصی اداره‌ها، فقط تنظیمات همین فرم را ویرایش کنید؛ داده‌های قبلی با نسخه زمان ثبت خود نگهداری می‌شوند. شناسه فیلدهای موجود را تغییر ندهید تا اتصال اطلاعات قبلی حفظ شود.</p>
+<div class="field"><label for="schemaJson">تعریف فیلدها و دسته‌بندی اداره‌ها</label><textarea id="schemaJson" spellcheck="false"></textarea></div>
+<div class="mission-actions"><div class="right"><button type="button" id="loadSchema">بارگذاری ساختار فعلی</button><button type="button" id="resetSchema" class="quiet">بازگشت به ساختار پایه</button></div><div class="left"><button type="button" id="saveSchema" class="primary">ذخیره نسخه جدید ساختار</button></div></div>
+<div id="schemaResult" class="mission-status"></div>
+</details>
 <footer class="ops-footer"></footer>
 </main>
-<script src="../assets/js/main.js?v=mission-bank-20261114-2"></script>
+<script src="../assets/js/main.js?v=mission-workflow-20261114-1"></script>
 <script src="../assets/js/organization-modules.js?v=dept8-20261107"></script>
 <script src="../assets/js/mobile-nav.js?v=internal-routing-20261110" defer></script>
-<script type="module" src="../assets/js/mission-store-bridge.js"></script>
+<script type="module" src="../assets/js/mission-create.js?v=mission-workflow-20261114-1"></script>
 <script>if("serviceWorker" in navigator)navigator.serviceWorker.register("../sw.js").catch(()=>{});</script>
 </body></html>
