@@ -209,16 +209,28 @@ async function renameSection(key){
 function applySectionLabels(){
  if(!schema)return;
  document.querySelectorAll("#missionForm .mission-section").forEach(section=>{
-  const key=section.dataset.section,label=(schema.sectionLabels||{})[key];if(!label)return;
-  const title=section.querySelector(".section-head h2");if(title){const edit=title.querySelector(".section-title-edit");title.textContent=label;if(edit)title.append(edit);}
-  const tab=document.querySelector('.mission-tab[data-tab="'+CSS.escape(key)+'"]');if(tab){let span=tab.querySelector(".mission-tab-label");if(!span){span=document.createElement("span");span.className="mission-tab-label";tab.append(span);}span.textContent=label;}
- });
- document.querySelectorAll("#missionForm .mission-section").forEach(section=>{
-  const key=section.dataset.section,tab=document.querySelector('.mission-tab[data-tab="'+CSS.escape(key)+'"]');
-  if(tab&&!tab.querySelector(".section-title-edit")){
-   if(!tab.querySelector(".mission-tab-label")){const text=[...tab.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent.trim()).filter(Boolean).join(" ");const span=document.createElement("span");span.className="mission-tab-label";span.textContent=text;tab.append(span);[...tab.childNodes].filter(n=>n.nodeType===3).forEach(n=>n.remove());}
-   const edit=document.createElement("span");edit.className="section-title-edit";edit.setAttribute("role","button");edit.setAttribute("tabindex","0");edit.setAttribute("aria-label","ویرایش عنوان بخش");edit.title="ویرایش عنوان";edit.innerHTML=pencilIcon();
-   const run=()=>renameSection(key);edit.addEventListener("click",event=>{event.preventDefault();event.stopPropagation();run();});edit.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();event.stopPropagation();run();}});tab.append(edit);
+  const key=section.dataset.section,label=(schema.sectionLabels||{})[key];
+  const title=section.querySelector(".section-head h2");
+  if(title){
+   const edit=title.querySelector(".section-title-edit");
+   const original=[...title.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent.trim()).filter(Boolean).join(" ");
+   title.textContent=label||original;
+   if(edit)title.append(edit);
+  }
+  const tab=document.querySelector('.mission-tab[data-tab="'+CSS.escape(key)+'"]');
+  if(tab){
+   let span=tab.querySelector(".mission-tab-label");
+   const original=[...tab.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent.trim()).filter(Boolean).join(" ");
+   if(!span){span=document.createElement("span");span.className="mission-tab-label";tab.append(span);}
+   if(original)[...tab.childNodes].filter(n=>n.nodeType===3).forEach(n=>n.remove());
+   span.textContent=label||span.textContent||original;
+   if(!tab.querySelector(".section-title-edit")){
+    const edit=document.createElement("span");edit.className="section-title-edit";edit.setAttribute("role","button");edit.setAttribute("tabindex","0");edit.setAttribute("aria-label","ویرایش عنوان بخش");edit.title="ویرایش عنوان";edit.innerHTML=pencilIcon();
+    const run=()=>renameSection(key);
+    edit.addEventListener("click",event=>{event.preventDefault();event.stopPropagation();run();});
+    edit.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();event.stopPropagation();run();}});
+    tab.append(edit);
+   }
   }
  });
 }
