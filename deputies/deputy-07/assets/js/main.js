@@ -1,3 +1,18 @@
+/* هویت واحد معاونت ۷ در عنوان و متن صفحات داخلی */
+document.title=document.title.replaceAll("شرکت هفت","معاونت ۷").replaceAll("شهر بهشت","معاونت ۷");
+if(document.body){
+ const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+ let node;
+ while((node=walker.nextNode())){
+  node.nodeValue=node.nodeValue
+   .replaceAll("شرکت هفت","معاونت ۷")
+   .replaceAll("رئیس شرکت","ریاست معاونت ۷")
+   .replaceAll("نمای کلان شرکت","نمای کلان معاونت ۷")
+   .replaceAll("تقویم شرکت","تقویم و رویدادها")
+   .replaceAll("مرکز خدمات شرکت","مرکز خدمات معاونت ۷")
+   .replaceAll("شهر بهشت","معاونت ۷");
+ }
+}
 const toggle=document.querySelector('.menu-toggle');
 const nav=document.querySelector('.dash-nav')||document.querySelector('.main-nav');
 if(toggle&&nav){toggle.addEventListener('click',()=>{const open=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));});nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');toggle.setAttribute('aria-expanded','false')}));}
@@ -63,7 +78,7 @@ const inPages=location.pathname.includes('/pages/');
   followups:prefix+'special-followups.html',notices:prefix+'notifications-center.html',calendar:prefix+'calendar.html',
   catalog:prefix+'report-catalog.html',archive:prefix+'report-archive.html',reports:prefix+'department-reports.html',participation:prefix+'participation.html',
   localData:localData,services:prefix+'company-services.html',communications:prefix+'internal-communications.html',welfare:prefix+'welfare-center.html',
-  coop:prefix+'staff-coop-store.html',economic:prefix+'employee-economic-center.html',retirees:prefix+'retiree-center.html',personnel:(inLocalData?'../pages/personnel-registry.html':prefix+'personnel-registry.html'),users:(inPages||inLocalData)?'../users.html':'users.html',control:(inPages||inLocalData)?'../control-center.html':'control-center.html'
+  coop:prefix+'staff-coop-store.html',economic:prefix+'employee-economic-center.html',retirees:prefix+'retiree-center.html',users:(inPages||inLocalData)?'../users.html':'users.html',control:(inPages||inLocalData)?'../control-center.html':'control-center.html'
  };
  const escapeNav=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  const customPages=(()=>{try{const x=JSON.parse(localStorage.getItem("deputy7.page-registry.v1"));return (x?.pages||[]).filter(p=>p.kind==="custom"&&p.status==="published").map(p=>({...p,href:(inPages?"custom-page.html?id="+encodeURIComponent(p.id):inLocalData?"../pages/custom-page.html?id="+encodeURIComponent(p.id):"pages/custom-page.html?id="+encodeURIComponent(p.id)),safeTitle:escapeNav(p.title)}));}catch{return[]}})();
@@ -108,7 +123,7 @@ const inPages=location.pathname.includes('/pages/');
    [[urls.reports,'گزارش تلفیقی'],[urls.participation,'نظرسنجی'],...customMenuLinks("گزارش‌ها")].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
    '</div></details>'+(otherCustomPages.length?'<details class="nav-dropdown"><summary>سایر صفحات</summary><div class="nav-menu">'+otherCustomPages.map(([href,label])=>'<a href="'+href+'">'+label+'</a>').join('')+'</div></details>':'');
   const navPathKey=href=>normalizePagePath(href).split("/").pop();
-  pageCatalog.filter(p=>p.kind==="static"&&p.id!=="entry"&&p.status==="published").forEach(p=>{
+  pageCatalog.filter(p=>p.kind==="static"&&p.id!=="entry"&&p.status==="published"&&!String(p.path||"").endsWith("personnel-registry.html")).forEach(p=>{
    const href=registeredPageHref(p),key=navPathKey(href);
    const menuName=p.menu==="ادارات"?"ادارات کل":(p.menu||"مدیریت");
    let dropdown=[...nav.querySelectorAll(".nav-dropdown")].find(d=>d.querySelector("summary")?.textContent.trim()===menuName);
@@ -137,7 +152,7 @@ const inPages=location.pathname.includes('/pages/');
   ...(otherCustomPages.length||otherStaticPages.length?[{id:'custom-pages',label:'سایر صفحات',icon:'▣',links:otherCustomPages}]:[])
  ];
  const groupForMenu={"ادارات":"departments","مدیریت":"management","اقدامات":"actions","خدمات":"services","گزارش‌ها":"reports","سایر صفحات":"custom-pages"};
- pageCatalog.filter(p=>p.kind==="static"&&p.id!=="entry"&&p.status==="published").forEach(p=>{
+ pageCatalog.filter(p=>p.kind==="static"&&p.id!=="entry"&&p.status==="published"&&!String(p.path||"").endsWith("personnel-registry.html")).forEach(p=>{
   const group=groups.find(g=>g.id===groupForMenu[p.menu]);if(!group)return;
   const href=registeredPageHref(p),key=href.split("?")[0].split("/").pop();
   const existingGroup=groups.find(g=>g.links.some(([existing])=>existing.split("?")[0].split("/").pop()===key));
