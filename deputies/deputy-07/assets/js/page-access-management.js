@@ -17,23 +17,34 @@ function init(){
  const host=$("pageAccessHost");if(!host)return;
  let state=read(),selectedRole=state.roles[0]?.id||"";
  if(!state.roles.length){host.innerHTML='<div class="um-empty show">ابتدا نقش‌های سازمانی را تعریف کنید.</div>';return;}
- state.pageGrants=state.pageGrants||{};
- for(const role of state.roles){state.pageGrants[role.id]=state.pageGrants[role.id]||{};for(const page of pages())if(!Array.isArray(state.pageGrants[role.id][page.id]))state.pageGrants[role.id][page.id]=defaultActions(role,page);}
- localStorage.setItem(KEY,JSON.stringify(state));
- const roleSelect=$("pageAccessRole");roleSelect.innerHTML=state.roles.map(r=>'<option value="'+esc(r.id)+'">'+esc(r.name)+'</option>').join("");roleSelect.value=selectedRole;
+ const roleSelect=$("pageAccessRole");
+ function ensureGrants(){
+  state=read();state.pageGrants=state.pageGrants||{};let changed=false;
+  for(const role of state.roles){state.pageGrants[role.id]=state.pageGrants[role.id]||{};for(const page of pages())if(!Array.isArray(state.pageGrants[role.id][page.id])){state.pageGrants[role.id][page.id]=defaultActions(role,page);changed=true;}}
+  for(const roleId of Object.keys(state.pageGrants))if(!state.roles.some(r=>r.id===roleId)){delete state.pageGrants[roleId];changed=true;}
+  if(changed)localStorage.setItem(KEY,JSON.stringify(state));
+ }
+ function syncRoles(){
+  const previous=roleSelect.value||selectedRole;state=read();
+  roleSelect.innerHTML=state.roles.map(r=>'<option value="'+esc(r.id)+'">'+esc(r.name)+'</option>').join("");
+  selectedRole=state.roles.some(r=>r.id===previous)?previous:(state.roles[0]?.id||"");roleSelect.value=selectedRole;
+  ensureGrants();
+ }
+ syncRoles();
  function render(){
-  state=read();selectedRole=roleSelect.value;
+  ensureGrants();state=read();selectedRole=roleSelect.value;
   const role=state.roles.find(r=>r.id===selectedRole);if(!role)return;
   const q=$("pageAccessSearch").value.trim().toLocaleLowerCase("fa");
   const list=pages().filter(p=>!q||(p.title+" "+p.category+" "+p.path).toLocaleLowerCase("fa").includes(q));
   $("pageAccessRows").innerHTML=list.map(p=>{const granted=state.pageGrants?.[role.id]?.[p.id]||[];return '<tr><td><b>'+esc(p.title)+'</b><small>'+esc(p.path)+'</small></td><td>'+esc(p.category||"—")+'</td>'+ACTIONS.map(([id,label])=>'<td><label class="page-access-check" title="'+label+'"><input type="checkbox" data-page="'+esc(p.id)+'" data-action="'+id+'" '+(granted.includes(id)?"checked":"")+'><span>'+label+'</span></label></td>').join("")+'</tr>';}).join("")||'<tr><td colspan="10">صفحه‌ای با این عبارت پیدا نشد.</td></tr>';
   $("pageAccessSummary").textContent=list.length.toLocaleString("fa-IR")+" صفحه برای نقش «"+role.name+"»";
  }
- function persist(){localStorage.setItem(KEY,JSON.stringify(state));}
+ function persist(){localStorage.setItem(KEY,JSON.stringify(state));window.dispatchEvent(new CustomEvent("deputy7:access-changed"));}
  $("pageAccessRows").addEventListener("change",e=>{const el=e.target;if(!el.matches("[data-page][data-action]"))return;const pageId=el.dataset.page,action=el.dataset.action;state=read();state.pageGrants=state.pageGrants||{};state.pageGrants[selectedRole]=state.pageGrants[selectedRole]||{};const arr=new Set(state.pageGrants[selectedRole][pageId]||[]);el.checked?arr.add(action):arr.delete(action);state.pageGrants[selectedRole][pageId]=[...arr];persist();});
  roleSelect.addEventListener("change",render);$("pageAccessSearch").addEventListener("input",render);
  $("pageAccessReset").addEventListener("click",()=>{if(!confirm("مجوزهای این نقش به الگوی پایه بازگردد؟"))return;state=read();const role=state.roles.find(r=>r.id===roleSelect.value);if(!role)return;state.pageGrants[role.id]={};for(const p of pages())state.pageGrants[role.id][p.id]=defaultActions(role,p);persist();render();});
- window.addEventListener("deputy7:pages-changed",render);
+ window.addEventListener("deputy7:pages-changed",()=>{ensureGrants();render();});
+ window.addEventListener("deputy7:identity-changed",()=>{syncRoles();render();});
  render();
 }
 document.addEventListener("DOMContentLoaded",init);
