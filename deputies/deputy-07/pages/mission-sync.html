@@ -23,8 +23,8 @@
 <section class="ops-intro"><div><span class="eyebrow">ماموریت‌ها · زیرساخت آفلاین</span><h1>پشتیبان‌گیری و بروزرسانی مأموریت‌ها</h1><p>مدیریت نسخه‌های اطلاعات و تبادل امن تغییرات بین رایانه‌های معاونت ۷</p></div></section>
 <section class="dept-panel sync-panel">
 <div class="dept-panel-head"><div><span class="eyebrow">اتصال به پایگاه داده محلی</span><h2>وضعیت مخزن مأموریت‌ها</h2></div><span id="lockBadge" class="status">قفل است</span></div>
-<p id="vaultState" class="sync-status">برای اتصال، گذرواژه اصلی مخزن محلی را وارد کنید. اگر هنوز مخزنی ساخته نشده باشد، در اولین بازگشایی ایجاد می‌شود.</p>
-<div class="form-row"><label for="passphrase">گذرواژه اصلی مخزن محلی</label><input id="passphrase" type="password" autocomplete="current-password" placeholder="حداقل ۱۲ نویسه"></div>
+<p id="vaultState" class="sync-status">برای اتصال، رمز قبلی (فقط برای انتقال یک‌باره) را وارد کنید. اگر هنوز مخزنی ساخته نشده باشد، در اولین بازگشایی ایجاد می‌شود.</p>
+<div class="form-row"><label for="passphrase">رمز قبلی مخزن محلی</label><input id="passphrase" type="password" autocomplete="current-password" placeholder="در صورت وجود، رمز قبلی"></div>
 <div class="sync-actions"><button id="unlockBtn" class="primary">ایجاد / بازگشایی مخزن</button><button id="lockBtn" class="quiet" disabled>قفل‌کردن مخزن</button><a class="file-button" href="../local-data/index.html">رفتن به مرکز داده و پشتیبان‌گیری</a></div>
 </section>
 <section class="stats sync-grid">
@@ -45,7 +45,7 @@
 </section>
 <section class="dept-panel sync-panel">
 <div class="dept-panel-head"><div><h2>روش کار هماهنگ چند رایانه</h2></div></div>
-<ol><li>در هر رایانه، نسخه آفلاین سامانه و همین مخزن را با گذرواژه اصلی بازگشایی کنید.</li><li>مأموریت‌ها در بانک محلی همان رایانه ثبت و ویرایش می‌شوند.</li><li>پس از پایان کار، بسته پشتیبان رمزگذاری‌شده بسازید.</li><li>بسته را به رایانه تجمیع‌کننده منتقل و وارد کنید.</li><li>تعارض‌های احتمالی را بررسی کنید و سپس بسته جامع جدید را به سایر رایانه‌ها برسانید.</li></ol>
+<ol><li>در هر رایانه، نسخه آفلاین سامانه و همین مخزن را با گذرواژه اصلی بازگشایی کنید.</li><li>مأموریت‌ها در بانک محلی همان رایانه ثبت و ویرایش می‌شوند.</li><li>پس از پایان کار، بسته تبادل بدون رمز بسازید.</li><li>بسته را به رایانه تجمیع‌کننده منتقل و وارد کنید.</li><li>تعارض‌های احتمالی را بررسی کنید و سپس بسته جامع جدید را به سایر رایانه‌ها برسانید.</li></ol>
 <p class="sync-note">قالب داده مأموریت نسخه‌دار است و از طریق لایه واسط <code>MissionStore</code> به مخزن متصل می‌شود. در توسعه بعدی، می‌توان همین واسط را به پایگاه داده مرکزی متصل کرد. تا آن زمان، نسخه وب از IndexedDB همین مرورگر و نسخه دسکتاپ از مخزن محلی برنامه استفاده می‌کند.</p>
 </section>
 <footer class="ops-footer"></footer>
