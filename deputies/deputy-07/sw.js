@@ -1,9 +1,10 @@
-const CACHE_NAME = "deputy-07-missions-v4";
+const CACHE_NAME = "deputy-07-missions-v5";
 const FILES = [
   "./pages/mission-bank.html",
   "./pages/mission-create.html",
   "./pages/mission-reports.html",
   "./pages/mission-sync.html",
+  "./pages/calendar.html",
   "./assets/css/style.css",
   "./assets/js/main.js",
   "./assets/js/page-registry-core.js",
@@ -16,6 +17,7 @@ const FILES = [
   "./assets/js/mission-bank.js",
   "./assets/js/mission-reports.js",
   "./assets/js/mission-calendar.js",
+  "./assets/js/calendar.js",
   "./local-data/assets/engine.js",
   "./assets/fonts/Vazirmatn-Regular.woff2",
   "./assets/fonts/Vazirmatn-Bold.woff2",
