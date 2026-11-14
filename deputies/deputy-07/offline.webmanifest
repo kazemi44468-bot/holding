@@ -1,0 +1,11 @@
+{
+  "name": "معاونت ۷ | مدیریت مأموریت‌ها",
+  "short_name": "مأموریت‌های معاونت ۷",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "./pages/mission-bank.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f6f1",
+  "theme_color": "#f3f6f1"
+}
