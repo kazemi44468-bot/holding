@@ -326,3 +326,12 @@ const inPages=location.pathname.includes('/pages/');
  if(link.href!==url.href)link.href=url.href;
 })();
 
+
+/* Persian calendar picker for every date/time input on Deputy 7 pages. */
+(()=> {
+ const current=document.currentScript;
+ const src=new URL("jalali-picker.js?v=1",current?.src||location.href).href;
+ const script=document.createElement("script");
+ script.src=src;script.defer=true;
+ document.head.appendChild(script);
+})();
