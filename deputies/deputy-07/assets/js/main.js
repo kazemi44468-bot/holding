@@ -57,7 +57,7 @@ const inPages=location.pathname.includes('/pages/');
   localData:localData,services:prefix+'company-services.html',communications:prefix+'internal-communications.html',welfare:prefix+'welfare-center.html',
   coop:prefix+'staff-coop-store.html',economic:prefix+'employee-economic-center.html',retirees:prefix+'retiree-center.html',personnel:prefix+'personnel-registry.html',users:(inPages||inLocalData)?'../users.html':'users.html',control:(inPages||inLocalData)?'../control-center.html':'control-center.html'
  };
- const customPages=(()=>{try{const x=JSON.parse(localStorage.getItem("deputy7.page-registry.v1"));return (x?.pages||[]).filter(p=>p.kind==="custom"&&p.status==="published").map(p=>({...p,href:(inPages?p.path.replace(/^pages\\//,""):inLocalData?"../"+p.path:p.path)}));}catch{return[]}})();
+ const customPages=(()=>{try{const x=JSON.parse(localStorage.getItem("deputy7.page-registry.v1"));return (x?.pages||[]).filter(p=>p.kind==="custom"&&p.status==="published").map(p=>({...p,href:(inPages?(p.path.startsWith("pages/")?p.path.slice(6):p.path):inLocalData?"../"+p.path:p.path)}));}catch{return[]}})();
  const pageCatalog=(()=>{try{return JSON.parse(localStorage.getItem("deputy7.page-registry.v1"))?.pages||[]}catch{return[]}})();
  const pageMeta=path=>pageCatalog.find(p=>p.kind==="static"&&String(p.path||"").split("?")[0].split("/").pop()===String(path||"").split("?")[0].split("/").pop());
  const nav=document.querySelector('.ops-nav');
