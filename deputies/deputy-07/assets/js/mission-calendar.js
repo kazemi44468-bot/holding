@@ -23,9 +23,10 @@ if(!status.exists) {
     let count=0;
     while(cursor<=last&&count<366){
       const date=[cursor.getFullYear(),String(cursor.getMonth()+1).padStart(2,"0"),String(cursor.getDate()).padStart(2,"0")].join("-");
-      events.push({date,type:"mission",dept:String(mission.executorDepartment||"all"),title:source.title||mission.missionTitle||"مأموریت",detail:[source.description||mission.missionSubject||"", "کد مأموریت: "+(mission.missionCode||mission.id), "پیشرفت: "+Number(mission.progress||0)+"٪", "وضعیت: "+(mission.status||"ثبت‌شده")].filter(Boolean).join(" · "),time:"",place:"بازه اجرای مأموریت",missionCode:mission.missionCode});
+      events.push({date,type:"mission",dept:String(mission.executorDepartment||"all"),departmentName:mission.executorDepartmentName||"",title:source.title||mission.missionTitle||"مأموریت",detail:[source.description||mission.missionSubject||"", "کد مأموریت: "+(mission.missionCode||mission.id), "پیشرفت: "+Number(mission.progress||0)+"٪", "وضعیت: "+(mission.status||"ثبت‌شده")].filter(Boolean).join(" · "),time:"",place:"بازه اجرای مأموریت",missionCode:mission.missionCode});
       cursor.setDate(cursor.getDate()+1);count++;
     }
   }
+  const deptSelect=document.querySelector("[data-calendar-dept]");for(const event of events){if(event.dept&&event.dept!=="all"&&deptSelect&&![...deptSelect.options].some(option=>option.value===event.dept)){const option=document.createElement("option");option.value=event.dept;option.textContent=event.departmentName||("اداره "+event.dept);deptSelect.append(option);}}
   window.dispatchEvent(new CustomEvent("deputy7:mission-calendar",{detail:events}));
 }
