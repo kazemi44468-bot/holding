@@ -228,12 +228,9 @@ async function loadMission(id){
  updateProgress();renderProgressHistory(mission.progressLog||[]);renderWorkflowHistory(mission.workflowLog||[]);
 }
 async function unlock(){
- const pass=$("vaultPass").value;
- const status=await MissionVault.status();
- await MissionStore.unlock(pass);
- $("vaultPass").value="";
- unlocked=true;$("vaultPass").value="";$("vaultPass").closest(".field").hidden=true;$("workArea").classList.remove("hidden");$("authState").textContent="مخزن محلی بدون درخواست رمز فعال است؛ اطلاعات این دوره رمزگذاری نمی‌شوند.";
- $("unlockVault").disabled=true;$("vaultPass").disabled=true;const canManageSchema=!!window.Deputy7Access?.canCurrent("manageSchema",{kind:"configuration"});$("schemaAdmin").hidden=!canManageSchema;$("schemaAdmin").classList.toggle("hidden",!canManageSchema);
+ await MissionStore.unlock();
+ unlocked=true;$("workArea").classList.remove("hidden");$("authState").textContent="پایگاه داده محلی بدون درخواست رمز فعال شد.";
+ $("unlockVault").disabled=true;const canManageSchema=!!window.Deputy7Access?.canCurrent("manageSchema",{kind:"configuration"});$("schemaAdmin").hidden=!canManageSchema;$("schemaAdmin").classList.toggle("hidden",!canManageSchema);
  await loadSchema();
  if(editingId)await loadMission(editingId);
  else{writeField("requestDate",dateNow());writeField("receivedAt",new Date().toISOString().slice(0,16));}
