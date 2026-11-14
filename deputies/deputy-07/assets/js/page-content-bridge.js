@@ -4,6 +4,7 @@ const pathname=decodeURI(location.pathname);
 const clean=value=>{let s=String(value||"");while(s.startsWith("../"))s=s.slice(3);if(s.startsWith("./"))s=s.slice(2);while(s.startsWith("/"))s=s.slice(1);return s;};
 const page=core.all().filter(p=>p.kind==="static").sort((a,b)=>clean(b.path).length-clean(a.path).length).find(p=>pathname.endsWith("/"+clean(p.path))||clean(p.path).startsWith("pages/")&&pathname.endsWith("/"+clean(p.path).split("/").pop()));
 if(!page||page.kind!=="static")return;
+if(page.title)document.title=page.title+" | معاونت ۷";
 const main=document.querySelector("main");if(!main)return;
 if(page.contentMode==="replace"){
  [...main.children].forEach(node=>{node.hidden=true;});
