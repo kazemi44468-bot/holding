@@ -82,7 +82,7 @@ function initRegistryPage(){
   $("[data-pr-prev]").disabled=page<=1;$("[data-pr-next]").disabled=page>=pages;
   $("[data-pr-active]").textContent=fa(rows.filter(r=>r.status==="active").length);
   $("[data-pr-empty]").textContent=fa(rows.filter(r=>r.status==="empty").length);
-  $("[data-pr-inactive]").textContent=fa(rows.filter(r=>r.status==="inactive").length);if($("[data-pr-moved]"))$("[data-pr-moved]").textContent=fa(rows.filter(r=>r.status==="moved").length);
+  if($("[data-pr-inactive]"))$("[data-pr-inactive]").textContent=fa(rows.filter(r=>r.status==="inactive").length);if($("[data-pr-moved]"))$("[data-pr-moved]").textContent=fa(rows.filter(r=>r.status==="moved").length);
  }
  function setForm(r){
   editing=r;const p=r?.profile||blank("1000").profile;
