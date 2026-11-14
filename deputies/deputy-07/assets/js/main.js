@@ -58,6 +58,8 @@ const inPages=location.pathname.includes('/pages/');
   coop:prefix+'staff-coop-store.html',economic:prefix+'employee-economic-center.html',retirees:prefix+'retiree-center.html',personnel:prefix+'personnel-registry.html',users:(inPages||inLocalData)?'../users.html':'users.html',control:(inPages||inLocalData)?'../control-center.html':'control-center.html'
  };
  const customPages=(()=>{try{const x=JSON.parse(localStorage.getItem("deputy7.page-registry.v1"));return (x?.pages||[]).filter(p=>p.kind==="custom"&&p.status==="published").map(p=>({...p,href:(inPages?p.path.replace(/^pages\\//,""):inLocalData?"../"+p.path:p.path)}));}catch{return[]}})();
+ const pageCatalog=(()=>{try{return JSON.parse(localStorage.getItem("deputy7.page-registry.v1"))?.pages||[]}catch{return[]}})();
+ const pageMeta=path=>pageCatalog.find(p=>p.kind==="static"&&String(p.path||"").split("?")[0].split("/").pop()===String(path||"").split("?")[0].split("/").pop());
  const nav=document.querySelector('.ops-nav');
  /* داخل سامانه، نشان و پیوندهای خانه باید به نمای اصلی سامانه برگردند، نه درگاه معرفی. */
  document.querySelectorAll('a[href="../index.html"],a[href="index.html"]').forEach(link=>{link.href=home;});
@@ -91,6 +93,7 @@ const inPages=location.pathname.includes('/pages/');
    '</div></details><details class="nav-dropdown"><summary>گزارش‌ها</summary><div class="nav-menu">'+
    [[urls.reports,'گزارش تلفیقی'],[urls.participation,'نظرسنجی']].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
    '</div></details>'+(customPages.length?'<details class="nav-dropdown"><summary>صفحات اختصاصی</summary><div class="nav-menu">'+customPages.map(p=>'<a href="'+p.href+'">'+p.title+'</a>').join('')+'</div></details>':'');
+  nav.querySelectorAll('a').forEach(a=>{const meta=pageMeta(a.getAttribute('href'));if(meta){a.textContent=meta.title||a.textContent;if(meta.status!=="published")a.hidden=true;}});
   nav.classList.add('ops-nav-framed');
   const current=location.pathname.split('/').pop();
   nav.querySelectorAll('.nav-dropdown').forEach(menu=>{if(menu.querySelector('a[href$="'+current+'"]'))menu.querySelector('summary').classList.add('active')});
@@ -108,6 +111,7 @@ const inPages=location.pathname.includes('/pages/');
   {id:'reports',label:'گزارش‌ها',icon:'▥',links:[[urls.reports,'گزارش تلفیقی ادارات'],[urls.catalog,'کاتالوگ گزارش‌ها'],[urls.archive,'آرشیو گزارش‌ها'],[urls.participation,'نظرسنجی']]},
   ...(customPages.length?[{id:'custom-pages',label:'صفحات',icon:'▣',links:customPages.map(p=>[p.href,p.title])}]:[])
  ];
+ groups.forEach(g=>{g.links=g.links.filter(([href])=>{const meta=pageMeta(href);return !meta||meta.status==="published";});});
  const dock=document.createElement('nav');
  dock.className='mobile-dock';
  dock.setAttribute('aria-label','منوی اصلی موبایل');
