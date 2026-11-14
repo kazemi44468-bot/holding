@@ -25,6 +25,7 @@ async function initialize(){
  return {total:SLOT_COUNT,created:missing.length,records:await list()};
 }
 async function save(code,profile){
+ if(!canManagePersonnel())throw Error("برای ویرایش بانک پرسنل، مجوز مدیر فنی لازم است.");
  Vault.ensure();code=normalizeCode(code);if(!/^\d{4,}$/.test(code)||Number(code)<MIN_CODE)throw Error("کد پرسنلی باید عددی و از ۱۰۰۰ به بالا باشد.");
  const prior=await get(code);if(!prior)throw Error("کد پرسنلی در بانک رزروشده پیدا نشد.");
  if(!String(profile.firstName||"").trim()||!String(profile.lastName||"").trim())throw Error("نام و نام خانوادگی الزامی است.");
@@ -41,6 +42,7 @@ function replaceRefs(value,oldCode,newCode,key=""){
  return value;
 }
 async function changeCode(oldCode,newCode){
+ if(!canManagePersonnel())throw Error("اصلاح کد فقط با مجوز مدیر فنی امکان‌پذیر است.");
  Vault.ensure();oldCode=normalizeCode(oldCode);newCode=normalizeCode(newCode);
  if(!/^\d{4,}$/.test(newCode)||Number(newCode)<MIN_CODE||Number(newCode)>=MIN_CODE+SLOT_COUNT)throw Error("کد جدید باید در بازه ۱۰۰۰ تا ۱۲۴۹ باشد.");
  if(oldCode===newCode)return await get(oldCode);
@@ -88,7 +90,7 @@ function initRegistryPage(){
   field("birthDate").value=p.birthDate||"";field("marriageDate").value=p.marriageDate||"";field("gender").value=p.gender||"";field("mobile").value=p.mobile||"";field("phone").value=p.phone||"";field("email").value=p.email||"";field("address").value=p.address||"";
   field("departmentId").value=p.departmentId||"";field("unit").value=p.unit||"";field("jobTitle").value=p.jobTitle||"";field("employmentType").value=p.employmentType||"";field("hireDate").value=p.hireDate||"";field("contractEnd").value=p.contractEnd||"";
   field("education").value=p.education||"";field("fieldOfStudy").value=p.fieldOfStudy||"";field("specialty").value=p.specialty||"";field("supervisorCode").value=p.supervisorCode||"";field("workLocation").value=p.workLocation||"";field("notes").value=p.notes||"";
-  field("code").readOnly=true; $("[data-pr-dialog-title]").textContent=r?"ویرایش پرونده پرسنلی":"تکمیل پرونده پرسنلی";$("[data-pr-recode]").hidden=!r||r.status==="empty"||!canManagePersonnel();
+  field("code").readOnly=true; $("[data-pr-dialog-title]").textContent=r?.status==="empty"?"تکمیل پرونده پرسنلی":"ویرایش پرونده پرسنلی";$("[data-pr-recode]").hidden=!r||r.status==="empty"||!canManagePersonnel();
   $("[data-pr-dialog]").showModal();
  }
  async function reload(){if(!await ensureUnlocked())return;const result=await initialize();rows=result.records;render();$("[data-pr-vault]").textContent="مخزن رمزگذاری‌شده باز است · "+fa(result.created)+" کد جدید رزرو شد";}
