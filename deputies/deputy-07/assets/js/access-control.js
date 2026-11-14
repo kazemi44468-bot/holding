@@ -2,7 +2,7 @@
    This is a client-side policy helper for gradual module integration, not a security boundary. */
 (()=>{"use strict";
 const KEY="deputy7.identity-access.v1";
-const technicalOnly=new Set(["manageUsers","manageSchema","manageBackup","manageDepartments","manageAppearance","manageEvents","manageDatabases","manageForms","manageWorkflows","manageReports","manageLayout","manageTransfer"]);
+const technicalOnly=new Set(["manageUsers","manageSchema","manageBackup","manageDepartments","manageAppearance","manageEvents","manageDatabases","manageForms","manageWorkflows","manageReports","manageLayout","manageTransfer","managePersonnel","managePages"]);
 const read=()=>{try{const s=JSON.parse(localStorage.getItem(KEY));return s&&s.version===1?s:null;}catch{return null;}};
 function evaluatePage(userId,pageId,action="view"){
  const s=read();if(!s)return {allowed:false,reason:"policy-store-unavailable"};
