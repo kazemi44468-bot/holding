@@ -60,5 +60,15 @@
  function init(root=document){root.querySelectorAll('input[type="date"],input[type="datetime-local"]').forEach(attach);}
  document.addEventListener("click",e=>{document.querySelectorAll(".jalali-calendar-popup:not([hidden])").forEach(panel=>{if(!panel.parentElement.contains(e.target))panel.hidden=true;});});
  window.JalaliPicker={init,format:dateLabel,toGregorian:jalaliToDate,toJalali:parts};init();
- new MutationObserver(records=>records.forEach(r=>r.addedNodes.forEach(n=>{if(n.nodeType===1){if(n.matches?.('input[type="date"],input[type="datetime-local"]'))attach(n);init(n);}}))).observe(document.documentElement,{childList:true,subtree:true});
+ const pendingRoots=new Set();let scanQueued=false;
+ new MutationObserver(records=>{
+  records.forEach(record=>record.addedNodes.forEach(node=>{
+   if(node.nodeType!==Node.ELEMENT_NODE)return;
+   if(node.matches('input[type="date"],input[type="datetime-local"]')||node.querySelector('input[type="date"],input[type="datetime-local"]'))pendingRoots.add(node);
+  }));
+  if(pendingRoots.size&&!scanQueued){
+   scanQueued=true;
+   queueMicrotask(()=>{scanQueued=false;pendingRoots.forEach(root=>init(root));pendingRoots.clear();});
+  }
+ }).observe(document.body||document.documentElement,{childList:true,subtree:true});
 })();
