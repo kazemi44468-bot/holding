@@ -185,6 +185,8 @@ async function saveMission(asDraft=false){
  const required=asDraft?["missionTitle"]:["missionTitle","missionSubject","executorDepartment","plannedEnd"];
  for(const id of required){const el=$(id);if(!el.value.trim()){el.focus();throw new Error(asDraft?"برای ذخیره پیش‌نویس، عنوان مأموریت را وارد کنید.":"فیلدهای عنوان، شرح موضوع، اداره مجری و مهلت اتمام الزامی هستند.");}}
  if(!asDraft&&!$("missionForm").reportValidity())throw new Error("لطفاً فیلدهای الزامی را تکمیل کنید.");
+ if(!asDraft&&$("plannedStart").value&&$("plannedEnd").value&&$("plannedStart").value>$("plannedEnd").value)throw new Error("تاریخ شروع برنامه‌ای نمی‌تواند بعد از مهلت پایان باشد.");
+ if(selectedRadio("calendarEnabled")!=="no"&&$("calendarStart").value&&$("calendarEnd").value&&$("calendarStart").value>$("calendarEnd").value)throw new Error("پایان بازه رویداد تقویم نمی‌تواند قبل از شروع آن باشد.");
  const data=collect();if(asDraft&&data.status==="draft")data.status="draft";else if(data.status==="draft")data.status="registered";
  data.executionStatus=data.status;data.workflow.stage=data.status;
  const now=new Date().toISOString();
