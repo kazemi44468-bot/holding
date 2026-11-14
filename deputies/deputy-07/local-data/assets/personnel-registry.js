@@ -109,15 +109,51 @@ function initRegistryPage(){
 }
 function initProfileBridge(){
  const root=document.querySelector("[data-personnel-profile]");if(!root)return;
- const input=root.querySelector("[data-personnel-id]"),search=root.querySelector("[data-personnel-search]");if(!input||!search)return;
+ const input=root.querySelector("[data-personnel-id]"),search=root.querySelector("[data-personnel-search]"),result=root.querySelector("[data-personnel-result]"),empty=root.querySelector("[data-personnel-empty]");
+ if(!input||!search||!result)return;
  const oldDirectory=root.querySelector(".profile-directory-panel");if(oldDirectory)oldDirectory.hidden=true;
- const oldResult=root.querySelector("[data-personnel-result]");if(oldResult)oldResult.hidden=true;
- const host=document.createElement("section");host.className="dept-panel pr-profile-lookup";host.innerHTML='<div class="dept-panel-head"><div><span class="eyebrow">بانک مرکزی پرسنل</span><h2>پرونده متصل به کد پرسنلی</h2><p data-pr-profile-status>برای جست‌وجو، مخزن رمزگذاری‌شده را بازگشایی کنید.</p></div><button type="button" class="pr-row-action" data-pr-profile-unlock>بازگشایی بانک</button></div><div data-pr-profile-result class="pr-profile-result">کد پرسنلی را وارد کنید.</div>';
- root.insertBefore(host,root.querySelector("[data-personnel-empty]"));
- async function find(){const code=input.value.trim();if(!code)return;const status=host.querySelector("[data-pr-profile-status]"),result=host.querySelector("[data-pr-profile-result]");try{if(!await ensureUnlocked())return;await initialize();const r=await get(code);if(!r){result.textContent="این کد در بانک پرسنل تعریف نشده است.";return;}const p=r.profile||{};result.innerHTML='<div class="pr-profile-head"><b>'+esc((p.firstName+" "+p.lastName).trim()||"پرونده تکمیل نشده")+'</b><span>کد '+esc(r.code)+'</span><span>'+esc(departments.find(d=>d[0]===p.departmentId)?.[1]||"اداره تعیین نشده")+'</span><span>'+esc(p.jobTitle||"سمت ثبت نشده")+'</span></div><div class="pr-profile-grid">'+[["وضعیت",r.status==="active"?"فعال":r.status==="inactive"?"غیرفعال":"تکمیل‌نشده"],["شماره همراه",p.mobile],["نوع همکاری",p.employmentType],["تاریخ شروع خدمت",p.hireDate],["تحصیلات",p.education],["واحد",p.unit]].map(([k,v])=>'<div><small>'+k+'</small><b>'+esc(v||"—")+'</b></div>').join("")+'</div>';status.textContent="اطلاعات از بانک مرکزی پرسنل فراخوانی شد.";}catch(e){status.textContent=e.message;}}
- search.addEventListener("click",find);host.querySelector("[data-pr-profile-unlock]").addEventListener("click",find);
+ const host=document.createElement("section");host.className="dept-panel pr-profile-lookup";
+ host.innerHTML='<div class="dept-panel-head"><div><span class="eyebrow">بانک مرکزی پرسنل</span><h2>پرونده متصل به کد پرسنلی</h2><p data-pr-profile-status>برای جست‌وجو، مخزن رمزگذاری‌شده را بازگشایی کنید.</p></div><button type="button" class="pr-row-action" data-pr-profile-unlock>بازگشایی بانک</button></div>';
+ root.insertBefore(host,empty||result);
+ const status=host.querySelector("[data-pr-profile-status]"),unlock=host.querySelector("[data-pr-profile-unlock]");
+ const fa=v=>String(v??"").replace(/\\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[Number(d)]);
+ const set=(key,value)=>result.querySelectorAll("[data-person-"+key+"]").forEach(node=>node.textContent=value||"ثبت نشده");
+ const deptName=id=>departments.find(d=>d[0]===String(id))?.[1]||"اداره تعیین نشده";
+ const years=date=>{if(!date)return "ثبت نشده";const d=new Date(date+"T12:00:00");if(Number.isNaN(d.getTime()))return "ثبت نشده";const n=Math.max(0,(Date.now()-d.getTime())/31557600000);return n.toFixed(1).replace(".", "٫")+" سال";};
+ function clearLegacyPanels(){
+  ["orders","pay-breakdown","leave-breakdown","skill-list","assets-list","asset-types","certificates","history","presence","competency","career","access","welfare","event-list"].forEach(key=>result.querySelectorAll("[data-person-"+key+"]").forEach(node=>{node.textContent="اطلاعاتی در بانک مرجع ثبت نشده است.";}));
+  result.querySelectorAll("[data-person-event-form],[data-profile-asset-checklist],[data-profile-health-fields],[data-profile-fitness-fields],[data-profile-workshops],[data-profile-missions]").forEach(node=>{node.hidden=true;});
+  const photo=result.querySelector("[data-person-photo]");if(photo){photo.removeAttribute("src");photo.hidden=true;}
+ }
+ async function find(){
+  const code=normalizeCode(input.value);if(!code){status.textContent="کد پرسنلی را وارد کنید.";return;}
+  if(!/^\\d{4}$/.test(code)||Number(code)<MIN_CODE||Number(code)>=MIN_CODE+SLOT_COUNT){status.textContent="کد باید در بازه ۱۰۰۰ تا ۱۲۴۹ باشد.";return;}
+  input.value=code;search.disabled=true;unlock.disabled=true;status.textContent="در حال دریافت پرونده…";
+  try{
+   if(!await ensureUnlocked())return;await initialize();const person=await get(code);
+   if(!person){result.hidden=true;if(empty)empty.hidden=false;status.textContent="این کد در بانک مرجع وجود ندارد.";return;}
+   if(person.status==="moved"){result.hidden=true;if(empty){empty.hidden=false;empty.textContent="این کد بازنشسته شده است؛ کد جایگزین: "+fa(person.replacedBy);}status.textContent="کد تغییر یافته است.";return;}
+   if(person.status==="empty"){result.hidden=true;if(empty){empty.hidden=false;empty.textContent="کد "+fa(code)+" رزرو شده است، اما مشخصات فرد هنوز ثبت نشده است.";}status.textContent="پرونده این کد تکمیل نشده است.";return;}
+   const p=person.profile||{},name=(p.firstName+" "+p.lastName).trim(),dept=deptName(p.departmentId),job=p.jobTitle||"سمت ثبت نشده";
+   if(empty)empty.hidden=true;result.hidden=false;
+   set("name",name||"نام ثبت نشده");set("role",job);set("dept",dept);set("status",person.status==="active"?"فعال":person.status==="inactive"?"غیرفعال":"نامشخص");
+   set("tenure",years(p.hireDate));set("attendance","ثبت نشده");set("number",fa(person.code));set("gender",p.gender);set("birth",p.birthDate);set("startdate",p.hireDate);
+   set("location",p.workLocation);set("supervisor",p.supervisorCode?"کد پرسنلی "+fa(p.supervisorCode):"ثبت نشده");
+   set("contact",[p.mobile,p.phone,p.email].filter(Boolean).join(" · "));set("shift","ثبت نشده");set("education",[p.education,p.fieldOfStudy].filter(Boolean).join(" · "));
+   set("salary","ثبت نشده");set("bonus","ثبت نشده");set("benefit","ثبت نشده");set("reward","ثبت نشده");set("discipline","ثبت نشده");
+   set("training","ثبت نشده");set("ot","ثبت نشده");set("leave","ثبت نشده");set("score","ثبت نشده");set("score-scale","ثبت نشده");
+   set("strengths",p.specialty||"ثبت نشده");set("development",p.notes||"ثبت نشده");set("tools","ثبت نشده");set("tools-count","ثبت نشده");set("assets-count","ثبت نشده");set("assets-issued","ثبت نشده");set("assets-maintenance","ثبت نشده");set("assets-note","ثبت نشده");
+   set("tasks","در دفتر اقدامات قابل پیگیری است");set("missions","ثبت نشده");set("meetings","ثبت نشده");set("resolutions","ثبت نشده");set("tickets","ثبت نشده");set("commendations","ثبت نشده");set("discipline-notes","ثبت نشده");set("sport-hours","ثبت نشده");set("sport-events","ثبت نشده");set("contract",p.employmentType);set("insurance","ثبت نشده");set("future",p.notes||"ثبت نشده");
+   set("skills",[p.specialty,p.fieldOfStudy].filter(Boolean).join(" · ")||"ثبت نشده");
+   clearLegacyPanels();
+   const header=result.querySelector(".profile-toolbar");if(header){const label=header.querySelector("b");if(label)label.textContent="پرونده مرجع · کد "+fa(person.code);}
+   status.textContent="پرونده از بانک مرکزی پرسنل فراخوانی شد؛ داده‌های تکمیل‌نشده با عبارت «ثبت نشده» مشخص شده‌اند.";
+  }catch(e){status.textContent=e.message;}finally{search.disabled=false;unlock.disabled=false;}
+ }
+ search.addEventListener("click",find);unlock.addEventListener("click",find);
  input.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();find();}});
 }
+
 window.PersonnelRegistry=Object.freeze({ensureUnlocked,initialize,list,get,save,changeCode,initRegistryPage,initProfileBridge,escape:esc});
 export const getPersonnel=get,ensurePersonnelUnlocked=ensureUnlocked,normalizePersonnelCode=normalizeCode;
 document.addEventListener("DOMContentLoaded",()=>{initRegistryPage();initProfileBridge();});
