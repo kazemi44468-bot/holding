@@ -76,7 +76,59 @@ body.ops-page:has(#missionForm) .mission-admin{background:#fbfcfc}
 </style>
 <style>
 .process-track-area{margin-top:16px;padding:14px;border:1px solid #e1e9eb;border-radius:12px;background:#fbfdfd}.process-track-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.process-track-card{min-width:0;padding:12px;border:1px solid #e2e9eb;border-radius:10px;background:#fff}.process-track-card h4{margin:0 0 5px;color:#42656d;font-size:13px}.process-track-card>p{min-height:34px;margin:0 0 9px;color:#78878c;font-size:10px;line-height:1.8}.process-track-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.process-track-card label{display:grid;gap:4px;color:#5b6d73;font-size:10px}.process-track-card input,.process-track-card select,.process-track-card textarea{width:100%;min-width:0;padding:7px;border:1px solid #dce6e8;border-radius:7px;background:#fff;color:#40545d;font:inherit;font-size:11px}.process-action-entry{display:grid;gap:7px;margin-top:10px;padding-top:9px;border-top:1px solid #edf1f2}.process-action-entry button{justify-self:start;padding:6px 9px;font-size:10px}.process-track-actions{display:grid;gap:6px;margin-top:9px}.process-track-action{padding:8px;border:1px solid #edf1f2;border-radius:7px;background:#fafcfc;font-size:10px;color:#5c7076}.process-track-action b{color:#456a72}.process-track-action small{display:block;color:#849196;margin-top:3px}.process-track-history{margin-top:12px;padding:10px;border:1px solid #e6edef;border-radius:8px;background:#fff;font-size:11px;color:#60747a}.process-track-history>div{margin-top:7px;line-height:1.9}@media(max-width:900px){.process-track-grid{grid-template-columns:1fr 1fr}}@media(max-width:600px){.process-track-grid{grid-template-columns:1fr}.process-track-card>p{min-height:0}}
-</style></head>
+</style><style>
+
+/* بازطراحی روشن و پرنشاط فرم مأموریت */
+:root{--mission-ink:#40566a;--mission-muted:#71869a;--mission-line:#dceaf2;--mission-tint:#f4faff;--mission-teal:#39a9c4;--mission-teal-soft:#e8f8fc}
+body.ops-page:has(#missionForm){background:#f3f8fc!important;color:#40566a}
+body.ops-page:has(#missionForm) .ops-intro{background:linear-gradient(115deg,#fff 0%,#eaf7ff 58%,#eefbf9 100%)!important;border-color:#d9ebf5!important;box-shadow:0 5px 18px rgba(71,145,185,.07)}
+body.ops-page:has(#missionForm) .ops-intro h1{color:#356d91!important}
+body.ops-page:has(#missionForm) .ops-intro p{color:#71889a!important}
+body.ops-page:has(#missionForm) .mission-auth,body.ops-page:has(#missionForm) .mission-card,body.ops-page:has(#missionForm) .mission-admin{border-color:#dceaf2!important;box-shadow:0 4px 16px rgba(79,139,174,.055)!important;background:#fff!important}
+body.ops-page:has(#missionForm) .mission-auth{background:#f5fbff!important}
+body.ops-page:has(#missionForm) .mission-tabs{background:#edf7fd!important;border-color:#d5e9f5!important;box-shadow:0 5px 15px rgba(79,139,174,.07)!important;backdrop-filter:none}
+body.ops-page:has(#missionForm) .mission-tab{background:#fff!important;border-color:#d8e9f3!important;color:#55758b!important;box-shadow:none!important}
+body.ops-page:has(#missionForm) .mission-tab:nth-child(5n+1){background:#f0f8ff!important}
+body.ops-page:has(#missionForm) .mission-tab:nth-child(5n+2){background:#effbf9!important}
+body.ops-page:has(#missionForm) .mission-tab:nth-child(5n+3){background:#fff9ed!important}
+body.ops-page:has(#missionForm) .mission-tab:nth-child(5n+4){background:#f7f3ff!important}
+body.ops-page:has(#missionForm) .mission-tab:nth-child(5n){background:#fff3f5!important}
+body.ops-page:has(#missionForm) .mission-tab[aria-selected=true]{background:#dff2ff!important;border-color:#91cce8!important;color:#246d9c!important;box-shadow:inset 0 -3px 0 #6bbbe2!important}
+body.ops-page:has(#missionForm) .step-count{background:#fff!important;border-color:#d7e8f1!important;color:#5b8299!important}
+body.ops-page:has(#missionForm) .mission-tab[aria-selected=true] .step-count{background:#c8eaff!important;border-color:#a9d8f0!important;color:#246d9c!important}
+body.ops-page:has(#missionForm) .mission-section{background:#fff!important;border:1px solid #dceaf2!important;border-radius:15px!important;box-shadow:0 5px 18px rgba(79,139,174,.045)!important}
+body.ops-page:has(#missionForm) .section-head h2{color:#397da5!important}
+body.ops-page:has(#missionForm) .section-head p{color:#7b91a1!important}
+body.ops-page:has(#missionForm) .field label{color:#4e6c81!important}
+body.ops-page:has(#missionForm) .field input,body.ops-page:has(#missionForm) .field select,body.ops-page:has(#missionForm) .field textarea,body.ops-page:has(#missionForm) .mission-admin textarea{background:#fbfdff!important;border-color:#d8e8f1!important;color:#40566a!important}
+body.ops-page:has(#missionForm) .field input:focus,body.ops-page:has(#missionForm) .field select:focus,body.ops-page:has(#missionForm) .field textarea:focus{border-color:#79c1e3!important;box-shadow:0 0 0 3px rgba(83,174,218,.14)!important}
+body.ops-page:has(#missionForm) .mission-progress{background:#eaf3f8!important}
+body.ops-page:has(#missionForm) .mission-progress span{background:linear-gradient(90deg,#6cc8e8,#61cbb8)!important}
+body.ops-page:has(#missionForm) button.primary{background:#56acd2!important;border-color:#56acd2!important;color:#fff!important;box-shadow:0 3px 9px rgba(69,166,207,.16)!important}
+body.ops-page:has(#missionForm) button.primary:hover{background:#3798c4!important}
+body.ops-page:has(#missionForm) button.quiet{background:#f1f8fc!important;border-color:#d7e9f3!important;color:#52758c!important}
+body.ops-page:has(#missionForm) .repeat-note{background:#f0f9ff!important;border-color:#d8edf8!important;color:#5c7d91!important}
+body.ops-page:has(#missionForm) .process-track-area{background:#f3faff!important;border-color:#d7eaf5!important}
+body.ops-page:has(#missionForm) .process-track-card{border-color:#dcebf3!important;box-shadow:0 2px 8px rgba(75,145,184,.04)}
+body.ops-page:has(#missionForm) .process-track-card:nth-child(3n+1){background:#f4faff!important}
+body.ops-page:has(#missionForm) .process-track-card:nth-child(3n+2){background:#f1fbf9!important}
+body.ops-page:has(#missionForm) .process-track-card:nth-child(3n){background:#fffaf0!important}
+body.ops-page:has(#missionForm) .process-track-card h4{color:#397fa6!important}
+body.ops-page:has(#missionForm) .process-track-card input,body.ops-page:has(#missionForm) .process-track-card select,body.ops-page:has(#missionForm) .process-track-card textarea{border-color:#d7e8f1!important;background:#fff!important}
+body.ops-page:has(#missionForm) .process-track-action{background:#fff!important;border-color:#e1edf3!important}
+body.ops-page:has(#missionForm) .field-editor{background:#eff8ff!important;border-color:#cfe5f2!important;box-shadow:0 7px 20px rgba(66,145,190,.11)!important}
+body.ops-page:has(#missionForm) .field-editor-grid input,body.ops-page:has(#missionForm) .field-editor-grid select,body.ops-page:has(#missionForm) .field-editor-grid textarea{border-color:#d5e7f1!important}
+body.ops-page:has(#missionForm) .field-edit-btn{display:inline-flex!important;vertical-align:middle;margin-inline-start:6px;padding:2px!important;min-width:20px!important;min-height:20px!important;width:20px;height:20px;border:0!important;border-radius:5px!important;background:transparent!important;color:#61a9ce!important;opacity:.82}
+body.ops-page:has(#missionForm) .field-edit-btn:hover{background:#e3f4fc!important;color:#2588b7!important;opacity:1}
+body.ops-page:has(#missionForm) .field-tools{display:none!important}
+body.ops-page:has(#missionForm) .section-title-edit{display:inline-flex;align-items:center;justify-content:center;margin-inline-start:7px;width:20px;height:20px;border:0;border-radius:5px;background:transparent;color:#69afd0;cursor:pointer;vertical-align:middle}
+body.ops-page:has(#missionForm) .section-title-edit:hover{background:#e3f4fc;color:#2588b7}
+body.ops-page:has(#missionForm) .section-title-edit svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+body.ops-page:has(#missionForm) .mission-tab .section-title-edit{flex:0 0 18px;width:18px;height:18px;margin-inline-start:auto;color:#6eaac6}
+@media(max-width:600px){body.ops-page:has(#missionForm) .mission-tabs{background:#edf7fd!important}}
+
+</style>
+</head>
 <body class="ops-page">
 <header class="ops-header"><div class="ops-header-inner"><a class="ops-brand" href="../dashboard.html"><img class="ops-logo" src="../assets/images/iran-flag.svg" alt="پرچم ایران"><span><b>معاونت ۷</b><small>سامانه وضعیت و عملکرد</small></span></a><nav class="ops-nav" aria-label="منوی اصلی"></nav><div class="ops-clock"><span>زمان سامانه</span><b id="clock">—</b><small id="date">—</small></div></div></header>
 <main class="ops-main">
@@ -312,55 +364,4 @@ body.ops-page:has(#missionForm) .mission-admin{background:#fbfcfc}
 <script type="module" src="../assets/js/mission-create.js?v=mission-suite-20261114-13"></script>
 <script>if("serviceWorker" in navigator)navigator.serviceWorker.register("../sw.js").catch(()=>{});</script>
 </body></html>
-<style>
 
-/* بازطراحی روشن و پرنشاط فرم مأموریت */
-:root{--mission-ink:#40566a;--mission-muted:#71869a;--mission-line:#dceaf2;--mission-tint:#f4faff;--mission-teal:#39a9c4;--mission-teal-soft:#e8f8fc}
-body.ops-page:has(#missionForm){background:#f3f8fc!important;color:#40566a}
-body.ops-page:has(#missionForm) .ops-intro{background:linear-gradient(115deg,#fff 0%,#eaf7ff 58%,#eefbf9 100%)!important;border-color:#d9ebf5!important;box-shadow:0 5px 18px rgba(71,145,185,.07)}
-body.ops-page:has(#missionForm) .ops-intro h1{color:#356d91!important}
-body.ops-page:has(#missionForm) .ops-intro p{color:#71889a!important}
-body.ops-page:has(#missionForm) .mission-auth,body.ops-page:has(#missionForm) .mission-card,body.ops-page:has(#missionForm) .mission-admin{border-color:#dceaf2!important;box-shadow:0 4px 16px rgba(79,139,174,.055)!important;background:#fff!important}
-body.ops-page:has(#missionForm) .mission-auth{background:#f5fbff!important}
-body.ops-page:has(#missionForm) .mission-tabs{background:#edf7fd!important;border-color:#d5e9f5!important;box-shadow:0 5px 15px rgba(79,139,174,.07)!important;backdrop-filter:none}
-body.ops-page:has(#missionForm) .mission-tab{background:#fff!important;border-color:#d8e9f3!important;color:#55758b!important;box-shadow:none!important}
-body.ops-page:has(#missionForm) .mission-tab:nth-child(5n+1){background:#f0f8ff!important}
-body.ops-page:has(#missionForm) .mission-tab:nth-child(5n+2){background:#effbf9!important}
-body.ops-page:has(#missionForm) .mission-tab:nth-child(5n+3){background:#fff9ed!important}
-body.ops-page:has(#missionForm) .mission-tab:nth-child(5n+4){background:#f7f3ff!important}
-body.ops-page:has(#missionForm) .mission-tab:nth-child(5n){background:#fff3f5!important}
-body.ops-page:has(#missionForm) .mission-tab[aria-selected=true]{background:#dff2ff!important;border-color:#91cce8!important;color:#246d9c!important;box-shadow:inset 0 -3px 0 #6bbbe2!important}
-body.ops-page:has(#missionForm) .step-count{background:#fff!important;border-color:#d7e8f1!important;color:#5b8299!important}
-body.ops-page:has(#missionForm) .mission-tab[aria-selected=true] .step-count{background:#c8eaff!important;border-color:#a9d8f0!important;color:#246d9c!important}
-body.ops-page:has(#missionForm) .mission-section{background:#fff!important;border:1px solid #dceaf2!important;border-radius:15px!important;box-shadow:0 5px 18px rgba(79,139,174,.045)!important}
-body.ops-page:has(#missionForm) .section-head h2{color:#397da5!important}
-body.ops-page:has(#missionForm) .section-head p{color:#7b91a1!important}
-body.ops-page:has(#missionForm) .field label{color:#4e6c81!important}
-body.ops-page:has(#missionForm) .field input,body.ops-page:has(#missionForm) .field select,body.ops-page:has(#missionForm) .field textarea,body.ops-page:has(#missionForm) .mission-admin textarea{background:#fbfdff!important;border-color:#d8e8f1!important;color:#40566a!important}
-body.ops-page:has(#missionForm) .field input:focus,body.ops-page:has(#missionForm) .field select:focus,body.ops-page:has(#missionForm) .field textarea:focus{border-color:#79c1e3!important;box-shadow:0 0 0 3px rgba(83,174,218,.14)!important}
-body.ops-page:has(#missionForm) .mission-progress{background:#eaf3f8!important}
-body.ops-page:has(#missionForm) .mission-progress span{background:linear-gradient(90deg,#6cc8e8,#61cbb8)!important}
-body.ops-page:has(#missionForm) button.primary{background:#56acd2!important;border-color:#56acd2!important;color:#fff!important;box-shadow:0 3px 9px rgba(69,166,207,.16)!important}
-body.ops-page:has(#missionForm) button.primary:hover{background:#3798c4!important}
-body.ops-page:has(#missionForm) button.quiet{background:#f1f8fc!important;border-color:#d7e9f3!important;color:#52758c!important}
-body.ops-page:has(#missionForm) .repeat-note{background:#f0f9ff!important;border-color:#d8edf8!important;color:#5c7d91!important}
-body.ops-page:has(#missionForm) .process-track-area{background:#f3faff!important;border-color:#d7eaf5!important}
-body.ops-page:has(#missionForm) .process-track-card{border-color:#dcebf3!important;box-shadow:0 2px 8px rgba(75,145,184,.04)}
-body.ops-page:has(#missionForm) .process-track-card:nth-child(3n+1){background:#f4faff!important}
-body.ops-page:has(#missionForm) .process-track-card:nth-child(3n+2){background:#f1fbf9!important}
-body.ops-page:has(#missionForm) .process-track-card:nth-child(3n){background:#fffaf0!important}
-body.ops-page:has(#missionForm) .process-track-card h4{color:#397fa6!important}
-body.ops-page:has(#missionForm) .process-track-card input,body.ops-page:has(#missionForm) .process-track-card select,body.ops-page:has(#missionForm) .process-track-card textarea{border-color:#d7e8f1!important;background:#fff!important}
-body.ops-page:has(#missionForm) .process-track-action{background:#fff!important;border-color:#e1edf3!important}
-body.ops-page:has(#missionForm) .field-editor{background:#eff8ff!important;border-color:#cfe5f2!important;box-shadow:0 7px 20px rgba(66,145,190,.11)!important}
-body.ops-page:has(#missionForm) .field-editor-grid input,body.ops-page:has(#missionForm) .field-editor-grid select,body.ops-page:has(#missionForm) .field-editor-grid textarea{border-color:#d5e7f1!important}
-body.ops-page:has(#missionForm) .field-edit-btn{display:inline-flex!important;vertical-align:middle;margin-inline-start:6px;padding:2px!important;min-width:20px!important;min-height:20px!important;width:20px;height:20px;border:0!important;border-radius:5px!important;background:transparent!important;color:#61a9ce!important;opacity:.82}
-body.ops-page:has(#missionForm) .field-edit-btn:hover{background:#e3f4fc!important;color:#2588b7!important;opacity:1}
-body.ops-page:has(#missionForm) .field-tools{display:none!important}
-body.ops-page:has(#missionForm) .section-title-edit{display:inline-flex;align-items:center;justify-content:center;margin-inline-start:7px;width:20px;height:20px;border:0;border-radius:5px;background:transparent;color:#69afd0;cursor:pointer;vertical-align:middle}
-body.ops-page:has(#missionForm) .section-title-edit:hover{background:#e3f4fc;color:#2588b7}
-body.ops-page:has(#missionForm) .section-title-edit svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-body.ops-page:has(#missionForm) .mission-tab .section-title-edit{flex:0 0 18px;width:18px;height:18px;margin-inline-start:auto;color:#6eaac6}
-@media(max-width:600px){body.ops-page:has(#missionForm) .mission-tabs{background:#edf7fd!important}}
-
-</style>
