@@ -34,7 +34,7 @@ export const MissionStore = Object.freeze({
     const missionId = String(id || data.id || crypto.randomUUID());
     const prior = await this.get(missionId);
     const now = new Date().toISOString();
-    const record = { ...data, id: missionId, schemaVersion: 1, createdAt: data.createdAt || prior?.createdAt || now, updatedAt: now };
+    const record = { ...data, id: missionId, schemaVersion: Number(data.schemaVersion ?? prior?.schemaVersion ?? 1), createdAt: data.createdAt || prior?.createdAt || now, updatedAt: now };
     await Vault.add(ENTITY, keyOf(missionId), "upsert", record);
     return missionId;
   },
