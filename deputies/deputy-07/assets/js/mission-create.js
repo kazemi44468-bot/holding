@@ -155,6 +155,10 @@ function fill(data){
  $("previousFields").classList.toggle("hidden",!data.hasPrevious);
  renderDepartmentFields();writeCustom(data.departmentFields);
 }
+function renderWorkflowHistory(log=[]){
+ const host=$("workflowHistory");if(!host)return;
+ host.innerHTML=log.length?log.slice().reverse().map(item=>'<div style="padding:7px 0;border-bottom:1px solid #e2eaf0"><b>'+safe(item.action||"تغییر گردش")+'</b> · '+safe(new Date(item.at).toLocaleString("fa-IR"))+'<div>'+safe(statusLabel(item.stage))+' · '+safe(item.department||"بدون اداره")+' · '+safe(item.owner||"بدون مسئول")+'</div></div>').join(""):"تاریخچه گردش هنوز ثبت نشده است.";
+}
 function renderProgressHistory(log=[]){
  $("progressHistory").innerHTML=log.length?log.slice().reverse().map(item=>'<div style="padding:8px 0;border-bottom:1px solid #e3ebf0"><b>'+safe(toFa(item.progress??0))+'٪</b> · '+safe(new Date(item.at).toLocaleString("fa-IR"))+'<div>'+safe(item.note||"بدون توضیح")+'</div><small>'+safe(item.by||"ثبت‌کننده")+'</small></div>').join(""):"هنوز گزارشی در تاریخچه پیشرفت ثبت نشده است.";
 }
@@ -165,8 +169,8 @@ async function saveMission(asDraft=false){
  const data=collect();if(asDraft&&data.status==="draft")data.status="draft";else if(data.status==="draft")data.status="registered";
  data.executionStatus=data.status;data.workflow.stage=data.status;
  const now=new Date().toISOString();
- if(!currentMission){data.missionCode=makeCode();data.createdAt=now;data.progressLog=[{id:crypto.randomUUID(),at:now,progress:data.progress,note:"ثبت اولیه مأموریت",by:"ثبت‌کننده"}];if(data.calendarEvent){data.calendarEvent.id="mission-event:"+data.missionCode;data.calendarEvent.missionCode=data.missionCode;}}
- else{data.missionCode=currentMission.missionCode;data.createdAt=currentMission.createdAt;data.progressLog=currentMission.progressLog||[];if(Number(data.progress)!==Number(currentMission.progress)){data.progressLog=[...data.progressLog,{id:crypto.randomUUID(),at:now,progress:Number(data.progress||0),note:data.progressDescription||"به‌روزرسانی درصد پیشرفت",by:data.assignedExpert||data.directOwner||"ثبت‌کننده"}];}data.updatedAt=now;}
+ if(!currentMission){data.missionCode=makeCode();data.createdAt=now;data.progressLog=[{id:crypto.randomUUID(),at:now,progress:data.progress,note:"ثبت اولیه مأموریت",by:"ثبت‌کننده"}];data.workflowLog=[{id:crypto.randomUUID(),at:now,action:"ثبت اولیه",stage:data.status,department:data.executorDepartmentName,owner:data.directOwner||data.assignedExpert||""}];if(data.calendarEvent){data.calendarEvent.id="mission-event:"+data.missionCode;data.calendarEvent.missionCode=data.missionCode;}}
+ else{data.missionCode=currentMission.missionCode;data.createdAt=currentMission.createdAt;data.progressLog=currentMission.progressLog||[];data.workflowLog=currentMission.workflowLog||[];const priorWorkflow=currentMission.workflow||{};if(priorWorkflow.stage!==data.workflow.stage||String(priorWorkflow.assignedDepartment)!==String(data.workflow.assignedDepartment)||String(priorWorkflow.assignedManager||"")!==String(data.workflow.assignedManager||"")||String(priorWorkflow.assignedExpert||"")!==String(data.workflow.assignedExpert||"")){data.workflowLog=[...data.workflowLog,{id:crypto.randomUUID(),at:now,action:"به‌روزرسانی گردش / ارجاع",stage:data.status,department:data.executorDepartmentName,owner:data.directOwner||data.assignedExpert||""}];}if(Number(data.progress)!==Number(currentMission.progress)){data.progressLog=[...data.progressLog,{id:crypto.randomUUID(),at:now,progress:Number(data.progress||0),note:data.progressDescription||"به‌روزرسانی درصد پیشرفت",by:data.assignedExpert||data.directOwner||"ثبت‌کننده"}];}data.updatedAt=now;}
  const id=await MissionStore.save(data,currentMission?.id);
  currentMission={...data,id};
  const files=[...($("missionFiles").files||[])];
@@ -175,7 +179,7 @@ async function saveMission(asDraft=false){
  if(attached.length){currentMission.attachments=[...(currentMission.attachments||[]),...attached];await MissionStore.save(currentMission,id);}
  $("missionFiles").value="";await renderAttachments(id);
  $("missionMeta").textContent="کد مأموریت: "+currentMission.missionCode+" · آخرین ذخیره: "+new Date().toLocaleString("fa-IR");
- $("statusLabel").textContent=statusLabel(currentMission.status);
+ $("statusLabel").textContent=statusLabel(currentMission.status);renderWorkflowHistory(currentMission.workflowLog||[]);
  $("saveResult").textContent="مأموریت با موفقیت در بانک مرکزی معاونت ۷ ذخیره شد. "+(attached.length?toFa(attached.length)+" پیوست نیز رمزگذاری شد.":"");
  $("pageTitle").textContent="ویرایش مأموریت · "+currentMission.missionCode;
  $("progressBar").style.width=Number(currentMission.progress||0)+"%";updateProgress();renderProgressHistory(currentMission.progressLog);
@@ -222,6 +226,7 @@ $("prevStep").addEventListener("click",()=>goStep(activeStep-1));
 $("nextStep").addEventListener("click",()=>goStep(activeStep+1));
 $("missionForm").addEventListener("submit",async e=>{e.preventDefault();try{await saveMission(false);}catch(err){$("saveResult").textContent=err.message;$("saveResult").classList.add("danger");}});
 $("saveDraft").addEventListener("click",async()=>{try{if(!$("missionTitle").value.trim())throw new Error("برای ذخیره پیش‌نویس، حداقل عنوان مأموریت را وارد کنید.");$("executionStatus").value="draft";await saveMission(true);}catch(e){$("saveResult").textContent=e.message;}});
+$("referMission").addEventListener("click",async()=>{try{if(!$("executorDepartment").value)throw new Error("ابتدا اداره مجری را انتخاب کنید.");if(!$("directOwner").value&&!$("assignedExpert").value)throw new Error("برای ارجاع، مدیر اداره یا کارشناس مسئول را مشخص کنید.");$("executionStatus").value="referred";if(!$("referredAt").value)$("referredAt").value=new Date().toISOString().slice(0,16);await saveMission(false);$("saveResult").textContent="مأموریت با وضعیت ارجاع‌شده به اداره مجری ثبت شد. مسئول و مهلت در پرونده مأموریت درج شده‌اند."; }catch(e){$("saveResult").textContent=e.message;}});
 $("addProgress").addEventListener("click",async()=>{try{if(!currentMission)throw new Error("ابتدا مأموریت را ذخیره کنید.");const note=$("progressDescription").value.trim();await MissionStore.addProgress(currentMission.id,{progress:Number($("progress").value||0),note,by:$("assignedExpert").value||$("directOwner").value||"ثبت‌کننده",status:$("executionStatus").value});currentMission=await MissionStore.get(currentMission.id);renderProgressHistory(currentMission.progressLog||[]);$("saveResult").textContent="گزارش پیشرفت در تاریخچه مأموریت ثبت شد.";}catch(e){$("saveResult").textContent=e.message;}});
 $("loadSchema").addEventListener("click",()=>{try{$("schemaJson").value=JSON.stringify(schema,null,2);$("schemaResult").textContent="ساختار فعال بارگذاری شد.";}catch(e){$("schemaResult").textContent=e.message;}});
 $("resetSchema").addEventListener("click",()=>{$("schemaJson").value=JSON.stringify(defaultConfig(),null,2);});
