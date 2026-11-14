@@ -460,3 +460,98 @@ html body.ops-page.control-page .control-sidebar .cc-nav.active>i{
 html body.ops-page.control-page .control-sidebar .cc-nav.active small{
   color:#8b8178!important;
 }
+
+/* بازتنظیم کامل رنگ ردیف‌ها و منوهای داخلی: زمینه روشن، نوشته تیره */
+html body.ops-page.control-page{
+  --cc-sidebar:#f5f3ef;
+  --cc-sidebar-hover:#ebe8e2;
+  --cc-sidebar-active:#e5e1d9;
+  --cc-text:#171717;
+  --cc-muted:#45413c;
+  --cc-faint:#625d56;
+}
+html body.ops-page.control-page .control-sidebar{
+  background:#f5f3ef!important;
+  background-image:none!important;
+  border-color:#e2ded7!important;
+}
+html body.ops-page.control-page .sidebar-brand,
+html body.ops-page.control-page .sidebar-foot{
+  border-color:#dedad3!important;
+  color:#33302c!important;
+}
+html body.ops-page.control-page .sidebar-brand b,
+html body.ops-page.control-page .sidebar-brand small{
+  color:#171717!important;
+}
+html body.ops-page.control-page .sidebar-brand-mark{
+  background:#e9e6df!important;
+  color:#171717!important;
+  border-color:#d8d3ca!important;
+}
+html body.ops-page.control-page .control-sidebar .cc-group-head{
+  background:#eae7e0!important;
+  background-image:none!important;
+  color:#171717!important;
+  border:1px solid #dcd7ce!important;
+  border-radius:8px!important;
+}
+html body.ops-page.control-page .control-sidebar .cc-group-head *,
+html body.ops-page.control-page .control-sidebar .cc-group-head .cc-group-icon,
+html body.ops-page.control-page .control-sidebar .cc-group-head .cc-group-arrow{
+  color:#24211e!important;
+}
+html body.ops-page.control-page .control-sidebar .cc-group-items{
+  background:transparent!important;
+}
+html body.ops-page.control-page .control-sidebar .cc-nav,
+html body.ops-page.control-page .control-sidebar .cc-nav-link{
+  background:#f9f8f5!important;
+  background-image:none!important;
+  color:#171717!important;
+  border:1px solid #e4e0d9!important;
+  border-radius:7px!important;
+}
+html body.ops-page.control-page .control-sidebar .cc-nav b,
+html body.ops-page.control-page .control-sidebar .cc-nav small,
+html body.ops-page.control-page .control-sidebar .cc-nav>i,
+html body.ops-page.control-page .control-sidebar .cc-nav-link,
+html body.ops-page.control-page .control-sidebar .cc-nav-link *{
+  color:#24211e!important;
+}
+html body.ops-page.control-page .control-sidebar .cc-nav:hover,
+html body.ops-page.control-page .control-sidebar .cc-nav-link:hover{
+  background:#eae7e0!important;
+  background-image:none!important;
+  border-color:#d8d2c8!important;
+  color:#111!important;
+}
+html body.ops-page.control-page .control-sidebar .cc-nav.active,
+html body.ops-page.control-page .control-sidebar .cc-nav.active:hover{
+  background:#e5e1d9!important;
+  background-image:none!important;
+  color:#111!important;
+  border:1px solid #d5cfc5!important;
+  box-shadow:inset -3px 0 0 #777168!important;
+}
+html body.ops-page.control-page .control-sidebar .cc-nav.active b,
+html body.ops-page.control-page .control-sidebar .cc-nav.active small,
+html body.ops-page.control-page .control-sidebar .cc-nav.active>i{
+  color:#111!important;
+}
+html body.ops-page.control-page .control-sidebar .sidebar-foot{
+  color:#333!important;
+}
+html body.ops-page.control-page .cc-module-list button{
+  background:#f5f3ef!important;
+  background-image:none!important;
+  color:#171717!important;
+  border-color:#e0dcd4!important;
+}
+html body.ops-page.control-page .cc-module-list button b{
+  color:#24211e!important;
+}
+html body.ops-page.control-page .cc-module-list button:hover{
+  background:#eae7e0!important;
+  border-color:#d8d2c8!important;
+}
