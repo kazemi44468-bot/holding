@@ -147,6 +147,7 @@ const inPages=location.pathname.includes('/pages/');
  groups.forEach(g=>{g.links=g.links.filter(([href])=>{const meta=pageMeta(href);return !meta||meta.status==="published";});});
  const dock=document.createElement('nav');
  dock.className='mobile-dock';
+ if(groups.some(g=>g.id==="custom-pages"))dock.classList.add("has-other-pages");
  dock.setAttribute('aria-label','منوی اصلی موبایل');
  const homeLink=document.createElement('a');
  homeLink.className='dock-home';homeLink.href=home;homeLink.innerHTML='<span class="dock-icon" aria-hidden="true">⌂</span><span>خانه</span>';
