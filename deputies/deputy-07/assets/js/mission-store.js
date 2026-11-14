@@ -16,7 +16,7 @@ export const MissionStore = Object.freeze({
       return { ...status, unlocked: false, records: 0, conflicts: 0 };
     }
   },
-  unlock(passphrase) { return Vault.unlock(passphrase); },
+  unlock() { return Vault.unlock(); },
   lock() { Vault.lock(); },
   async list() {
     const snapshot = await Vault.snapshot();
