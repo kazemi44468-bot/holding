@@ -70,6 +70,7 @@ const inPages=location.pathname.includes('/pages/');
  const customMenuLinks=menu=>customPages.filter(p=>p.menu===menu).map(p=>[p.href,p.safeTitle]);
  const otherCustomPages=customMenuLinks("سایر صفحات");
  const pageCatalog=window.Deputy7Pages?.all()||[];
+ const otherStaticPages=pageCatalog.filter(p=>p.kind==="static"&&p.id!=="entry"&&p.menu==="سایر صفحات"&&p.status==="published");
  const normalizePagePath=value=>{let path=String(value||"").split("?")[0];while(path.startsWith("../"))path=path.slice(3);if(path.startsWith("./"))path=path.slice(2);while(path.startsWith("/"))path=path.slice(1);return path;};
  const pageMeta=path=>{const raw=normalizePagePath(path),exact=pageCatalog.find(p=>p.kind==="static"&&normalizePagePath(p.path)===raw);if(exact)return exact;const base=raw.split("/").pop();return pageCatalog.find(p=>p.kind==="static"&&String(p.path||"").split("/").pop()===base&&(String(p.path||"").startsWith("pages/")||!inPages));};
  const registeredPageHref=p=>{const path=String(p.path||"");return inPages?(path.startsWith("pages/")?path.slice(6):"../"+path):inLocalData?"../"+path:path;};
@@ -133,9 +134,9 @@ const inPages=location.pathname.includes('/pages/');
   {id:'actions',label:'اقدامات',icon:'✓',links:[[urls.followups,'پیگیری دستورات ریاست'],[urls.notices,'مرکز اعلانات ریاست'],[urls.calendar,'تقویم شرکت'],...customMenuLinks("اقدامات")]},
   {id:'services',label:'خدمات',icon:'◇',links:[[urls.services,'نمای کلی مرکز خدمات'],[urls.communications,'ارتباطات کارکنان'],[urls.welfare,'خدمات رفاهی'],[urls.coop,'فروشگاه و تعاونی مصرف'],[urls.economic,'برنامه‌ریزی اقتصادی'],[urls.retirees,'خدمات بازنشستگان'],...customMenuLinks("خدمات")]},
   {id:'reports',label:'گزارش‌ها',icon:'▥',links:[[urls.reports,'گزارش تلفیقی ادارات'],[urls.catalog,'کاتالوگ گزارش‌ها'],[urls.archive,'آرشیو گزارش‌ها'],[urls.participation,'نظرسنجی'],...customMenuLinks("گزارش‌ها")]},
-  ...(otherCustomPages.length?[{id:'custom-pages',label:'سایر صفحات',icon:'▣',links:otherCustomPages}]:[])
+  ...(otherCustomPages.length||otherStaticPages.length?[{id:'custom-pages',label:'سایر صفحات',icon:'▣',links:otherCustomPages}]:[])
  ];
- const groupForMenu={"ادارات":"departments","مدیریت":"management","اقدامات":"actions","خدمات":"services","گزارش‌ها":"reports"};
+ const groupForMenu={"ادارات":"departments","مدیریت":"management","اقدامات":"actions","خدمات":"services","گزارش‌ها":"reports","سایر صفحات":"custom-pages"};
  pageCatalog.filter(p=>p.kind==="static"&&p.id!=="entry"&&p.status==="published").forEach(p=>{
   const group=groups.find(g=>g.id===groupForMenu[p.menu]);if(!group)return;
   const href=registeredPageHref(p),key=href.split("?")[0].split("/").pop();
