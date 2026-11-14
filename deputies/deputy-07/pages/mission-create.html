@@ -16,7 +16,7 @@
 <header class="ops-header"><div class="ops-header-inner"><a class="ops-brand" href="../dashboard.html"><img class="ops-logo" src="../assets/images/iran-flag.svg" alt="پرچم ایران"><span><b>معاونت ۷</b><small>سامانه وضعیت و عملکرد</small></span></a><nav class="ops-nav" aria-label="منوی اصلی"></nav><div class="ops-clock"><span>زمان سامانه</span><b id="clock">—</b><small id="date">—</small></div></div></header>
 <main class="ops-main">
 <section class="ops-intro"><div><span class="eyebrow">مدیریت چرخه عمر مأموریت</span><h1 id="pageTitle">ایجاد مأموریت جدید</h1><p>ثبت درخواست، ارجاع تخصصی، برنامه‌ریزی، اجرا، پایش پیشرفت و تحویل نتیجه در یک پرونده یکپارچه</p></div></section>
-<section class="mission-auth"><div class="field"><label for="vaultPass">رمز امنیتی پایگاه داده معاونت ۷</label><input id="vaultPass" type="password" autocomplete="current-password" placeholder="رمز پایگاه داده را وارد کنید"></div><button id="unlockVault" class="primary">اتصال به پایگاه داده</button><span id="authState" class="mission-status">برای ثبت یا مشاهده مأموریت، ابتدا پایگاه داده را باز کنید.</span></section>
+<section class="mission-auth"><div class="field"><label for="vaultPass">رمز قبلی (فقط برای انتقال یک‌باره اطلاعات قدیمی)</label><input id="vaultPass" type="password" autocomplete="current-password" placeholder="اگر مخزن رمزگذاری‌شده قبلی دارید، وارد کنید؛ در غیر این صورت خالی بگذارید"></div><button id="unlockVault" class="primary">اتصال به پایگاه داده</button><span id="authState" class="mission-status">برای ثبت یا مشاهده مأموریت، ابتدا پایگاه داده را باز کنید.</span></section>
 <div id="workArea" class="hidden">
 <div class="mission-card">
 <div class="section-head"><div><h2>پرونده مأموریت</h2><p id="missionMeta">پیش‌نویس جدید · کد مأموریت پس از ذخیره تولید می‌شود</p></div><div><span id="statusLabel" class="status">پیش‌نویس</span></div></div>
@@ -143,7 +143,7 @@
 <div id="progressHistory" class="repeat-note">گزارش‌های پیشرفت پس از ذخیره مأموریت در تاریخچه ثبت می‌شوند.</div>
 </section>
 <section class="mission-card mission-section" data-section="documents">
-<div class="section-head"><div><h2>۹. پیوست‌ها، مستندات و کاربرگ جلسات</h2><p>نگهداری مستندات مأموریت در مخزن رمزگذاری‌شده مشترک</p></div></div>
+<div class="section-head"><div><h2>۹. پیوست‌ها، مستندات و کاربرگ جلسات</h2><p>نگهداری مستندات مأموریت در مخزن محلی مشترک</p></div></div>
 <div class="form-grid">
 <div class="field full"><label for="missionFiles">انتخاب پیوست‌ها</label><input id="missionFiles" type="file" multiple><small>پیوست‌ها پس از ذخیره پرونده در مخزن امن معاونت ۷ نگهداری می‌شوند.</small></div><div class="field full"><label>پیوست‌های ثبت‌شده در این پرونده</label><div id="missionAttachmentList" class="repeat-note">پس از بارگذاری پرونده، پیوست‌های قبلی نمایش داده می‌شوند.</div></div>
 <div class="field full"><label for="documentRegister">فهرست اسناد و ارجاعات (هر سطر: نوع سند | شماره | تاریخ | توضیح)</label><textarea id="documentRegister"></textarea></div>
