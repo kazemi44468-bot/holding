@@ -16,7 +16,7 @@ async function list(){
  Vault.ensure();const snap=await Vault.snapshot();
  return snap.records.filter(r=>r.entity===ENTITY).map(r=>r.data).sort((a,b)=>Number(a.code)-Number(b.code));
 }
-async function get(code){code=normalizeCode(code);return (await list()).find(x=>String(x.code)===code)||null;}
+async function get(code){code=normalizeCode(code);let rows=await list();if(rows.length<SLOT_COUNT)rows=(await initialize()).records;return rows.find(x=>String(x.code)===code)||null;}
 async function initialize(){
  Vault.ensure();const current=await list(),have=new Set(current.map(x=>String(x.code))),missing=[];
  for(let i=0;i<SLOT_COUNT;i++){const code=String(MIN_CODE+i);if(!have.has(code))missing.push(code);}
@@ -44,7 +44,7 @@ async function changeCode(oldCode,newCode){
  if(!/^\d{4,}$/.test(newCode)||Number(newCode)<MIN_CODE||Number(newCode)>=MIN_CODE+SLOT_COUNT)throw Error("کد جدید باید در بازه ۱۰۰۰ تا ۱۲۴۹ باشد.");
  if(oldCode===newCode)return await get(oldCode);
  const source=await get(oldCode);if(!source)throw Error("کد فعلی پیدا نشد.");
- const target=await get(newCode);if(target&&target.status!=="empty")throw Error("کد جدید قبلاً به فرد دیگری تخصیص یافته است.");if(target)await Vault.add(ENTITY,newCode,"delete",target);
+ const target=await get(newCode);if(target&&target.status!=="empty"&&target.movedFrom!==oldCode)throw Error("کد جدید قبلاً به فرد دیگری تخصیص یافته است.");if(target&&target.status==="empty")await Vault.add(ENTITY,newCode,"delete",target);
  const snap=await Vault.snapshot();
  for(const r of snap.records){
   if(r.entity===ENTITY&&String(r.recordId)===oldCode)continue;
@@ -55,7 +55,7 @@ async function changeCode(oldCode,newCode){
   const key=localStorage.key(i);if(!key)continue;const raw=localStorage.getItem(key);if(!raw)continue;
   try{const parsed=JSON.parse(raw),updated=replaceRefs(parsed,oldCode,newCode);if(JSON.stringify(updated)!==JSON.stringify(parsed))localStorage.setItem(key,JSON.stringify(updated));}catch{}
  }
- const moved={...source,code:newCode,profile:replaceRefs(source.profile,oldCode,newCode),updatedAt:new Date().toISOString(),revision:(source.revision||0)+1};
+ const moved={...source,code:newCode,movedFrom:oldCode,profile:replaceRefs(source.profile,oldCode,newCode),updatedAt:new Date().toISOString(),revision:(source.revision||0)+1};
  await Vault.add(ENTITY,newCode,"upsert",moved);
  await Vault.add(ENTITY,oldCode,"delete",{...source,code:oldCode,replacedBy:newCode,updatedAt:new Date().toISOString()});
  await Vault.add("personnel-audit",crypto.randomUUID(),"upsert",{action:"recode",oldCode,newCode,at:new Date().toISOString()});
@@ -71,8 +71,8 @@ function initRegistryPage(){
  function render(){
   const q=$("[data-personnel-search]").value.trim().toLocaleLowerCase("fa"),status=$("[data-personnel-status]").value,dep=$("[data-personnel-department]").value;
   const filtered=rows.filter(r=>{const p=r.profile||{},name=(p.firstName+" "+p.lastName+" "+p.nationalCode+" "+p.mobile+" "+r.code).toLocaleLowerCase("fa");return (!q||name.includes(q))&&(!status||r.status===status)&&(!dep||p.departmentId===dep);});
-  const pages=Math.max(1,Math.ceil(filtered.length/pageSize));page=Math.min(page,pages);const slice=filtered.slice((page-1)*pageSize,page*pageSize);
-  tbody.innerHTML=slice.map(r=>{const p=r.profile||{},name=(p.firstName+" "+p.lastName).trim()||"پرونده تکمیل نشده";return '<tr><td><b class="pr-code">'+fa(r.code)+'</b></td><td>'+esc(name)+'</td><td>'+esc(departments.find(d=>d[0]===p.departmentId)?.[1]||"—")+'</td><td>'+esc(p.jobTitle||"—")+'</td><td><span class="pr-status '+r.status+'">'+(r.status==="active"?"فعال":r.status==="inactive"?"غیرفعال":"تکمیل‌نشده")+'</span></td><td><button type="button" class="pr-row-action" data-edit="'+esc(r.code)+'">ویرایش پرونده</button></td></tr>';}).join("")||'<tr><td colspan="6" class="pr-empty">رکوردی با این فیلتر پیدا نشد.</td></tr>';
+  const pages=Math.max(1,Math.ceil(filtered.length/pageSize));page=Math.min(page,pages);const slice=filtered.slice((page-1)*pageSize,page*pageSize),editable=canManagePersonnel();
+  tbody.innerHTML=slice.map(r=>{const p=r.profile||{},name=(p.firstName+" "+p.lastName).trim()||"پرونده تکمیل نشده";return '<tr><td><b class="pr-code">'+fa(r.code)+'</b></td><td>'+esc(name)+'</td><td>'+esc(departments.find(d=>d[0]===p.departmentId)?.[1]||"—")+'</td><td>'+esc(p.jobTitle||"—")+'</td><td><span class="pr-status '+r.status+'">'+(r.status==="active"?"فعال":r.status==="inactive"?"غیرفعال":"تکمیل‌نشده")+'</span></td><td><button type="button" class="pr-row-action" data-edit="'+esc(r.code)+'" '+(editable?"":"disabled")+'>ویرایش پرونده</button></td></tr>';}).join("")||'<tr><td colspan="6" class="pr-empty">رکوردی با این فیلتر پیدا نشد.</td></tr>';
   $("[data-pr-count]").textContent=fa(filtered.length)+" پرونده از "+fa(rows.length);
   $("[data-pr-pages]").textContent=fa(page)+" / "+fa(pages);
   $("[data-pr-prev]").disabled=page<=1;$("[data-pr-next]").disabled=page>=pages;
