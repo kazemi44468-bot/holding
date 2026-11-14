@@ -17,15 +17,23 @@
 </div></header>
 <main class="ops-main">
 <section class="ops-intro"><div><span class="eyebrow">ماموریت‌ها · گزارش و رصد</span><h1>گزارش مأموریت‌ها</h1><p>نمای گزارش‌گیری و پایش وضعیت مأموریت‌های معاونت ۷</p></div></section>
-<section class="dept-panel" style="padding:28px;margin-top:22px">
-<div class="dept-panel-head"><div><span class="eyebrow">مرحله آماده‌سازی</span><h2>ساختار گزارش‌گیری در حال طراحی است</h2></div></div>
-<p style="color:var(--muted);margin:10px 0 0">گزارش‌ها پس از تعیین شاخص‌های رصد، دوره‌های زمانی، وضعیت‌های اجرایی و سطح تفکیک موردنظر شما تکمیل می‌شود.</p>
-</section>
+<section class="dept-panel mission-report-panel">
+<div class="mission-auth"><div class="field"><label for="reportPass">رمز امنیتی پایگاه داده معاونت ۷</label><input id="reportPass" type="password" placeholder="رمز پایگاه داده"></div><button id="reportUnlock" class="primary">بارگذاری گزارش‌ها</button><span id="reportState" class="profile-hint">گزارش‌ها فقط از داده‌های واقعی ثبت‌شده در بانک مأموریت‌ها محاسبه می‌شوند.</span></div>
+<div id="reportContent" hidden>
+<div class="report-filter"><label>بازه گزارش <select id="reportPeriod"><option value="all">کل دوره</option><option value="year">سال جاری</option><option value="quarter">سه‌ماهه اخیر</option><option value="month">ماه اخیر</option></select></label><label>اداره <select id="reportDept"><option value="">همه ادارات</option><option value="1">اداره ۱</option><option value="2">اداره ۲</option><option value="3">اداره ۳</option><option value="4">اداره ۴</option><option value="6">اداره ۶</option><option value="7">اداره ۷</option><option value="8">اداره ۸</option><option value="HQ">ستاد معاونت ۷</option></select></label><button id="reportRefresh" class="quiet">بروزرسانی گزارش</button></div>
+<div class="mission-kpis"><article><small>تعداد مأموریت‌ها</small><b id="rTotal">۰</b></article><article><small>تکمیل‌شده</small><b id="rDone">۰</b></article><article><small>در حال اجرا</small><b id="rActive">۰</b></article><article><small>معوق</small><b id="rLate">۰</b></article><article><small>میانگین پیشرفت</small><b id="rProgress">۰٪</b></article><article><small>میانگین تحقق هدف</small><b id="rGoal">—</b></article></div>
+<div class="report-grid"><article class="report-box"><h2>توزیع مأموریت بر اساس وضعیت</h2><div id="statusBars" class="report-bars"></div></article><article class="report-box"><h2>تعداد مأموریت به تفکیک اداره</h2><div id="deptBars" class="report-bars"></div></article><article class="report-box"><h2>عملکرد زمانی و تأخیر</h2><div id="timeSummary" class="report-summary"></div></article><article class="report-box"><h2>وضعیت اولویت‌ها</h2><div id="priorityBars" class="report-bars"></div></article></div>
+<div class="table-scroll"><table class="notice-breakdown"><thead><tr><th>اداره</th><th>کل مأموریت</th><th>تکمیل</th><th>در حال اجرا</th><th>معوق</th><th>میانگین پیشرفت</th></tr></thead><tbody id="deptReportRows"></tbody></table></div>
+<p class="profile-hint">مبنای محاسبه: رکوردهای ذخیره‌شده در بانک مأموریت‌ها، تاریخ‌های برنامه‌ای و درصدهای پیشرفت ثبت‌شده. مأموریت‌های حذف‌شده یا صرفاً پیش‌نویس در شاخص تکمیل لحاظ نمی‌شوند. بازه زمانی بر اساس تاریخ ایجاد پرونده است.</p>
+</div></section>
+<style>
+.mission-auth{display:flex;align-items:end;gap:12px;flex-wrap:wrap}.mission-auth .field{min-width:230px;flex:1}.report-filter{display:flex;gap:14px;align-items:end;flex-wrap:wrap;margin:18px 0}.report-filter label{display:grid;gap:5px;font-size:12px;color:#526c80}.report-filter select{min-width:140px;padding:8px;border:1px solid #d9e3eb;border-radius:8px;background:white;font:inherit}.mission-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:15px 0}.mission-kpis article,.report-box{background:#fff;border:1px solid #dfe7ed;border-radius:12px;padding:14px}.mission-kpis small,.mission-kpis b{display:block}.mission-kpis small{font-size:11px;color:#71869a}.mission-kpis b{font-size:21px;color:#285779;margin-top:5px}.report-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:16px 0}.report-box h2{font-size:14px;color:#294d6b;margin:0 0 14px}.report-bars{display:grid;gap:10px}.report-bar{display:grid;grid-template-columns:minmax(100px,1fr) minmax(90px,2fr) 40px;gap:8px;align-items:center;font-size:11px}.report-track{height:9px;background:#edf2f5;border-radius:8px;overflow:hidden}.report-track i{display:block;height:100%;background:#6b9eb8;border-radius:8px}.report-summary{font-size:12px;line-height:2.2;color:#506a80}.report-summary b{color:#285779}@media(max-width:700px){.report-grid{grid-template-columns:1fr}}
+</style>
 <footer class="ops-footer"></footer>
 </main>
 <script src="../assets/js/main.js?v=mission-bank-20261114-2"></script>
 <script src="../assets/js/organization-modules.js?v=dept8-20261107"></script>
 <script src="../assets/js/mobile-nav.js?v=internal-routing-20261110" defer></script>
-<script type="module" src="../assets/js/mission-store-bridge.js"></script>
+<script type="module" src="../assets/js/mission-reports.js?v=mission-workflow-20261114-1"></script>
 <script>if("serviceWorker" in navigator)navigator.serviceWorker.register("../sw.js").catch(()=>{});</script>
 </body></html>
