@@ -1,5 +1,5 @@
 import {Vault} from "./engine.js";
-const ENTITY="personnel",MIN_CODE=1000,SLOT_COUNT=250,REF_KEYS=new Set(["personnelCode","staffCode","employeeCode","personnelId","supervisorCode","managerPersonnelCode","ownerCode","assigneeCode"]);
+const ENTITY="personnel",MIN_CODE=1000,SLOT_COUNT=250,REF_KEYS=new Set(["personnelCode","staffCode","employeeCode","personnelId","personId","employeeId","staffId","supervisorCode","managerPersonnelCode","ownerCode","assigneeCode","assignedToCode","assignedByCode","recipientCode","reviewerCode","operatorCode","authorCode","targetPersonCode","createdByPersonnelCode"]);
 const normalizeCode=v=>String(v??"").trim().replace(/[۰-۹]/g,d=>String("۰۱۲۳۴۵۶۷۸۹".indexOf(d))).replace(/[٠-٩]/g,d=>String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));
 const recordKey=code=>"personnel:"+String(code);
 const blank=(code)=>({code:String(code),status:"empty",profile:{firstName:"",lastName:"",nationalCode:"",birthDate:"",marriageDate:"",gender:"",mobile:"",phone:"",email:"",address:"",departmentId:"",unit:"",jobTitle:"",employmentType:"",hireDate:"",contractEnd:"",education:"",fieldOfStudy:"",specialty:"",supervisorCode:"",workLocation:"",notes:""},createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),revision:1});
@@ -32,7 +32,7 @@ async function save(code,profile){
  const nationalCode=String(profile.nationalCode||"").trim();if(nationalCode&&nationalCode.length!==10)throw Error("کد ملی باید ۱۰ رقم باشد.");if(nationalCode&&(await list()).some(r=>r.code!==code&&r.profile?.nationalCode===nationalCode))throw Error("این کد ملی قبلاً در پرونده دیگری ثبت شده است.");
  const clean={...blank(code),...prior,profile:{...blank(code).profile,...(prior.profile||{}),...profile},status:profile.recordStatus==="inactive"?"inactive":(profile.firstName||profile.lastName)?"active":(prior.status==="inactive"?"inactive":"empty"),updatedAt:new Date().toISOString(),revision:(prior.revision||0)+1};
  await Vault.add(ENTITY,recordKey(code),"upsert",clean);
- try{const key="deputy7.identity-access.v1",s=JSON.parse(localStorage.getItem(key)||"null");if(s?.users){s.users=s.users.map(u=>u.personnelCode===code?{...u,name:(clean.profile.firstName+" "+clean.profile.lastName).trim()||u.name,title:clean.profile.jobTitle||u.title,unit:clean.profile.unit||u.unit,departments:clean.profile.departmentId?[clean.profile.departmentId]:u.departments}:u);localStorage.setItem(key,JSON.stringify(s));}}catch{}
+ try{const key="deputy7.identity-access.v1",s=JSON.parse(localStorage.getItem(key)||"null");if(s?.users){s.users=s.users.map(u=>u.personnelCode===code?{...u,name:(clean.profile.firstName+" "+clean.profile.lastName).trim()||u.name,title:clean.profile.jobTitle||u.title,unit:clean.profile.unit||u.unit,departments:clean.profile.departmentId?[clean.profile.departmentId]:u.departments,status:clean.status==="inactive"?"suspended":u.personnelInactive?"active":u.status,personnelInactive:clean.status==="inactive"}:u);localStorage.setItem(key,JSON.stringify(s));}}catch{}
  await Vault.add("personnel-audit",crypto.randomUUID(),"upsert",{action:"save",code,at:new Date().toISOString()});
  return clean;
 }
