@@ -61,7 +61,7 @@
  events.push(...hrEvents.map(e=>({...e,detail:[e.detail||"",e.personName||"",e.actionRequired?"اقدام: "+e.actionLabel:""].filter(Boolean).join(" · ")})));
  const shared=window.CITY_ORG_DATA;
  if(shared)events.forEach(e=>{if(e.orderId){const o=shared.orders.find(x=>x.id===e.orderId);if(o){e.title=o.title;e.detail="مخاطب اجرا: "+shared.byId(o.dept).name+" · مسئول: "+o.owner+" · پرونده "+o.id;e.place="مهلت "+o.deadline+" · "+o.status;}}});
- const typeNames={meeting:"جلسه",session:"نشست",action:"اقدام",training:"آموزش",personal:"مناسبت پرسنلی",resolution:"مصوبه ریاست"};
+ const typeNames={meeting:"جلسه",session:"نشست",action:"اقدام",mission:"مأموریت",training:"آموزش",personal:"مناسبت پرسنلی",resolution:"مصوبه ریاست"};
  const fa=new Intl.DateTimeFormat("fa-IR-u-ca-persian",{day:"numeric"});
  const fullDate=new Intl.DateTimeFormat("fa-IR-u-ca-persian",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
  const monthTitle=new Intl.DateTimeFormat("fa-IR-u-ca-persian",{month:"long",year:"numeric"});
@@ -133,5 +133,12 @@
   const total=root.querySelector("[data-calendar-total]");if(total)total.textContent=fmt(events.length);
   render();renderPersonal();renderPersonnelSummary();renderDepartmentSummary();
  };
+ window.addEventListener("deputy7:mission-calendar",event=>{
+  const incoming=Array.isArray(event.detail)?event.detail:[];
+  events.splice(0,events.length,...events.filter(item=>item.source!=="mission-vault"),...incoming.map(item=>({...item,source:"mission-vault"})));
+  root.querySelectorAll("[data-calendar-count]").forEach(node=>node.textContent=fmt(events.filter(item=>item.type===node.dataset.calendarCount).length));
+  const total=root.querySelector("[data-calendar-total]");if(total)total.textContent=fmt(events.length);
+  render();renderPersonal();renderPersonnelSummary();renderDepartmentSummary();
+ });
  render();renderPersonal();renderPersonnelSummary();renderDepartmentSummary();
 })();
