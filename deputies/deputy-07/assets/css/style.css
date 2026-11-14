@@ -5675,3 +5675,7 @@ body.ops-page .page-studio-block.is-note{background:#f5f3ef;border-color:#e1ddd5
 body.ops-page .page-studio-replacement-hero{margin:0 0 14px;padding:22px 24px;background:#f5f3ef;border:1px solid #e1ddd5;border-radius:11px}
 body.ops-page .page-studio-replacement-hero h1{margin:0;color:#30383d;font-size:24px}
 body.ops-page .page-studio-replacement-hero p{margin:7px 0 0;color:#59636a;font-size:12px;line-height:2}
+
+/* وقتی دسته «سایر صفحات» فعال است، برای گزینه هفتم فضای مستقل در نوار پایین ایجاد شود. */
+body.ops-page .mobile-dock.has-other-pages{grid-template-columns:repeat(7,minmax(0,1fr))}
+@media screen and (min-width:761px) and (max-width:900px){body.ops-page .mobile-dock.has-other-pages{grid-template-columns:repeat(7,minmax(0,1fr))}}
