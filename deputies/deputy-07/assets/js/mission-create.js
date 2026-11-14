@@ -130,7 +130,7 @@ function fieldOptions(el){return el&&el.tagName==="SELECT"?[...el.options].filte
 function fieldMeta(id,wrap){
  const label=wrap?.querySelector("label[for]"),control=$(id);
  const old=schema.coreFields?.[id]||{};
- return {...old,id,label:old.label||label?.textContent?.replace(/\\*/g,"").trim()||id,type:old.type||fieldControlType(control),required:old.required??!!control?.required,placeholder:old.placeholder??control?.placeholder??"",options:old.options||fieldOptions(control),active:old.active!==false};
+ return {...old,id,label:old.label||label?.textContent?.replace(/\*/g,"").trim()||id,type:old.type||fieldControlType(control),required:old.required??!!control?.required,placeholder:old.placeholder??control?.placeholder??"",options:old.options||fieldOptions(control),active:old.active!==false};
 }
 function applyCoreFields(){
  document.querySelectorAll("#missionForm .field label[for]").forEach(label=>{
@@ -141,7 +141,7 @@ function applyCoreFields(){
   el.required=required;
   if(meta.type==="textarea"&&el.tagName!=="TEXTAREA"){const next=document.createElement("textarea");next.id=id;next.name=el.name;next.value=el.value;next.rows=3;el.replaceWith(next);}
   else if(meta.type!=="textarea"&&meta.type!=="select"&&el.tagName!=="INPUT"){const next=document.createElement("input");next.id=id;next.name=el.name;next.type=meta.type;next.value=el.value;next.placeholder=meta.placeholder||"";el.replaceWith(next);}
-  const target=$(id);if(target){if(target.tagName==="INPUT")target.type=meta.type==="select"?"text":meta.type;target.placeholder=meta.placeholder||"";if(meta.type==="select"){let select=target;if(select.tagName!=="SELECT"){select=document.createElement("select");select.id=id;select.name=target.name;target.replaceWith(select);}const value=select.value;select.replaceChildren();const empty=document.createElement("option");empty.value="";empty.textContent="انتخاب کنید";select.append(empty);(meta.options||[]).forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;select.append(o);});if([...select.options].some(o=>o.value===value))select.value=value;}}
+  const target=$(id);if(target){target.required=required;if(target.tagName==="INPUT")target.type=meta.type==="select"?"text":meta.type;target.placeholder=meta.placeholder||"";if(meta.type==="select"){let select=target;if(select.tagName!=="SELECT"){select=document.createElement("select");select.id=id;select.name=target.name;target.replaceWith(select);}const value=select.value;select.replaceChildren();const empty=document.createElement("option");empty.value="";empty.textContent="انتخاب کنید";select.append(empty);(meta.options||[]).forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;select.append(o);});if(value&&!([...select.options].some(o=>o.value===value))){const legacy=document.createElement("option");legacy.value=value;legacy.textContent=value+" (مقدار قبلی)";select.append(legacy);}if([...select.options].some(o=>o.value===value))select.value=value;}}
  });
 }
 function decorateFormFields(){
@@ -202,7 +202,7 @@ $("fieldEditorSave").addEventListener("click",async()=>{
   else if(editingField.kind==="extra"){const f=schema.extraFields.find(x=>x.id===editingField.id);Object.assign(f,meta);}
   else if(editingField.kind==="dept"){const f=(schema.departments.find(d=>String(d.id)===String(editingField.departmentId))?.fields||[]).find(x=>x.id===editingField.id);Object.assign(f,meta);}
   else{schema.extraFields=schema.extraFields||[];const id="f_"+crypto.randomUUID().replace(/-/g,"").slice(0,12);schema.extraFields.push({id,section:editingField.section,...meta,full:false});}
-  const extraValues=readExtraFields();await persistFieldSchema();applyCoreFields();renderDepartmentFields();renderExtraFields(extraValues);decorateFormFields();$("fieldEditor").hidden=true;editingField=null;$("fieldEditorStatus").textContent="";$("schemaResult").textContent="تغییر ساختار فرم ذخیره شد.";
+  const extraValues=readExtraFields(),departmentValues=readCustom();await persistFieldSchema();applyCoreFields();renderDepartmentFields();writeCustom(departmentValues);renderExtraFields(extraValues);decorateFormFields();$("fieldEditor").hidden=true;editingField=null;$("fieldEditorStatus").textContent="";$("schemaResult").textContent="تغییر ساختار فرم ذخیره شد.";
  }catch(e){$("fieldEditorStatus").textContent=e.message;}
 });
 $("fieldEditorDelete").addEventListener("click",async()=>{
@@ -212,7 +212,7 @@ $("fieldEditorDelete").addEventListener("click",async()=>{
   if(editingField.kind==="core"){schema.coreFields=schema.coreFields||{};schema.coreFields[editingField.id]={...fieldMeta(editingField.id,$(editingField.id)?.closest(".field")),active:false};}
   else if(editingField.kind==="extra"){const f=schema.extraFields.find(x=>x.id===editingField.id);if(f)f.active=false;}
   else if(editingField.kind==="dept"){const f=(schema.departments.find(d=>String(d.id)===String(editingField.departmentId))?.fields||[]).find(x=>x.id===editingField.id);if(f)f.active=false;}
-  const extraValues=readExtraFields();await persistFieldSchema();applyCoreFields();renderDepartmentFields();renderExtraFields(extraValues);$("fieldEditor").hidden=true;editingField=null;$("schemaResult").textContent="فیلد از فرم پنهان شد؛ داده‌های قبلی حفظ شدند.";
+  const extraValues=readExtraFields(),departmentValues=readCustom();await persistFieldSchema();applyCoreFields();renderDepartmentFields();writeCustom(departmentValues);renderExtraFields(extraValues);$("fieldEditor").hidden=true;editingField=null;$("schemaResult").textContent="فیلد از فرم پنهان شد؛ داده‌های قبلی حفظ شدند.";
  }catch(e){$("fieldEditorStatus").textContent=e.message;}
 });
 function addMilestoneRow(item={}){
