@@ -564,3 +564,10 @@ html body.ops-page.control-page .cc-module-list button:hover{
 .ps-section-row label:first-child select{width:100%;min-height:36px;border:1px solid #dedad3;border-radius:8px;padding:8px;background:#fff;color:#302c27;font:inherit;font-size:11px}
 .ps-section-row textarea{min-height:64px;resize:vertical}
 @media(max-width:760px){.ps-section-row{grid-template-columns:1fr}.ps-section-row button{width:34px}}
+
+
+/* صفحه‌ساز: بلوک‌های محتوایی با نوع نمایش مستقل */
+.ps-section-row{grid-template-columns:minmax(130px,.55fr) minmax(160px,.8fr) minmax(240px,1.5fr) 34px}
+.ps-section-row label:first-child select{width:100%;min-height:36px;border:1px solid #dedad3;border-radius:8px;padding:8px;background:#fff;color:#302c27;font:inherit;font-size:11px}
+.ps-section-row textarea{min-height:64px;resize:vertical}
+@media(max-width:760px){.ps-section-row{grid-template-columns:1fr}.ps-section-row button{width:34px}}
