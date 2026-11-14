@@ -139,13 +139,13 @@ function renderProgressHistory(log=[]){
  $("progressHistory").innerHTML=log.length?log.slice().reverse().map(item=>'<div style="padding:8px 0;border-bottom:1px solid #e3ebf0"><b>'+safe(toFa(item.progress??0))+'٪</b> · '+safe(new Date(item.at).toLocaleString("fa-IR"))+'<div>'+safe(item.note||"بدون توضیح")+'</div><small>'+safe(item.by||"ثبت‌کننده")+'</small></div>').join(""):"هنوز گزارشی در تاریخچه پیشرفت ثبت نشده است.";
 }
 async function saveMission(asDraft=false){
- const required=["missionTitle","missionSubject","executorDepartment","plannedEnd"];
- for(const id of required){const el=$(id);if(!el.value.trim()){el.focus();throw new Error("فیلدهای عنوان، شرح موضوع، اداره مجری و مهلت اتمام الزامی هستند.");}}
+ const required=asDraft?["missionTitle"]:["missionTitle","missionSubject","executorDepartment","plannedEnd"];
+ for(const id of required){const el=$(id);if(!el.value.trim()){el.focus();throw new Error(asDraft?"برای ذخیره پیش‌نویس، عنوان مأموریت را وارد کنید.":"فیلدهای عنوان، شرح موضوع، اداره مجری و مهلت اتمام الزامی هستند.");}}
  if(!asDraft&&!$("missionForm").reportValidity())throw new Error("لطفاً فیلدهای الزامی را تکمیل کنید.");
  const data=collect();if(asDraft&&data.status==="draft")data.status="draft";else if(data.status==="draft")data.status="registered";
  data.executionStatus=data.status;data.workflow.stage=data.status;
  const now=new Date().toISOString();
- if(!currentMission){data.missionCode=makeCode();data.createdAt=now;data.progressLog=[{id:crypto.randomUUID(),at:now,progress:data.progress,note:"ثبت اولیه مأموریت",by:"ثبت‌کننده"}];}
+ if(!currentMission){data.missionCode=makeCode();data.createdAt=now;data.progressLog=[{id:crypto.randomUUID(),at:now,progress:data.progress,note:"ثبت اولیه مأموریت",by:"ثبت‌کننده"}];if(data.calendarEvent){data.calendarEvent.id="mission-event:"+data.missionCode;data.calendarEvent.missionCode=data.missionCode;}}
  else{data.missionCode=currentMission.missionCode;data.createdAt=currentMission.createdAt;data.progressLog=currentMission.progressLog||[];data.updatedAt=now;}
  const id=await MissionStore.save(data,currentMission?.id);
  currentMission={...data,id};
