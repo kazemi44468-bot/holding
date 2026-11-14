@@ -2,7 +2,7 @@ import { MissionStore, MissionVault } from "./mission-store.js";
 const $=id=>document.getElementById(id);
 const fa=n=>Number(n||0).toLocaleString("fa-IR");
 const names={"1":"اداره ۱ · اداری و پشتیبانی","2":"اداره ۲ · تحقیق و توسعه","3":"اداره ۳ · پارکبان و معبربانان","4":"اداره ۴ · تأسیسات فنی و نگهداری","6":"اداره ۶ · فاوا و خدمات فنی","7":"اداره ۷ · جمع‌آوری و بازیافت پسماند","8":"اداره ۸ · بازرسی و تحقیقات محلی","HQ":"ستاد معاونت ۷"};
-const labels={draft:"پیش‌نویس",registered:"ثبت‌شده",referred:"ارجاع‌شده","in-progress":"در حال اجرا",blocked:"دارای مانع",review:"در انتظار بررسی",completed:"تکمیل‌شده",closed:"مختومه",cancelled:"لغوشده"};
+const labels={draft:"پیش‌نویس",registered:"ثبت‌شده",referred:"ارجاع‌شده","in-progress":"در حال اجرا",blocked:"دارای مانع",review:"در انتظار بررسی",revision:"نیازمند اصلاح",completed:"تکمیل‌شده",closed:"مختومه",cancelled:"لغوشده"};
 let missions=[];
 function late(m){return m.plannedEnd&&m.plannedEnd<new Date().toISOString().slice(0,10)&&!["completed","closed","cancelled"].includes(m.status);}
 function render(){
