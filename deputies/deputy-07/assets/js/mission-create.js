@@ -17,7 +17,7 @@ const departmentNames = {
  "HQ":"ستاد معاونت ۷"
 };
 const baseSchema = {
- schemaId:"mission-form", version:1, options:{
+ schemaId:"mission-form", version:1, coreFields:{}, extraFields:[], options:{
   communicationType:["نامه رسمی","درخواست شفاهی","مکاتبه داخلی","صورتجلسه","دستور مقام مافوق","گزارش یا اعلام نیاز"],
   requestChannel:["دبیرخانه","سامانه مکاتبات","ارجاع مستقیم","جلسه","تماس یا اعلام شفاهی","سایر"],
   requesterType:["ریاست معاونت","معاونت","مرکز","اداره","مدیریت","واحد یا شخص","سازمان بیرونی"],
@@ -103,7 +103,7 @@ const safe = value => String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":
 function makeCode(){const d=new Date(),stamp=[d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("");return "M7-"+stamp+"-"+crypto.randomUUID().slice(0,8).toUpperCase();}
 function statusLabel(status){return ({draft:"پیش‌نویس",registered:"ثبت‌شده",referred:"ارجاع‌شده","in-progress":"در حال اجرا",blocked:"دارای مانع",review:"در انتظار بررسی",revision:"نیازمند اصلاح",completed:"تکمیل‌شده",closed:"مختومه",cancelled:"لغوشده"})[status]||"ثبت‌شده";}
 function defaultConfig(){return structuredClone(baseSchema);}
-async function loadSchema(){const saved=await MissionStore.config();schema=saved?{...defaultConfig(),...saved,options:{...baseSchema.options,...(saved.options||{})}}:defaultConfig();$("schemaJson").value=JSON.stringify(schema,null,2);applySchemaOptions();renderDepartmentFields();}
+async function loadSchema(){const saved=await MissionStore.config();schema=saved?{...defaultConfig(),...saved,coreFields:{...(saved.coreFields||{})},extraFields:Array.isArray(saved.extraFields)?saved.extraFields:[],options:{...baseSchema.options,...(saved.options||{})}}:defaultConfig();$("schemaJson").value=JSON.stringify(schema,null,2);applySchemaOptions();applyCoreFields();renderDepartmentFields();renderExtraFields();decorateFormFields();}
 function applySchemaOptions(){for(const [id,values] of Object.entries(schema?.options||{})){const select=$(id);if(!select||select.tagName!=="SELECT"||!Array.isArray(values))continue;const current=select.value;const keepBlank=id==="communicationType";select.replaceChildren();if(keepBlank){const empty=document.createElement("option");empty.value="";empty.textContent="انتخاب کنید";select.append(empty);}for(const item of values){const option=document.createElement("option");const parts=String(item).split("|");option.value=parts.length>1?parts[0]:item;option.textContent=parts.length>1?parts.slice(1).join("|"):item;select.append(option);}if([...select.options].some(o=>o.value===current))select.value=current;}const deptSelect=$("executorDepartment"),selected=deptSelect.value;deptSelect.replaceChildren();const blank=document.createElement("option");blank.value="";blank.textContent="انتخاب اداره";deptSelect.append(blank);for(const d of schema?.departments||[]){departmentNames[String(d.id)]=d.name;const option=document.createElement("option");option.value=String(d.id);option.textContent=d.name;deptSelect.append(option);}if([...deptSelect.options].some(o=>o.value===selected))deptSelect.value=selected;}
 function renderDepartmentFields(){
  const host=$("departmentFields"),dept=$("executorDepartment").value;
@@ -123,6 +123,94 @@ function renderDepartmentFields(){
   wrap.append(label,input);host.append(wrap);
  }
 }
+
+function fieldControlType(el){if(!el)return "text";if(el.tagName==="TEXTAREA")return "textarea";if(el.tagName==="SELECT")return "select";return ["number","date"].includes(el.type)?el.type:"text";}
+function fieldOptions(el){return el&&el.tagName==="SELECT"?[...el.options].filter(o=>o.value!=="").map(o=>o.textContent):[];}
+function fieldMeta(id,wrap){
+ const label=wrap?.querySelector("label[for]"),control=$(id);
+ const old=schema.coreFields?.[id]||{};
+ return {...old,id,label:old.label||label?.textContent?.replace(/\\*/g,"").trim()||id,type:old.type||fieldControlType(control),required:old.required??!!control?.required,placeholder:old.placeholder??control?.placeholder??"",options:old.options||fieldOptions(control),active:old.active!==false};
+}
+function applyCoreFields(){
+ document.querySelectorAll("#missionForm .field label[for]").forEach(label=>{
+  const id=label.htmlFor,wrap=label.closest(".field"),el=$(id);if(!wrap||!el||el.type==="file")return;
+  const meta=fieldMeta(id,wrap);wrap.hidden=meta.active===false;
+  const required=!!meta.required;
+  label.textContent=meta.label+(required?" *":"");
+  el.required=required;
+  if(meta.type==="textarea"&&el.tagName!=="TEXTAREA"){const next=document.createElement("textarea");next.id=id;next.name=el.name;next.value=el.value;next.rows=3;el.replaceWith(next);}
+  else if(meta.type!=="textarea"&&meta.type!=="select"&&el.tagName!=="INPUT"){const next=document.createElement("input");next.id=id;next.name=el.name;next.type=meta.type;next.value=el.value;next.placeholder=meta.placeholder||"";el.replaceWith(next);}
+  const target=$(id);if(target){if(target.tagName==="INPUT")target.type=meta.type==="select"?"text":meta.type;target.placeholder=meta.placeholder||"";if(meta.type==="select"){let select=target;if(select.tagName!=="SELECT"){select=document.createElement("select");select.id=id;select.name=target.name;target.replaceWith(select);}const value=select.value;select.replaceChildren();const empty=document.createElement("option");empty.value="";empty.textContent="انتخاب کنید";select.append(empty);(meta.options||[]).forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;select.append(o);});if([...select.options].some(o=>o.value===value))select.value=value;}}
+ });
+}
+function decorateFormFields(){
+ document.querySelectorAll("#missionForm .field").forEach(wrap=>{
+  const label=wrap.querySelector(":scope > label[for]");if(!label||wrap.querySelector(":scope > .field-tools"))return;
+  const id=label.htmlFor;if(!$(id)||$(id).type==="file")return;
+  const tools=document.createElement("div");tools.className="field-tools";
+  const edit=document.createElement("button");edit.type="button";edit.className="field-edit-btn";edit.textContent="ویرایش فیلد";edit.addEventListener("click",()=>openFieldEditor({kind:"core",id,wrap}));
+  tools.append(edit);label.after(tools);
+ });
+ document.querySelectorAll("#missionForm .mission-section").forEach(section=>{
+  const head=section.querySelector(".section-head");if(!head||head.querySelector(".section-add-btn"))return;
+  const btn=document.createElement("button");btn.type="button";btn.className="section-add-btn";btn.textContent="＋ افزودن فیلد";
+  btn.addEventListener("click",()=>openFieldEditor({kind:"new",section:section.dataset.section}));head.append(btn);
+ });
+}
+function renderExtraFields(values){
+ document.querySelectorAll(".extra-field").forEach(el=>el.remove());
+ const savedValues=values||currentMission?.extraFields||{};
+ (schema.extraFields||[]).filter(f=>f.active!==false).forEach(field=>{
+  const section=document.querySelector('.mission-section[data-section="'+CSS.escape(field.section||"general")+'"] .form-grid');
+  if(!section)return;
+  const wrap=document.createElement("div");wrap.className="field extra-field"+(field.full?" full":"");
+  const label=document.createElement("label");label.htmlFor="extra_"+field.id;label.textContent=field.label+(field.required?" *":"");
+  let el;if(field.type==="textarea"){el=document.createElement("textarea");el.rows=3;}else if(field.type==="select"){el=document.createElement("select");const empty=document.createElement("option");empty.value="";empty.textContent="انتخاب کنید";el.append(empty);(field.options||[]).forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;el.append(o);});}else{el=document.createElement("input");el.type=field.type||"text";}
+  el.id="extra_"+field.id;el.dataset.extraFieldId=field.id;el.required=!!field.required;el.placeholder=field.placeholder||"";el.value=savedValues[field.id]??"";
+  wrap.append(label,el);
+  const tools=document.createElement("div");tools.className="field-tools";const edit=document.createElement("button");edit.type="button";edit.className="field-edit-btn";edit.textContent="ویرایش فیلد";edit.addEventListener("click",()=>openFieldEditor({kind:"extra",id:field.id,section:field.section}));tools.append(edit);wrap.append(tools);section.append(wrap);
+ });
+}
+function readExtraFields(){const out={...(currentMission?.extraFields||{})};document.querySelectorAll("[data-extra-field-id]").forEach(el=>out[el.dataset.extraFieldId]=el.type==="number"?(el.value===""?null:Number(el.value)):el.value.trim());return out;}
+let editingField=null;
+function openFieldEditor(target){
+ editingField=target;let meta;
+ if(target.kind==="core"){const wrap=target.wrap||$(target.id)?.closest(".field");meta=fieldMeta(target.id,wrap);}
+ else if(target.kind==="extra"){meta=(schema.extraFields||[]).find(f=>f.id===target.id)||{};}
+ else meta={label:"",type:"text",required:false,placeholder:"",options:[],section:target.section};
+ $("fieldEditorHeading").textContent=target.kind==="new"?"افزودن فیلد جدید":"ویرایش فیلد";
+ $("fieldEditorLabel").value=meta.label||"";$("fieldEditorType").value=meta.type||"text";$("fieldEditorPlaceholder").value=meta.placeholder||"";
+ $("fieldEditorOptions").value=(meta.options||[]).join("\n");$("fieldEditorRequired").checked=!!meta.required;
+ $("fieldEditorOptionsWrap").hidden=(meta.type||"text")!=="select";$("fieldEditorDelete").hidden=target.kind==="new";
+ $("fieldEditorStatus").textContent="";$("fieldEditor").hidden=false;$("fieldEditor").scrollIntoView({behavior:"smooth",block:"center"});
+}
+$("fieldEditorType").addEventListener("change",()=>{$("fieldEditorOptionsWrap").hidden=$("fieldEditorType").value!=="select";});
+$("fieldEditorCancel").addEventListener("click",()=>{$("fieldEditor").hidden=true;editingField=null;});
+async function persistFieldSchema(){
+ if(!window.Deputy7Access?.canCurrent("manageSchema",{kind:"configuration"}))throw new Error("برای تغییر ساختار فرم، دسترسی مدیریت ساختار لازم است.");
+ schema=await MissionStore.saveConfig(schema);$("schemaJson").value=JSON.stringify(schema,null,2);
+}
+$("fieldEditorSave").addEventListener("click",async()=>{
+ try{
+  if(!editingField)throw new Error("فیلدی انتخاب نشده است.");
+  const label=$("fieldEditorLabel").value.trim(),type=$("fieldEditorType").value,required=$("fieldEditorRequired").checked,placeholder=$("fieldEditorPlaceholder").value.trim(),options=$("fieldEditorOptions").value.split("\n").map(x=>x.trim()).filter(Boolean);
+  if(!label)throw new Error("عنوان فیلد را وارد کنید.");if(type==="select"&&!options.length)throw new Error("برای فهرست انتخابی حداقل یک گزینه وارد کنید.");
+  const meta={label,type,required,placeholder,options,active:true};
+  if(editingField.kind==="core"){schema.coreFields=schema.coreFields||{};schema.coreFields[editingField.id]={...fieldMeta(editingField.id,editingField.wrap),...meta};}
+  else if(editingField.kind==="extra"){const f=schema.extraFields.find(x=>x.id===editingField.id);Object.assign(f,meta);}
+  else{schema.extraFields=schema.extraFields||[];const id="f_"+crypto.randomUUID().replace(/-/g,"").slice(0,12);schema.extraFields.push({id,section:editingField.section,...meta,full:false});}
+  await persistFieldSchema();applyCoreFields();renderExtraFields();decorateFormFields();$("fieldEditor").hidden=true;editingField=null;$("fieldEditorStatus").textContent="";$("schemaResult").textContent="تغییر ساختار فرم ذخیره شد.";
+ }catch(e){$("fieldEditorStatus").textContent=e.message;}
+});
+$("fieldEditorDelete").addEventListener("click",async()=>{
+ try{
+  if(!editingField||editingField.kind==="new")return;
+  if(!confirm("این فیلد از فرم‌های جدید و ویرایش حذف شود؟ مقدارهای ذخیره‌شده قبلی پاک نمی‌شوند."))return;
+  if(editingField.kind==="core"){schema.coreFields=schema.coreFields||{};schema.coreFields[editingField.id]={...fieldMeta(editingField.id,$(editingField.id)?.closest(".field")),active:false};}
+  else{const f=schema.extraFields.find(x=>x.id===editingField.id);if(f)f.active=false;}
+  await persistFieldSchema();applyCoreFields();renderExtraFields();$("fieldEditor").hidden=true;editingField=null;$("schemaResult").textContent="فیلد از فرم پنهان شد؛ داده‌های قبلی حفظ شدند.";
+ }catch(e){$("fieldEditorStatus").textContent=e.message;}
+});
 function addMilestoneRow(item={}){
  const host=$("milestoneRows"),row=document.createElement("div");row.className="milestone-row";
  const make=(type,placeholder,value)=>{const el=document.createElement("input");el.type=type;el.placeholder=placeholder;if(value!==undefined&&value!==null)el.value=value;if(type==="number"){el.min="0";el.max="100";}return el;};
@@ -146,7 +234,7 @@ function writeCustom(values){Object.entries(values||{}).forEach(([id,value])=>{c
 function goStep(index){activeStep=Math.max(0,Math.min(sections.length-1,index));sections.forEach((s,i)=>s.classList.toggle("active",i===activeStep));tabs.forEach((t,i)=>t.setAttribute("aria-selected",String(i===activeStep)));$("prevStep").disabled=activeStep===0;$("nextStep").classList.toggle("hidden",activeStep===sections.length-1);$("saveMission").textContent=editingId?"ذخیره تغییرات مأموریت":"ثبت و ذخیره مأموریت";tabs[activeStep].scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"});}
 function updateProgress(){const value=Math.max(0,Math.min(100,Number($("progress").value||0)));$("progressBar").style.width=value+"%";$("progressText").textContent="پیشرفت ثبت‌شده: "+toFa(value)+"٪ · وضعیت: "+statusLabel($("executionStatus").value);}
 function collect(){
- const data={};fieldIds.forEach(id=>data[id]=readField(id));
+ const data={...(currentMission||{})};fieldIds.forEach(id=>{if($(id))data[id]=readField(id);});
  data.hasPrevious=selectedRadio("hasPrevious")==="yes";
  data.calendarEnabled=selectedRadio("calendarEnabled")!=="no";
  data.departmentFields=readCustom();
@@ -161,6 +249,7 @@ function collect(){
  }:null;
  data.milestones=readMilestones();
  data.departmentFields={...(currentMission?.departmentFields||{}),...readCustom()};
+ data.extraFields={...(currentMission?.extraFields||{}),...readExtraFields()};
  data.schemaSnapshot=currentMission?.schemaSnapshot||structuredClone(schema||defaultConfig());
  data.schemaVersion=Number(schema?.version||1);
  data.schemaHistory=currentMission?.schemaHistory||[{version:data.schemaVersion,at:new Date().toISOString(),snapshot:structuredClone(schema||defaultConfig())}];
@@ -172,7 +261,7 @@ function fill(data){
  setRadio("hasPrevious",data.hasPrevious?"yes":"no");
  setRadio("calendarEnabled",data.calendarEnabled===false?"no":"yes");
  $("previousFields").classList.toggle("hidden",!data.hasPrevious);
- renderDepartmentFields();writeCustom(data.departmentFields);renderMilestones(data.milestones||[]);
+ renderDepartmentFields();writeCustom(data.departmentFields);renderMilestones(data.milestones||[]);renderExtraFields(data.extraFields);
 }
 function renderWorkflowHistory(log=[]){
  const host=$("workflowHistory");if(!host)return;
