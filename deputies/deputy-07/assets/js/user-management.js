@@ -22,7 +22,7 @@ const $=id=>document.getElementById(id),uid=()=>crypto.randomUUID?crypto.randomU
 const clone=x=>JSON.parse(JSON.stringify(x));
 function load(){try{const platform=JSON.parse(localStorage.getItem("deputy7.platform.config.v1"));const x=JSON.parse(localStorage.getItem(KEY));if(x&&x.version===1){departments=platform?.departments?.length?platform.departments:(Array.isArray(x.departments)&&x.departments.length?x.departments:departments);return {...x,departments,roles:[...defaultRoles.map(d=>({...d,...(x.roles||[]).find(r=>r.id===d.id)})),...(x.roles||[]).filter(r=>!defaultRoles.some(d=>d.id===r.id))],theme:x.theme||{preset:"sky",density:"comfortable",corners:"soft"}};}}catch{}return {version:1,users:[],groups:[],roles:clone(defaultRoles),departments:clone(defaultDepartments),theme:{preset:"sky",density:"comfortable",corners:"soft"},audit:[]};}
 let state=load(),activeTab="users",visibleUsers=[];
-const save=()=>{state.departments=departments;localStorage.setItem(KEY,JSON.stringify(state));try{const p=JSON.parse(localStorage.getItem("deputy7.platform.config.v1"))||{};p.version=1;p.departments=departments;localStorage.setItem("deputy7.platform.config.v1",JSON.stringify(p));}catch{}render();};
+const save=()=>{state.departments=departments;localStorage.setItem(KEY,JSON.stringify(state));try{const p=JSON.parse(localStorage.getItem("deputy7.platform.config.v1"))||{};p.version=1;p.departments=departments;localStorage.setItem("deputy7.platform.config.v1",JSON.stringify(p));}catch{}render();window.dispatchEvent(new CustomEvent("deputy7:identity-changed"));};
 const fmt=n=>Number(n||0).toLocaleString("fa-IR");
 const deptName=id=>departments.find(d=>d.id===String(id))?.name||"—";
 const roleName=id=>state.roles.find(r=>r.id===id)?.name||"نقش نامشخص";
