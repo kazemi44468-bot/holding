@@ -5624,3 +5624,30 @@ html body.ops-page .ops-header.is-compact .ops-brand img.ops-logo{
 
 /* مرکز دسترسی شش‌گانه داشبورد؛ چیدمان متوازن در دسکتاپ */
 @media(min-width:901px){body.ops-page .home-quick-access{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+
+
+/* منوی پایین در تبلت: هماهنگ با نقطه شکست پنهان‌شدن منوی سربرگ */
+@media screen and (min-width:761px) and (max-width:900px){
+ body.ops-page{padding-bottom:calc(82px + env(safe-area-inset-bottom))!important}
+ body.ops-page .mobile-dock{
+  display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr));position:fixed;z-index:1000;
+  right:0;left:0;bottom:0;min-height:67px;padding:7px 10px max(7px,env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.98);border-top:1px solid #d4dfe5;
+  box-shadow:0 -5px 22px rgba(34,46,56,.12);backdrop-filter:blur(12px)
+ }
+ body.ops-page .mobile-dock>a,body.ops-page .mobile-dock>button{
+  min-width:0;border:0;background:transparent;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:3px;color:#354c60;font-size:10px;font-weight:600;line-height:1.3;
+  padding:3px 2px;cursor:pointer;border-radius:8px
+ }
+ body.ops-page .mobile-dock .dock-icon{font-size:19px;line-height:1.2;color:#354c60}
+ body.ops-page .mobile-dock>a.active,body.ops-page .mobile-dock>button.selected,body.ops-page .mobile-dock>button.has-current{background:#edf1f3;color:#293744}
+ body.ops-page .mobile-dock-panel{
+  position:fixed;right:14px;left:14px;bottom:76px;z-index:1001;max-height:min(58vh,440px);overflow:auto;
+  padding:13px;background:#fff;border:1px solid #d6dfe5;border-radius:12px;box-shadow:0 12px 35px rgba(34,46,56,.18)
+ }
+ body.ops-page .mobile-dock-panel[hidden]{display:none}
+ body.ops-page .mobile-dock-panel-title{font-size:12px;font-weight:800;color:#293744;padding:2px 3px 10px;border-bottom:1px solid #e4e9ed;margin-bottom:8px}
+ body.ops-page .mobile-dock-panel-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ body.ops-page .mobile-dock-panel-links a{display:flex;align-items:center;min-height:42px;padding:8px 10px;border:1px solid #e0e6eb;border-radius:8px;background:#f7f9fa;color:#293744;font-size:10px;line-height:1.7}
+}
