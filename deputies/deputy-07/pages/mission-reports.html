@@ -8,7 +8,7 @@
 <link rel="manifest" href="../offline.webmanifest">
 <link rel="preload" href="../assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/css/style.css?v=mission-bank-20261114-2">
+<link rel="stylesheet" href="../assets/css/style.css?v=mission-suite-20261114-2">
 </head>
 <body class="ops-page">
 <header class="ops-header"><div class="ops-header-inner">
@@ -16,9 +16,9 @@
 <nav class="ops-nav" aria-label="منوی اصلی"></nav><div class="ops-clock"><span>زمان سامانه</span><b id="clock">—</b><small id="date">—</small></div>
 </div></header>
 <main class="ops-main">
-<section class="ops-intro"><div><span class="eyebrow">ماموریت‌ها · گزارش و رصد</span><h1>گزارش مأموریت‌ها</h1><p>نمای گزارش‌گیری و پایش وضعیت مأموریت‌های معاونت ۷</p></div></section>
+<section class="ops-intro"><div><span class="eyebrow">مأموریت‌ها / تحلیل و پایش</span><h1>گزارش مأموریت‌ها</h1><p>نمای گزارش‌گیری و پایش وضعیت مأموریت‌های معاونت ۷</p></div></section>
 <section class="dept-panel mission-report-panel">
-<div class="mission-auth"><div class="field"><label for="reportPass">رمز قبلی (فقط برای انتقال یک‌باره مخزن قدیمی)</label><input id="reportPass" type="password" placeholder="در صورت وجود، رمز قبلی را وارد کنید"></div><button id="reportUnlock" class="primary">بارگذاری گزارش‌ها</button><span id="reportState" class="profile-hint">گزارش‌ها فقط از داده‌های واقعی ثبت‌شده در بانک مأموریت‌ها محاسبه می‌شوند.</span></div>
+<div class="mission-auth"><div class="field"><label for="reportPass">رمز قبلی (فقط برای انتقال یک‌باره مخزن قدیمی)</label><input id="reportPass" type="password" placeholder="در صورت وجود، رمز قبلی را وارد کنید"></div><button id="reportUnlock" class="primary">بارگذاری گزارش‌ها</button><span id="reportState" class="profile-hint">گزارش‌ها بر پایه اطلاعات ثبت‌شده در مخزن مأموریت‌ها محاسبه می‌شوند.</span></div>
 <div id="reportContent" hidden>
 <div class="report-filter"><label>بازه گزارش <select id="reportPeriod"><option value="all">کل دوره</option><option value="year">سال جاری</option><option value="quarter">سه‌ماهه اخیر</option><option value="month">ماه اخیر</option></select></label><label>اداره <select id="reportDept"><option value="">همه ادارات</option><option value="1">اداره ۱</option><option value="2">اداره ۲</option><option value="3">اداره ۳</option><option value="4">اداره ۴</option><option value="6">اداره ۶</option><option value="7">اداره ۷</option><option value="8">اداره ۸</option><option value="HQ">ستاد معاونت ۷</option></select></label><button id="reportRefresh" class="quiet">بروزرسانی گزارش</button></div>
 <div class="mission-kpis"><article><small>تعداد مأموریت‌ها</small><b id="rTotal">۰</b></article><article><small>تکمیل‌شده</small><b id="rDone">۰</b></article><article><small>در حال اجرا</small><b id="rActive">۰</b></article><article><small>معوق</small><b id="rLate">۰</b></article><article><small>میانگین پیشرفت</small><b id="rProgress">۰٪</b></article><article><small>میانگین تحقق هدف</small><b id="rGoal">—</b></article></div>
@@ -28,6 +28,47 @@
 </div></section>
 <style>
 .mission-auth{display:flex;align-items:end;gap:12px;flex-wrap:wrap}.mission-auth .field{min-width:230px;flex:1}.report-filter{display:flex;gap:14px;align-items:end;flex-wrap:wrap;margin:18px 0}.report-filter label{display:grid;gap:5px;font-size:12px;color:#526c80}.report-filter select{min-width:140px;padding:8px;border:1px solid #d9e3eb;border-radius:8px;background:white;font:inherit}.mission-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:15px 0}.mission-kpis article,.report-box{background:#fff;border:1px solid #dfe7ed;border-radius:12px;padding:14px}.mission-kpis small,.mission-kpis b{display:block}.mission-kpis small{font-size:11px;color:#71869a}.mission-kpis b{font-size:21px;color:#285779;margin-top:5px}.report-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:16px 0}.report-box h2{font-size:14px;color:#294d6b;margin:0 0 14px}.report-bars{display:grid;gap:10px}.report-bar{display:grid;grid-template-columns:minmax(100px,1fr) minmax(90px,2fr) 40px;gap:8px;align-items:center;font-size:11px}.report-track{height:9px;background:#edf2f5;border-radius:8px;overflow:hidden}.report-track i{display:block;height:100%;background:#6b9eb8;border-radius:8px}.report-summary{font-size:12px;line-height:2.2;color:#506a80}.report-summary b{color:#285779}@media(max-width:700px){.report-grid{grid-template-columns:1fr}}
+
+body.ops-page:has(.mission-report-panel){background:#f5f7f8;color:#344650}
+body.ops-page:has(.mission-report-panel) .ops-intro{padding:18px 21px;margin-bottom:13px;border:1px solid #e1e8eb;border-radius:13px;background:linear-gradient(110deg,#fff,#f3f8f8)}
+body.ops-page:has(.mission-report-panel) .ops-intro h1{font-size:23px;color:#344650;margin:4px 0}
+body.ops-page:has(.mission-report-panel) .ops-intro p{font-size:12px;color:#71818a}
+body.ops-page:has(.mission-report-panel) .mission-report-panel{padding:18px;border:1px solid #dfe7e9;border-radius:12px;background:#fff;box-shadow:0 2px 10px rgba(36,61,72,.035)}
+body.ops-page:has(.mission-report-panel) .mission-auth{padding:12px 14px;border:1px solid #e3eaec;border-radius:9px;background:#f8fafb}
+body.ops-page:has(.mission-report-panel) .mission-auth .field{margin:0}
+body.ops-page:has(.mission-report-panel) .mission-auth label{font-size:11px;color:#53676f}
+body.ops-page:has(.mission-report-panel) .mission-auth input{border:1px solid #dce5e8;border-radius:8px;padding:9px 11px;font:inherit;font-size:12px}
+body.ops-page:has(.mission-report-panel) .report-filter{display:flex;align-items:end;gap:9px;padding:11px;border:1px solid #e5ecee;border-radius:10px;background:#f8fafb;margin:13px 0}
+body.ops-page:has(.mission-report-panel) .report-filter label{font-size:10px;color:#64777e}
+body.ops-page:has(.mission-report-panel) .report-filter select{min-height:37px;border:1px solid #dce5e8;border-radius:8px;color:#40545d;font-size:11px;padding:7px 10px}
+body.ops-page:has(.mission-report-panel) .report-filter button{border:1px solid #dfe7e9;background:#f1f6f7;color:#4f6870;border-radius:8px;padding:8px 11px;font-size:11px}
+body.ops-page:has(.mission-report-panel) .mission-kpis{grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:12px 0}
+body.ops-page:has(.mission-report-panel) .mission-kpis article{padding:11px 12px;border:1px solid #e1e9eb;border-radius:10px;background:#fbfcfc;box-shadow:none}
+body.ops-page:has(.mission-report-panel) .mission-kpis small{font-size:9px;color:#7b8a90}
+body.ops-page:has(.mission-report-panel) .mission-kpis b{font-size:19px;color:#496f78;margin-top:4px}
+body.ops-page:has(.mission-report-panel) .report-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:13px 0}
+body.ops-page:has(.mission-report-panel) .report-box{min-width:0;padding:14px;border:1px solid #e1e9eb;border-radius:10px;background:#fff;box-shadow:none}
+body.ops-page:has(.mission-report-panel) .report-box h2{font-size:12px;color:#435f68;margin:0 0 12px;padding-bottom:9px;border-bottom:1px solid #edf1f2}
+body.ops-page:has(.mission-report-panel) .report-bars{gap:9px}
+body.ops-page:has(.mission-report-panel) .report-bar{grid-template-columns:minmax(90px,1fr) minmax(90px,2fr) 34px;gap:7px;color:#5d7077;font-size:10px}
+body.ops-page:has(.mission-report-panel) .report-track{height:8px;background:#edf2f3;border-radius:20px}
+body.ops-page:has(.mission-report-panel) .report-track i{background:#78a7af;border-radius:20px}
+body.ops-page:has(.mission-report-panel) .report-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;font-size:10px;line-height:1.8}
+body.ops-page:has(.mission-report-panel) .report-summary>div{padding:8px 9px;border:1px solid #edf1f2;border-radius:8px;background:#fafcfc;color:#65777e}
+body.ops-page:has(.mission-report-panel) .report-summary b{color:#456d77}
+body.ops-page:has(.mission-report-panel) .report-column-chart{display:grid;grid-template-columns:repeat(auto-fit,minmax(66px,1fr));align-items:end;gap:8px;min-height:190px;padding:8px 2px 0}
+body.ops-page:has(.mission-report-panel) .report-column{display:flex;flex-direction:column;align-items:center;justify-content:end;gap:5px;min-width:0;height:180px}
+body.ops-page:has(.mission-report-panel) .report-column b{font-size:10px;color:#496b73}
+body.ops-page:has(.mission-report-panel) .report-column-track{display:flex;align-items:end;justify-content:center;width:100%;height:125px;border-bottom:1px solid #dfe7e9;background:linear-gradient(to top,#f8fafb 1px,transparent 1px);background-size:100% 25%}
+body.ops-page:has(.mission-report-panel) .report-column-track i{display:block;width:min(27px,65%);min-height:3px;border-radius:6px 6px 0 0;background:#79a9b1}
+body.ops-page:has(.mission-report-panel) .report-column span{width:100%;min-height:30px;text-align:center;font-size:9px;line-height:1.5;color:#697b81;overflow-wrap:anywhere}
+body.ops-page:has(.mission-report-panel) .table-scroll{border:1px solid #e3eaec;border-radius:10px;margin-top:13px}
+body.ops-page:has(.mission-report-panel) table thead th{background:#f1f6f7;color:#52666e;font-size:10px;padding:10px}
+body.ops-page:has(.mission-report-panel) table tbody td{font-size:10px;padding:10px;border-bottom:1px solid #edf1f2}
+@media(max-width:950px){body.ops-page:has(.mission-report-panel) .mission-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){body.ops-page:has(.mission-report-panel) .report-grid{grid-template-columns:1fr}body.ops-page:has(.mission-report-panel) .mission-report-panel{padding:12px}}
+@media(max-width:480px){body.ops-page:has(.mission-report-panel) .mission-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}body.ops-page:has(.mission-report-panel) .report-summary{grid-template-columns:1fr}}
+
 </style>
 <footer class="ops-footer"></footer>
 </main>
