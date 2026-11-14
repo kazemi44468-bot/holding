@@ -4,7 +4,7 @@ const fa=n=>Number(n||0).toLocaleString("fa-IR");
 const names={"1":"اداره ۱ · اداری و پشتیبانی","2":"اداره ۲ · تحقیق و توسعه","3":"اداره ۳ · پارکبان و معبربانان","4":"اداره ۴ · تأسیسات فنی و نگهداری","6":"اداره ۶ · فاوا و خدمات فنی","7":"اداره ۷ · جمع‌آوری و بازیافت پسماند","8":"اداره ۸ · بازرسی و تحقیقات محلی","HQ":"ستاد معاونت ۷"};
 const labels={draft:"پیش‌نویس",registered:"ثبت‌شده",referred:"ارجاع‌شده","in-progress":"در حال اجرا",blocked:"دارای مانع",review:"در انتظار بررسی",revision:"نیازمند اصلاح",completed:"تکمیل‌شده",closed:"مختومه",cancelled:"لغوشده"};
 let missions=[];
-function late(m){return m.plannedEnd&&m.plannedEnd<new Date().toISOString().slice(0,10)&&!["completed","closed","cancelled"].includes(m.status);}
+function late(m){const d=new Date(),today=[d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-");return m.plannedEnd&&m.plannedEnd<today&&!["completed","closed","cancelled"].includes(m.status);}
 function render(){
  const q=$("bankSearch").value.trim().toLocaleLowerCase("fa"),dept=$("bankDept").value,status=$("bankStatus").value,priority=$("bankPriority").value;
  const list=missions.filter(m=>(!q||[m.missionCode,m.missionTitle,m.missionSubject,m.directOwner,m.assignedExpert,names[m.executorDepartment]].join(" ").toLocaleLowerCase("fa").includes(q))&&(!dept||String(m.executorDepartment)===dept)&&(!status||m.status===status)&&(!priority||m.priority===priority));
