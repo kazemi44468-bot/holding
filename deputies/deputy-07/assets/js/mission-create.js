@@ -156,7 +156,7 @@ async function saveMission(asDraft=false){
  const attached=[];
  for(const file of files){attached.push(await MissionVault.addAttachment(file,"mission",id));}
  if(attached.length){currentMission.attachments=[...(currentMission.attachments||[]),...attached];await MissionStore.save(currentMission,id);}
- $("missionFiles").value="";
+ $("missionFiles").value="";await renderAttachments(id);
  $("missionMeta").textContent="کد مأموریت: "+currentMission.missionCode+" · آخرین ذخیره: "+new Date().toLocaleString("fa-IR");
  $("statusLabel").textContent=statusLabel(currentMission.status);
  $("saveResult").textContent="مأموریت با موفقیت در بانک مرکزی معاونت ۷ ذخیره شد. "+(attached.length?toFa(attached.length)+" پیوست نیز رمزگذاری شد.":"");
@@ -165,10 +165,22 @@ async function saveMission(asDraft=false){
  history.replaceState(null,"",location.pathname+"?id="+encodeURIComponent(id));
  return id;
 }
+async function renderAttachments(recordId){
+ const host=$("missionAttachmentList");if(!host)return;
+ const files=(await MissionVault.listAttachments()).filter(file=>file.meta?.entity==="mission"&&String(file.meta?.recordId||"")===String(recordId));
+ host.replaceChildren();
+ if(!files.length){host.textContent="برای این مأموریت پیوستی ثبت نشده است.";return;}
+ for(const file of files){const row=document.createElement("div");row.style.cssText="display:flex;justify-content:space-between;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid #e2eaf0";
+ const name=document.createElement("span");name.textContent=file.meta.name+" · "+toFa(Math.round((file.meta.size||0)/1024))+" کیلوبایت";
+ const button=document.createElement("button");button.type="button";button.textContent="دریافت فایل";button.disabled=!!file.corrupt;
+ button.addEventListener("click",async()=>{try{const item=await MissionVault.downloadAttachment(file.attachmentId),url=URL.createObjectURL(item.blob),a=document.createElement("a");a.href=url;a.download=item.meta.name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);}catch(e){$("saveResult").textContent=e.message;}});
+ row.append(name,button);host.append(row);
+ }
+}
 async function loadMission(id){
  const mission=await MissionStore.get(id);if(!mission)throw new Error("مأموریت موردنظر در بانک پیدا نشد.");
  currentMission=mission;fill(mission);
- $("pageTitle").textContent="ویرایش مأموریت · "+mission.missionCode;
+ await renderAttachments(id);$("pageTitle").textContent="ویرایش مأموریت · "+mission.missionCode;
  $("missionMeta").textContent="کد مأموریت: "+mission.missionCode+" · ایجاد: "+new Date(mission.createdAt).toLocaleString("fa-IR");
  $("statusLabel").textContent=statusLabel(mission.status);
  updateProgress();renderProgressHistory(mission.progressLog||[]);
