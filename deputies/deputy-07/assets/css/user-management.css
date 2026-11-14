@@ -341,3 +341,37 @@ html body.ops-page.control-page #view-users .um-form-grid textarea:focus{
   outline:2px solid #e5e1d9!important;
   border-color:#aaa398!important;
 }
+
+/* تکمیل رنگ‌بندی خنثی برای جدول‌ها، مجوزها و سوابق */
+html body.ops-page.control-page #view-users .cc-section-head>div>span,
+html body.ops-page.control-page #view-users .um-permission-title{
+  color:#171717!important;
+}
+html body.ops-page.control-page #view-users .um-permission-grid label,
+html body.ops-page.control-page #view-users .um-role-card li,
+html body.ops-page.control-page #view-users .um-audit-item,
+html body.ops-page.control-page #view-users .um-table-wrap,
+html body.ops-page.control-page #view-users .um-matrix-wrap,
+html body.ops-page.control-page #view-users .um-dialog-actions{
+  background:#fff!important;
+  background-image:none!important;
+  color:#171717!important;
+  border-color:#e2ded7!important;
+}
+html body.ops-page.control-page #view-users .um-permission-grid label *,
+html body.ops-page.control-page #view-users .um-role-card li *,
+html body.ops-page.control-page #view-users .um-audit-item *{
+  color:#24211e!important;
+}
+html body.ops-page.control-page #view-users .um-card-actions,
+html body.ops-page.control-page #view-users .um-role-head{
+  color:#171717!important;
+}
+html body.ops-page.control-page #view-users .um-status:before{
+  box-shadow:none!important;
+}
+html body.ops-page.control-page #view-users .um-chip,
+html body.ops-page.control-page #view-users .um-chip.blue,
+html body.ops-page.control-page #view-users .um-chip.gold{
+  border:1px solid #dcd7ce!important;
+}
