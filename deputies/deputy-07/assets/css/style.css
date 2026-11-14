@@ -5679,3 +5679,28 @@ body.ops-page .page-studio-replacement-hero p{margin:7px 0 0;color:#59636a;font-
 /* وقتی دسته «سایر صفحات» فعال است، برای گزینه هفتم فضای مستقل در نوار پایین ایجاد شود. */
 body.ops-page .mobile-dock.has-other-pages{grid-template-columns:repeat(7,minmax(0,1fr))}
 @media screen and (min-width:761px) and (max-width:900px){body.ops-page .mobile-dock.has-other-pages{grid-template-columns:repeat(7,minmax(0,1fr))}}
+
+
+/* معاونت ۷ — تقویم و رویدادها: تقویم و فهرست روز در اولویت بصری */
+body.ops-page main[data-org-calendar]>.ops-intro{margin-bottom:12px}
+body.ops-page main[data-org-calendar]>.ops-intro .intro-stamp{padding:8px 12px;min-width:105px;max-width:130px}
+body.ops-page main[data-org-calendar]>.ops-intro .intro-stamp b{font-size:19px}
+body.ops-page main[data-org-calendar]>.calendar-filter-row{margin:10px 0 12px}
+body.ops-page main[data-org-calendar]>.calendar-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.85fr);gap:14px;align-items:stretch;margin-bottom:14px}
+body.ops-page main[data-org-calendar]>.calendar-layout>.calendar-panel{min-width:0;padding:16px}
+body.ops-page main[data-org-calendar]>.calendar-layout>.calendar-panel:first-child .calendar-days{min-height:390px}
+body.ops-page main[data-org-calendar]>.calendar-layout>.calendar-panel:first-child .calendar-day{min-height:62px}
+body.ops-page main[data-org-calendar]>.calendar-overview{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:0 0 18px}
+body.ops-page main[data-org-calendar]>.calendar-overview article{min-width:0;padding:9px 10px;border:1px solid #e0e8ed;border-radius:9px;background:#fff;box-shadow:none}
+body.ops-page main[data-org-calendar]>.calendar-overview article small{font-size:9px;line-height:1.6}
+body.ops-page main[data-org-calendar]>.calendar-overview article b{font-size:17px;margin:3px 0}
+body.ops-page main[data-org-calendar]>.calendar-overview article span{font-size:8px}
+@media(max-width:900px){
+ body.ops-page main[data-org-calendar]>.calendar-layout{grid-template-columns:1fr}
+ body.ops-page main[data-org-calendar]>.calendar-overview{grid-template-columns:repeat(3,minmax(0,1fr))}
+ body.ops-page main[data-org-calendar]>.calendar-layout>.calendar-panel:first-child .calendar-days{min-height:300px}
+}
+@media(max-width:520px){
+ body.ops-page main[data-org-calendar]>.calendar-overview{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body.ops-page main[data-org-calendar]>.calendar-layout>.calendar-panel{padding:10px}
+}
