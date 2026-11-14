@@ -141,6 +141,22 @@ function buildFieldControl(meta,id,value=""){
 function applyConditionToWrap(wrap,condition){if(condition?.fieldKey){wrap.dataset.conditionField=condition.fieldKey;wrap.dataset.conditionOperator=condition.operator||"equals";wrap.dataset.conditionValue=condition.value??"";}else{delete wrap.dataset.conditionField;delete wrap.dataset.conditionOperator;delete wrap.dataset.conditionValue;}}
 function fieldDefinitions(){const defs=[];document.querySelectorAll("#missionForm .field label[for]").forEach(l=>{const id=l.htmlFor;if($(id)&&$(id).type!=="file")defs.push({key:"core:"+id,label:fieldMeta(id,l.closest(".field")).label});});const dept=String($("executorDepartment")?.value||"");(schema?.departments||[]).filter(d=>String(d.id)===dept).forEach(d=>(d.fields||[]).filter(f=>f.active!==false).forEach(f=>defs.push({key:"dept:"+dept+":"+f.id,label:f.label})));(schema?.extraFields||[]).filter(f=>f.active!==false).forEach(f=>defs.push({key:"extra:"+f.id,label:f.label}));return defs;}
 function valueForFieldKey(key){const p=String(key||"").split(":");if(p[0]==="core")return readField(p[1]);if(p[0]==="extra")return readExtraFields()[p[1]];if(p[0]==="dept")return readCustom()[p[2]];return null;}
+
+function conditionOptionsFor(key){
+ const p=String(key||"").split(":");let field;
+ if(p[0]==="core"){const id=p[1];field=schema.coreFields?.[id]||{type:initialCoreFieldTypes[id],options:fieldOptions($(id))};}
+ else if(p[0]==="extra")field=(schema.extraFields||[]).find(f=>f.id===p[1]);
+ else if(p[0]==="dept")field=(schema.departments||[]).find(d=>String(d.id)===p[1])?.fields?.find(f=>f.id===p[2]);
+ if(!field)return [];
+ if(["checkbox","yesno"].includes(field.type))return [{value:"true",label:"بله"},{value:"false",label:"خیر"}];
+ return (field.options||[]).map(v=>({value:String(v),label:String(v)}));
+}
+function refreshConditionSuggestions(){
+ const list=$("fieldEditorConditionSuggestions");if(!list)return;list.replaceChildren();
+ conditionOptionsFor($("fieldEditorConditionField").value).forEach(x=>{const o=document.createElement("option");o.value=x.value;o.label=x.label;list.append(o);});
+ const type=String($("fieldEditorConditionField").value).split(":")[0];
+ $("fieldEditorConditionValue").placeholder=type==="core"?"مقدار دقیق؛ برای بله/خیر true یا false":"مقدار دقیق گزینه انتخابی";
+}
 function applyFieldConditions(){document.querySelectorAll("#missionForm .field[data-condition-field]").forEach(w=>{const a=valueForFieldKey(w.dataset.conditionField),v=w.dataset.conditionValue||"",op=w.dataset.conditionOperator||"equals";let show=true;if(op==="not-empty")show=a!==null&&a!==undefined&&a!==""&&a!==false&&(!Array.isArray(a)||a.length>0);else if(op==="equals")show=Array.isArray(a)?a.includes(v):String(a??"")===v;else if(op==="not-equals")show=Array.isArray(a)?!a.includes(v):String(a??"")!==v;w.hidden=!show;w.querySelectorAll("input,select,textarea").forEach(e=>{if(e.dataset.conditionRequired===undefined)e.dataset.conditionRequired=String(e.required);e.required=show&&e.dataset.conditionRequired==="true";});});}
 function fieldOptions(el){return el&&el.tagName==="SELECT"?[...el.options].filter(o=>o.value!=="").map(o=>o.textContent):[];}
 function fieldMeta(id,wrap){
@@ -184,11 +200,12 @@ function openFieldEditor(target){
  $("fieldEditorOptionsWrap").hidden=!["select","checklist"].includes(meta.type||"text");$("fieldEditorDelete").hidden=target.kind==="new";
   const defs=fieldDefinitions().filter(x=>x.key!==(target.kind==="core"?"core:"+target.id:target.kind==="extra"?"extra:"+target.id:target.kind==="dept"?"dept:"+target.departmentId+":"+target.id:""));
   $("fieldEditorConditionField").replaceChildren();const none=document.createElement("option");none.value="";none.textContent="بدون شرط";$("fieldEditorConditionField").append(none);defs.forEach(x=>{const o=document.createElement("option");o.value=x.key;o.textContent=x.label;$("fieldEditorConditionField").append(o);});
-  const cond=meta.condition||{};$("fieldEditorConditionEnabled").checked=!!cond.fieldKey;$("fieldEditorConditionField").value=cond.fieldKey||"";$("fieldEditorConditionOperator").value=cond.operator||"equals";$("fieldEditorConditionValue").value=cond.value??"";$("fieldEditorConditionFields").hidden=!cond.fieldKey;
+  const cond=meta.condition||{};$("fieldEditorConditionEnabled").checked=!!cond.fieldKey;$("fieldEditorConditionField").value=cond.fieldKey||"";$("fieldEditorConditionOperator").value=cond.operator||"equals";$("fieldEditorConditionValue").value=cond.value??"";$("fieldEditorConditionFields").hidden=!cond.fieldKey;refreshConditionSuggestions();
  $("fieldEditorStatus").textContent="";$("fieldEditor").hidden=false;$("fieldEditor").scrollIntoView({behavior:"smooth",block:"center"});
 }
 $("fieldEditorType").addEventListener("change",()=>{$("fieldEditorOptionsWrap").hidden=!["select","checklist"].includes($("fieldEditorType").value);});
 $("fieldEditorConditionEnabled").addEventListener("change",()=>{$("fieldEditorConditionFields").hidden=!$("fieldEditorConditionEnabled").checked;});
+$("fieldEditorConditionField").addEventListener("change",refreshConditionSuggestions);
 $("fieldEditorCancel").addEventListener("click",()=>{$("fieldEditor").hidden=true;editingField=null;});
 async function persistFieldSchema(){
  if(!window.Deputy7Access?.canCurrent("manageSchema",{kind:"configuration"}))throw new Error("برای تغییر ساختار فرم، دسترسی مدیریت ساختار لازم است.");
