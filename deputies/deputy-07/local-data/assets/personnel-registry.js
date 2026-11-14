@@ -55,6 +55,7 @@ async function changeCode(oldCode,newCode){
   const key=localStorage.key(i);if(!key)continue;const raw=localStorage.getItem(key);if(!raw)continue;
   try{const parsed=JSON.parse(raw),updated=replaceRefs(parsed,oldCode,newCode);if(JSON.stringify(updated)!==JSON.stringify(parsed))localStorage.setItem(key,JSON.stringify(updated));}catch{}
  }
+ for(const prefix of ["city-person-events-","city-person-profile-"]){const oldKey=prefix+oldCode,newKey=prefix+newCode,raw=localStorage.getItem(oldKey);if(raw!==null){const existing=localStorage.getItem(newKey);if(existing!==null&&prefix==="city-person-events-"){try{localStorage.setItem(newKey,JSON.stringify([...JSON.parse(existing),...JSON.parse(raw)]));}catch{localStorage.setItem(newKey,raw);}}else if(existing===null)localStorage.setItem(newKey,raw);localStorage.removeItem(oldKey);}}
  const moved={...source,code:newCode,movedFrom:oldCode,profile:replaceRefs(source.profile,oldCode,newCode),updatedAt:new Date().toISOString(),revision:(source.revision||0)+1};
  await Vault.add(ENTITY,newCode,"upsert",moved);
  await Vault.add(ENTITY,oldCode,"delete",{...source,code:oldCode,replacedBy:newCode,updatedAt:new Date().toISOString()});
