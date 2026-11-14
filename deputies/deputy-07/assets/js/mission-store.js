@@ -45,6 +45,27 @@ export const MissionStore = Object.freeze({
     await Vault.add(ENTITY, keyOf(id), "delete", { id: String(id), deletedAt: new Date().toISOString() });
     return true;
   },
+  async config() {
+    const snapshot = await Vault.snapshot();
+    const row = snapshot.records.find(item => item.entity === "mission-config" && item.recordId === "mission-config:form-schema");
+    return row?.data || null;
+  },
+  async saveConfig(data) {
+    Vault.ensure();
+    if (!data || typeof data !== "object" || !Array.isArray(data.departments)) throw new Error("ساختار پیکربندی معتبر نیست.");
+    const prior = (await Vault.snapshot()).records.find(item => item.entity === "mission-config" && item.recordId === "mission-config:form-schema");
+    await Vault.add("mission-config", "mission-config:form-schema", "upsert", { ...data, version: Number(prior?.data?.version || 0) + 1, updatedAt: new Date().toISOString() });
+    return this.config();
+  },
+  async addProgress(id, entry) {
+    Vault.ensure();
+    const prior = await this.get(id);
+    if (!prior) throw new Error("پرونده مأموریت پیدا نشد.");
+    const updates = Array.isArray(prior.progressLog) ? prior.progressLog.slice() : [];
+    updates.push({ id: crypto.randomUUID(), at: new Date().toISOString(), ...entry });
+    const nextProgress = Math.max(0, Math.min(100, Number(entry.progress ?? prior.progress ?? 0)));
+    return this.save({ ...prior, progress: nextProgress, progressLog: updates, lastProgressAt: new Date().toISOString() }, id);
+  },
   async summary() {
     const snapshot = await Vault.snapshot();
     const records = snapshot.records.filter(row => row.entity === ENTITY);
