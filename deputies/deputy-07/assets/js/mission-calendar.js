@@ -6,8 +6,9 @@ if(!status.exists) {
   try {
     await MissionVault.counts();
   } catch {
-    const pass=prompt("برای نمایش مأموریت‌های محرمانه در تقویم مرکزی، رمز امنیتی پایگاه داده معاونت ۷ را وارد کنید:");
-    if(!pass)throw new Error("نمایش مأموریت‌ها بدون بازگشایی مخزن امکان‌پذیر نیست.");
+    const current=await MissionVault.status();
+    let pass="";
+    if(current.needsMigration){pass=prompt("برای انتقال یک‌باره مخزن قدیمی، رمز قبلی را وارد کنید:")||"";if(!pass)throw new Error("انتقال مخزن قدیمی انجام نشد.");}
     await MissionStore.unlock(pass);
   }
   const missions=await MissionStore.list();
