@@ -8,6 +8,7 @@ function setUnlocked(value) {
   $("lockBadge").classList.toggle("open", value);
   $("unlockBtn").disabled = value;
   $("passphrase").disabled = value;
+  $("passphrase").parentElement.hidden = value;
   for (const id of ["lockBtn","exportBtn","importFile","refreshBtn"]) $(id).disabled = !value;
 }
 function show(id, value) { $(id).textContent = value; }
