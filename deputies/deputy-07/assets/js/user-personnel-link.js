@@ -1,0 +1,4 @@
+import {getPersonnel,ensurePersonnelUnlocked} from "../../local-data/assets/personnel-registry.js";
+(()=>{"use strict";const $=id=>document.getElementById(id);const button=$("userPersonnelLookup");if(!button)return;
+button.addEventListener("click",async()=>{const code=$("userPersonnelCode").value.trim();if(!code)return alert("کد پرسنلی را وارد کنید.");try{if(!await ensurePersonnelUnlocked())return;const r=await getPersonnel(code);if(!r||r.status!=="active")return alert("پرونده فعال با این کد پیدا نشد؛ ابتدا اطلاعات را در بانک مرکزی تکمیل کنید.");const p=r.profile||{};$("userName").value=(p.firstName+" "+p.lastName).trim();$("userTitle").value=p.jobTitle||"";$("userUnit").value=p.unit||"";const dep=$("userDepartments");[...dep.options].forEach(o=>o.selected=o.value===String(p.departmentId));alert("مشخصات فرد از بانک مرکزی فراخوانی شد.");}catch(e){alert(e.message);}});
+})();
