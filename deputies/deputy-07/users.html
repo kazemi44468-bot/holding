@@ -7,7 +7,7 @@
 <link rel="preload" href="assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/style.css?v=users-center-20261113">
-<link rel="stylesheet" href="assets/css/user-management.css?v=users-isolated-20261114-1">
+<link rel="stylesheet" href="assets/css/user-management.css?v=users-restored-content-20261114-2">
 </head>
 <body class="ops-page users-admin-page">
 <header class="ops-header"><div class="ops-header-inner">
@@ -15,11 +15,9 @@
 <nav class="ops-nav" aria-label="ناوبری اصلی"></nav><div class="ops-clock"><span>زمان سامانه</span><b id="clock">—</b><small id="date">—</small></div>
 </div></header>
 <main class="ops-main users-main">
-<section class="users-hero">
- <div><span class="eyebrow">مدیریت سازمانی · معاونت ۷</span><h1>مدیریت کاربران و سطح دسترسی</h1><p>تعریف کاربران، انتساب به اداره‌ها، ساخت گروه‌های دسترسی و تنظیم مجوزهای عملیاتی</p></div>
- <div class="users-hero-actions"><a class="users-back" href="control-center.html">بازگشت به نمای کلان ←</a><button class="um-primary" id="addUserBtn" type="button">＋ افزودن کاربر</button></div>
-</section>
-<section class="um-notice" aria-label="وضعیت زیرساخت"><span class="um-notice-icon">i</span><div><b>وضعیت فعلی: مدیریت پیکربندی محلی</b><p>اطلاعات این بخش در مرورگر همین دستگاه نگهداری می‌شود. این نسخه برای تعریف و بررسی ساختار کاربران و مجوزهاست؛ ورود امن، رمز عبور مستقل، اعمال اجباری مجوز در همه صفحات و همگام‌سازی بین دستگاه‌ها تا اتصال سرویس هویت مرکزی فعال نشده‌اند.</p></div></section>
+<section class="users-hero"><div><span class="eyebrow">مدیریت سازمانی · معاونت ۷</span><h1>مدیریت کاربران و سطح دسترسی</h1><p>مدیریت حساب‌های سازمانی، گروه‌ها، نقش‌ها و مجوزهای عملیاتی</p></div><div class="users-hero-actions"><a class="users-back" href="control-center.html">بازگشت به مرکز کنترل و پیکربندی ←</a></div></section>
+<section class="users-content-shell" id="view-users">
+<div class="um-panel-head"><div><span>مدیریت هویت و دسترسی</span><h2>مدیریت کاربران و مجوزها</h2><p>حساب‌های سازمانی، گروه‌ها، نقش‌ها و ماتریس دسترسی در همین مرکز کنترل مدیریت می‌شوند.</p></div><button class="um-primary" id="addUserBtn" type="button">＋ افزودن کاربر</button></div>
 <section class="um-stats" aria-label="خلاصه کاربران">
  <article><small>کل کاربران تعریف‌شده</small><b id="statUsers">۰</b><span>حساب‌های ثبت‌شده</span></article>
  <article><small>کاربران فعال</small><b id="statActive">۰</b><span>دارای وضعیت فعال</span></article>
@@ -33,7 +31,7 @@
   <button class="um-tab" data-tab="groups"><span>▦</span><span><b>گروه‌های دسترسی</b><small>دسته‌بندی و اعمال گروهی</small></span></button>
   <button class="um-tab" data-tab="roles"><span>▤</span><span><b>نقش‌ها و مجوزها</b><small>تعریف سطح و اختیارات</small></span></button>
   <button class="um-tab" data-tab="matrix"><span>▥</span><span><b>ماتریس دسترسی ادارات</b><small>محدوده سازمانی و عملیات</small></span></button>
-  <button class="um-tab" data-tab="structure"><span>▦</span><span><b>ساختار و ظاهر سامانه</b><small>مدیریت اداره‌ها و پوسته سایت</small></span></button>
+  
   <button class="um-tab" data-tab="audit"><span>◷</span><span><b>سوابق تغییرات</b><small>ردیابی تغییرات مدیریتی</small></span></button>
  </aside>
  <div class="um-content">
@@ -56,26 +54,16 @@
    <div class="um-matrix-wrap"><table class="um-table um-matrix"><thead><tr><th>نقش</th><th>مشاهده</th><th>ثبت</th><th>ویرایش</th><th>حذف</th><th>ارجاع کار</th><th>تأیید</th><th>گزارش/خروجی</th><th>مدیریت کاربران</th><th>مدیریت ساختار</th><th>پشتیبان‌گیری</th><th>اطلاعات حساس</th></tr></thead><tbody id="matrixBody"></tbody></table></div>
    <div class="um-scope-note"><b>قاعده محدوده:</b> رئیس در سطح کل معاونت؛ مدیر اداره فقط اداره‌های منتسب؛ کارشناس فقط اداره/واحد منتسب و رکوردهای مجاز؛ مدیر فنی اختیار پیکربندی فنی دارد و دسترسی محتوایی او مستقل و قابل ثبت است.</div>
   </section>
-  <section class="um-panel" id="panel-structure">
-   <div class="um-panel-head"><div><span class="eyebrow">پیکربندی قابل تغییر</span><h2>ساختار سازمانی و ظاهر سامانه</h2><p>اداره‌ها را اضافه، ویرایش یا غیرفعال کنید و رنگ و تراکم نمای سامانه را تنظیم کنید.</p></div></div>
-   <div class="um-config-grid">
-    <section class="um-config-card"><div class="um-config-head"><div><h3>مدیریت اداره‌ها</h3><p>تغییر نام و کد، افزودن اداره جدید و حذف اداره‌های غیر‌فعال</p></div><button class="um-primary" id="addDepartmentBtn" type="button">＋ اداره جدید</button></div>
-     <form id="departmentForm" class="um-inline-form"><input type="hidden" id="editDepartmentId"><label>کد اداره<input id="departmentCode" required maxlength="12" placeholder="مثلاً ۹"></label><label>عنوان اداره<input id="departmentName" required maxlength="120" placeholder="عنوان رسمی اداره"></label><label>توضیح کوتاه<input id="departmentDescription" maxlength="180" placeholder="حوزه مسئولیت"></label><button class="um-primary" type="submit">ذخیره اداره</button><button class="um-secondary" id="cancelDepartmentEdit" type="button">پاک‌کردن فرم</button></form>
-     <div id="departmentsManager" class="um-department-list"></div>
-    </section>
-    <section class="um-config-card"><div class="um-config-head"><div><h3>تنظیمات ظاهری</h3><p>تنظیمات اولیه پوسته مشترک؛ بدون تغییر محتوای صفحات</p></div></div>
-     <div class="um-theme-controls"><label>رنگ اصلی سامانه<select id="themePreset"><option value="sky">آبی آسمانی</option><option value="slate">آبی خاکستری روشن</option><option value="sand">کرم و طلایی ملایم</option></select></label><label>تراکم نمایش<select id="themeDensity"><option value="comfortable">استاندارد</option><option value="compact">فشرده</option></select></label><label>گوشه کارت‌ها<select id="themeCorners"><option value="soft">گرد ملایم</option><option value="square">گوشه کم‌گرد</option></select></label><button class="um-primary" id="saveThemeBtn" type="button">اعمال تنظیمات ظاهری</button><p class="um-theme-hint" id="themeStatus">تنظیمات روی همین مرورگر اعمال می‌شود.</p></div>
-    </section>
-   </div>
-  </section>
+  
   <section class="um-panel" id="panel-audit">
    <div class="um-panel-head"><div><span class="eyebrow">ردپای مدیریتی</span><h2>سوابق تغییرات</h2><p>ایجاد، ویرایش، تعلیق و تغییر گروه‌ها و نقش‌ها در این مرورگر ثبت می‌شود.</p></div><button id="clearAuditBtn" class="um-secondary" type="button">پاک‌سازی سوابق محلی</button></div>
    <div class="um-audit-list" id="auditList"></div><div class="um-empty" id="auditEmpty">هنوز رویدادی ثبت نشده است.</div>
   </section>
  </div>
 </section>
-</main>
-<footer class="ops-footer"></footer>
+
+</section>
+
 <dialog class="um-dialog" id="userDialog"><form id="userForm" method="dialog">
  <div class="um-dialog-head"><div><span class="eyebrow">حساب سازمانی</span><h2 id="userDialogTitle">افزودن کاربر</h2></div><button class="um-close" type="button" data-close="userDialog">×</button></div>
  <input type="hidden" id="editUserId">
@@ -110,7 +98,9 @@
  <h3 class="um-permission-title">مجوزهای این نقش</h3><div class="um-permission-grid" id="rolePermissions"></div>
  <div class="um-dialog-actions"><button class="um-secondary" type="button" data-close="roleDialog">انصراف</button><button class="um-primary" type="submit">ذخیره نقش</button></div>
 </form></dialog>
-<script src="assets/js/access-control.js?v=control-center-03"></script>
-<script src="assets/js/main.js?v=sky-blue-20261113"></script>
-<script src="assets/js/user-management.js?v=sky-blue-20261113-2"></script>
+</main>
+<footer class="ops-footer"></footer>
+<script src="assets/js/access-control.js?v=users-restored-content-20261114-2" defer></script>
+<script src="assets/js/main.js?v=users-restored-content-20261114-2" defer></script>
+<script src="assets/js/user-management.js?v=users-restored-content-20261114-2" defer></script>
 </body></html>
