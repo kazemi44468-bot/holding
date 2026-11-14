@@ -94,6 +94,7 @@ const fieldIds = [
  "documentRegister","meetingMinutes","meetingActions",
  "headOfDepartmentOrder","headOfDepartmentBy","headOfDepartmentAt","deputyOrder","deputyBy","deputyAt","calendarTitle","calendarStart","calendarEnd","calendarReminder","calendarDescription"
 ];
+const initialCoreFieldTypes=Object.fromEntries(fieldIds.map(id=>{const el=$(id);return [id,!el?"text":el.tagName==="TEXTAREA"?"textarea":el.tagName==="SELECT"?"select":el.type||"text"];}));
 function readControl(el,type){if(!el)return null;if(type==="checkbox")return !!el.checked;if(type==="yesno")return el.value===""?null:el.value==="true";if(type==="checklist")return [...el.querySelectorAll('input[type="checkbox"]:checked')].map(x=>x.value);if(type==="number")return el.value===""?null:Number(el.value);return typeof el.value==="string"?el.value.trim():null;}
 function writeControl(el,value,type){if(!el||value===undefined||value===null)return;if(type==="checkbox"){el.checked=value===true||["true","1","yes","بله","checked"].includes(String(value).toLowerCase());return;}if(type==="yesno"){el.value=value===true||["true","1","yes","بله"].includes(String(value).toLowerCase())?"true":value===false||["false","0","no","خیر"].includes(String(value).toLowerCase())?"false":"";return;}if(type==="checklist"){const values=Array.isArray(value)?value:[String(value)];el.querySelectorAll('input[type="checkbox"]').forEach(x=>x.checked=values.includes(x.value));return;}el.value=Array.isArray(value)?value.join("، "):typeof value==="boolean"?(value?"بله":"خیر"):String(value);}
 const readField=id=>readControl($(id),schema?.coreFields?.[id]?.type||fieldControlType($(id)));
@@ -241,6 +242,15 @@ function readCustom(){const out={};document.querySelectorAll("[data-custom-id]")
 function writeCustom(values){Object.entries(values||{}).forEach(([id,value])=>{const el=document.querySelector('[data-custom-id="'+CSS.escape(id)+'"]');if(el)writeControl(el,value,el.dataset.fieldType||el.dataset.customType||"text");});applyFieldConditions();}
 function goStep(index){activeStep=Math.max(0,Math.min(sections.length-1,index));sections.forEach((s,i)=>s.classList.toggle("active",i===activeStep));tabs.forEach((t,i)=>t.setAttribute("aria-selected",String(i===activeStep)));$("prevStep").disabled=activeStep===0;$("nextStep").classList.toggle("hidden",activeStep===sections.length-1);$("saveMission").textContent=editingId?"ذخیره تغییرات مأموریت":"ثبت و ذخیره مأموریت";tabs[activeStep].scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"});}
 function updateProgress(){const value=Math.max(0,Math.min(100,Number($("progress").value||0)));$("progressBar").style.width=value+"%";$("progressText").textContent="پیشرفت ثبت‌شده: "+toFa(value)+"٪ · وضعیت: "+statusLabel($("executionStatus").value);}
+function archiveChangedFieldValues(data){
+ if(!currentMission)return;
+ const prior=currentMission.schemaHistory?.slice(-1)[0]?.snapshot||currentMission.schemaSnapshot||{},history={...(currentMission.fieldHistory||{})};
+ const add=(key,oldType,newType,value)=>{if(oldType&&newType&&oldType!==newType&&value!==undefined&&value!==null){history[key]=[...(history[key]||[]),{type:oldType,schemaVersion:Number(currentMission.schemaVersion||1),value,archivedAt:new Date().toISOString()}];}};
+ for(const id of fieldIds){if(!$(id))continue;const oldType=prior.coreFields?.[id]?.type||initialCoreFieldTypes[id],newType=schema.coreFields?.[id]?.type||initialCoreFieldTypes[id];add("core:"+id,oldType,newType,currentMission[id]);}
+ for(const oldDept of prior.departments||[]){const nextDept=(schema.departments||[]).find(d=>String(d.id)===String(oldDept.id));for(const oldField of oldDept.fields||[]){const nextField=(nextDept?.fields||[]).find(f=>f.id===oldField.id);if(nextField)add("dept:"+oldDept.id+":"+oldField.id,oldField.type,nextField.type,currentMission.departmentFields?.[oldField.id]);}}
+ for(const oldField of prior.extraFields||[]){const nextField=(schema.extraFields||[]).find(f=>f.id===oldField.id);if(nextField)add("extra:"+oldField.id,oldField.type,nextField.type,currentMission.extraFields?.[oldField.id]);}
+ data.fieldHistory=history;
+}
 function collect(){
  const data={...(currentMission||{})};fieldIds.forEach(id=>{if($(id))data[id]=readField(id);});
  data.hasPrevious=selectedRadio("hasPrevious")==="yes";
@@ -262,7 +272,8 @@ function collect(){
  data.schemaVersion=Number(schema?.version||1);
  data.schemaHistory=currentMission?.schemaHistory||[{version:data.schemaVersion,at:new Date().toISOString(),snapshot:structuredClone(schema||defaultConfig())}];
  if(currentMission&&Number(currentMission.schemaVersion||1)!==data.schemaVersion)data.schemaHistory=[...data.schemaHistory,{version:data.schemaVersion,at:new Date().toISOString(),snapshot:structuredClone(schema||defaultConfig())}];
- return data;
+ archiveChangedFieldValues(data);
+  return data;
 }
 function fill(data){
  fieldIds.forEach(id=>writeField(id,data[id]));
