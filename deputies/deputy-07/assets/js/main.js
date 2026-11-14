@@ -101,11 +101,13 @@ const inPages=location.pathname.includes('/pages/');
   const navPathKey=href=>normalizePagePath(href).split("/").pop();
   pageCatalog.filter(p=>p.kind==="static"&&p.id!=="entry"&&p.status==="published").forEach(p=>{
    const href=registeredPageHref(p),key=navPathKey(href);
-   if([...nav.querySelectorAll("a")].some(a=>navPathKey(a.getAttribute("href"))===key))return;
    const menuName=p.menu==="ادارات"?"ادارات کل":(p.menu||"مدیریت");
    let dropdown=[...nav.querySelectorAll(".nav-dropdown")].find(d=>d.querySelector("summary")?.textContent.trim()===menuName);
    if(!dropdown&&menuName==="سایر صفحات"){dropdown=document.createElement("details");dropdown.className="nav-dropdown";const summary=document.createElement("summary");summary.textContent=menuName;const box=document.createElement("div");box.className="nav-menu";dropdown.append(summary,box);nav.append(dropdown);}
-   const box=dropdown?.querySelector(".nav-menu");if(box){const a=document.createElement("a");a.href=href;a.textContent=p.title;box.append(a);}
+   const box=dropdown?.querySelector(".nav-menu");if(!box)return;
+   const existing=[...nav.querySelectorAll("a")].find(a=>navPathKey(a.getAttribute("href"))===key);
+   if(existing){if(existing.closest(".nav-menu")!==box)box.append(existing);return;}
+   const a=document.createElement("a");a.href=href;a.textContent=p.title;box.append(a);
   });
   nav.querySelectorAll('a').forEach(a=>{const meta=pageMeta(a.getAttribute('href'));if(meta){a.textContent=meta.title||a.textContent;if(meta.status!=="published")a.hidden=true;}});
   nav.classList.add('ops-nav-framed');
@@ -129,7 +131,9 @@ const inPages=location.pathname.includes('/pages/');
  pageCatalog.filter(p=>p.kind==="static"&&p.id!=="entry"&&p.status==="published").forEach(p=>{
   const group=groups.find(g=>g.id===groupForMenu[p.menu]);if(!group)return;
   const href=registeredPageHref(p),key=href.split("?")[0].split("/").pop();
-  if(!group.links.some(([existing])=>existing.split("?")[0].split("/").pop()===key))group.links.push([href,p.title]);
+  const existingGroup=groups.find(g=>g.links.some(([existing])=>existing.split("?")[0].split("/").pop()===key));
+  if(existingGroup){const link=existingGroup.links.find(([existing])=>existing.split("?")[0].split("/").pop()===key);if(existingGroup!==group){existingGroup.links=existingGroup.links.filter(([existing])=>existing.split("?")[0].split("/").pop()!==key);group.links.push([href,p.title]);}else if(link)link[1]=p.title;}
+  else group.links.push([href,p.title]);
  });
  groups.forEach(g=>{g.links=g.links.filter(([href])=>{const meta=pageMeta(href);return !meta||meta.status==="published";});});
  const dock=document.createElement('nav');
