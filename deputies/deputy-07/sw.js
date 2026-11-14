@@ -1,44 +1,58 @@
-const CACHE_NAME = "deputy-07-missions-v40";
-const FILES = [
-  "./pages/mission-bank.html",
-  "./pages/mission-create.html",
-  "./pages/mission-reports.html",
-  "./pages/mission-sync.html",
-  "./pages/calendar.html",
-  "./assets/css/style.css",
-  "./assets/css/mission-visual.css",
-  "./assets/js/main.js",
-  "./assets/js/jalali-picker.js",
-  "./assets/js/page-registry-core.js",
-  "./assets/js/organization-modules.js",
-  "./assets/js/mobile-nav.js",
-  "./assets/js/mission-store.js",
-  "./assets/js/mission-store-bridge.js",
-  "./assets/js/mission-sync.js",
-  "./assets/js/mission-create.js",
-  "./assets/js/access-control.js",
-  "./assets/js/mission-bank.js",
-  "./assets/js/mission-reports.js",
-  "./assets/js/mission-calendar.js",
-  "./assets/js/calendar.js",
-  "./local-data/assets/engine.js",
-  "./assets/fonts/Vazirmatn-Regular.woff2",
-  "./assets/fonts/Vazirmatn-Bold.woff2",
-  "./assets/images/iran-flag.svg"
+"use strict";
+const CACHE_NAME="deputy-07-missions-v41";
+const CORE_FILES=[
+ "./pages/mission-bank.html",
+ "./pages/mission-create.html",
+ "./pages/mission-reports.html",
+ "./pages/mission-sync.html",
+ "./assets/css/style.css",
+ "./assets/js/main.js",
+ "./assets/js/jalali-picker.js",
+ "./assets/images/iran-flag.svg"
 ];
-self.addEventListener("install", event => {
-  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(FILES)).then(() => self.skipWaiting()));
+const STATIC_RE=/\.(?:css|js|mjs|woff2?|ttf|svg|png|jpe?g|webp|ico)$/i;
+self.addEventListener("install",event=>{
+ event.waitUntil((async()=>{
+  const cache=await caches.open(CACHE_NAME);
+  await Promise.allSettled(CORE_FILES.map(path=>cache.add(path)));
+  await self.skipWaiting();
+ })());
 });
-self.addEventListener("activate", event => {
-  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith("deputy-07-missions-") && key !== CACHE_NAME).map(key => caches.delete(key)))).then(() => self.clients.claim()));
+self.addEventListener("activate",event=>{
+ event.waitUntil((async()=>{
+  const keys=await caches.keys();
+  await Promise.all(keys.filter(key=>key.startsWith("deputy-07-missions-")&&key!==CACHE_NAME).map(key=>caches.delete(key)));
+  await self.clients.claim();
+ })());
 });
-self.addEventListener("fetch", event => {
-  if (event.request.method !== "GET" || new URL(event.request.url).origin !== self.location.origin) return;
-  event.respondWith(fetch(event.request).then(response => {
-    if (response && response.ok) {
-      const copy = response.clone();
-      caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
-    }
+self.addEventListener("fetch",event=>{
+ const request=event.request;
+ if(request.method!=="GET")return;
+ const url=new URL(request.url);
+ if(url.origin!==self.location.origin)return;
+ if(STATIC_RE.test(url.pathname)){
+  event.respondWith((async()=>{
+   const cache=await caches.open(CACHE_NAME);
+   const cached=await cache.match(request);
+   const refresh=fetch(request).then(response=>{
+    if(response&&response.ok)cache.put(request,response.clone()).catch(()=>{});
     return response;
-  }).catch(async () => (await caches.match(event.request,{ignoreSearch:true})) || (event.request.mode === "navigate" ? caches.match("./pages/mission-bank.html") : Response.error())));
+   }).catch(()=>null);
+   if(cached){event.waitUntil(refresh.then(()=>undefined));return cached;}
+   return (await refresh)||Response.error();
+  })());
+  return;
+ }
+ if(request.mode==="navigate"){
+  event.respondWith((async()=>{
+   try{
+    const response=await fetch(request);
+    if(response&&response.ok){const cache=await caches.open(CACHE_NAME);cache.put(request,response.clone()).catch(()=>{});}
+    return response;
+   }catch(error){
+    return (await caches.match(request,{ignoreSearch:true}))||
+      (await caches.match("./pages/mission-bank.html"))||Response.error();
+   }
+  })());
+ }
 });
