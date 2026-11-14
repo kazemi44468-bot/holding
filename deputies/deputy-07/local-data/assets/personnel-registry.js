@@ -1,5 +1,6 @@
 import {Vault} from "./engine.js";
 const ENTITY="personnel",MIN_CODE=1000,SLOT_COUNT=250,REF_KEYS=new Set(["personnelCode","staffCode","employeeCode","personnelId","supervisorCode","managerPersonnelCode","ownerCode","assigneeCode"]);
+const normalizeCode=v=>String(v??"").trim().replace(/[۰-۹]/g,d=>String("۰۱۲۳۴۵۶۷۸۹".indexOf(d))).replace(/[٠-٩]/g,d=>String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));
 const blank=(code)=>({code:String(code),status:"empty",profile:{firstName:"",lastName:"",nationalCode:"",birthDate:"",gender:"",mobile:"",phone:"",email:"",address:"",departmentId:"",unit:"",jobTitle:"",employmentType:"",hireDate:"",contractEnd:"",education:"",fieldOfStudy:"",specialty:"",supervisorCode:"",workLocation:"",notes:""},createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),revision:1});
 const clone=x=>JSON.parse(JSON.stringify(x));
 const esc=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -15,7 +16,7 @@ async function list(){
  Vault.ensure();const snap=await Vault.snapshot();
  return snap.records.filter(r=>r.entity===ENTITY).map(r=>r.data).sort((a,b)=>Number(a.code)-Number(b.code));
 }
-async function get(code){return (await list()).find(x=>String(x.code)===String(code))||null;}
+async function get(code){code=normalizeCode(code);return (await list()).find(x=>String(x.code)===code)||null;}
 async function initialize(){
  Vault.ensure();const current=await list(),have=new Set(current.map(x=>String(x.code))),missing=[];
  for(let i=0;i<SLOT_COUNT;i++){const code=String(MIN_CODE+i);if(!have.has(code))missing.push(code);}
@@ -23,7 +24,7 @@ async function initialize(){
  return {total:SLOT_COUNT,created:missing.length,records:await list()};
 }
 async function save(code,profile){
- Vault.ensure();code=String(code).trim();if(!/^\d{4,}$/.test(code)||Number(code)<MIN_CODE)throw Error("کد پرسنلی باید عددی و از ۱۰۰۰ به بالا باشد.");
+ Vault.ensure();code=normalizeCode(code);if(!/^\d{4,}$/.test(code)||Number(code)<MIN_CODE)throw Error("کد پرسنلی باید عددی و از ۱۰۰۰ به بالا باشد.");
  const prior=await get(code);if(!prior)throw Error("کد پرسنلی در بانک رزروشده پیدا نشد.");
  if(!String(profile.firstName||"").trim()||!String(profile.lastName||"").trim())throw Error("نام و نام خانوادگی الزامی است.");
  const nationalCode=String(profile.nationalCode||"").trim();if(nationalCode&&nationalCode.length!==10)throw Error("کد ملی باید ۱۰ رقم باشد.");if(nationalCode&&(await list()).some(r=>r.code!==code&&r.profile?.nationalCode===nationalCode))throw Error("این کد ملی قبلاً در پرونده دیگری ثبت شده است.");
@@ -39,7 +40,7 @@ function replaceRefs(value,oldCode,newCode,key=""){
  return value;
 }
 async function changeCode(oldCode,newCode){
- Vault.ensure();oldCode=String(oldCode);newCode=String(newCode).trim();
+ Vault.ensure();oldCode=normalizeCode(oldCode);newCode=normalizeCode(newCode);
  if(!/^\d{4,}$/.test(newCode)||Number(newCode)<MIN_CODE||Number(newCode)>=MIN_CODE+SLOT_COUNT)throw Error("کد جدید باید در بازه ۱۰۰۰ تا ۱۲۴۹ باشد.");
  if(oldCode===newCode)return await get(oldCode);
  const source=await get(oldCode);if(!source)throw Error("کد فعلی پیدا نشد.");
@@ -114,5 +115,5 @@ function initProfileBridge(){
  input.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();find();}});
 }
 window.PersonnelRegistry=Object.freeze({ensureUnlocked,initialize,list,get,save,changeCode,initRegistryPage,initProfileBridge,escape:esc});
-export const getPersonnel=get,ensurePersonnelUnlocked=ensureUnlocked;
+export const getPersonnel=get,ensurePersonnelUnlocked=ensureUnlocked,normalizePersonnelCode=normalizeCode;
 document.addEventListener("DOMContentLoaded",()=>{initRegistryPage();initProfileBridge();});
