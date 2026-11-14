@@ -1,4 +1,4 @@
-const CACHE_NAME = "deputy-07-missions-v37";
+const CACHE_NAME = "deputy-07-missions-v38";
 const FILES = [
   "./pages/mission-bank.html",
   "./pages/mission-create.html",
