@@ -204,7 +204,7 @@ async function loadMission(id){
  await renderAttachments(id);$("pageTitle").textContent="ویرایش مأموریت · "+mission.missionCode;
  $("missionMeta").textContent="کد مأموریت: "+mission.missionCode+" · ایجاد: "+new Date(mission.createdAt).toLocaleString("fa-IR");
  $("statusLabel").textContent=statusLabel(mission.status);
- updateProgress();renderProgressHistory(mission.progressLog||[]);
+ updateProgress();renderProgressHistory(mission.progressLog||[]);renderWorkflowHistory(mission.workflowLog||[]);
 }
 async function unlock(){
  const pass=$("vaultPass").value;
