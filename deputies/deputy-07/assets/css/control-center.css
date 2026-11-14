@@ -571,3 +571,7 @@ html body.ops-page.control-page .cc-module-list button:hover{
 .ps-section-row label:first-child select{width:100%;min-height:36px;border:1px solid #dedad3;border-radius:8px;padding:8px;background:#fff;color:#302c27;font:inherit;font-size:11px}
 .ps-section-row textarea{min-height:64px;resize:vertical}
 @media(max-width:760px){.ps-section-row{grid-template-columns:1fr}.ps-section-row button{width:34px}}
+
+.ps-builder-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ps-builder-grid label[hidden]{display:none!important}
+@media(max-width:760px){.ps-builder-grid{grid-template-columns:1fr}}
