@@ -232,10 +232,6 @@ async function unlock(){
  const status=await MissionVault.status();
  await MissionStore.unlock(pass);
  $("vaultPass").value="";
- $("vaultPass").closest(".field").hidden=false;
- $("vaultPass").closest(".field").hidden=false;
- $("authState").textContent=status.needsMigration?"مخزن قبلی با موفقیت به حالت بدون رمز منتقل شد.":"مخزن محلی بدون رمز آماده استفاده است.";
-
  unlocked=true;$("vaultPass").value="";$("vaultPass").closest(".field").hidden=true;$("workArea").classList.remove("hidden");$("authState").textContent="مخزن محلی بدون درخواست رمز فعال است؛ اطلاعات این دوره رمزگذاری نمی‌شوند.";
  $("unlockVault").disabled=true;$("vaultPass").disabled=true;const canManageSchema=!!window.Deputy7Access?.canCurrent("manageSchema",{kind:"configuration"});$("schemaAdmin").hidden=!canManageSchema;$("schemaAdmin").classList.toggle("hidden",!canManageSchema);
  await loadSchema();
