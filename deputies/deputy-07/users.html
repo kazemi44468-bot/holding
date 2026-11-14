@@ -55,12 +55,12 @@
    <div class="um-scope-note"><b>قاعده محدوده:</b> رئیس در سطح کل معاونت؛ مدیر اداره فقط اداره‌های منتسب؛ کارشناس فقط اداره/واحد منتسب و رکوردهای مجاز؛ مدیر فنی اختیار پیکربندی فنی دارد و دسترسی محتوایی او مستقل و قابل ثبت است.</div>
   </section>
   
-  <section class="um-panel" id="panel-page-access">
+  <section class="um-panel" id="panel-page-access"><div id="pageAccessHost">
    <div class="um-panel-head"><div><span class="eyebrow">PAGE-LEVEL AUTHORIZATION</span><h2>ماتریس دسترسی صفحه‌ای</h2><p>برای هر نقش تعیین کنید به کدام صفحه و با چه عملیاتی دسترسی داشته باشد. مجوزهای این بخش مستقل از مجوزهای عمومی نقش هستند.</p></div><button type="button" class="um-secondary" id="pageAccessReset">بازنشانی نقش به الگوی پایه</button></div>
    <div class="um-toolbar"><label>نقش سازمانی<select id="pageAccessRole"></select></label><label class="um-search">⌕ <input id="pageAccessSearch" type="search" placeholder="جست‌وجوی عنوان یا مسیر صفحه"></label><span id="pageAccessSummary"></span></div>
    <div class="um-matrix-wrap"><table class="um-table page-access-table"><thead><tr><th>صفحه</th><th>دسته</th><th>مشاهده</th><th>ایجاد</th><th>ویرایش</th><th>حذف</th><th>تأیید</th><th>خروجی</th><th>مدیریت</th></tr></thead><tbody id="pageAccessRows"></tbody></table></div>
    <div class="um-scope-note"><b>نکته اجرایی:</b> این ماتریس سیاست دسترسی را برای نقش‌ها ذخیره می‌کند. در نسخه فعلی وب ایستا، اعمال آن در رابط کاربری است؛ برای امنیت قطعی در برابر دسترسی مستقیم به فایل‌ها، احراز هویت و کنترل مجوز باید در سرویس محلی/سرور نیز اجرا شود.</div>
-  </section>
+  </div></section>
   <section class="um-panel" id="panel-audit">
    <div class="um-panel-head"><div><span class="eyebrow">ردپای مدیریتی</span><h2>سوابق تغییرات</h2><p>ایجاد، ویرایش، تعلیق و تغییر گروه‌ها و نقش‌ها در این مرورگر ثبت می‌شود.</p></div><button id="clearAuditBtn" class="um-secondary" type="button">پاک‌سازی سوابق محلی</button></div>
    <div class="um-audit-list" id="auditList"></div><div class="um-empty" id="auditEmpty">هنوز رویدادی ثبت نشده است.</div>
