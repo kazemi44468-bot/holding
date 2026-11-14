@@ -26,7 +26,7 @@ async function initialize(){
 }
 async function save(code,profile){
  if(!canManagePersonnel())throw Error("برای ویرایش بانک پرسنل، مجوز مدیر فنی لازم است.");
- Vault.ensure();code=normalizeCode(code);if(!/^\d{4,}$/.test(code)||Number(code)<MIN_CODE)throw Error("کد پرسنلی باید عددی و از ۱۰۰۰ به بالا باشد.");
+ Vault.ensure();code=normalizeCode(code);if(!/^\d{4}$/.test(code)||Number(code)<MIN_CODE||Number(code)>=MIN_CODE+SLOT_COUNT)throw Error("کد پرسنلی باید یکی از شناسه‌های رزروشده ۱۰۰۰ تا ۱۲۴۹ باشد.");
  const prior=await get(code);if(!prior)throw Error("کد پرسنلی در بانک رزروشده پیدا نشد.");
  if(!String(profile.firstName||"").trim()||!String(profile.lastName||"").trim())throw Error("نام و نام خانوادگی الزامی است.");
  const nationalCode=String(profile.nationalCode||"").trim();if(nationalCode&&nationalCode.length!==10)throw Error("کد ملی باید ۱۰ رقم باشد.");if(nationalCode&&(await list()).some(r=>r.code!==code&&r.profile?.nationalCode===nationalCode))throw Error("این کد ملی قبلاً در پرونده دیگری ثبت شده است.");
@@ -46,7 +46,7 @@ async function changeCode(oldCode,newCode){
  Vault.ensure();oldCode=normalizeCode(oldCode);newCode=normalizeCode(newCode);
  if(!/^\d{4,}$/.test(newCode)||Number(newCode)<MIN_CODE||Number(newCode)>=MIN_CODE+SLOT_COUNT)throw Error("کد جدید باید در بازه ۱۰۰۰ تا ۱۲۴۹ باشد.");
  if(oldCode===newCode)return await get(oldCode);
- const source=await get(oldCode);if(!source)throw Error("کد فعلی پیدا نشد.");
+ const source=await get(oldCode);if(!source||!["active","inactive"].includes(source.status))throw Error("کد فعلی پیدا نشد یا قبلاً بازنشسته شده است.");
  const target=await get(newCode);if(target&&target.status!=="empty"&&target.movedFrom!==oldCode)throw Error("کد جدید قبلاً به فرد دیگری تخصیص یافته است.");if(target&&target.status==="empty")await Vault.add(ENTITY,recordKey(newCode),"delete",target);
  const snap=await Vault.snapshot();
  for(const r of snap.records){
@@ -61,7 +61,7 @@ async function changeCode(oldCode,newCode){
  for(const prefix of ["city-person-events-","city-person-profile-"]){const oldKey=prefix+oldCode,newKey=prefix+newCode,raw=localStorage.getItem(oldKey);if(raw!==null){const existing=localStorage.getItem(newKey);if(existing!==null&&prefix==="city-person-events-"){try{localStorage.setItem(newKey,JSON.stringify([...JSON.parse(existing),...JSON.parse(raw)]));}catch{localStorage.setItem(newKey,raw);}}else if(existing===null)localStorage.setItem(newKey,raw);localStorage.removeItem(oldKey);}}
  const moved={...source,code:newCode,movedFrom:oldCode,profile:replaceRefs(source.profile,oldCode,newCode),updatedAt:new Date().toISOString(),revision:(source.revision||0)+1};
  await Vault.add(ENTITY,recordKey(newCode),"upsert",moved);
- await Vault.add(ENTITY,recordKey(oldCode),"delete",{...source,code:oldCode,replacedBy:newCode,updatedAt:new Date().toISOString()});
+ await Vault.add(ENTITY,recordKey(oldCode),"upsert",{...blank(oldCode),status:"moved",replacedBy:newCode,retiredAt:new Date().toISOString(),updatedAt:new Date().toISOString(),revision:(source.revision||0)+1});
  await Vault.add("personnel-audit",crypto.randomUUID(),"upsert",{action:"recode",oldCode,newCode,at:new Date().toISOString()});
  return moved;
 }
@@ -76,13 +76,13 @@ function initRegistryPage(){
   const q=$("[data-personnel-search]").value.trim().toLocaleLowerCase("fa"),status=$("[data-personnel-status]").value,dep=$("[data-personnel-department]").value;
   const filtered=rows.filter(r=>{const p=r.profile||{},name=(p.firstName+" "+p.lastName+" "+p.nationalCode+" "+p.mobile+" "+r.code).toLocaleLowerCase("fa");return (!q||name.includes(q))&&(!status||r.status===status)&&(!dep||p.departmentId===dep);});
   const pages=Math.max(1,Math.ceil(filtered.length/pageSize));page=Math.min(page,pages);const slice=filtered.slice((page-1)*pageSize,page*pageSize),editable=canManagePersonnel();
-  tbody.innerHTML=slice.map(r=>{const p=r.profile||{},name=(p.firstName+" "+p.lastName).trim()||"پرونده تکمیل نشده";return '<tr><td><b class="pr-code">'+fa(r.code)+'</b></td><td>'+esc(name)+'</td><td>'+esc(departments.find(d=>d[0]===p.departmentId)?.[1]||"—")+'</td><td>'+esc(p.jobTitle||"—")+'</td><td><span class="pr-status '+r.status+'">'+(r.status==="active"?"فعال":r.status==="inactive"?"غیرفعال":"تکمیل‌نشده")+'</span></td><td><button type="button" class="pr-row-action" data-edit="'+esc(r.code)+'" '+(editable?"":"disabled")+'>ویرایش پرونده</button></td></tr>';}).join("")||'<tr><td colspan="6" class="pr-empty">رکوردی با این فیلتر پیدا نشد.</td></tr>';
+  tbody.innerHTML=slice.map(r=>{const p=r.profile||{},name=(p.firstName+" "+p.lastName).trim()||"پرونده تکمیل نشده";return '<tr><td><b class="pr-code">'+fa(r.code)+'</b></td><td>'+esc(name)+'</td><td>'+esc(departments.find(d=>d[0]===p.departmentId)?.[1]||"—")+'</td><td>'+esc(p.jobTitle||"—")+'</td><td><span class="pr-status '+r.status+'">'+(r.status==="active"?"فعال":r.status==="inactive"?"غیرفعال":r.status==="moved"?"کد بازنشسته · ← "+fa(r.replacedBy):"تکمیل‌نشده")+'</span></td><td><button type="button" class="pr-row-action" data-edit="'+esc(r.code)+'" '+(editable&&r.status!=="moved"?"":"disabled")+'>'+(r.status==="moved"?"غیرقابل تخصیص":"ویرایش پرونده")+'</button></td></tr>';}).join("")||'<tr><td colspan="6" class="pr-empty">رکوردی با این فیلتر پیدا نشد.</td></tr>';
   $("[data-pr-count]").textContent=fa(filtered.length)+" پرونده از "+fa(rows.length);
   $("[data-pr-pages]").textContent=fa(page)+" / "+fa(pages);
   $("[data-pr-prev]").disabled=page<=1;$("[data-pr-next]").disabled=page>=pages;
   $("[data-pr-active]").textContent=fa(rows.filter(r=>r.status==="active").length);
   $("[data-pr-empty]").textContent=fa(rows.filter(r=>r.status==="empty").length);
-  $("[data-pr-inactive]").textContent=fa(rows.filter(r=>r.status==="inactive").length);
+  $("[data-pr-inactive]").textContent=fa(rows.filter(r=>r.status==="inactive").length);if($("[data-pr-moved]"))$("[data-pr-moved]").textContent=fa(rows.filter(r=>r.status==="moved").length);
  }
  function setForm(r){
   editing=r;const p=r?.profile||blank("1000").profile;
