@@ -16,7 +16,6 @@ if(page.contentMode==="replace"){
  if(page.description){const intro=main.querySelector("h1")?.parentElement;const p=intro?.querySelector("p");if(p)p.textContent=page.description;}
 }
 const sections=(page.sections||[]).filter(s=>s&&((s.title||"").trim()||(s.body||"").trim()));if(!sections.length)return;
-const main=document.querySelector("main");if(!main)return;
 const host=document.createElement("section");host.className="page-studio-extra";host.setAttribute("aria-label","بخش‌های تکمیلی صفحه");
 sections.forEach(s=>{
  const card=document.createElement("article");card.className="page-studio-block"+(s.type==="note"?" is-note":"");
