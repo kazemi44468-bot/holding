@@ -62,6 +62,8 @@
  const shared=window.CITY_ORG_DATA;
  if(shared)events.forEach(e=>{if(e.orderId){const o=shared.orders.find(x=>x.id===e.orderId);if(o){e.title=o.title;e.detail="مخاطب اجرا: "+shared.byId(o.dept).name+" · مسئول: "+o.owner+" · پرونده "+o.id;e.place="مهلت "+o.deadline+" · "+o.status;}}});
  const typeNames={meeting:"جلسه",session:"نشست",action:"اقدام",mission:"مأموریت",training:"آموزش",personal:"مناسبت پرسنلی",resolution:"مصوبه ریاست"};
+ const countType=type=>{const rows=events.filter(e=>e.type===type);return type==="mission"?new Set(rows.map(e=>e.missionCode||e.title)).size:rows.length;};
+ const countAll=()=>events.filter(e=>e.type!=="mission").length+countType("mission");
  const fa=new Intl.DateTimeFormat("fa-IR-u-ca-persian",{day:"numeric"});
  const fullDate=new Intl.DateTimeFormat("fa-IR-u-ca-persian",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
  const monthTitle=new Intl.DateTimeFormat("fa-IR-u-ca-persian",{month:"long",year:"numeric"});
@@ -101,8 +103,8 @@
  root.querySelector("[data-cal-prev]").addEventListener("click",()=>{const p=new Date(monthStart);p.setDate(p.getDate()-1);monthStart=startOfMonth(p);selected=new Date(monthStart);render();});
  root.querySelector("[data-cal-next]").addEventListener("click",()=>{const n=new Date(monthStart);n.setDate(n.getDate()+monthDays(monthStart));monthStart=startOfMonth(n);selected=new Date(monthStart);render();});
  typeFilter.addEventListener("change",render);deptFilter.addEventListener("change",render);
- root.querySelectorAll("[data-calendar-count]").forEach(n=>{n.textContent=new Intl.NumberFormat("fa-IR").format(events.filter(e=>e.type===n.dataset.calendarCount).length);});
- const totalNode=root.querySelector("[data-calendar-total]");if(totalNode)totalNode.textContent=fmt(events.length);
+ root.querySelectorAll("[data-calendar-count]").forEach(n=>{n.textContent=new Intl.NumberFormat("fa-IR").format(countType(n.dataset.calendarCount));});
+ const totalNode=root.querySelector("[data-calendar-total]");if(totalNode)totalNode.textContent=fmt(countAll());
  const personSummary=root.querySelector("[data-calendar-person-summary]");
  const summary=root.querySelector("[data-calendar-department-summary]");
  let centralPeople=[];
