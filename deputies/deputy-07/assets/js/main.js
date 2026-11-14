@@ -99,9 +99,9 @@ const inPages=location.pathname.includes('/pages/');
   nav.innerHTML='<a href="'+home+'">نمای کلان</a><details class="nav-dropdown"><summary>ادارات کل</summary><div class="nav-menu">'+
    ['اداره اداری و پشتیبانی','اداره تحقیق و توسعه','اداره پارکبان و معبربانان','اداره تأسیسات فنی و امور نگهداری','اداره فاوا و خدمات فنی','اداره جمع‌آوری و بازیافت پسماند','اداره بازرسی و تحقیقات محلی'].map((n,i)=>'<a href="'+urls.departments[i]+'">'+n+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>مدیریت</summary><div class="nav-menu">'+
-   [[urls.users,'کاربران و سطح دسترسی'],[urls.control,'مرکز کنترل و پیکربندی'],[urls.personnel,'بانک مرکزی پرسنل'],[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],...customMenuLinks("مدیریت")].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
+   [[urls.users,'کاربران و سطح دسترسی'],[urls.control,'مرکز کنترل و پیکربندی'],[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],...customMenuLinks("مدیریت")].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>اقدامات</summary><div class="nav-menu">'+
-   [[urls.followups,'پیگیری دستورات'],[urls.notices,'اعلانات ریاست'],[urls.calendar,'تقویم شرکت'],...customMenuLinks("اقدامات")].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
+   [[urls.followups,'پیگیری دستورات'],[urls.notices,'اعلانات ریاست'],[urls.calendar,'تقویم و رویدادها'],...customMenuLinks("اقدامات")].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>مرکز خدمات</summary><div class="nav-menu">'+
    [[urls.services,'نمای کلی خدمات'],[urls.communications,'ارتباطات کارکنان'],[urls.welfare,'خدمات رفاهی'],[urls.coop,'فروشگاه تعاونی'],[urls.economic,'برنامه‌ریزی اقتصادی'],[urls.retirees,'خدمات بازنشستگان'],...customMenuLinks("خدمات")].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>گزارش‌ها</summary><div class="nav-menu">'+
@@ -130,8 +130,8 @@ const inPages=location.pathname.includes('/pages/');
  const current=location.pathname.split('/').pop();
  const groups=[
   {id:'departments',label:'ادارات',icon:'▦',links:urls.departments.map((href,i)=>[href,['اداره اداری و پشتیبانی','اداره تحقیق و توسعه','اداره پارکبان و معبربانان','اداره تأسیسات فنی و امور نگهداری','اداره فاوا و خدمات فنی','اداره جمع‌آوری و بازیافت پسماند','اداره بازرسی و تحقیقات محلی'][i]])},
-  {id:'management',label:'مدیریت',icon:'▤',links:[[urls.users,'کاربران و سطح دسترسی'],[urls.control,'مرکز کنترل و پیکربندی'],[urls.personnel,'بانک مرکزی پرسنل'],[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],...customMenuLinks("مدیریت")]},
-  {id:'actions',label:'اقدامات',icon:'✓',links:[[urls.followups,'پیگیری دستورات ریاست'],[urls.notices,'مرکز اعلانات ریاست'],[urls.calendar,'تقویم شرکت'],...customMenuLinks("اقدامات")]},
+  {id:'management',label:'مدیریت',icon:'▤',links:[[urls.users,'کاربران و سطح دسترسی'],[urls.control,'مرکز کنترل و پیکربندی'],[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],...customMenuLinks("مدیریت")]},
+  {id:'actions',label:'اقدامات',icon:'✓',links:[[urls.followups,'پیگیری دستورات ریاست'],[urls.notices,'مرکز اعلانات ریاست'],[urls.calendar,'تقویم و رویدادها'],...customMenuLinks("اقدامات")]},
   {id:'services',label:'خدمات',icon:'◇',links:[[urls.services,'نمای کلی مرکز خدمات'],[urls.communications,'ارتباطات کارکنان'],[urls.welfare,'خدمات رفاهی'],[urls.coop,'فروشگاه و تعاونی مصرف'],[urls.economic,'برنامه‌ریزی اقتصادی'],[urls.retirees,'خدمات بازنشستگان'],...customMenuLinks("خدمات")]},
   {id:'reports',label:'گزارش‌ها',icon:'▥',links:[[urls.reports,'گزارش تلفیقی ادارات'],[urls.catalog,'کاتالوگ گزارش‌ها'],[urls.archive,'آرشیو گزارش‌ها'],[urls.participation,'نظرسنجی'],...customMenuLinks("گزارش‌ها")]},
   ...(otherCustomPages.length||otherStaticPages.length?[{id:'custom-pages',label:'سایر صفحات',icon:'▣',links:otherCustomPages}]:[])
