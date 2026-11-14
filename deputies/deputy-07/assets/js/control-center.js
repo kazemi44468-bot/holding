@@ -1,5 +1,5 @@
 import {Vault} from "../../local-data/assets/engine.js";
-import {getPersonnel,ensurePersonnelUnlocked,normalizePersonnelCode} from "../../local-data/assets/personnel-registry.js?v=personnel-registry-20261114-4";
+import {getPersonnel,ensurePersonnelUnlocked,normalizePersonnelCode} from "../../local-data/assets/personnel-registry.js?v=personnel-registry-20261114-5";
 (()=>{"use strict";
 const $=id=>document.getElementById(id),uid=()=>crypto.randomUUID?crypto.randomUUID():"id-"+Date.now()+"-"+Math.random().toString(16).slice(2),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const KEY="deputy7.platform.config.v1";let unlocked=false,passphrase="",configQueue=Promise.resolve(),state={version:1,departments:[],databases:[],forms:[],theme:{palette:"adminlogin",density:"comfortable",radius:"soft",width:"wide"}},records=[];
