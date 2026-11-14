@@ -17,6 +17,7 @@ function showView(v){document.querySelectorAll(".cc-view").forEach(x=>x.classLis
 document.querySelectorAll(".cc-nav[data-view]").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.view)));
 document.querySelectorAll(".cc-group-head").forEach(b=>b.addEventListener("click",()=>b.closest(".cc-nav-group")?.classList.toggle("open")));
 document.querySelectorAll("[data-jump]").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.jump)));
+if(location.hash==="#view-users")showView("users");
 $("ccMobileMenu").onclick=()=>document.body.classList.toggle("cc-sidebar-open");$("ccSidebarOverlay").onclick=()=>document.body.classList.remove("cc-sidebar-open");
 $("ccMenuSearch").addEventListener("input",e=>{const q=e.target.value.trim().toLocaleLowerCase("fa");document.querySelectorAll(".cc-nav[data-view],.cc-nav-link").forEach(a=>{a.hidden=!!q&&!a.textContent.toLocaleLowerCase("fa").includes(q);const g=a.closest(".cc-nav-group");if(g&&q&& !a.hidden)g.classList.add("open");});});
 $("refreshMonitor").onclick=()=>{renderMonitor();renderFollowups();};
