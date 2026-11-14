@@ -1,17 +1,17 @@
 (()=>{"use strict";
-const KEY="deputy7.identity-access.v1",ACTIONS=[["view","مشاهده"],["create","ایجاد"],["edit","ویرایش"],["delete","حذف"],["approve","تأیید"],["export","خروجی"],["manage","مدیریت صفحه"]];
+const KEY="deputy7.identity-access.v1",ACTIONS=[["view","مشاهده"],["create","ایجاد"],["edit","ویرایش"],["delete","حذف"],["assign","ارجاع"],["approve","تأیید"],["export","خروجی"],["manage","مدیریت صفحه"]];
 const $=id=>document.getElementById(id),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function read(){try{return JSON.parse(localStorage.getItem(KEY))||{version:1,users:[],roles:[]};}catch{return {version:1,users:[],roles:[]};}}
 function pages(){return window.Deputy7Pages?.all()||[];}
 function defaultActions(role,page){
  if(role.id==="super-admin"||role.superAdmin)return ACTIONS.map(x=>x[0]);
- if(role.id==="chair")return ["view","approve","export"];
+ if(role.id==="chair")return ["view","assign","approve","export"];
  if(role.id==="technical-admin")return ["view","manage"].filter(x=>page.category==="پیکربندی"||page.category==="امنیت"||page.id==="personnel-registry");
- if(role.id==="department-manager")return ["view","create","edit","delete","approve","export"];
+ if(role.id==="department-manager")return ["view","create","edit","delete","assign","approve","export"];
  if(role.id==="expert")return ["view","create","edit"];
  if(role.id==="operator")return ["view","create"];
  if(role.id==="observer"||role.id==="auditor")return ["view","export"];
- const grants=role.grants||[];return ["view","create","edit","delete","approve","export","manage"].filter(a=>grants.includes(a)||a==="view"&&grants.includes("view"));
+ const grants=role.grants||[];return ["view","create","edit","delete","assign","approve","export","manage"].filter(a=>grants.includes(a)||a==="view"&&grants.includes("view"));
 }
 function init(){
  const host=$("pageAccessHost");if(!host)return;
@@ -26,7 +26,7 @@ function init(){
   const role=state.roles.find(r=>r.id===selectedRole);if(!role)return;
   const q=$("pageAccessSearch").value.trim().toLocaleLowerCase("fa");
   const list=pages().filter(p=>!q||(p.title+" "+p.category+" "+p.path).toLocaleLowerCase("fa").includes(q));
-  $("pageAccessRows").innerHTML=list.map(p=>{const granted=state.pageGrants?.[role.id]?.[p.id]||[];return '<tr><td><b>'+esc(p.title)+'</b><small>'+esc(p.path)+'</small></td><td>'+esc(p.category||"—")+'</td>'+ACTIONS.map(([id,label])=>'<td><label class="page-access-check" title="'+label+'"><input type="checkbox" data-page="'+esc(p.id)+'" data-action="'+id+'" '+(granted.includes(id)?"checked":"")+'><span>'+label+'</span></label></td>').join("")+'</tr>';}).join("")||'<tr><td colspan="9">صفحه‌ای با این عبارت پیدا نشد.</td></tr>';
+  $("pageAccessRows").innerHTML=list.map(p=>{const granted=state.pageGrants?.[role.id]?.[p.id]||[];return '<tr><td><b>'+esc(p.title)+'</b><small>'+esc(p.path)+'</small></td><td>'+esc(p.category||"—")+'</td>'+ACTIONS.map(([id,label])=>'<td><label class="page-access-check" title="'+label+'"><input type="checkbox" data-page="'+esc(p.id)+'" data-action="'+id+'" '+(granted.includes(id)?"checked":"")+'><span>'+label+'</span></label></td>').join("")+'</tr>';}).join("")||'<tr><td colspan="10">صفحه‌ای با این عبارت پیدا نشد.</td></tr>';
   $("pageAccessSummary").textContent=list.length.toLocaleString("fa-IR")+" صفحه برای نقش «"+role.name+"»";
  }
  function persist(){localStorage.setItem(KEY,JSON.stringify(state));}
