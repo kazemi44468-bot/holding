@@ -285,7 +285,7 @@ const inPages=location.pathname.includes('/pages/');
  const link=[...document.querySelectorAll('link[rel="stylesheet"]')].find(el=>/assets\/css\/style\.css(?:\?|$)/.test(el.getAttribute('href')||''));
  if(!link)return;
  const url=new URL(link.href,document.baseURI);
- url.searchParams.set('v','page-studio-20261114-5');
+ url.searchParams.set('v','page-studio-20261114-6');
  if(link.href!==url.href)link.href=url.href;
 })();
 
@@ -298,6 +298,6 @@ const inPages=location.pathname.includes('/pages/');
   if(existing){if(existing.dataset.loaded==="true"||existing.readyState==="complete")return resolve();existing.addEventListener("load",resolve,{once:true});existing.addEventListener("error",reject,{once:true});return;}
   const s=document.createElement("script");s.src=base+src;s.defer=true;s.onload=()=>{s.dataset.loaded="true";resolve();};s.onerror=reject;document.head.append(s);
  });
- const bridge=()=>load("page-content-bridge.js?v=page-studio-20261114-5").catch(()=>{});
- if(window.Deputy7Pages)bridge();else load("page-registry-core.js?v=page-studio-20261114-5").then(bridge).catch(()=>{});
+ const bridge=()=>load("page-content-bridge.js?v=page-studio-20261114-6").catch(()=>{});
+ if(window.Deputy7Pages)bridge();else load("page-registry-core.js?v=page-studio-20261114-6").then(bridge).catch(()=>{});
 })();
