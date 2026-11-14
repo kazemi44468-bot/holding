@@ -1,4 +1,4 @@
-const CACHE_NAME = "deputy-07-missions-v23";
+const CACHE_NAME = "deputy-07-missions-v24";
 const FILES = [
   "./pages/mission-bank.html",
   "./pages/mission-create.html",
@@ -7,6 +7,7 @@ const FILES = [
   "./pages/calendar.html",
   "./assets/css/style.css",
   "./assets/js/main.js",
+  "./assets/js/jalali-picker.js",
   "./assets/js/page-registry-core.js",
   "./assets/js/organization-modules.js",
   "./assets/js/mobile-nav.js",
