@@ -114,7 +114,7 @@ const inPages=location.pathname.includes('/pages/');
   else mobileNavQuery.addListener(syncHeaderNav);
  }
  if(nav){
-  nav.innerHTML='<a href="'+home+'">نمای کلان</a><details class="nav-dropdown"><summary>ادارات کل</summary><div class="nav-menu">'+
+  nav.innerHTML='<details class="nav-dropdown"><summary>ادارات کل</summary><div class="nav-menu">'+
    ['اداره اداری و پشتیبانی','اداره تحقیق و توسعه','اداره پارکبان و معبربانان','اداره تأسیسات فنی و امور نگهداری','اداره فاوا و خدمات فنی','اداره جمع‌آوری و بازیافت پسماند','اداره بازرسی و تحقیقات محلی'].map((n,i)=>'<a href="'+urls.departments[i]+'">'+n+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>مدیریت</summary><div class="nav-menu">'+
    [[urls.users,'کاربران و سطح دسترسی'],[urls.control,'مرکز کنترل و پیکربندی'],[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],...customMenuLinks("مدیریت")].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
