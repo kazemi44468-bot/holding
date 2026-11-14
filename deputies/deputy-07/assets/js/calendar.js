@@ -5,7 +5,7 @@
  const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
  const departments={"1":"اداره اداری و پشتیبانی","2":"اداره تحقیق و توسعه","3":"اداره پارک بان و معبربانان","4":"اداره تأسیسات فنی و امور نگهداری","6":"اداره فاوا و خدمات فنی","7":"اداره جمع‌آوری، نگهداری و بازیافت پسماند","8":"اداره بازرسی و تحقیقات محلی"};
  const events=[
-  {date:"2026-11-22",type:"meeting",dept:"all",title:"نشست راهبری و مرور اولویت‌های شرکت",detail:"بررسی وضعیت اقدامات جاری، موانع اجرایی و تصمیم‌های بین‌اداره‌ای",time:"۰۹:۰۰",place:"اتاق جلسات ستاد"},
+  {date:"2026-11-22",type:"meeting",dept:"all",title:"نشست راهبری و مرور اولویت‌های معاونت ۷",detail:"بررسی وضعیت اقدامات جاری، موانع اجرایی و تصمیم‌های بین‌اداره‌ای",time:"۰۹:۰۰",place:"اتاق جلسات ستاد"},
   {date:"2026-11-04",type:"meeting",dept:"1",title:"جلسه بررسی امور پرسنلی",detail:"بررسی درخواست‌ها و برنامه‌های امور اداری",time:"۱۰:۰۰",place:"اداره اداری و پشتیبانی"},
   {date:"2026-11-06",type:"session",dept:"2",title:"نشست بررسی طرح‌های پژوهشی",detail:"ارزیابی پیشرفت طرح‌ها و تعیین گام‌های بعدی",time:"۱۱:۰۰",place:"اداره تحقیق و توسعه"},
   {date:"2026-11-05",type:"meeting",dept:"3",title:"جلسه هماهنگی عملیات میدانی",detail:"هماهنگی سرپرستان و برنامه عملیات مناطق",time:"۰۸:۳۰",place:"اداره پارک بان و معبربانان"},
@@ -30,12 +30,12 @@
  ];
  events.push(
   /* برنامه جلسات ریاست با مدیران ادارات و برنامه‌های تکمیلی زمان‌دار */
-  {date:"2026-11-10",type:"meeting",dept:"all",title:"جلسه رئیس شرکت با اداره اداری و پشتیبانی",detail:"مرور وضعیت نیروی انسانی، مکاتبات، پشتیبانی و تصمیم‌گیری درباره درخواست‌های ارجاعی",time:"۰۸:۳۰",place:"اتاق جلسات ریاست"},
-  {date:"2026-11-11",type:"meeting",dept:"all",title:"جلسه رئیس شرکت با اداره تحقیق و توسعه",detail:"ارائه گزارش طرح‌های پژوهشی، اولویت‌بندی مطالعات و تعیین خروجی‌های قابل تحویل",time:"۰۹:۰۰",place:"اتاق جلسات ریاست"},
-  {date:"2026-11-12",type:"meeting",dept:"all",title:"جلسه رئیس شرکت با اداره پارکبان و معبربانان",detail:"بررسی پوشش مناطق، وضعیت نیروهای میدانی، انضباط عملیاتی و نیازهای تجهیزاتی",time:"۰۸:۳۰",place:"اتاق جلسات ریاست"},
-  {date:"2026-11-15",type:"meeting",dept:"all",title:"جلسه رئیس شرکت با اداره تأسیسات فنی و امور نگهداری",detail:"بررسی خرابی‌های باز، برنامه نگهداری پیشگیرانه و اولویت تعمیرات",time:"۰۹:۰۰",place:"اتاق جلسات ریاست"},
-  {date:"2026-11-16",type:"meeting",dept:"all",title:"جلسه رئیس شرکت با اداره فاوا و خدمات فنی",detail:"مرور پایداری سامانه‌ها، امنیت اطلاعات، پشتیبانی کاربران و برنامه توسعه زیرساخت",time:"۰۹:۰۰",place:"اتاق جلسات ریاست"},
-  {date:"2026-11-17",type:"meeting",dept:"all",title:"جلسه رئیس شرکت با اداره جمع‌آوری و بازیافت پسماند",detail:"ارزیابی ناوگان، مسیرهای جمع‌آوری، شاخص‌های پاکیزگی و برنامه بازیافت",time:"۰۸:۳۰",place:"اتاق جلسات ریاست"},
+  {date:"2026-11-10",type:"meeting",dept:"all",title:"جلسه ریاست معاونت ۷ با اداره اداری و پشتیبانی",detail:"مرور وضعیت نیروی انسانی، مکاتبات، پشتیبانی و تصمیم‌گیری درباره درخواست‌های ارجاعی",time:"۰۸:۳۰",place:"اتاق جلسات ریاست"},
+  {date:"2026-11-11",type:"meeting",dept:"all",title:"جلسه ریاست معاونت ۷ با اداره تحقیق و توسعه",detail:"ارائه گزارش طرح‌های پژوهشی، اولویت‌بندی مطالعات و تعیین خروجی‌های قابل تحویل",time:"۰۹:۰۰",place:"اتاق جلسات ریاست"},
+  {date:"2026-11-12",type:"meeting",dept:"all",title:"جلسه ریاست معاونت ۷ با اداره پارکبان و معبربانان",detail:"بررسی پوشش مناطق، وضعیت نیروهای میدانی، انضباط عملیاتی و نیازهای تجهیزاتی",time:"۰۸:۳۰",place:"اتاق جلسات ریاست"},
+  {date:"2026-11-15",type:"meeting",dept:"all",title:"جلسه ریاست معاونت ۷ با اداره تأسیسات فنی و امور نگهداری",detail:"بررسی خرابی‌های باز، برنامه نگهداری پیشگیرانه و اولویت تعمیرات",time:"۰۹:۰۰",place:"اتاق جلسات ریاست"},
+  {date:"2026-11-16",type:"meeting",dept:"all",title:"جلسه ریاست معاونت ۷ با اداره فاوا و خدمات فنی",detail:"مرور پایداری سامانه‌ها، امنیت اطلاعات، پشتیبانی کاربران و برنامه توسعه زیرساخت",time:"۰۹:۰۰",place:"اتاق جلسات ریاست"},
+  {date:"2026-11-17",type:"meeting",dept:"all",title:"جلسه ریاست معاونت ۷ با اداره جمع‌آوری و بازیافت پسماند",detail:"ارزیابی ناوگان، مسیرهای جمع‌آوری، شاخص‌های پاکیزگی و برنامه بازیافت",time:"۰۸:۳۰",place:"اتاق جلسات ریاست"},
   {date:"2026-11-18",type:"meeting",dept:"all",title:"جلسه شورای مدیران و جمع‌بندی عملکرد ادارات",detail:"ارائه گزارش هفت اداره، بررسی انحراف برنامه‌ها و تصویب اقدامات اصلاحی",time:"۱۰:۰۰",place:"سالن جلسات مرکزی"},
   {date:"2026-11-19",type:"meeting",dept:"1",title:"جلسه هفتگی هماهنگی اداره اداری و پشتیبانی",detail:"تقسیم کار هفتگی، وضعیت درخواست‌ها و مرور پرونده‌های دارای مهلت",time:"۰۹:۰۰",place:"اتاق اداره"},
   {date:"2026-11-19",type:"meeting",dept:"2",title:"جلسه هفتگی شورای پژوهش",detail:"کنترل نقاط عطف طرح‌ها و بررسی مستندات مطالعاتی",time:"۱۱:۰۰",place:"اتاق اداره"},
@@ -81,7 +81,7 @@
  function startOfMonth(d){const x=new Date(d);x.setHours(12,0,0,0);const k=keyOf(x);while(true){const p=new Date(x);p.setDate(p.getDate()-1);if(keyOf(p)!==k)break;x.setTime(p.getTime());}return x;}
  function monthDays(first){const k=keyOf(first);let n=0;const x=new Date(first);while(keyOf(x)===k){n++;x.setDate(x.getDate()+1);}return n;}
  function filtered(){return events.filter(e=>(typeFilter.value==="all"||e.type===typeFilter.value)&&(deptFilter.value==="all"||e.dept==="all"||e.dept===deptFilter.value));}
- function card(e){const d=fromIso(e.date);const hr=e.hrEventType?'<span>'+hrEventNames[e.hrEventType]+'</span><span>'+esc(e.actionLabel)+'</span>'+(e.actionDue?'<span>مهلت اقدام: '+new Intl.DateTimeFormat("fa-IR-u-ca-persian",{dateStyle:"medium"}).format(fromIso(e.actionDue))+'</span>':''):'';return '<article class="calendar-event"><div class="calendar-event-date"><b>'+dayNumber(d)+'</b><span>'+new Intl.DateTimeFormat("fa-IR-u-ca-persian",{month:"short"}).format(d)+'</span></div><div class="calendar-event-content"><b>'+esc(e.title)+'</b><p>'+esc(e.detail)+'</p><div class="calendar-event-meta"><span>'+typeNames[e.type]+'</span><span>'+ (e.dept==="all"?"ستاد شرکت":departments[e.dept]||"")+'</span>'+hr+(e.time?'<span>'+esc(e.time)+'</span>':'')+(e.place?'<span>'+esc(e.place)+'</span>':'')+'</div></div></article>';}
+ function card(e){const d=fromIso(e.date);const hr=e.hrEventType?'<span>'+hrEventNames[e.hrEventType]+'</span><span>'+esc(e.actionLabel)+'</span>'+(e.actionDue?'<span>مهلت اقدام: '+new Intl.DateTimeFormat("fa-IR-u-ca-persian",{dateStyle:"medium"}).format(fromIso(e.actionDue))+'</span>':''):'';return '<article class="calendar-event"><div class="calendar-event-date"><b>'+dayNumber(d)+'</b><span>'+new Intl.DateTimeFormat("fa-IR-u-ca-persian",{month:"short"}).format(d)+'</span></div><div class="calendar-event-content"><b>'+esc(e.title)+'</b><p>'+esc(e.detail)+'</p><div class="calendar-event-meta"><span>'+typeNames[e.type]+'</span><span>'+ (e.dept==="all"?"ستاد معاونت ۷":departments[e.dept]||"")+'</span>'+hr+(e.time?'<span>'+esc(e.time)+'</span>':'')+(e.place?'<span>'+esc(e.place)+'</span>':'')+'</div></div></article>';}
  function renderGrid(){
   monthLabel.textContent=monthTitle.format(monthStart);
   const first=new Date(monthStart);const offset=(first.getDay()+1)%7;const total=monthDays(first);const rows=Math.ceil((offset+total)/7);const today=iso(new Date());
