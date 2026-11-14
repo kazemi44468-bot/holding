@@ -179,10 +179,14 @@ function openFieldEditor(target){
  $("fieldEditorHeading").textContent=target.kind==="new"?"افزودن فیلد جدید":"ویرایش فیلد";
  $("fieldEditorLabel").value=meta.label||"";$("fieldEditorType").value=meta.type||"text";$("fieldEditorPlaceholder").value=meta.placeholder||"";
  $("fieldEditorOptions").value=(meta.options||[]).join("\n");$("fieldEditorRequired").checked=!!meta.required;
- $("fieldEditorOptionsWrap").hidden=(meta.type||"text")!=="select";$("fieldEditorDelete").hidden=target.kind==="new";
+ $("fieldEditorOptionsWrap").hidden=!["select","checklist"].includes(meta.type||"text");$("fieldEditorDelete").hidden=target.kind==="new";
+  const defs=fieldDefinitions().filter(x=>x.key!==(target.kind==="core"?"core:"+target.id:target.kind==="extra"?"extra:"+target.id:target.kind==="dept"?"dept:"+target.departmentId+":"+target.id:""));
+  $("fieldEditorConditionField").replaceChildren();const none=document.createElement("option");none.value="";none.textContent="بدون شرط";$("fieldEditorConditionField").append(none);defs.forEach(x=>{const o=document.createElement("option");o.value=x.key;o.textContent=x.label;$("fieldEditorConditionField").append(o);});
+  const cond=meta.condition||{};$("fieldEditorConditionEnabled").checked=!!cond.fieldKey;$("fieldEditorConditionField").value=cond.fieldKey||"";$("fieldEditorConditionOperator").value=cond.operator||"equals";$("fieldEditorConditionValue").value=cond.value??"";$("fieldEditorConditionFields").hidden=!cond.fieldKey;
  $("fieldEditorStatus").textContent="";$("fieldEditor").hidden=false;$("fieldEditor").scrollIntoView({behavior:"smooth",block:"center"});
 }
-$("fieldEditorType").addEventListener("change",()=>{$("fieldEditorOptionsWrap").hidden=$("fieldEditorType").value!=="select";});
+$("fieldEditorType").addEventListener("change",()=>{$("fieldEditorOptionsWrap").hidden=!["select","checklist"].includes($("fieldEditorType").value);});
+$("fieldEditorConditionEnabled").addEventListener("change",()=>{$("fieldEditorConditionFields").hidden=!$("fieldEditorConditionEnabled").checked;});
 $("fieldEditorCancel").addEventListener("click",()=>{$("fieldEditor").hidden=true;editingField=null;});
 async function persistFieldSchema(){
  if(!window.Deputy7Access?.canCurrent("manageSchema",{kind:"configuration"}))throw new Error("برای تغییر ساختار فرم، دسترسی مدیریت ساختار لازم است.");
@@ -193,12 +197,14 @@ $("fieldEditorSave").addEventListener("click",async()=>{
   if(!editingField)throw new Error("فیلدی انتخاب نشده است.");
   const label=$("fieldEditorLabel").value.trim(),type=$("fieldEditorType").value,required=$("fieldEditorRequired").checked,placeholder=$("fieldEditorPlaceholder").value.trim(),options=$("fieldEditorOptions").value.split("\n").map(x=>x.trim()).filter(Boolean);
   if(!label)throw new Error("عنوان فیلد را وارد کنید.");if(type==="select"&&!options.length)throw new Error("برای فهرست انتخابی حداقل یک گزینه وارد کنید.");
-  const meta={label,type,required,placeholder,options,active:true};
+  const condition=$("fieldEditorConditionEnabled").checked?{fieldKey:$("fieldEditorConditionField").value,operator:$("fieldEditorConditionOperator").value,value:$("fieldEditorConditionValue").value.trim()}:null;
+   if(condition&&!condition.fieldKey)throw new Error("فیلد مرجع شرط را انتخاب کنید.");if(condition&&condition.operator!=="not-empty"&&!condition.value)throw new Error("مقدار شرط را وارد کنید.");
+   const meta={label,type,required,placeholder,options,condition,active:true};
   if(editingField.kind==="core"){schema.coreFields=schema.coreFields||{};schema.coreFields[editingField.id]={...fieldMeta(editingField.id,editingField.wrap),...meta};}
   else if(editingField.kind==="extra"){const f=schema.extraFields.find(x=>x.id===editingField.id);Object.assign(f,meta);}
   else if(editingField.kind==="dept"){const f=(schema.departments.find(d=>String(d.id)===String(editingField.departmentId))?.fields||[]).find(x=>x.id===editingField.id);Object.assign(f,meta);}
   else{schema.extraFields=schema.extraFields||[];const id="f_"+crypto.randomUUID().replace(/-/g,"").slice(0,12);schema.extraFields.push({id,section:editingField.section,...meta,full:false});}
-  const extraValues=readExtraFields(),departmentValues=readCustom();await persistFieldSchema();applyCoreFields();renderDepartmentFields();writeCustom(departmentValues);renderExtraFields(extraValues);decorateFormFields();$("fieldEditor").hidden=true;editingField=null;$("fieldEditorStatus").textContent="";$("schemaResult").textContent="تغییر ساختار فرم ذخیره شد.";
+  const extraValues=readExtraFields(),departmentValues=readCustom();await persistFieldSchema();applyCoreFields();renderDepartmentFields();writeCustom(departmentValues);renderExtraFields(extraValues);decorateFormFields();applyFieldConditions();$("fieldEditor").hidden=true;editingField=null;$("fieldEditorStatus").textContent="";$("schemaResult").textContent="تغییر ساختار فرم ذخیره شد.";
  }catch(e){$("fieldEditorStatus").textContent=e.message;}
 });
 $("fieldEditorDelete").addEventListener("click",async()=>{
@@ -248,7 +254,7 @@ function collect(){
   dept:data.executorDepartment||"all",description:data.calendarDescription||data.missionSubject||"",reminder:data.calendarReminder||"بدون یادآوری"
  }:null;
  data.milestones=readMilestones();
- data.departmentFields={...(currentMission?.departmentFields||{}),...readCustom()};
+ data.departmentFields={...(currentMission?.departmentFields||{}),...(departmentDraftValues[data.executorDepartment]||{}),...readCustom()};
  data.extraFields={...(currentMission?.extraFields||{}),...readExtraFields()};
  data.schemaSnapshot=currentMission?.schemaSnapshot||structuredClone(schema||defaultConfig());
  data.schemaVersion=Number(schema?.version||1);
@@ -261,7 +267,7 @@ function fill(data){
  setRadio("hasPrevious",data.hasPrevious?"yes":"no");
  setRadio("calendarEnabled",data.calendarEnabled===false?"no":"yes");
  $("previousFields").classList.toggle("hidden",!data.hasPrevious);
- renderDepartmentFields();writeCustom(data.departmentFields);renderMilestones(data.milestones||[]);renderExtraFields(data.extraFields);
+ renderDepartmentFields();writeCustom(data.departmentFields);renderMilestones(data.milestones||[]);renderExtraFields(data.extraFields);applyFieldConditions();
 }
 function renderWorkflowHistory(log=[]){
  const host=$("workflowHistory");if(!host)return;
@@ -325,7 +331,8 @@ async function unlock(){
  else{writeField("requestDate",dateNow());writeField("receivedAt",new Date().toISOString().slice(0,16));}
 }
 $("unlockVault").addEventListener("click",async()=>{try{await unlock();}catch(e){$("authState").textContent=e.message;}});
-$("executorDepartment").addEventListener("change",renderDepartmentFields);
+$("executorDepartment").addEventListener("change",()=>{renderDepartmentFields();applyFieldConditions();});
+$("missionForm").addEventListener("input",applyFieldConditions);$("missionForm").addEventListener("change",applyFieldConditions);
 document.querySelectorAll('input[name="hasPrevious"]').forEach(el=>el.addEventListener("change",()=>$("previousFields").classList.toggle("hidden",selectedRadio("hasPrevious")!=="yes")));
 $("progress").addEventListener("input",updateProgress);$("executionStatus").addEventListener("change",updateProgress);
 $("addMilestone").addEventListener("click",()=>addMilestoneRow());
