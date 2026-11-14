@@ -1,6 +1,7 @@
 import {Vault} from "./engine.js";
 const ENTITY="personnel",MIN_CODE=1000,SLOT_COUNT=250,REF_KEYS=new Set(["personnelCode","staffCode","employeeCode","personnelId","supervisorCode","managerPersonnelCode","ownerCode","assigneeCode"]);
 const normalizeCode=v=>String(v??"").trim().replace(/[۰-۹]/g,d=>String("۰۱۲۳۴۵۶۷۸۹".indexOf(d))).replace(/[٠-٩]/g,d=>String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));
+const recordKey=code=>"personnel:"+String(code);
 const blank=(code)=>({code:String(code),status:"empty",profile:{firstName:"",lastName:"",nationalCode:"",birthDate:"",marriageDate:"",gender:"",mobile:"",phone:"",email:"",address:"",departmentId:"",unit:"",jobTitle:"",employmentType:"",hireDate:"",contractEnd:"",education:"",fieldOfStudy:"",specialty:"",supervisorCode:"",workLocation:"",notes:""},createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),revision:1});
 const clone=x=>JSON.parse(JSON.stringify(x));
 const esc=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -20,7 +21,7 @@ async function get(code){code=normalizeCode(code);let rows=await list();if(rows.
 async function initialize(){
  Vault.ensure();const current=await list(),have=new Set(current.map(x=>String(x.code))),missing=[];
  for(let i=0;i<SLOT_COUNT;i++){const code=String(MIN_CODE+i);if(!have.has(code))missing.push(code);}
- for(const code of missing)await Vault.add(ENTITY,code,"upsert",blank(code));
+ for(const code of missing)await Vault.add(ENTITY,recordKey(code),"upsert",blank(code));
  return {total:SLOT_COUNT,created:missing.length,records:await list()};
 }
 async function save(code,profile){
@@ -29,7 +30,7 @@ async function save(code,profile){
  if(!String(profile.firstName||"").trim()||!String(profile.lastName||"").trim())throw Error("نام و نام خانوادگی الزامی است.");
  const nationalCode=String(profile.nationalCode||"").trim();if(nationalCode&&nationalCode.length!==10)throw Error("کد ملی باید ۱۰ رقم باشد.");if(nationalCode&&(await list()).some(r=>r.code!==code&&r.profile?.nationalCode===nationalCode))throw Error("این کد ملی قبلاً در پرونده دیگری ثبت شده است.");
  const clean={...blank(code),...prior,profile:{...blank(code).profile,...(prior.profile||{}),...profile},status:profile.recordStatus==="inactive"?"inactive":(profile.firstName||profile.lastName)?"active":(prior.status==="inactive"?"inactive":"empty"),updatedAt:new Date().toISOString(),revision:(prior.revision||0)+1};
- await Vault.add(ENTITY,code,"upsert",clean);
+ await Vault.add(ENTITY,recordKey(code),"upsert",clean);
  try{const key="deputy7.identity-access.v1",s=JSON.parse(localStorage.getItem(key)||"null");if(s?.users){s.users=s.users.map(u=>u.personnelCode===code?{...u,name:(clean.profile.firstName+" "+clean.profile.lastName).trim()||u.name,title:clean.profile.jobTitle||u.title,unit:clean.profile.unit||u.unit,departments:clean.profile.departmentId?[clean.profile.departmentId]:u.departments}:u);localStorage.setItem(key,JSON.stringify(s));}}catch{}
  await Vault.add("personnel-audit",crypto.randomUUID(),"upsert",{action:"save",code,at:new Date().toISOString()});
  return clean;
@@ -44,10 +45,10 @@ async function changeCode(oldCode,newCode){
  if(!/^\d{4,}$/.test(newCode)||Number(newCode)<MIN_CODE||Number(newCode)>=MIN_CODE+SLOT_COUNT)throw Error("کد جدید باید در بازه ۱۰۰۰ تا ۱۲۴۹ باشد.");
  if(oldCode===newCode)return await get(oldCode);
  const source=await get(oldCode);if(!source)throw Error("کد فعلی پیدا نشد.");
- const target=await get(newCode);if(target&&target.status!=="empty"&&target.movedFrom!==oldCode)throw Error("کد جدید قبلاً به فرد دیگری تخصیص یافته است.");if(target&&target.status==="empty")await Vault.add(ENTITY,newCode,"delete",target);
+ const target=await get(newCode);if(target&&target.status!=="empty"&&target.movedFrom!==oldCode)throw Error("کد جدید قبلاً به فرد دیگری تخصیص یافته است.");if(target&&target.status==="empty")await Vault.add(ENTITY,recordKey(newCode),"delete",target);
  const snap=await Vault.snapshot();
  for(const r of snap.records){
-  if(r.entity===ENTITY&&String(r.recordId)===oldCode)continue;
+  if(r.entity===ENTITY&&String(r.recordId)===recordKey(oldCode))continue;
   const updated=replaceRefs(r.data,oldCode,newCode);
   if(JSON.stringify(updated)!==JSON.stringify(r.data))await Vault.add(r.entity,r.recordId,"upsert",updated);
  }
@@ -57,8 +58,8 @@ async function changeCode(oldCode,newCode){
  }
  for(const prefix of ["city-person-events-","city-person-profile-"]){const oldKey=prefix+oldCode,newKey=prefix+newCode,raw=localStorage.getItem(oldKey);if(raw!==null){const existing=localStorage.getItem(newKey);if(existing!==null&&prefix==="city-person-events-"){try{localStorage.setItem(newKey,JSON.stringify([...JSON.parse(existing),...JSON.parse(raw)]));}catch{localStorage.setItem(newKey,raw);}}else if(existing===null)localStorage.setItem(newKey,raw);localStorage.removeItem(oldKey);}}
  const moved={...source,code:newCode,movedFrom:oldCode,profile:replaceRefs(source.profile,oldCode,newCode),updatedAt:new Date().toISOString(),revision:(source.revision||0)+1};
- await Vault.add(ENTITY,newCode,"upsert",moved);
- await Vault.add(ENTITY,oldCode,"delete",{...source,code:oldCode,replacedBy:newCode,updatedAt:new Date().toISOString()});
+ await Vault.add(ENTITY,recordKey(newCode),"upsert",moved);
+ await Vault.add(ENTITY,recordKey(oldCode),"delete",{...source,code:oldCode,replacedBy:newCode,updatedAt:new Date().toISOString()});
  await Vault.add("personnel-audit",crypto.randomUUID(),"upsert",{action:"recode",oldCode,newCode,at:new Date().toISOString()});
  return moved;
 }
