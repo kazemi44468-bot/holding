@@ -84,7 +84,7 @@ const setRadio = (name,value) => { const el=document.querySelector('input[name="
 const dateNow = () => new Date().toISOString().slice(0,10);
 const toFa = value => Number(value||0).toLocaleString("fa-IR");
 const safe = value => String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-function makeCode(){const d=new Date(),stamp=[d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("");return "M7-"+stamp+"-"+crypto.randomUUID().slice(0,6).toUpperCase();}
+function makeCode(){const d=new Date(),stamp=[d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("");return "M7-"+stamp+"-"+crypto.randomUUID().slice(0,8).toUpperCase();}
 function statusLabel(status){return ({draft:"پیش‌نویس",registered:"ثبت‌شده",referred:"ارجاع‌شده","in-progress":"در حال اجرا",blocked:"دارای مانع",review:"در انتظار بررسی",completed:"تکمیل‌شده",closed:"مختومه",cancelled:"لغوشده"})[status]||"ثبت‌شده";}
 function defaultConfig(){return structuredClone(baseSchema);}
 async function loadSchema(){schema=await MissionStore.config()||defaultConfig();$("schemaJson").value=JSON.stringify(schema,null,2);renderDepartmentFields();}
@@ -124,8 +124,11 @@ function collect(){
   start:data.calendarStart||data.plannedStart||dateNow(),end:data.calendarEnd||data.plannedEnd||data.calendarStart||data.plannedStart||dateNow(),
   dept:data.executorDepartment||"all",description:data.calendarDescription||data.missionSubject||"",reminder:data.calendarReminder||"بدون یادآوری"
  }:null;
- data.schemaSnapshot=structuredClone(schema||defaultConfig());
+ data.departmentFields={...(currentMission?.departmentFields||{}),...readCustom()};
+ data.schemaSnapshot=currentMission?.schemaSnapshot||structuredClone(schema||defaultConfig());
  data.schemaVersion=Number(schema?.version||1);
+ data.schemaHistory=currentMission?.schemaHistory||[{version:data.schemaVersion,at:new Date().toISOString(),snapshot:structuredClone(schema||defaultConfig())}];
+ if(currentMission&&Number(currentMission.schemaVersion||1)!==data.schemaVersion)data.schemaHistory=[...data.schemaHistory,{version:data.schemaVersion,at:new Date().toISOString(),snapshot:structuredClone(schema||defaultConfig())}];
  return data;
 }
 function fill(data){
@@ -146,7 +149,7 @@ async function saveMission(asDraft=false){
  data.executionStatus=data.status;data.workflow.stage=data.status;
  const now=new Date().toISOString();
  if(!currentMission){data.missionCode=makeCode();data.createdAt=now;data.progressLog=[{id:crypto.randomUUID(),at:now,progress:data.progress,note:"ثبت اولیه مأموریت",by:"ثبت‌کننده"}];if(data.calendarEvent){data.calendarEvent.id="mission-event:"+data.missionCode;data.calendarEvent.missionCode=data.missionCode;}}
- else{data.missionCode=currentMission.missionCode;data.createdAt=currentMission.createdAt;data.progressLog=currentMission.progressLog||[];data.updatedAt=now;}
+ else{data.missionCode=currentMission.missionCode;data.createdAt=currentMission.createdAt;data.progressLog=currentMission.progressLog||[];if(Number(data.progress)!==Number(currentMission.progress)){data.progressLog=[...data.progressLog,{id:crypto.randomUUID(),at:now,progress:Number(data.progress||0),note:data.progressDescription||"به‌روزرسانی درصد پیشرفت",by:data.assignedExpert||data.directOwner||"ثبت‌کننده"}];}data.updatedAt=now;}
  const id=await MissionStore.save(data,currentMission?.id);
  currentMission={...data,id};
  const files=[...($("missionFiles").files||[])];
@@ -179,7 +182,7 @@ async function unlock(){
  $("unlockVault").disabled=true;$("vaultPass").disabled=true;$("schemaAdmin").hidden=false;
  await loadSchema();
  if(editingId)await loadMission(editingId);
- else{writeField("requestDate",dateNow());writeField("receivedAt",new Date().toISOString().slice(0,16));writeField("calendarStart",dateNow());writeField("calendarEnd",dateNow());}
+ else{writeField("requestDate",dateNow());writeField("receivedAt",new Date().toISOString().slice(0,16));}
 }
 $("unlockVault").addEventListener("click",async()=>{try{await unlock();}catch(e){$("authState").textContent=e.message;}});
 $("executorDepartment").addEventListener("change",renderDepartmentFields);
