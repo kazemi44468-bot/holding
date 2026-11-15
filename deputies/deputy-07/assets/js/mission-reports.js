@@ -8,19 +8,54 @@ const today=()=>{const d=new Date();return [d.getFullYear(),String(d.getMonth()+
 const date=v=>{if(!v)return null;const m=String(v).match(/^(\d{4})-(\d{2})-(\d{2})/);const d=m?new Date(+m[1],+m[2]-1,+m[3]):new Date(v);return isNaN(d)?null:d};
 const iso=d=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-");
 const plus=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const jalaliFormatter=new Intl.DateTimeFormat("en-US-u-ca-persian",{year:"numeric",month:"numeric",day:"numeric"});
+function jalaliParts(value){const p=Object.fromEntries(jalaliFormatter.formatToParts(value).map(x=>[x.type,x.value]));return {year:Number(p.year),month:Number(p.month),day:Number(p.day)}}
+function jalaliMonthStart(value){const d=new Date(value),p=jalaliParts(d);return new Date(d.getFullYear(),d.getMonth(),d.getDate()-p.day+1)}
+function jalaliStartOffset(value,months){let d=jalaliMonthStart(value);for(let i=0;i<months;i++)d=jalaliMonthStart(plus(d,-1));return d}
+function jalaliYearStart(value){let d=jalaliMonthStart(value),guard=0;while(jalaliParts(d).month!==1&&guard++<12)d=jalaliMonthStart(plus(d,-1));return d}
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const statusDone=m=>["completed","closed"].includes(m.status);
 const isLate=m=>m.plannedEnd&&m.plannedEnd<today()&&!statusDone(m)&&m.status!=="cancelled";
 const track=(m,k)=>m.processTracks?.[k]||{};
 const pct=(m,k)=>Math.max(0,Math.min(100,Number(track(m,k).progress||0)));
 const avg=(arr,k)=>arr.length?Math.round(arr.reduce((s,m)=>s+pct(m,k),0)/arr.length):0;
-function range(){const n=new Date(),p=$("reportPeriod").value;let from,to=new Date(n.getFullYear(),n.getMonth(),n.getDate());if(p==="day")from=to;else if(p==="week"){from=new Date(to);from.setDate(from.getDate()-((from.getDay()+6)%7));}else if(p==="month")from=new Date(n.getFullYear(),n.getMonth(),1);else if(p==="quarter")from=new Date(n.getFullYear(),n.getMonth()-2,1);else if(p==="year")from=new Date(n.getFullYear(),0,1);else if(p==="custom"){from=date($("reportFrom").value);to=date($("reportTo").value);if(!from||!to||from>to)return {from:null,to:null,label:"تاریخ شروع و پایان را انتخاب کنید"};}else return {from:null,to:null,label:"کل سوابق موجود"};return {from,to,label:iso(from)+" تا "+iso(to)}}
+function range(){
+ const n=new Date(),p=$("reportPeriod").value;let from,to=new Date(n.getFullYear(),n.getMonth(),n.getDate());
+ if(p==="day")from=to;
+ else if(p==="week"){from=new Date(to);from.setDate(from.getDate()-((from.getDay()+6)%7))}
+ else if(p==="month")from=jalaliMonthStart(n);
+ else if(p==="quarter")from=jalaliStartOffset(n,2);
+ else if(p==="year")from=jalaliYearStart(n);
+ else if(p==="custom"){from=date($("reportFrom").value);to=date($("reportTo").value);if(!from||!to||from>to)return {from:null,to:null,label:"تاریخ شروع و پایان را انتخاب کنید"}}
+ else if(p==="all"){const dates=eventList(rowsForDept()).map(e=>date(e.at)).filter(Boolean);from=dates.length?jalaliMonthStart(new Date(Math.min(...dates))):jalaliStartOffset(n,11);to=new Date(n.getFullYear(),n.getMonth(),n.getDate())}
+ else return {from:null,to:null,label:"کل سوابق موجود"};
+ return {from,to,label:from.toLocaleDateString("fa-IR")+" تا "+to.toLocaleDateString("fa-IR")}
+}
 function inside(v,r){if(!r.from&&!r.to)return true;const d=date(v);return !!d&&(!r.from||d>=r.from)&&(!r.to||d<plus(r.to,1))}
 function rowsForDept(){const d=$("reportDept").value;return all.filter(m=>!d||String(m.executorDepartment)===d)}
 function eventList(rows){const out=[],add=(m,type,at,label)=>{if(at)out.push({m,type,at:String(at),label})};for(const m of rows){add(m,"created",m.createdAt,"ایجاد");add(m,"started",m.actualStart,"شروع");add(m,"finished",m.actualEnd,"خاتمه");const w=m.workflowLog||[];if(!m.actualStart){const x=w.find(e=>e.stage==="in-progress");if(x)add(m,"started",x.at,"شروع از گردش کار")}if(!m.actualEnd&&statusDone(m)){const x=w.find(e=>["completed","closed"].includes(e.stage));add(m,"finished",x?.at||m.updatedAt,"خاتمه")};w.forEach(x=>add(m,"status",x.at,x.action||"تغییر وضعیت"));(m.progressLog||[]).forEach(x=>add(m,"action",x.at,"گزارش پیشرفت"));(m.processLog||[]).forEach(x=>add(m,"action",x.at,x.action||"اقدام"));Object.values(m.processTracks||{}).forEach(t=>(t.actions||[]).forEach(x=>add(m,"action",x.createdAt,"اقدام: "+(x.title||"ثبت‌شده"))))}
 const seen=new Set();return out.filter(e=>{const k=[e.m.id,e.type,e.at.slice(0,10),e.label].join("|");if(seen.has(k))return false;seen.add(k);return true})}
 function drawBars(id,items,percent=false,column=false){const host=$(id),max=Math.max(1,...items.map(x=>x.value));if(!items.length){host.innerHTML='<span class="profile-hint">داده‌ای برای نمایش وجود ندارد.</span>';return}if(column){host.innerHTML='<div class="report-column-chart">'+items.map(x=>'<div class="report-column"><b>'+fa(x.value)+'</b><div class="report-column-track"><i style="height:'+Math.max(x.value?3:0,x.value/max*100)+'%"></i></div><span>'+esc(x.label)+'</span></div>').join("")+'</div>';return}host.innerHTML=items.map(x=>'<div class="report-bar"><span>'+esc(x.label)+'</span><span class="report-track"><i style="width:'+Math.max(0,x.value/max*100)+'%"></i></span><b>'+fa(x.value)+(percent?"٪":"")+'</b></div>').join("")}
-function buckets(r){const p=$("reportPeriod").value,n=new Date(),out=[];if(p==="day"){out.push({from:new Date(n.getFullYear(),n.getMonth(),n.getDate()),to:new Date(n.getFullYear(),n.getMonth(),n.getDate()+1),label:"امروز"})}else if(p==="week"||p==="month"){let d=r.from||new Date(n.getFullYear(),n.getMonth(),1);const end=r.to||n;while(d<=end&&out.length<35){out.push({from:new Date(d),to:plus(d,1),label:fa(d.getDate())+" "+d.toLocaleDateString("fa-IR",{month:"short"})});d=plus(d,1)}}else if(p==="quarter"){let d=r.from||new Date(n.getFullYear(),n.getMonth()-2,1);for(let i=0;i<13;i++){out.push({from:new Date(d),to:plus(d,7),label:fa(d.getDate())+"/"+fa(d.getMonth()+1)});d=plus(d,7)}}else if(p==="custom"&&r.from&&r.to){const span=Math.ceil((r.to-r.from)/86400000)+1;if(span<=31){let d=new Date(r.from);while(d<=r.to){out.push({from:new Date(d),to:plus(d,1),label:fa(d.getDate())+"/"+fa(d.getMonth()+1)});d=plus(d,1)}}else if(span<=120){let d=new Date(r.from);while(d<=r.to){out.push({from:new Date(d),to:plus(d,7),label:fa(d.getDate())+"/"+fa(d.getMonth()+1)});d=plus(d,7)}}else{let d=new Date(r.from.getFullYear(),r.from.getMonth(),1);while(d<=r.to){const z=new Date(d.getFullYear(),d.getMonth()+1,1);out.push({from:new Date(d),to:z,label:d.toLocaleDateString("fa-IR",{month:"short",year:"2-digit"})});d=z}}}else{let d=r.from?new Date(r.from.getFullYear(),r.from.getMonth(),1):new Date(n.getFullYear(),n.getMonth()-11,1);for(let i=0;i<12;i++){const z=new Date(d.getFullYear(),d.getMonth()+1,1);out.push({from:new Date(d),to:z,label:d.toLocaleDateString("fa-IR",{month:"short"})});d=z}}return out}
+function buckets(r){
+ const p=$("reportPeriod").value,n=new Date(),out=[];
+ if(p==="day"){out.push({from:new Date(n.getFullYear(),n.getMonth(),n.getDate()),to:plus(new Date(n.getFullYear(),n.getMonth(),n.getDate()),1),label:"امروز"})}
+ else if(p==="week"||p==="month"){
+  let d=r.from||jalaliMonthStart(n);const end=r.to||n;
+  while(d<=end&&out.length<35){out.push({from:new Date(d),to:plus(d,1),label:fa(jalaliParts(d).day)+" "+d.toLocaleDateString("fa-IR",{month:"short"})});d=plus(d,1)}
+ }else if(p==="quarter"){
+  let d=r.from||jalaliStartOffset(n,2);const end=r.to||n;
+  while(d<=end&&out.length<16){out.push({from:new Date(d),to:plus(d,7),label:d.toLocaleDateString("fa-IR",{day:"numeric",month:"short"})});d=plus(d,7)}
+ }else if(p==="custom"&&r.from&&r.to){
+  const span=Math.ceil((r.to-r.from)/86400000)+1;
+  if(span<=31){let d=new Date(r.from);while(d<=r.to){out.push({from:new Date(d),to:plus(d,1),label:d.toLocaleDateString("fa-IR",{day:"numeric",month:"short"})});d=plus(d,1)}}
+  else if(span<=120){let d=new Date(r.from);while(d<=r.to){out.push({from:new Date(d),to:plus(d,7),label:d.toLocaleDateString("fa-IR",{day:"numeric",month:"short"})});d=plus(d,7)}}
+  else{let d=jalaliMonthStart(r.from);while(d<=r.to&&out.length<120){const z=jalaliMonthStart(plus(d,35));out.push({from:new Date(d),to:z,label:d.toLocaleDateString("fa-IR",{month:"short",year:"2-digit"})});d=z}}
+ }else{
+  let d=r.from?jalaliMonthStart(r.from):jalaliStartOffset(n,11),end=r.to||n;
+  while(d<=end&&out.length<120){const z=jalaliMonthStart(plus(d,35));out.push({from:new Date(d),to:z,label:d.toLocaleDateString("fa-IR",{month:"short",year:"2-digit"})});d=z}
+ }
+ return out
+}
 function renderTimeline(rows,r){const host=$("timelineChart");if($("reportPeriod").value==="custom"&&!r.from){host.textContent=r.label;return}const ev=eventList(rows).filter(x=>inside(x.at,r)),types=["created","started","finished","action"],labels={created:"ایجاد",started:"شروع",finished:"خاتمه",action:"اقدامات"},bs=buckets(r),vals=bs.map(b=>({b,c:Object.fromEntries(types.map(t=>[t,ev.filter(e=>{const d=date(e.at);return e.type===t&&d&&d>=b.from&&d<b.to}).length]))})),max=Math.max(1,...vals.flatMap(x=>types.map(t=>x.c[t])));host.innerHTML='<div class="report-timeline-scroll"><div class="report-timeline-bars">'+vals.map(x=>'<div class="report-timeline-group"><div class="report-timeline-columns">'+types.map(t=>'<div class="report-timeline-col '+t+'" title="'+labels[t]+' '+fa(x.c[t])+'"><i style="height:'+Math.max(x.c[t]?3:0,x.c[t]/max*112)+'px"></i></div>').join("")+'</div><small>'+esc(x.b.label)+'</small></div>').join("")+'</div></div>';$("rCreated").textContent=fa(ev.filter(x=>x.type==="created").length);$("rStarted").textContent=fa(ev.filter(x=>x.type==="started").length);$("rFinished").textContent=fa(ev.filter(x=>x.type==="finished").length);$("rActions").textContent=fa(ev.filter(x=>x.type==="action").length);$("rStatusChanges").textContent=fa(ev.filter(x=>x.type==="status").length);$("reportRangeLabel").textContent=r.label}
 const fd=v=>{const d=date(v);return d?d.toLocaleDateString("fa-IR"):"—"},fdt=v=>{const d=date(v);return d?d.toLocaleString("fa-IR"):"—"};
 function renderGantt(rows){
@@ -88,11 +123,12 @@ function renderIndependentTimeline(rows){
  const control=$("reportPeriod"),old=control.value;control.value="custom";renderTimeline(rows,rangeValue);control.value=old;ids.forEach((id,i)=>$(id).textContent=saved[i]);
 }
 function setupComparisonMonths(){
- const sel=$("comparisonMonths"),now=new Date();sel.replaceChildren();
- for(let i=11;i>=0;i--){const d=new Date(now.getFullYear(),now.getMonth()-i,1),v=iso(d).slice(0,7),o=document.createElement("option");o.value=v;o.textContent=d.toLocaleDateString("fa-IR",{month:"long",year:"numeric"});if(i<=2)o.selected=true;sel.append(o)}
+ const sel=$("comparisonMonths"),now=new Date();sel.replaceChildren();let cursor=jalaliMonthStart(now);const months=[];
+ for(let i=0;i<12;i++){months.unshift(new Date(cursor));cursor=jalaliMonthStart(plus(cursor,-1))}
+ months.forEach((d,i)=>{const o=document.createElement("option");o.value=iso(d);o.textContent=d.toLocaleDateString("fa-IR",{month:"long",year:"numeric"});if(i>=9)o.selected=true;sel.append(o)})
 }
 function monthStats(rows,month){
- const [y,m]=month.split("-").map(Number),from=new Date(y,m-1,1),to=new Date(y,m,1),events=eventList(rows);
+ const from=date(month),to=jalaliMonthStart(plus(from,35)),events=eventList(rows);
  const created=events.filter(e=>e.type==="created"&&date(e.at)>=from&&date(e.at)<to).length;
  const started=events.filter(e=>e.type==="started"&&date(e.at)>=from&&date(e.at)<to).length;
  const finished=events.filter(e=>e.type==="finished"&&date(e.at)>=from&&date(e.at)<to).length;
@@ -101,7 +137,7 @@ function monthStats(rows,month){
   if(logs.length)return Number(logs[0].progress||0);
   const updated=date(x.updatedAt);return updated&&updated<to?Number(x.progress||0):0;
  });
- return {month,created,started,finished,progress:snapshots.length?Math.round(snapshots.reduce((a,b)=>a+b,0)/snapshots.length):0};
+ return {month,created,started,finished,progress:snapshots.length?Math.round(snapshots.reduce((a,b)=>a+b,0)/snapshots.length):0}
 }
 function changeText(first,last){
  const delta=last-first;
@@ -116,7 +152,7 @@ function renderComparison(){
  const metrics=[["مأموریت ایجادشده",first.created,last.created],["شروع مأموریت",first.started,last.started],["خاتمه مأموریت",first.finished,last.finished],["میانگین پیشرفت",first.progress,last.progress]];
  $("comparisonMetrics").innerHTML=metrics.map(([label,a,b])=>'<div><small>'+label+'</small><b>'+changeText(a,b)+'</b><span>از '+fa(a)+(label==="میانگین پیشرفت"?"٪":"")+' به '+fa(b)+(label==="میانگین پیشرفت"?"٪":"")+'</span></div>').join("");
  const keys=[["created","ایجاد"],["started","شروع"],["finished","خاتمه"],["progress","میانگین پیشرفت"]];
- $("comparisonChart").innerHTML='<div class="comparison-month-grid">'+stats.map(x=>'<section><b class="comparison-month-title">'+new Date(Number(x.month.slice(0,4)),Number(x.month.slice(5,7))-1,1).toLocaleDateString("fa-IR",{month:"short",year:"numeric"})+'</b>'+keys.map(([k,label])=>{const max=Math.max(1,...stats.map(z=>z[k]));return '<div class="comparison-value"><span>'+label+'</span><i><em style="width:'+Math.max(x[k]?2:0,x[k]/max*100)+'%"></em></i><b>'+fa(x[k])+(k==="progress"?"٪":"")+'</b></div>'}).join("")+'</section>').join("")+'</div>';
+ $("comparisonChart").innerHTML='<div class="comparison-month-grid">'+stats.map(x=>'<section><b class="comparison-month-title">'+date(x.month).toLocaleDateString("fa-IR",{month:"short",year:"numeric"})+'</b>'+keys.map(([k,label])=>{const max=Math.max(1,...stats.map(z=>z[k]));return '<div class="comparison-value"><span>'+label+'</span><i><em style="width:'+Math.max(x[k]?2:0,x[k]/max*100)+'%"></em></i><b>'+fa(x[k])+(k==="progress"?"٪":"")+'</b></div>'}).join("")+'</section>').join("")+'</div>';
 }
 function applyChartFilters(){
  const rows=rowsForDept();
