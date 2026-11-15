@@ -62,13 +62,14 @@ function render(){
  $("deptReportRows").innerHTML=Object.entries(depts).map(([id,name])=>{
   const a=rows.filter(m=>String(m.executorDepartment)===id);
   const waiting=a.filter(m=>["registered","referred"].includes(m.status)).length;
-  const running=a.filter(m=>["in-progress","blocked","review","revision"].includes(m.status)).length;
+  const running=a.filter(m=>m.status==="in-progress").length;
+  const attention=a.filter(m=>["blocked","review","revision"].includes(m.status)).length;
   const finished=a.filter(statusDone).length;
   const overdue=a.filter(isLate).length;
   const actions=eventList(a).filter(e=>e.type==="action").length;
   const scored=a.filter(m=>m.progress!==""&&m.progress!=null&&!Number.isNaN(Number(m.progress)));
   const avg=scored.length?Math.round(scored.reduce((sum,m)=>sum+Number(m.progress),0)/scored.length):null;
-  return '<tr><td>'+esc(name)+'</td><td>'+fa(a.length)+'</td><td>'+fa(waiting)+'</td><td>'+fa(running)+'</td><td>'+fa(finished)+'</td><td>'+fa(overdue)+'</td><td>'+fa(actions)+'</td><td>'+(avg===null?"—":fa(avg)+"٪")+'</td></tr>';
+  return '<tr><td>'+esc(name)+'</td><td>'+fa(a.length)+'</td><td>'+fa(waiting)+'</td><td>'+fa(running)+'</td><td>'+fa(attention)+'</td><td>'+fa(finished)+'</td><td>'+fa(overdue)+'</td><td>'+fa(actions)+'</td><td>'+(avg===null?"—":fa(avg)+"٪")+'</td></tr>';
 }).join("");
  applyChartFilters();renderComparison();
 }
