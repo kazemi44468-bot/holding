@@ -48,20 +48,27 @@ const lateDone=done.filter(m=>m.plannedEnd&&m.actualEnd&&m.actualEnd>m.plannedEn
 $("deptReportRows").innerHTML=Object.entries(depts).map(([id,name])=>{const a=rows.filter(m=>String(m.executorDepartment)===id),d=a.filter(statusDone).length,p=a.length?Math.round(a.reduce((s,m)=>s+Number(m.progress||0),0)/a.length):0;return '<tr><td>'+esc(name)+'</td><td>'+fa(a.length)+'</td><td>'+fa(d)+'</td><td>'+fa(a.filter(m=>active.includes(m)).length)+'</td><td>'+fa(a.filter(isLate).length)+'</td><td>'+fa(p)+'٪</td><td>'+fa(avg(a,"management"))+'٪</td><td>'+fa(avg(a,"office"))+'٪</td><td>'+fa(avg(a,"department"))+'٪</td></tr>'}).join("");
 const sel=$("missionDetailSelect"),old=sel.value;sel.innerHTML='<option value="">انتخاب کنید</option>'+rows.map(m=>'<option value="'+esc(m.id)+'">'+esc((m.missionCode||"بدون کد")+" · "+(m.missionTitle||"بدون عنوان"))+'</option>').join("");sel.value=rows.some(m=>String(m.id)===old)?old:"";renderGantt(rows);renderDetail();applyChartFilters();renderComparison()}
 
-function chartRange(period){
+function chartRange(period,id){
  const now=new Date(),end=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1);
  if(period==="all")return {from:null,to:end,label:"کل سوابق"};
- let from;
- if(period==="month")from=new Date(now.getFullYear(),now.getMonth(),1);
- else if(period==="previous") {from=new Date(now.getFullYear(),now.getMonth()-1,1);return {from,to:new Date(now.getFullYear(),now.getMonth(),1),label:from.toLocaleDateString("fa-IR",{month:"long",year:"numeric"})};}
+ let from,to=end;
+ if(period==="day")from=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+ else if(period==="week"){from=new Date(now.getFullYear(),now.getMonth(),now.getDate());from.setDate(from.getDate()-((from.getDay()+6)%7))}
+ else if(period==="month")from=new Date(now.getFullYear(),now.getMonth(),1);
+ else if(period==="previous"){from=new Date(now.getFullYear(),now.getMonth()-1,1);to=new Date(now.getFullYear(),now.getMonth(),1)}
  else if(period==="quarter")from=new Date(now.getFullYear(),now.getMonth()-2,1);
  else if(period==="half")from=new Date(now.getFullYear(),now.getMonth()-5,1);
  else if(period==="year")from=new Date(now.getFullYear(),0,1);
- else return {from:null,to:end,label:"کل سوابق"};
- return {from,to:end,label:from.toLocaleDateString("fa-IR")+" تا امروز"};
+ else if(period==="custom"){
+  from=date($("chartFrom-"+id)?.value);const endDate=date($("chartTo-"+id)?.value);
+  if(!from||!endDate||from>endDate)return {from:null,to:null,label:"تاریخ شروع و پایان را انتخاب کنید",invalid:true};
+  to=plus(endDate,1);
+ }else return {from:null,to:end,label:"کل سوابق"};
+ return {from,to,label:from.toLocaleDateString("fa-IR")+" تا "+new Date(to.getTime()-86400000).toLocaleDateString("fa-IR")};
 }
 function chartRows(rows,id){
- const r=chartRange($("chartPeriod-"+id)?.value||"all");
+ const r=chartRange($("chartPeriod-"+id)?.value||"all",id);
+ if(r.invalid)return [];
  if(!r.from)return rows;
  if(id==="gantt")return rows.filter(m=>{const a=date(m.plannedStart)||date(m.createdAt),b=date(m.plannedEnd)||date(m.actualEnd)||a;return a&&b&&a<r.to&&b>=r.from});
  return rows.filter(m=>{const d=date(m.createdAt)||date(m.actualStart)||date(m.plannedStart)||date(m.updatedAt);return d&&d>=r.from&&d<r.to});
@@ -74,7 +81,8 @@ function drawDonut(id,items){
  host.innerHTML='<div class="mission-donut-layout"><div class="mission-donut" style="background:conic-gradient('+gradient+')"><span>'+fa(total)+'<small>مأموریت</small></span></div><div class="mission-donut-legend">'+parts.map(x=>'<div><i style="background:'+x.color+'"></i><span>'+esc(x.label)+'</span><b>'+fa(x.value)+'</b></div>').join("")+'</div></div>';
 }
 function renderIndependentTimeline(rows){
- const r=chartRange($("chartPeriod-timeline")?.value||"all"),now=new Date(),ids=["rCreated","rStarted","rFinished","rActions","rStatusChanges","reportRangeLabel"],saved=ids.map(id=>$(id).textContent);
+ const r=chartRange($("chartPeriod-timeline")?.value||"all","timeline"),now=new Date(),ids=["rCreated","rStarted","rFinished","rActions","rStatusChanges","reportRangeLabel"],saved=ids.map(id=>$(id).textContent);
+ if(r.invalid){$("timelineChart").textContent=r.label;return}
  const events=eventList(rows).map(e=>date(e.at)).filter(Boolean),earliest=events.length?new Date(Math.min(...events)):new Date(now.getFullYear(),now.getMonth()-11,1);
  const rangeValue=r.from?{from:r.from,to:new Date(r.to.getTime()-86400000),label:r.label}:{from:new Date(earliest.getFullYear(),earliest.getMonth(),1),to:now,label:"کل سوابق"};
  const control=$("reportPeriod"),old=control.value;control.value="custom";renderTimeline(rows,rangeValue);control.value=old;ids.forEach((id,i)=>$(id).textContent=saved[i]);
@@ -125,4 +133,4 @@ function applyChartFilters(){
 
 async function refresh(){all=await MissionStore.list();const cfg=await MissionStore.config();for(const d of cfg?.departments||[])depts[String(d.id)]=d.name;const sel=$("reportDept");for(const m of all){const id=String(m.executorDepartment||"");if(id&&m.executorDepartmentName)depts[id]=m.executorDepartmentName;if(id&&![...sel.options].some(o=>o.value===id)){const o=document.createElement("option");o.value=id;o.textContent=depts[id]||"اداره "+id;sel.append(o)}}render()}
 async function init(){try{await MissionStore.unlock();$("reportContent").hidden=false;$("reportState").textContent="اتصال برقرار است؛ داده‌ها مستقیماً از بانک مأموریت‌های معاونت ۷ خوانده می‌شوند.";const t=today();$("reportFrom").value=t;$("reportTo").value=t;setupComparisonMonths();await refresh();const seeded=await ensureMissionSamples();$("sampleDataState").textContent=seeded?fa(seeded)+" مأموریت نمونه به بانک اضافه شد.":"مأموریت‌های نمونه قبلاً ثبت شده‌اند.";await refresh()}catch(e){$("reportState").textContent=e.message;$("reportContent").hidden=true}}
-init();$("seedMissionSamples").addEventListener("click",async()=>{try{const n=await ensureMissionSamples();await refresh();$("sampleDataState").textContent=n?fa(n)+" مأموریت نمونه ثبت شد.":"داده‌های نمونه قبلاً ثبت شده‌اند."}catch(e){$("sampleDataState").textContent="خطا: "+e.message}});$("removeMissionSamples").addEventListener("click",async()=>{try{const n=await removeMissionSamples();await refresh();$("sampleDataState").textContent=n?fa(n)+" مأموریت نمونه حذف شد.":"داده نمونه‌ای برای حذف وجود ندارد."}catch(e){$("sampleDataState").textContent="خطا: "+e.message}});$("reportRefresh").addEventListener("click",()=>refresh().catch(e=>$("reportState").textContent=e.message));$("reportPeriod").addEventListener("change",()=>{const x=$("reportPeriod").value==="custom";$("reportFrom").disabled=!x;$("reportTo").disabled=!x;render()});$("reportDept").addEventListener("change",render);$("reportFrom").addEventListener("change",render);$("reportTo").addEventListener("change",render);$("missionDetailSelect").addEventListener("change",renderDetail);document.querySelectorAll("[id^=chartPeriod-]").forEach(x=>x.addEventListener("change",applyChartFilters));$("comparisonMonths").addEventListener("change",renderComparison);
+init();$("seedMissionSamples").addEventListener("click",async()=>{try{const n=await ensureMissionSamples();await refresh();$("sampleDataState").textContent=n?fa(n)+" مأموریت نمونه ثبت شد.":"داده‌های نمونه قبلاً ثبت شده‌اند."}catch(e){$("sampleDataState").textContent="خطا: "+e.message}});$("removeMissionSamples").addEventListener("click",async()=>{try{const n=await removeMissionSamples();await refresh();$("sampleDataState").textContent=n?fa(n)+" مأموریت نمونه حذف شد.":"داده نمونه‌ای برای حذف وجود ندارد."}catch(e){$("sampleDataState").textContent="خطا: "+e.message}});$("reportRefresh").addEventListener("click",()=>refresh().catch(e=>$("reportState").textContent=e.message));$("reportPeriod").addEventListener("change",()=>{const x=$("reportPeriod").value==="custom";$("reportFrom").disabled=!x;$("reportTo").disabled=!x;render()});$("reportDept").addEventListener("change",render);$("reportFrom").addEventListener("change",render);$("reportTo").addEventListener("change",render);$("missionDetailSelect").addEventListener("change",renderDetail);document.querySelectorAll("[id^=chartPeriod-]").forEach(x=>{const id=x.id.slice("chartPeriod-".length),dates=$("chartDates-"+id),toggle=()=>{if(dates)dates.hidden=x.value!=="custom";applyChartFilters()};x.addEventListener("change",toggle);["chartFrom-"+id,"chartTo-"+id].forEach(k=>$(k)?.addEventListener("change",applyChartFilters));toggle()});$("comparisonMonths").addEventListener("change",renderComparison);
