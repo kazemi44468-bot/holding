@@ -1,4 +1,4 @@
-import { MissionStore } from "./mission-store.js?v=20261115-04";
+import { MissionStore } from "./mission-store.js?v=20261115-05";
 
 const SAMPLE_BATCH="mission-report-demo-2026-11-v2";
 const LEGACY_BATCH="mission-report-demo-2026-11";
@@ -39,7 +39,7 @@ export async function ensureMissionSamples(force=false){
    id,missionCode:code,missionTitle:spec.title,missionSubject:"پرونده آزمایشی برای نمایش و ارزیابی بانک مأموریت، گزارش‌های زمانی، نمودار پیشرفت و برنامه زمان‌بندی.",expectedPurpose:"نمایش چرخه کامل ثبت، ارجاع، اجرا، پایش و خاتمه مأموریت.",
    communicationType:"گزارش یا اعلام نیاز",requestNumber:"DEMO-"+String(i+1).padStart(3,"0"),requestDate:created,requestChannel:"ارجاع مستقیم",
    executorDepartment:spec.dept,executorDepartmentName:deptName,executorSubunit:"واحد تخصصی نمونه",missionType:i%3===0?"اجرایی":i%3===1?"نظارتی و بازرسی":"فنی و تعمیراتی",workNature:"پروژه‌ای",priority:spec.priority,confidentiality:"داخلی",
-   status:spec.status,executionStatus:spec.status,missionPhase:phaseOf(spec.status),progress:spec.progress,qualityScore:spec.progress===100?92:72+i%5,goalAchievement:spec.progress===100?100:Math.min(100,spec.progress+8),
+   status:spec.status,executionStatus:spec.status,missionPhase:phaseOf(spec.status),progress:spec.progress,missionDaysRequested:5+(i%5),missionDaysApproved:4+(i%5),missionDaysCompleted:spec.finishAgo!==null?(4+(i%5)):Math.floor((4+(i%5))*spec.progress/100),qualityScore:spec.progress===100?92:72+i%5,goalAchievement:spec.progress===100?100:Math.min(100,spec.progress+8),
    scheduleStatus:spec.status==="blocked"?"متوقف به علت مانع":spec.finishAgo!==null?"مطابق برنامه":spec.status==="in-progress"&&spec.createdAgo>15?"دارای تأخیر":"مطابق برنامه",
    plannedStart,plannedEnd,actualStart:started,actualEnd:finished,coordinationAt:sampleDate(Math.max(0,(spec.startAgo??spec.createdAgo)-2))+"T09:30:00",
    deputyApproval:"approved",deputyReferralDepartment:spec.dept,deputyReferralPerson:owner,deputyReferralAt:created+"T10:00:00",referredAt:created+"T10:00:00",
