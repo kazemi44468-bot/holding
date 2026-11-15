@@ -117,7 +117,7 @@ function prepareWorkflowSchema(){
  if(currentVersion<19){
   schema.coreFields=schema.coreFields||{};
   for(const [id,section] of Object.entries(fieldSections)){
-   const meta=schema.coreFields[id]||{id,label:document.querySelector('label[for="'+id+'"]')?.textContent?.trim()||id,type:initialCoreFieldTypes[id]||"text",required:!!$(id)?.required,placeholder:$(id)?.getAttribute("placeholder")||"",options:[],active:true};
+   const meta=schema.coreFields[id]||fieldMeta(id,$(id)?.closest('.field'));
    meta.section=section;meta.order=meta.order||1;meta.active=meta.active!==false;schema.coreFields[id]=meta;
   }
   schema.extraFields=Array.isArray(schema.extraFields)?schema.extraFields:[];
