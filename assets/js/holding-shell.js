@@ -1,3 +1,14 @@
+/* فاوآیکن واحد هلدینگ برای همه صفحات داخلی که از پوسته مشترک استفاده می‌کنند. */
+(function(){
+ var script=[].slice.call(document.scripts).find(function(node){return /assets\/js\/holding-shell\.js(?:\?|$)/.test(node.getAttribute('src')||'');});
+ var base=script&&script.src?new URL('../../',script.src):new URL('../../',location.href);
+ var svg=new URL('favicon.svg?v=holding-favicon-20261115',base).href;
+ var ico=new URL('favicon.ico?v=holding-favicon-20261115',base).href;
+ function set(rel,type,href){var link=document.querySelector('link[rel="'+rel+'"][type="'+type+'"]');if(!link){link=document.createElement('link');link.rel=rel;link.type=type;document.head.appendChild(link);}link.href=href;}
+ set('icon','image/svg+xml',svg);
+ set('icon','image/x-icon',ico);
+})();
+
 (function(){
 'use strict';
 if(document.querySelector('.holding-masthead'))return;
