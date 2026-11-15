@@ -196,8 +196,7 @@ function renderComparison(){
   $("comparisonSummary").textContent=(depts[id]||"اداره انتخابی")+" · "+fa(periods.length)+" ماه · شاخص: "+fmt;
   $("comparisonCaption").textContent="هر ستون تعداد "+fmt+" را در همان ماه نشان می‌دهد. این نما برای مقایسه اداره با عملکرد ماه‌های قبلی خودش است؛ ماه‌های بدون رویداد نیز با مقدار صفر نمایش داده می‌شوند.";
  }
- if(!bars.length){host.innerHTML='<p class="comparison-note">برای این فیلترها داده‌ای وجود ندارد.</p>';return}
- if(mode==="departments"&&!bars.length){host.innerHTML="<p class=\\"comparison-note\\">برای مقایسه، دست‌کم یک اداره را انتخاب کنید.</p>";return}
+ if(!bars.length){host.innerHTML='<p class="comparison-note">'+(mode==="departments"?"برای مقایسه، دست‌کم یک اداره را انتخاب کنید.":"برای این فیلترها داده‌ای وجود ندارد.")+"</p>";return}
  const max=Math.max(1,...bars.map(x=>x.value));
  host.innerHTML='<div class="comparison-axis"><span>۰</span><span>'+fa(Math.ceil(max/2))+'</span><span>'+fa(max)+'</span></div><div class="comparison-bars">'+bars.map((x,i)=>'<div class="comparison-bar-item" title="'+esc(x.label)+' · '+fa(x.value)+'"><div class="comparison-bar-value">'+fa(x.value)+'</div><div class="comparison-bar-track"><i style="height:'+Math.max(x.value?3:0,x.value/max*100)+'%"></i></div><b>'+esc(x.label)+'</b>'+(x.detail?'<small>'+esc(x.detail)+'</small>':"")+'</div>').join("")+'</div>';
 }
