@@ -1,7 +1,7 @@
 @echo off
 setlocal
 cd /d "%~dp0..\.."
-set "URL=http://127.0.0.1:8765/deputies/deputy-07/pages/mission-bank.html"
+set "URL=http://127.0.0.1:8765/deputies/deputy-07/pages/mission-create.html"
 where py >nul 2>nul
 if %errorlevel%==0 (
   start "معاونت ۷ - سرور آفلاین" /D "%CD%" py -3 -m http.server 8765 --bind 127.0.0.1
@@ -18,6 +18,6 @@ timeout /t 2 /nobreak >nul
 start "" "%URL%"
 echo.
 echo Local server is running at http://127.0.0.1:8765
-echo Keep the server window open. For offline use, first open the pages once while online.
+echo Keep the server window open. The mission registration page is now open on localhost.\necho IndexedDB data is stored in this browser profile for this localhost address.\necho Export regular backups from the local data center before changing browser or computer.
 echo.
 pause
