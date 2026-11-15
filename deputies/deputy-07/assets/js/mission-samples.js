@@ -21,7 +21,18 @@ function sampleDate(daysAgo){const d=new Date();d.setHours(12,0,0,0);d.setDate(d
 function phaseOf(status){return ["completed","closed"].includes(status)?"completed":["in-progress","blocked","review","revision"].includes(status)?"active":"planned"}
 export async function ensureMissionSamples(force=false){
  const marker=await MissionStore.getMeta(SAMPLE_META_KEY);
- if(marker?.done&&marker.batch===SAMPLE_BATCH&&!force)return 0;
+ if(marker?.done&&marker.batch===SAMPLE_BATCH&&!force){
+  const current=await MissionStore.list();let migrated=0;
+  for(let i=0;i<sampleSpecs.length;i++){
+   const id="sample-mission-"+String(i+1).padStart(2,"0"),record=current.find(m=>String(m.id)===id);if(!record)continue;
+   const approved=4+(i%5),patch={};
+   if(record.missionDaysRequested==null)patch.missionDaysRequested=5+(i%5);
+   if(record.missionDaysApproved==null)patch.missionDaysApproved=approved;
+   if(record.missionDaysCompleted==null)patch.missionDaysCompleted=record.actualEnd?approved:Math.floor(approved*Number(record.progress||0)/100);
+   if(Object.keys(patch).length){await MissionStore.save({...record,...patch},id);migrated++;}
+  }
+  return 0;
+}
  const existing=await MissionStore.list();
  const oldSamples=existing.filter(m=>m.isSampleData||m.sampleBatch===LEGACY_BATCH||m.sampleBatch===SAMPLE_BATCH||String(m.id).startsWith("sample-mission-"));
  for(const item of oldSamples)await MissionStore.remove(item.id);
