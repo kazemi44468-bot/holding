@@ -205,3 +205,12 @@ body.ops-page:has(.mission-report-panel) .chart-custom-dates input{width:116px;m
 @media(max-width:600px){body.ops-page:has(.mission-report-panel) .chart-custom-dates{display:grid;grid-template-columns:1fr 1fr}body.ops-page:has(.mission-report-panel) .chart-custom-dates label{justify-content:space-between}body.ops-page:has(.mission-report-panel) .chart-custom-dates input{width:100px}}
 
 body.ops-page:has(.mission-report-panel) .chart-select-hint{display:block;color:#8a9690;font-size:9px;line-height:1.6}
+
+/* Offline mission-bank backup controls */
+body.ops-page:has(.mission-bank-panel) .mission-backup-actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+body.ops-page:has(.mission-bank-panel) .mission-backup-actions button{min-height:36px;padding:7px 12px;border:1px solid #dce7e2;border-radius:8px;background:#fff;color:#536e64;font:inherit;font-size:11px;cursor:pointer}
+body.ops-page:has(.mission-bank-panel) .mission-backup-actions button:hover{background:#f2f8f5;border-color:#b9d5ca}
+body.ops-page:has(.mission-bank-panel) .mission-backup-actions button:disabled{opacity:.55;cursor:wait}
+body.ops-page:has(.mission-bank-panel) .mission-backup-state{margin:9px 0 14px;padding:8px 11px;border:1px solid #e2ebe6;border-radius:8px;background:#f8fbf9;color:#718078;font-size:10px;line-height:1.8}
+body.ops-page:has(.mission-bank-panel) .mission-backup-state.is-error{border-color:#ead5d1;background:#fff9f8;color:#9a5c52}
+@media(max-width:650px){body.ops-page:has(.mission-bank-panel) .mission-bank-toolbar{align-items:flex-start;flex-direction:column}body.ops-page:has(.mission-bank-panel) .mission-backup-actions{width:100%}body.ops-page:has(.mission-bank-panel) .mission-backup-actions button{flex:1}}
