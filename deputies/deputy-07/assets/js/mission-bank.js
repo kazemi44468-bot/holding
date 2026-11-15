@@ -22,6 +22,43 @@ function render(){
 }
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 async function refresh(){missions=await MissionStore.list();const config=await MissionStore.config();for(const d of config?.departments||[])names[String(d.id)]=d.name;const core=config?.coreFields||{};const title=$("bankTitleHead"),deptHead=$("bankDeptHead"),owner=$("bankOwnerHead"),deadline=$("bankDeadlineHead");if(title)title.textContent=(core.missionTitle?.label||"عنوان مأموریت")+" / کد";if(deptHead)deptHead.textContent=core.executorDepartment?.label||"اداره مجری";if(owner)owner.textContent=core.directOwner?.label||"مسئول مستقیم";if(deadline)deadline.textContent=core.plannedEnd?.label||"مهلت پایان";const select=$("bankDept");for(const m of missions){const id=String(m.executorDepartment||"");if(!id)continue;if(m.executorDepartmentName)names[id]=m.executorDepartmentName;if(![...select.options].some(o=>o.value===id)){const option=document.createElement("option");option.value=id;option.textContent=names[id]||("اداره "+id);select.append(option);}}render();}
+function setBackupState(message,error=false){const el=$("bankBackupState");if(el){el.textContent=message;el.classList.toggle("is-error",!!error);}}
+function backupFilename(){const d=new Date(),stamp=[d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0"),String(d.getHours()).padStart(2,"0"),String(d.getMinutes()).padStart(2,"0")].join("");return "mission-bank-backup-"+stamp+".json";}
+async function saveBackupFile(content,name){
+ const blob=new Blob([content],{type:"application/json;charset=utf-8"});
+ if(window.showSaveFilePicker){
+  try{
+   const handle=await window.showSaveFilePicker({suggestedName:name,types:[{description:"پشتیبان بانک مأموریت‌ها",accept:{"application/json":[".json"]}}]});
+   const writable=await handle.createWritable();await writable.write(blob);await writable.close();return "saved";
+  }catch(error){if(error?.name==="AbortError")return "cancelled";throw error;}
+ }
+ const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);return "downloaded";
+}
+$("bankBackup").addEventListener("click",async()=>{
+ const button=$("bankBackup");button.disabled=true;
+ try{
+  const content=await MissionStore.exportBankBackup(),pkg=JSON.parse(content),name=backupFilename();
+  const result=await saveBackupFile(content,name);
+  if(result==="cancelled"){setBackupState("ذخیره پشتیبان لغو شد.");return;}
+  setBackupState("پشتیبان بانک مأموریت‌ها آماده شد: "+fa(pkg.counts.missionChanges)+" تغییر مأموریت، "+fa(pkg.counts.attachments)+" پیوست. فایل: "+name);
+ }catch(error){setBackupState("تهیه پشتیبان ناموفق بود: "+error.message,true);}
+ finally{button.disabled=false;}
+});
+$("bankRestore").addEventListener("click",()=>$("bankBackupFile").click());
+$("bankBackupFile").addEventListener("change",async event=>{
+ const file=event.target.files?.[0];if(!file)return;
+ const button=$("bankRestore");button.disabled=true;
+ try{
+  if(file.size>100*1024*1024)throw new Error("حجم فایل پشتیبان از سقف ۱۰۰ مگابایت بیشتر است.");
+  const content=await file.text(),pkg=JSON.parse(content);
+  const count=pkg?.counts?.missionChanges??pkg?.payload?.changes?.length??0;
+  if(!confirm("فایل «"+file.name+"» بارگذاری شود؟\n"+fa(count)+" تغییر در بانک ادغام می‌شود. اطلاعات فعلی حذف نخواهد شد."))return;
+  const result=await MissionStore.importBankBackup(content);
+  await refresh();
+  setBackupState("بازیابی انجام شد؛ "+fa(result.added)+" تغییر جدید و "+fa(result.filesAdded)+" پیوست اضافه شد، "+fa(result.duplicates)+" مورد تکراری نادیده گرفته شد. تعداد مأموریت‌های قابل مشاهده: "+fa(result.records)+".");
+ }catch(error){setBackupState("بارگذاری پشتیبان ناموفق بود: "+error.message,true);}
+ finally{button.disabled=false;event.target.value="";}
+});
 async function initBank(){try{await MissionStore.unlock();await ensureMissionSamples();$("bankContent").hidden=false;$("bankState").textContent="اتصال خودکار برقرار شد؛ پایگاه داده بدون رمز باز است.";await refresh();}catch(e){$("bankState").textContent=e.message;$("bankContent").hidden=true;}}initBank();
 $("bankRefresh").addEventListener("click",async()=>{try{await refresh();}catch(e){$("bankState").textContent=e.message;}});
 ["bankSearch","bankDept","bankStatus","bankPriority"].forEach(id=>$(id).addEventListener(id==="bankSearch"?"input":"change",render));
