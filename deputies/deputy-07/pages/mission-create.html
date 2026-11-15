@@ -160,7 +160,7 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 <main class="ops-main">
 <section class="ops-intro"><div><span class="eyebrow">مدیریت چرخه عمر مأموریت</span><h1 id="pageTitle">ایجاد مأموریت جدید</h1><p>ثبت درخواست، ارجاع تخصصی، برنامه‌ریزی، اجرا، پایش پیشرفت و تحویل نتیجه در یک پرونده یکپارچه</p></div></section>
 
-<section class="mission-auth"><button id="unlockVault" class="primary">ورود به پایگاه داده</button><span id="authState" class="mission-status">برای ثبت یا مشاهده مأموریت، وارد پایگاه داده شوید؛ نیازی به رمز نیست.</span></section>
+<section class="mission-auth"><button id="unlockVault" class="primary" hidden>اتصال خودکار</button><span id="authState" class="mission-status">برای ثبت یا مشاهده مأموریت، وارد پایگاه داده شوید؛ نیازی به رمز نیست.</span></section>
 <div id="workArea" class="hidden">
 <section class="mission-card" id="schemaTransferTools">
  <div class="section-head"><div><h2>ویرایش و انتشار ساختار فرم مأموریت</h2><p>برای اصلاح هر فیلد، روی علامت قلم کنار عنوان آن بزنید. پس از ثبت ویرایش، ساختار فعال در پایگاه داده این سامانه ذخیره می‌شود.</p></div></div>
@@ -437,7 +437,7 @@ if(location.protocol==="file:"){
 <script src="../assets/js/main.js?v=mission-suite-20261114-14"></script>
 <script src="../assets/js/organization-modules.js?v=dept8-20261107"></script>
 <script src="../assets/js/mobile-nav.js?v=internal-routing-20261110" defer></script>
-<script type="module" src="../assets/js/mission-create.js?v=mission-workflow-v23-20261115"></script>
+<script type="module" src="../assets/js/mission-create.js?v=mission-workflow-local-first-20261115-01"></script>
 <script>if("serviceWorker" in navigator)navigator.serviceWorker.register("../sw.js").catch(()=>{});</script>
 </body></html>
 
