@@ -268,7 +268,11 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 <div class="field" data-condition-field="deputyApproval" data-condition-value="approved"><label for="deputyReferralPerson">نفر مسئول ارجاع پس از تأیید</label><input id="deputyReferralPerson" placeholder="نام یا کد پرسنلی فرد مسئول"></div>
 <div class="field" data-condition-field="deputyApproval" data-condition-value="approved"><label for="deputyReferralAt">تاریخ و ساعت ارجاع پس از تأیید</label><input id="deputyReferralAt" type="datetime-local"></div>
 <div class="field"><label for="reportFrequency">تناوب گزارش پیشرفت</label><select id="reportFrequency"><option>روزانه</option><option selected>هفتگی</option><option>دو هفته یک‌بار</option><option>ماهانه</option><option>در نقاط عطف</option></select></div>
-<div class="field"><label for="durationEstimate">مدت برآوردی (روز)</label><input id="durationEstimate" type="number" min="0" placeholder="خودکار از تاریخ‌ها قابل محاسبه است"></div>
+<div class="field"><label for="durationEstimate">مدت برآوردی (روز)</label><input id="durationEstimate" type="number" min="0" placeholder="مدت تخمینی اولیه"></div>
+<div class="field"><label for="missionDaysRequested">تعداد روز مأموریتِ درخواستی</label><input id="missionDaysRequested" type="number" min="0" step="1" placeholder="طبق درخواست اولیه"></div>
+<div class="field"><label for="missionDaysApproved">تعداد روز مأموریتِ مصوب</label><input id="missionDaysApproved" type="number" min="0" step="1" placeholder="طبق تأیید و ابلاغ"></div>
+<div class="field"><label for="missionDaysCompleted">تعداد روز مأموریتِ انجام‌شده</label><input id="missionDaysCompleted" type="number" min="0" step="1" placeholder="مدت واقعی انجام‌شده"></div>
+<div class="field full"><small class="hint">این سه عدد مستقل ثبت می‌شوند؛ در گزارش‌ها اختلاف روزهای انجام‌شده با روزهای مصوب نیز محاسبه خواهد شد.</small></div>
 <div class="field full"><label>نقاط عطف و موعدهای میانی</label><div id="milestoneRows" class="milestone-rows"></div><div class="mission-actions"><div class="right"><button type="button" id="addMilestone" class="quiet">＋ افزودن نقطه عطف</button><button type="button" id="calculateMilestoneProgress" class="quiet">محاسبه پیشرفت از نقاط عطف</button></div></div><small>برای هر نقطه عطف، موعد، مسئول، وزن و درصد پیشرفت را ثبت کنید. نقاط عطف بخشی از برنامه اجرایی مأموریت هستند.</small></div>
 </div>
 </section>
@@ -433,7 +437,7 @@ if(location.protocol==="file:"){
 <script src="../assets/js/main.js?v=mission-suite-20261114-14"></script>
 <script src="../assets/js/organization-modules.js?v=dept8-20261107"></script>
 <script src="../assets/js/mobile-nav.js?v=internal-routing-20261110" defer></script>
-<script type="module" src="../assets/js/mission-create.js?v=mission-workflow-v21-20261115"></script>
+<script type="module" src="../assets/js/mission-create.js?v=mission-workflow-v22-20261115"></script>
 <script>if("serviceWorker" in navigator)navigator.serviceWorker.register("../sw.js").catch(()=>{});</script>
 </body></html>
 
