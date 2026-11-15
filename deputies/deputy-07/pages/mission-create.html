@@ -332,12 +332,12 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 <div class="field full"><label for="evaluationNotes">نظر ارزیاب و جمع‌بندی نهایی</label><textarea id="evaluationNotes"></textarea></div>
 </div>
 <div class="mission-actions"><div class="right"><button type="button" id="addProgress" class="quiet">ثبت گزارش پیشرفت در تاریخچه</button></div></div>
-<div id="progressHistory" class="repeat-note">گزارش‌های پیشرفت پس از ذخیره مأموریت در تاریخچه ثبت می‌شوند.</div>
+<div id="progressHistory" class="repeat-note"></div>
 </section>
 <section class="mission-card mission-section" data-section="knowledge">
 <div class="section-head"><div><h2>دانش و تجربه‌نگاری</h2></div></div>
 <div class="form-grid">
-<div class="field full"><label for="missionFiles">انتخاب پیوست‌ها</label><input id="missionFiles" type="file" multiple><small>پیوست‌ها پس از ذخیره پرونده در مخزن امن معاونت ۷ نگهداری می‌شوند.</small></div><div class="field full"><label>پیوست‌های ثبت‌شده در این پرونده</label><div id="missionAttachmentList" class="repeat-note">پس از بارگذاری پرونده، پیوست‌های قبلی نمایش داده می‌شوند.</div></div>
+<div class="field full"><label for="missionFiles">انتخاب پیوست‌ها</label><input id="missionFiles" type="file" multiple><small>پیوست‌ها پس از ذخیره پرونده در مخزن امن معاونت ۷ نگهداری می‌شوند.</small></div><div class="field full"><label>پیوست‌های ثبت‌شده در این پرونده</label><div id="missionAttachmentList" class="repeat-note"></div></div>
 <div class="field full"><label for="documentRegister">فهرست اسناد و ارجاعات (هر سطر: نوع سند | شماره | تاریخ | توضیح)</label><textarea id="documentRegister"></textarea></div>
 <div class="field full"><label for="meetingMinutes">کاربرگ جلسات و صورتجلسات</label><textarea id="meetingMinutes" placeholder="تاریخ جلسه | حاضران | دستور جلسه | تصمیم‌ها | مسئول هر اقدام | موعد"></textarea></div>
 <div class="field full"><label for="meetingActions">اقدامات حاصل از جلسات و پیگیری مصوبات</label><textarea id="meetingActions"></textarea></div>
@@ -376,7 +376,7 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 <div class="field"><label for="calendarReminder">یادآوری</label><select id="calendarReminder"><option>بدون یادآوری</option><option>یک روز قبل</option><option>سه روز قبل</option><option>یک هفته قبل</option></select></div>
 <div class="field full"><label for="calendarDescription">توضیحات رویداد تقویم</label><textarea id="calendarDescription"></textarea></div>
 </div>
-<div class="repeat-note">مأموریت به‌صورت یک رویداد بازه‌ای در تقویم نمایش داده می‌شود؛ نقاط عطف، جلسه هماهنگی و موعد تحویل نیز به‌عنوان نقاط کنترل مرتبط با همان کد مأموریت قابل نمایش خواهند بود.</div>
+<div class="repeat-note"></div>
 <div class="process-track-area"><div class="section-head"><div><h3>چرخه‌های مستقل پیگیری مأموریت</h3></div></div><div class="process-track-grid">
 
 <article class="process-track-card" data-process-track="management"><h4>۱. چرخه مدیریتی معاون</h4>
@@ -412,7 +412,7 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 <label>وضعیت اقدام<select data-action-field="status"><option>ثبت‌شده</option><option>در حال انجام</option><option>تکمیل‌شده</option><option>متوقف</option></select></label>
 <label>شرح / نتیجه<textarea data-action-field="note" rows="2"></textarea></label><button type="button" class="quiet" data-add-track-action>＋ ثبت اقدام اداره</button></div>
 <div class="process-track-actions" data-track-actions></div></article>
-</div><div class="process-track-history"><b>تاریخچه تغییرات چرخه‌ها</b><div id="processTrackHistory">پس از ثبت مأموریت، تغییرات این سه چرخه نگهداری می‌شود.</div></div></div><div class="field full"><div class="mission-actions"><div class="right"><button type="button" id="returnForReview" class="quiet">ارسال نتیجه برای بررسی مقام ارجاع‌دهنده</button><button type="button" id="closeMission" class="primary">تأیید نهایی و مختومه‌کردن</button></div></div></div><div class="field full"><label>تاریخچه گردش و ارجاع</label><div id="workflowHistory" class="repeat-note">پس از ثبت مأموریت، تاریخچه گردش این پرونده نمایش داده می‌شود.</div></div>
+</div><div class="process-track-history"><b>تاریخچه تغییرات چرخه‌ها</b><div id="processTrackHistory">پس از ثبت مأموریت، تغییرات این سه چرخه نگهداری می‌شود.</div></div></div><div class="field full"><div class="mission-actions"><div class="right"><button type="button" id="returnForReview" class="quiet">ارسال نتیجه برای بررسی مقام ارجاع‌دهنده</button><button type="button" id="closeMission" class="primary">تأیید نهایی و مختومه‌کردن</button></div></div></div><div class="field full"><label>تاریخچه گردش و ارجاع</label><div id="workflowHistory" class="repeat-note"></div></div>
 </section>
 <div class="mission-actions"><div class="right"><button type="button" id="prevStep" class="quiet">مرحله قبل</button><button type="button" id="nextStep" class="primary">مرحله بعد</button></div><div class="left"><button type="button" id="saveDraft" class="quiet">ذخیره پیش‌نویس</button><button type="submit" id="saveMission" class="primary"><svg aria-hidden="true" viewBox="0 0 24 24" width="17" height="17" style="vertical-align:-4px;margin-left:6px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M5 3h12l4 4v14H3V3z"/><path d="M7 3v6h10V3M7 21v-7h10v7"/></svg>ثبت و ذخیره مأموریت</button></div></div>
 <div id="saveResult" class="toast" role="status"></div>
