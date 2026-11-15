@@ -1,56 +1,28 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#f3f6f1">
-<meta name="description" content="پشتیبان‌گیری و تبادل آفلاین اطلاعات مأموریت‌های معاونت ۷">
-<title>پشتیبان‌گیری و بروزرسانی مأموریت‌ها | معاونت ۷</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f3f7f9">
+<meta name="description" content="مدیریت ذخیره‌سازی محلی اطلاعات مأموریت‌های معاونت ۷">
+<title>مدیریت داده‌های محلی مأموریت‌ها | معاونت ۷</title>
 <link rel="manifest" href="../offline.webmanifest">
-<link rel="preload" href="../assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/css/style.css?v=mission-sync-20261114-1">
+<link rel="preload" href="../assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="../assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/css/style.css?v=mission-local-data-20261115-01"><link rel="stylesheet" href="../assets/css/mission-visual.css?v=mission-local-data-20261115-01">
 <style>
-.sync-panel{padding:24px;margin-top:20px}.sync-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.sync-stat{padding:16px;border:1px solid var(--line,#dce4df);border-radius:12px;background:#fff}.sync-stat small{display:block;color:var(--muted);margin-bottom:8px}.sync-stat b{font-size:22px}.sync-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.sync-note{padding:14px;border:1px solid #d7e5e5;border-radius:10px;background:#f3f8f8;line-height:1.9}.sync-status{margin-top:12px;color:var(--muted);line-height:1.9}.sync-list{display:grid;gap:8px;margin-top:14px}.sync-row{padding:12px;border:1px solid var(--line,#dce4df);border-radius:10px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.sync-row small{color:var(--muted)}.sync-actions button,.sync-actions .file-button{cursor:pointer}
-</style>
-</head>
+.local-data-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}.local-data-stat{padding:17px;border:1px solid #dce8ed;border-radius:12px;background:#fff}.local-data-stat small{display:block;color:#718793;font-size:11px;margin-bottom:8px}.local-data-stat b{font-size:22px;color:#365e70;font-variant-numeric:tabular-nums}.local-data-card{padding:20px;margin-top:14px}.local-data-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}.local-data-note{padding:13px 15px;border:1px solid #dbe9ee;border-radius:10px;background:#f3f8fa;color:#5f7885;font-size:12px;line-height:2;margin-top:14px}.local-data-state{font-size:12px;line-height:2;color:#5e7885}.local-data-badge{display:inline-flex;align-items:center;padding:5px 10px;border-radius:30px;background:#eaf5f2;color:#3f7b70;font-size:11px}.local-data-badge.error{background:#fff1ed;color:#a75b4d}@media(max-width:700px){.local-data-grid{grid-template-columns:1fr}.local-data-card{padding:15px}}
+</style></head>
 <body class="ops-page">
-<header class="ops-header"><div class="ops-header-inner">
-<a class="ops-brand" href="../dashboard.html"><img class="ops-logo" src="../assets/images/iran-flag.svg" alt="پرچم ایران"><span><b>معاونت ۷</b><small>سامانه وضعیت و عملکرد</small></span></a>
-<nav class="ops-nav" aria-label="منوی اصلی"></nav><div class="ops-clock"><span>زمان سامانه</span><b id="clock">—</b><small id="date">—</small></div>
-</div></header>
+<header class="ops-header"><div class="ops-header-inner"><a class="ops-brand" href="../dashboard.html"><img class="ops-logo" src="../assets/images/iran-flag.svg" alt="پرچم ایران"><span><b>معاونت ۷</b><small>سامانه وضعیت و عملکرد</small></span></a><nav class="ops-nav" aria-label="منوی اصلی"></nav><div class="ops-clock"><span>زمان سامانه</span><b id="clock">—</b><small id="date">—</small></div></div></header>
 <main class="ops-main">
-<section class="ops-intro"><div><span class="eyebrow">ماموریت‌ها · زیرساخت آفلاین</span><h1>پشتیبان‌گیری و بروزرسانی مأموریت‌ها</h1><p>مدیریت نسخه‌های اطلاعات و تبادل امن تغییرات بین رایانه‌های معاونت ۷</p></div></section>
-<section class="dept-panel sync-panel">
-<div class="dept-panel-head"><div><span class="eyebrow">اتصال به پایگاه داده محلی</span><h2>وضعیت مخزن مأموریت‌ها</h2></div><span id="lockBadge" class="status">قفل است</span></div>
-<p id="vaultState" class="sync-status">برای اتصال، رمز قبلی (فقط برای انتقال یک‌باره) را وارد کنید. اگر هنوز مخزنی ساخته نشده باشد، در اولین بازگشایی ایجاد می‌شود.</p>
-<div class="form-row"><label for="passphrase">رمز قبلی مخزن محلی</label><input id="passphrase" type="password" autocomplete="current-password" placeholder="در صورت وجود، رمز قبلی"></div>
-<div class="sync-actions"><button id="unlockBtn" class="primary">ایجاد / بازگشایی مخزن</button><button id="lockBtn" class="quiet" disabled>قفل‌کردن مخزن</button><a class="file-button" href="../local-data/index.html">رفتن به مرکز داده و پشتیبان‌گیری</a></div>
-</section>
-<section class="stats sync-grid">
-<article class="sync-stat"><small>مأموریت‌های ثبت‌شده</small><b id="missionCount">—</b></article>
-<article class="sync-stat"><small>تعارض‌های مأموریت</small><b id="conflictCount">—</b></article>
-<article class="sync-stat"><small>کل تغییرات مخزن</small><b id="changeCount">—</b></article>
-<article class="sync-stat"><small>شناسه این رایانه</small><b id="deviceId">—</b></article>
-</section>
-<section class="dept-panel sync-panel">
-<div class="dept-panel-head"><div><span class="eyebrow">تبادل آفلاین</span><h2>تهیه و دریافت بسته بروزرسانی</h2></div></div>
-<div class="sync-note">برای انتقال اطلاعات بین رایانه‌ها، از هر رایانه بسته پشتیبان تهیه کنید و با فلش یا شبکه داخلی به رایانه مقصد ببرید. هنگام دریافت، تغییرات جدید ادغام می‌شوند؛ موارد تکراری دوباره ثبت نمی‌شوند و تعارض‌ها بدون حذف شاخه‌ها گزارش می‌شوند.</div>
-<div class="sync-actions"><button id="exportBtn" class="primary" disabled>ساخت بسته پشتیبان و بروزرسانی</button><label class="file-button" for="importFile">دریافت بسته رایانه دیگر</label><input id="importFile" type="file" accept=".h7backup,.json,application/json" hidden disabled></div>
-<p id="transferResult" class="sync-status" aria-live="polite">ابتدا مخزن را بازگشایی کنید.</p>
-</section>
-<section class="dept-panel sync-panel">
-<div class="dept-panel-head"><div><span class="eyebrow">داده‌های مشترک</span><h2>آخرین مأموریت‌های موجود در مخزن</h2></div><button id="refreshBtn" class="quiet" disabled>بروزرسانی فهرست</button></div>
-<div id="missionList" class="sync-list">برای مشاهده اطلاعات، مخزن را بازگشایی کنید.</div>
-</section>
-<section class="dept-panel sync-panel">
-<div class="dept-panel-head"><div><h2>روش کار هماهنگ چند رایانه</h2></div></div>
-<ol><li>در هر رایانه، نسخه آفلاین سامانه را باز کنید؛ در حالت عادی رمز لازم نیست.</li><li>مأموریت‌ها در بانک محلی همان رایانه ثبت و ویرایش می‌شوند.</li><li>پس از پایان کار، بسته تبادل بدون رمز بسازید.</li><li>بسته را به رایانه تجمیع‌کننده منتقل و وارد کنید.</li><li>تعارض‌های احتمالی را بررسی کنید و سپس بسته جامع جدید را به سایر رایانه‌ها برسانید.</li></ol>
-<p class="sync-note">قالب داده مأموریت نسخه‌دار است و از طریق لایه واسط <code>MissionStore</code> به مخزن متصل می‌شود. در توسعه بعدی، می‌توان همین واسط را به پایگاه داده مرکزی متصل کرد. تا آن زمان، نسخه وب از IndexedDB همین مرورگر و نسخه دسکتاپ از مخزن محلی برنامه استفاده می‌کند.</p>
-</section>
-<footer class="ops-footer"></footer>
-</main>
-<script src="../assets/js/main.js?v=mission-sync-20261114-1"></script>
-<script type="module" src="../assets/js/mission-sync.js"></script>
-<script>if("serviceWorker" in navigator)navigator.serviceWorker.register("../sw.js").catch(()=>{});</script>
+<section class="ops-intro"><div><span class="eyebrow">مأموریت‌ها · زیرساخت اطلاعات</span><h1>مدیریت داده‌های محلی</h1><p>ذخیره خودکار اطلاعات مأموریت‌ها روی همین رایانه، بدون سرور پایگاه داده و بدون حساب کاربری</p></div></section>
+<section class="dept-panel local-data-card"><div class="dept-panel-head"><div><span class="eyebrow">وضعیت ذخیره‌سازی</span><h2>مخزن محلی مأموریت‌ها</h2></div><span id="storageBadge" class="local-data-badge">در حال بررسی</span></div><p id="storageState" class="local-data-state">در حال اتصال به فضای ذخیره‌سازی همین مرورگر…</p>
+<div class="local-data-grid"><article class="local-data-stat"><small>مأموریت‌های ذخیره‌شده</small><b id="missionCount">—</b></article><article class="local-data-stat"><small>حجم مصرف‌شده مرورگر</small><b id="storageUsed">—</b></article><article class="local-data-stat"><small>وضعیت نوشتن و خواندن</small><b id="storageHealth">—</b></article></div></section>
+<section class="dept-panel local-data-card"><div class="dept-panel-head"><div><span class="eyebrow">انتقال ساده فایل اطلاعات</span><h2>دریافت یا بازیابی اطلاعات</h2></div></div>
+<p class="local-data-state">اطلاعات هنگام ثبت مأموریت به‌طور خودکار ذخیره می‌شوند. این بخش فقط برای نگهداری یک نسخه مستقل یا انتقال اطلاعات به رایانه دیگر است؛ نیازی به همگام‌سازی یا ادغام دستی روزانه نیست.</p>
+<div class="local-data-actions"><button id="exportData" class="primary" type="button">دریافت فایل اطلاعات مأموریت‌ها</button><button id="chooseImport" class="quiet" type="button">بازیابی از فایل اطلاعات</button><input id="importDataFile" type="file" accept=".json,application/json" hidden><button id="refreshStorage" class="quiet" type="button">بررسی مجدد وضعیت</button></div>
+<p id="transferState" class="local-data-state" role="status" aria-live="polite"></p><div class="local-data-note">فایل اطلاعات شامل سوابق مأموریت‌ها، ساختار فرم و داده‌های تکمیلی است. هنگام بازیابی، اطلاعات موجود حذف نمی‌شوند؛ سوابق هم‌نام بر اساس شناسه مأموریت به‌روزرسانی و موارد جدید اضافه می‌شوند.</div></section>
+<section class="dept-panel local-data-card"><div class="dept-panel-head"><div><span class="eyebrow">نحوه اجرای محلی</span><h2>شروع کار روی رایانه</h2></div></div>
+<ol class="local-data-state"><li>نسخه کامل مخزن را از GitHub به‌صورت ZIP دریافت و از حالت فشرده خارج کنید.</li><li>در ویندوز، فایل <b>START-OFFLINE.bat</b> داخل پوشه <b>deputies/deputy-07</b> را دوبار کلیک کنید.</li><li>صفحه مأموریت در مرورگر باز می‌شود و ثبت اطلاعات بدون اینترنت و بدون دیتابیس هاستینگ انجام خواهد شد.</li><li>برای مشاهده همان اطلاعات، همیشه از همان رایانه، همان مرورگر و همان نشانی محلی استفاده کنید.</li></ol>
+<div class="local-data-note">این برنامه از یک وب‌سرور بسیار سبک فقط برای نمایش فایل‌های سایت روی نشانی محلی استفاده می‌کند؛ این وب‌سرور دیتابیس نیست. اطلاعات در IndexedDB مرورگر ذخیره می‌شوند و روی رایانه شما باقی می‌مانند.</div></section>
+<footer class="ops-footer"></footer></main>
+<script src="../assets/js/main.js?v=mission-local-data-20261115-01"></script><script type="module" src="../assets/js/mission-sync.js?v=mission-local-data-20261115-01"></script><script>if("serviceWorker" in navigator)navigator.serviceWorker.register("../sw.js").catch(()=>{});</script>
 </body></html>
