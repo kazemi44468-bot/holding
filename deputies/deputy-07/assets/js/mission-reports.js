@@ -33,6 +33,60 @@ drawBars("trackBars",[{label:"مدیریتی معاون",value:avg(rows,"managem
 const lateDone=done.filter(m=>m.plannedEnd&&m.actualEnd&&m.actualEnd>m.plannedEnd).length,noEnd=rows.filter(m=>!m.plannedEnd).length,durations=rows.filter(m=>m.plannedStart&&m.plannedEnd).map(m=>(date(m.plannedEnd)-date(m.plannedStart))/86400000),cost=rows.reduce((s,m)=>s+Number(m.actualCost||0),0),budget=rows.reduce((s,m)=>s+Number(m.estimatedCost||0),0),milestones=rows.reduce((s,m)=>s+(m.milestones||[]).length,0);$("timeSummary").innerHTML='<div>دارای مهلت برنامه‌ای: <b>'+fa(rows.length-noEnd)+'</b></div><div>فاقد تاریخ پایان: <b>'+fa(noEnd)+'</b></div><div>تکمیل‌شده با تأخیر: <b>'+fa(lateDone)+'</b></div><div>میانگین مدت برنامه: <b>'+fa(durations.length?Math.round(durations.reduce((a,b)=>a+b,0)/durations.length):0)+' روز</b></div><div>دارای مانع: <b>'+fa(rows.filter(m=>m.status==="blocked").length)+'</b></div><div>برآورد هزینه: <b>'+fa(budget)+' تومان</b></div><div>هزینه واقعی: <b>'+fa(cost)+' تومان</b></div><div>نقاط عطف: <b>'+fa(milestones)+'</b></div>';
 $("deptReportRows").innerHTML=Object.entries(depts).map(([id,name])=>{const a=rows.filter(m=>String(m.executorDepartment)===id),d=a.filter(statusDone).length,p=a.length?Math.round(a.reduce((s,m)=>s+Number(m.progress||0),0)/a.length):0;return '<tr><td>'+esc(name)+'</td><td>'+fa(a.length)+'</td><td>'+fa(d)+'</td><td>'+fa(a.filter(m=>active.includes(m)).length)+'</td><td>'+fa(a.filter(isLate).length)+'</td><td>'+fa(p)+'٪</td><td>'+fa(avg(a,"management"))+'٪</td><td>'+fa(avg(a,"office"))+'٪</td><td>'+fa(avg(a,"department"))+'٪</td></tr>'}).join("");
 const sel=$("missionDetailSelect"),old=sel.value;sel.innerHTML='<option value="">انتخاب کنید</option>'+rows.map(m=>'<option value="'+esc(m.id)+'">'+esc((m.missionCode||"بدون کد")+" · "+(m.missionTitle||"بدون عنوان"))+'</option>').join("");sel.value=rows.some(m=>String(m.id)===old)?old:"";renderGantt(rows);renderDetail()}
+
+const SAMPLE_BATCH="mission-report-demo-2026-11";
+const sampleSpecs=[
+ ["1","تکمیل پرونده‌های پشتیبانی نیروی انسانی","completed",100,"critical",13,10,4],
+ ["2","ارزیابی شاخص‌های کیفیت خدمات شهری","in-progress",68,"important",12,9,null],
+ ["3","بازدید و پایش پاکیزگی محورهای اصلی","in-progress",54,"urgent",11,8,null],
+ ["4","تعمیر و آماده‌سازی تجهیزات روشنایی","blocked",35,"critical",10,8,null],
+ ["6","به‌روزرسانی زیرساخت شبکه و ارتباطات","completed",100,"important",9,7,3],
+ ["7","ساماندهی مسیرهای جمع‌آوری پسماند خشک","in-progress",76,"urgent",8,6,null],
+ ["8","بررسی میدانی درخواست‌های ثبت‌شده شهروندان","review",92,"normal",7,5,null],
+ ["HQ","تهیه گزارش تجمیعی عملکرد اداره‌ها","referred",42,"important",6,4,null],
+ ["3","برنامه‌ریزی شیفت‌های عملیاتی مناطق","registered",10,"normal",5,null,null],
+ ["4","بازدید دوره‌ای تأسیسات و تجهیزات","in-progress",61,"normal",4,3,null],
+ ["7","رفع نقاط انباشت پسماند در محدوده‌های منتخب","closed",100,"urgent",3,2,1],
+ ["2","طراحی الگوی سنجش رضایت از خدمات","in-progress",27,"normal",2,1,null]
+];
+const sampleDeptName=id=>depts[id]||("اداره "+id);
+function sampleDate(daysAgo){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-daysAgo);return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-")}
+async function seedMissionSamples(){
+ const existing=await MissionStore.list(),known=new Set(existing.map(m=>String(m.id))),batch=sampleSpecs.filter((_,i)=>!known.has("sample-mission-"+String(i+1).padStart(2,"0")));
+ let added=0;
+ for(let i=0;i<sampleSpecs.length;i++){
+  const [dept,title,status,progress,priority,createdAgo,startAgo,finishAgo]=sampleSpecs[i],id="sample-mission-"+String(i+1).padStart(2,"0");
+  if(known.has(id))continue;
+  const created=sampleDate(createdAgo),started=startAgo===null?null:sampleDate(startAgo),finished=finishAgo===null?null:sampleDate(finishAgo),plannedStart=sampleDate(createdAgo),plannedEnd=sampleDate(Math.max(0,createdAgo-14));
+  const now=new Date().toISOString(),code="TST-1405-"+String(i+1).padStart(3,"0");
+  const actionAt=sampleDate(Math.max(0,(startAgo??createdAgo)-1))+"T10:30:00";
+  const trackStatus=status==="completed"||status==="closed"?"completed":status==="registered"?"not-started":status==="referred"?"pending":"in-progress";
+  const record={
+   id,missionCode:code,missionTitle:title,missionSubject:"پرونده نمونه برای ارزیابی گزارش‌های زمانی، نمودار پیشرفت و برنامه زمان‌بندی.",executorDepartment:dept,executorDepartmentName:sampleDeptName(dept),missionType:"اجرایی",workNature:"پروژه‌ای",priority,confidentiality:"داخلی",status,executionStatus:status,progress,qualityScore:status==="completed"||status==="closed"?90:70+i%4,goalAchievement:status==="completed"||status==="closed"?100:Math.min(100,progress+5),scheduleStatus:finishAgo!==null&&finishAgo>Math.max(0,createdAgo-14)?"دارای تأخیر":"مطابق برنامه",plannedStart,plannedEnd,actualStart:started,actualEnd:finished,createdAt:created+"T09:00:00",updatedAt:now,isSampleData:true,sampleBatch:SAMPLE_BATCH,sampleLabel:"داده آزمایشی",
+   directOwner:"مسئول نمونه",assignedExpert:"کارشناس آزمایشی",progressDescription:"ثبت آزمایشی برای ارزیابی صفحه گزارش.",
+   workflow:{stage:status,assignedDepartment:dept,assignedManager:"مسئول نمونه",assignedExpert:"کارشناس آزمایشی",updatedAt:now},
+   workflowLog:[{id:id+"-w1",at:created+"T09:00:00",action:"ثبت مأموریت آزمایشی",stage:"registered",department:sampleDeptName(dept),owner:"مسئول نمونه"},...(started?[{id:id+"-w2",at:started+"T10:00:00",action:"شروع عملیات",stage:"in-progress",department:sampleDeptName(dept),owner:"کارشناس آزمایشی"}]:[]),...(finished?[{id:id+"-w3",at:finished+"T16:00:00",action:"اتمام و تأیید مأموریت",stage:status,department:sampleDeptName(dept),owner:"مسئول نمونه"}]:[])],
+   progressLog:[{id:id+"-p1",at:created+"T09:30:00",progress:0,note:"ثبت اولیه",by:"داده آزمایشی"},{id:id+"-p2",at:(started||created)+"T14:00:00",progress:Math.max(5,Math.round(progress*.55)),note:"گزارش میانی پیشرفت",by:"داده آزمایشی"},{id:id+"-p3",at:(finished||sampleDate(0))+"T15:00:00",progress,note:"به‌روزرسانی پیشرفت",by:"داده آزمایشی"}],
+   processLog:[{id:id+"-a1",at:actionAt,action:"بررسی و ثبت اقدام اجرایی",note:"اقدام نمونه برای نمایش در نمودار فعالیت",by:"کارشناس آزمایشی"}],
+   processTracks:{
+    management:{status:trackStatus,progress:Math.min(100,progress+8),owner:"مسئول نمونه",dueDate:plannedEnd,actions:[{id:id+"-ma",title:"بررسی مدیریتی و تعیین اولویت",status:"تکمیل‌شده",createdAt:created+"T11:00:00",owner:"مسئول نمونه"}]},
+    office:{status:trackStatus,progress:Math.max(0,progress-4),owner:"دفتر معاون",dueDate:plannedEnd,actions:[{id:id+"-oa",title:"پیگیری و هماهنگی بین واحدی",status:progress>=70?"تکمیل‌شده":"در حال انجام",createdAt:actionAt,owner:"دفتر معاون",dueDate:plannedEnd}]},
+    department:{status:trackStatus,progress,owner:"کارشناس آزمایشی",dueDate:plannedEnd,actions:[{id:id+"-da",title:"اجرای اقدام تخصصی اداره",status:finished?"تکمیل‌شده":"در حال انجام",createdAt:(started||created)+"T12:00:00",owner:"کارشناس آزمایشی",dueDate:plannedEnd}]}
+   },
+   milestones:[{id:id+"-m1",title:"آماده‌سازی و هماهنگی",weight:25,progress:100,dueDate:plannedStart},{id:id+"-m2",title:"اجرای عملیات اصلی",weight:50,progress, dueDate:plannedEnd},{id:id+"-m3",title:"تحویل و ارزیابی",weight:25,progress:finished?100:0,dueDate:plannedEnd}]
+  };
+  await MissionStore.save(record,id);added++;
+ }
+ await refresh();
+ $("sampleDataState").textContent=added?fa(added)+" مأموریت نمونه اضافه شد.": "۱۲ مأموریت نمونه از قبل در بانک وجود دارند.";
+}
+async function removeMissionSamples(){
+ const records=await MissionStore.list(),samples=records.filter(m=>m.sampleBatch===SAMPLE_BATCH);
+ for(const m of samples)await MissionStore.remove(m.id);
+ await refresh();
+ $("sampleDataState").textContent=samples.length?fa(samples.length)+" مأموریت آزمایشی حذف شد.":"داده آزمایشی برای حذف وجود نداشت.";
+}
+
 async function refresh(){all=await MissionStore.list();const cfg=await MissionStore.config();for(const d of cfg?.departments||[])depts[String(d.id)]=d.name;const sel=$("reportDept");for(const m of all){const id=String(m.executorDepartment||"");if(id&&m.executorDepartmentName)depts[id]=m.executorDepartmentName;if(id&&![...sel.options].some(o=>o.value===id)){const o=document.createElement("option");o.value=id;o.textContent=depts[id]||"اداره "+id;sel.append(o)}}render()}
 async function init(){try{await MissionStore.unlock();$("reportContent").hidden=false;$("reportState").textContent="اتصال برقرار است؛ داده‌ها مستقیماً از بانک مأموریت‌های معاونت ۷ خوانده می‌شوند.";const t=today();$("reportFrom").value=t;$("reportTo").value=t;await refresh()}catch(e){$("reportState").textContent=e.message;$("reportContent").hidden=true}}
-init();$("reportRefresh").addEventListener("click",()=>refresh().catch(e=>$("reportState").textContent=e.message));$("reportPeriod").addEventListener("change",()=>{const x=$("reportPeriod").value==="custom";$("reportFrom").disabled=!x;$("reportTo").disabled=!x;render()});$("reportDept").addEventListener("change",render);$("reportFrom").addEventListener("change",render);$("reportTo").addEventListener("change",render);$("missionDetailSelect").addEventListener("change",renderDetail);
+init();$("seedMissionSamples").addEventListener("click",()=>seedMissionSamples().catch(e=>$("sampleDataState").textContent="خطا: "+e.message));$("removeMissionSamples").addEventListener("click",()=>removeMissionSamples().catch(e=>$("sampleDataState").textContent="خطا: "+e.message));$("reportRefresh").addEventListener("click",()=>refresh().catch(e=>$("reportState").textContent=e.message));$("reportPeriod").addEventListener("change",()=>{const x=$("reportPeriod").value==="custom";$("reportFrom").disabled=!x;$("reportTo").disabled=!x;render()});$("reportDept").addEventListener("change",render);$("reportFrom").addEventListener("change",render);$("reportTo").addEventListener("change",render);$("missionDetailSelect").addEventListener("change",renderDetail);
