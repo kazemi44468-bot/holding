@@ -1,78 +1,11 @@
-import { MissionStore, MissionVault } from "./mission-store.js";
-const $ = id => document.getElementById(id);
-let unlocked = false;
-const fmt = value => Number(value || 0).toLocaleString("fa-IR");
-function setUnlocked(value) {
-  unlocked = value;
-  $("lockBadge").textContent = value ? "باز است" : "قفل است";
-  $("lockBadge").classList.toggle("open", value);
-  $("unlockBtn").disabled = value;
-  $("passphrase").disabled = value;
-  $("passphrase").parentElement.hidden = value;
-  for (const id of ["lockBtn","exportBtn","importFile","refreshBtn"]) $(id).disabled = !value;
-}
-function show(id, value) { $(id).textContent = value; }
-async function refresh() {
-  if (!unlocked) return;
-  const [summary, status, missions] = await Promise.all([MissionStore.summary(), MissionVault.counts(), MissionStore.list()]);
-  show("missionCount", fmt(summary.records));
-  show("conflictCount", fmt(summary.conflicts));
-  show("changeCount", fmt(summary.changes));
-  show("deviceId", status.device);
-  $("deviceId").style.fontSize = "12px";
-  $("missionList").replaceChildren();
-  if (!missions.length) {
-    $("missionList").textContent = "هنوز مأموریتی در پایگاه داده محلی ثبت نشده است.";
-  } else {
-    for (const mission of missions.slice(0, 30)) {
-      const row = document.createElement("div"); row.className = "sync-row";
-      const title = document.createElement("strong");
-      title.textContent = mission.title || mission.subject || ("مأموریت " + mission.id.slice(0, 8));
-      const meta = document.createElement("small");
-      meta.textContent = "شناسه: " + mission.id + " · آخرین تغییر: " + new Date(mission._updatedAt).toLocaleString("fa-IR");
-      row.append(title, meta); $("missionList").append(row);
-    }
-  }
-  show("vaultState", "مخزن محلی باز است. اطلاعات مأموریت‌ها از پایگاه داده مشترک معاونت ۷ خوانده می‌شود.");
-}
-$("unlockBtn").addEventListener("click", async () => {
-  try {
-    const device = await MissionStore.unlock($("passphrase").value);
-    $("passphrase").value = ""; setUnlocked(true);
-    show("vaultState", "مخزن با موفقیت بازگشایی شد. شناسه رایانه: " + device);
-    show("transferResult", "اتصال به پایگاه داده محلی برقرار شد.");
-    await refresh();
-  } catch (error) { show("vaultState", error.message); }
-});
-$("lockBtn").addEventListener("click", () => {
-  MissionStore.lock(); setUnlocked(false);
-  for (const id of ["missionCount","conflictCount","changeCount","deviceId"]) show(id, "—");
-  $("missionList").textContent = "مخزن قفل است.";
-  show("transferResult", "مخزن قفل شد.");
-});
-$("refreshBtn").addEventListener("click", async () => { try { await refresh(); } catch (error) { show("transferResult", error.message); } });
-$("exportBtn").addEventListener("click", async () => {
-  try {
-    const content = await MissionVault.export();
-    const name = "deputy-07-offline-update-" + new Date().toISOString().slice(0,10) + ".h7backup";
-    const blob = new Blob([content], { type: "application/json" });
-    const url = URL.createObjectURL(blob), a = document.createElement("a");
-    a.href = url; a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1500);
-    show("transferResult", "بسته تبادل بدون رمز ساخته شد. این بسته شامل کل مخزن مرکز داده معاونت ۷ است؛ آن را فقط در مسیر انتقال مورد اعتماد نگهداری کنید.");
-  } catch (error) { show("transferResult", error.message); }
-});
-$("importFile").addEventListener("change", async event => {
-  const file = event.target.files?.[0]; if (!file) return;
-  try {
-    const raw = await file.text();
-    const legacy = JSON.parse(raw);
-    let pass = "";
-    if (legacy.version === 1) { pass = prompt("این بسته قدیمی رمزگذاری‌شده است؛ رمز همان بسته را وارد کنید:") || ""; if (!pass) return; }
-    const result = await MissionVault.import(raw, pass);
-    show("transferResult", "ادغام انجام شد: " + fmt(result.added) + " تغییر جدید، " + fmt(result.duplicates) + " مورد تکراری، " + fmt(result.conflicts) + " تعارض و " + fmt(result.records) + " رکورد قابل استفاده.");
-    await refresh();
-  } catch (error) { show("transferResult", error.message); }
-  finally { event.target.value = ""; }
-});
-const status = await MissionVault.status();
-if (status.needsMigration) show("vaultState", "مخزن قدیمی رمزگذاری شده است؛ رمز قبلی را فقط یک‌بار وارد کنید. پس از انتقال، دیگر رمز لازم نیست."); else show("vaultState", "مخزن محلی بدون رمز آماده استفاده است؛ برای شروع دکمه اتصال را بزنید.");
+import { MissionStore, MissionVault } from "./mission-store.js?v=mission-local-data-20261115-01";
+const $=id=>document.getElementById(id),fa=value=>Number(value||0).toLocaleString("fa-IR");
+function state(message,error=false){$("storageState").textContent=message;$("storageBadge").textContent=error?"نیازمند بررسی":"ذخیره‌سازی فعال";$("storageBadge").classList.toggle("error",error);}
+function transfer(message,error=false){$("transferState").textContent=message;$("transferState").style.color=error?"#a75b4d":"#527c70";}
+function fileName(){const d=new Date(),p=n=>String(n).padStart(2,"0");return "mission-data-"+d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+"-"+p(d.getHours())+p(d.getMinutes())+".json";}
+async function refresh(){await MissionStore.unlock();const health=await MissionVault.healthCheck(),summary=await MissionStore.summary();$("missionCount").textContent=fa(summary.records);$("storageHealth").textContent=health.writable?"آماده":"ناموفق";if(navigator.storage?.estimate){const estimate=await navigator.storage.estimate(),used=Number(estimate.usage||0);$("storageUsed").textContent=used<1048576?fa(Math.round(used/1024))+" KB":(used/1048576).toFixed(1).replace(".", "٫")+" MB";}else $("storageUsed").textContent="نامشخص";state("اطلاعات به‌صورت خودکار در فضای محلی همین مرورگر ذخیره می‌شود. تعداد تغییرات ثبت‌شده: "+fa(summary.changes)+" مورد. "+(health.persistent?"مرورگر ماندگاری فضای ذخیره‌سازی را پذیرفته است.":"مرورگر ماندگاری ویژه را تضمین نکرده است؛ فایل اطلاعات دوره‌ای دریافت کنید."));}
+$("exportData").addEventListener("click",async()=>{const button=$("exportData");button.disabled=true;try{const content=await MissionStore.exportBankBackup(),blob=new Blob([content],{type:"application/json;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=fileName();document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);transfer("فایل اطلاعات مأموریت‌ها با موفقیت آماده شد.");}catch(e){transfer("دریافت فایل اطلاعات ناموفق بود: "+e.message,true);}finally{button.disabled=false;}});
+$("chooseImport").addEventListener("click",()=>$("importDataFile").click());
+$("importDataFile").addEventListener("change",async event=>{const file=event.target.files?.[0];if(!file)return;const button=$("chooseImport");button.disabled=true;try{if(file.size>100*1024*1024)throw new Error("حجم فایل بیش از ۱۰۰ مگابایت است.");const raw=await file.text(),pkg=JSON.parse(raw),count=pkg?.counts?.missionChanges??pkg?.payload?.changes?.length??0;if(!confirm("اطلاعات فایل «"+file.name+"» به بانک محلی اضافه یا با سوابق هم‌شناسه به‌روزرسانی شود؟\nتعداد تغییرات: "+fa(count)+"\nاطلاعات دیگر حذف نمی‌شوند."))return;const result=await MissionStore.importBankBackup(raw);await refresh();transfer("بازیابی انجام شد: "+fa(result.added)+" تغییر جدید، "+fa(result.duplicates)+" مورد تکراری و "+fa(result.records)+" مأموریت قابل مشاهده.");}catch(e){transfer("بازیابی فایل ناموفق بود: "+e.message,true);}finally{button.disabled=false;event.target.value="";}});
+$("refreshStorage").addEventListener("click",()=>refresh().catch(e=>state(e.message,true)));
+if(location.protocol==="file:")state("این صفحه با file:// باز شده است. برای فعال‌شدن ذخیره‌سازی، فایل START-OFFLINE.bat را اجرا کنید.",true);else refresh().catch(e=>state("اتصال به ذخیره‌ساز محلی برقرار نشد: "+e.message,true));
