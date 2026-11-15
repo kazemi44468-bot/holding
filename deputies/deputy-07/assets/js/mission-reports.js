@@ -120,7 +120,7 @@ function periodList(r){
 }
 function renderComparison(){
  const mode=$("comparisonMode").value,metric=$("comparisonMetric").value,r=comparisonRange(),host=$("comparisonChart");
- if(!r){$("comparisonSummary").textContent="برای نمایش مقایسه، تاریخ شروع و پایان معتبر انتخاب کنید.";$("comparisonCaption").textContent="";host.innerHTML="";return}
+ if(!r){$("comparisonSummary").textContent="برای نمایش مقایسه، تاریخ شروع و پایان معتبر انتخاب کنید.";host.innerHTML="";return}
  const fmt=metricLabels[metric],bars=[];
  if(mode==="departments"){
   const selected=[...comparisonSelectedDepts];
@@ -128,13 +128,13 @@ function renderComparison(){
   departments.forEach(id=>{const q=all.filter(m=>String(m.executorDepartment)===id);bars.push({label:depts[id]||"اداره "+id,value:metricCount(q,metric,r.from,r.to),detail:fa(q.length)+" پرونده در بانک"})});
   $("comparisonDeptPicker").hidden=false;$("comparisonSingleDeptWrap").hidden=true;
   $("comparisonSummary").textContent=fa(bars.length)+" اداره · "+r.label+" · شاخص: "+fmt;
-  $("comparisonCaption").textContent="هر ستون تعداد "+fmt+" را در بازه انتخابی نشان می‌دهد. همه اداره‌ها با یک مقیاس مشترک مقایسه شده‌اند؛ تعداد پرونده‌های موجود هر اداره نیز در توضیح ستون آمده است.";
+  
  }else{
   const id=$("comparisonSingleDept").value,rows=all.filter(m=>String(m.executorDepartment)===id),periods=periodList(r);
   periods.forEach(p=>bars.push({label:p.label,value:metricCount(rows,metric,p.from,p.to)}));
   $("comparisonDeptPicker").hidden=true;$("comparisonSingleDeptWrap").hidden=false;
   $("comparisonSummary").textContent=(depts[id]||"اداره انتخابی")+" · "+fa(periods.length)+" ماه · شاخص: "+fmt;
-  $("comparisonCaption").textContent="هر ستون تعداد "+fmt+" را در همان ماه نشان می‌دهد. این نما برای مقایسه اداره با عملکرد ماه‌های قبلی خودش است؛ ماه‌های بدون رویداد نیز با مقدار صفر نمایش داده می‌شوند.";
+  
  }
  if(!bars.length){host.innerHTML='<p class="comparison-note">'+(mode==="departments"?"برای مقایسه، دست‌کم یک اداره را انتخاب کنید.":"برای این فیلترها داده‌ای وجود ندارد.")+"</p>";return}
  const max=Math.max(1,...bars.map(x=>x.value));
