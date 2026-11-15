@@ -1,5 +1,5 @@
 "use strict";
-const CACHE_NAME="deputy-07-missions-v43";
+const CACHE_NAME="deputy-07-missions-v44";
 const CORE_FILES=[
  "./pages/mission-bank.html",
  "./pages/mission-create.html",
@@ -43,7 +43,7 @@ self.addEventListener("fetch",event=>{
  if(STATIC_RE.test(url.pathname)){
   event.respondWith((async()=>{
    const cache=await caches.open(CACHE_NAME);
-   const cached=await cache.match(request);
+   const cached=await cache.match(request,{ignoreSearch:true});
    if(cached)return cached;
    try{
     const response=await fetch(request);
