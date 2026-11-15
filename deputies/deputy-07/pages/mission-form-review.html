@@ -58,6 +58,17 @@ td .required{width:auto;min-width:auto;accent-color:#5b9bb6}
 <main class="ops-main">
 <section class="ops-intro"><span class="eyebrow">کاربرگ طراحی و بازبینی</span><h1>بازبینی و نهایی‌سازی فرم ثبت مأموریت</h1><p>تمام اجزای فرم فعلی در این صفحه فهرست شده‌اند. تغییرات پیشنهادی را در ردیف همان مورد بنویس؛ این کاربرگ به‌تنهایی هیچ تغییری در فرم اصلی ایجاد نمی‌کند.</p></section>
 <section class="panel">
+<b>تنظیم عنوان‌ها و منوی فرم</b>
+<p class="note">عنوان مجموعه، تیتر بالای صفحه و توضیح اصلی را ویرایش کن. منوی پرش به بخش‌ها از عنوان و ترتیب بخش‌ها ساخته می‌شود.</p>
+<div class="settings-grid">
+<label>عنوان مجموعه<input id="brandTitle" value="معاونت ۷"></label>
+<label>زیرعنوان مجموعه<input id="brandSubtitle" value="سامانه وضعیت و عملکرد"></label>
+<label>تیتر کوچک بالای صفحه<input id="pageEyebrow" value="کاربرگ طراحی و بازبینی"></label>
+<label>عنوان اصلی صفحه<input id="pageHeading" value="بازبینی و نهایی‌سازی فرم ثبت مأموریت"></label>
+<label style="grid-column:span 2">توضیح زیر عنوان اصلی<input id="pageDescription" value="تمام اجزای فرم فعلی در این صفحه فهرست شده‌اند. تغییرات پیشنهادی را در ردیف همان مورد بنویس؛ این کاربرگ به‌تنهایی هیچ تغییری در فرم اصلی ایجاد نمی‌کند."></label>
+</div><div class="menu-preview" id="sectionMenuPreview"></div>
+</section>
+<section class="panel">
 <div class="toolbar">
 <button class="primary" id="exportReview">دریافت فایل تغییرات (JSON)</button>
 <button id="importReview">بارگذاری فایل تغییرات قبلی</button><input id="importFile" type="file" accept=".json,application/json" hidden>
