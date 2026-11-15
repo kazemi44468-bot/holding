@@ -36,18 +36,18 @@ const sel=$("missionDetailSelect"),old=sel.value;sel.innerHTML='<option value=""
 
 const SAMPLE_BATCH="mission-report-demo-2026-11";
 const sampleSpecs=[
- ["1","تکمیل پرونده‌های پشتیبانی نیروی انسانی","completed",100,"critical",13,10,4],
- ["2","ارزیابی شاخص‌های کیفیت خدمات شهری","in-progress",68,"important",12,9,null],
- ["3","بازدید و پایش پاکیزگی محورهای اصلی","in-progress",54,"urgent",11,8,null],
- ["4","تعمیر و آماده‌سازی تجهیزات روشنایی","blocked",35,"critical",10,8,null],
- ["6","به‌روزرسانی زیرساخت شبکه و ارتباطات","completed",100,"important",9,7,3],
- ["7","ساماندهی مسیرهای جمع‌آوری پسماند خشک","in-progress",76,"urgent",8,6,null],
- ["8","بررسی میدانی درخواست‌های ثبت‌شده شهروندان","review",92,"normal",7,5,null],
- ["HQ","تهیه گزارش تجمیعی عملکرد اداره‌ها","referred",42,"important",6,4,null],
- ["3","برنامه‌ریزی شیفت‌های عملیاتی مناطق","registered",10,"normal",5,null,null],
- ["4","بازدید دوره‌ای تأسیسات و تجهیزات","in-progress",61,"normal",4,3,null],
- ["7","رفع نقاط انباشت پسماند در محدوده‌های منتخب","closed",100,"urgent",3,2,1],
- ["2","طراحی الگوی سنجش رضایت از خدمات","in-progress",27,"normal",2,1,null]
+ ["1","تکمیل پرونده‌های پشتیبانی نیروی انسانی","completed",100,"critical",350,343,336],
+ ["2","ارزیابی شاخص‌های کیفیت خدمات شهری","in-progress",68,"important",320,313,null],
+ ["3","بازدید و پایش پاکیزگی محورهای اصلی","in-progress",54,"urgent",290,283,null],
+ ["4","تعمیر و آماده‌سازی تجهیزات روشنایی","blocked",35,"critical",260,253,null],
+ ["6","به‌روزرسانی زیرساخت شبکه و ارتباطات","completed",100,"important",230,223,216],
+ ["7","ساماندهی مسیرهای جمع‌آوری پسماند خشک","in-progress",76,"urgent",200,193,null],
+ ["8","بررسی میدانی درخواست‌های ثبت‌شده شهروندان","review",92,"normal",170,163,null],
+ ["HQ","تهیه گزارش تجمیعی عملکرد اداره‌ها","referred",42,"important",140,null,null],
+ ["3","برنامه‌ریزی شیفت‌های عملیاتی مناطق","registered",10,"normal",110,null,null],
+ ["4","بازدید دوره‌ای تأسیسات و تجهیزات","in-progress",61,"normal",80,73,null],
+ ["7","رفع نقاط انباشت پسماند در محدوده‌های منتخب","closed",100,"urgent",50,43,36],
+ ["2","طراحی الگوی سنجش رضایت از خدمات","in-progress",27,"normal",20,13,null]
 ];
 const sampleDeptName=id=>depts[id]||("اداره "+id);
 function sampleDate(daysAgo){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-daysAgo);return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-")}
@@ -106,9 +106,9 @@ function chartRows(rows,id){
  return rows.filter(m=>{const d=date(m.createdAt)||date(m.actualStart)||date(m.plannedStart)||date(m.updatedAt);return d&&d>=r.from&&d<r.to});
 }
 function renderIndependentTimeline(rows){
- const r=chartRange($("chartPeriod-timeline")?.value||"all"),now=new Date();
+ const r=chartRange($("chartPeriod-timeline")?.value||"all"),now=new Date(),ids=["rCreated","rStarted","rFinished","rActions","rStatusChanges","reportRangeLabel"],saved=ids.map(id=>$(id).textContent);
  const rangeValue=r.from?{from:r.from,to:new Date(r.to.getTime()-86400000),label:r.label}:{from:new Date(now.getFullYear(),now.getMonth()-11,1),to:now,label:"۱۲ ماه اخیر"};
- const control=$("reportPeriod"),old=control.value;control.value="custom";renderTimeline(rows,rangeValue);control.value=old;
+ const control=$("reportPeriod"),old=control.value;control.value="custom";renderTimeline(rows,rangeValue);control.value=old;ids.forEach((id,i)=>$(id).textContent=saved[i]);
 }
 function setupComparisonMonths(){
  const sel=$("comparisonMonths"),now=new Date();sel.replaceChildren();
@@ -146,7 +146,7 @@ function applyChartFilters(){
  renderIndependentTimeline(rows);
  const a=chartRows(rows,"dept"),b=chartRows(rows,"progress"),c=chartRows(rows,"status"),d=chartRows(rows,"priority"),e=chartRows(rows,"tracks"),g=chartRows(rows,"gantt");
  drawBars("deptBars",Object.entries(depts).map(([id,label])=>({label,value:a.filter(m=>String(m.executorDepartment)===id).length})).filter(x=>x.value),false,true);
- drawBars("deptProgressBars",Object.entries(depts).map(([id,label])=>{const q=b.filter(m=>String(m.executorDepartment)===id);return {label,value:q.length?Math.round(q.reduce((s,m)=>s+Number(m.progress||0),0)/q.length):0}}).filter(x=>b.some(m=>String(m.executorDepartment)===String(Object.keys(depts).find(k=>depts[k]===x.label)))),true);
+ drawBars("deptProgressBars",Object.entries(depts).map(([id,label])=>{const q=b.filter(m=>String(m.executorDepartment)===id);return {label,value:q.length?Math.round(q.reduce((s,m)=>s+Number(m.progress||0),0)/q.length):0}}).filter(x=>b.some(m=>depts[String(m.executorDepartment)]===x.label)),true);
  drawBars("statusBars",Object.entries(statuses).map(([id,label])=>({label,value:c.filter(m=>m.status===id).length})).filter(x=>x.value));
  const pn={critical:"بحرانی",urgent:"فوری",important:"مهم",normal:"عادی"};
  drawBars("priorityBars",Object.entries(pn).map(([id,label])=>({label,value:d.filter(m=>m.priority===id).length})).filter(x=>x.value));
