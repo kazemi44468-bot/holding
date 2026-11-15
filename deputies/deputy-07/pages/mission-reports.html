@@ -10,7 +10,7 @@
 <link rel="preload" href="../assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../assets/css/style.css?v=mission-visual-20261114-01">
 
-<link rel="stylesheet" href="../assets/css/mission-visual.css?v=1">
+<link rel="stylesheet" href="../assets/css/mission-visual.css?v=mission-report-20261115-01">
 </head>
 <body class="ops-page">
 <header class="ops-header"><div class="ops-header-inner">
@@ -22,12 +22,22 @@
 <section class="dept-panel mission-report-panel">
 <div class="mission-auth"><span id="reportState" class="profile-hint">در حال اتصال خودکار به پایگاه داده محلی؛ بدون درخواست رمز.</span></div>
 <div id="reportContent">
-<div class="report-filter"><label>بازه گزارش <select id="reportPeriod"><option value="all">کل دوره</option><option value="year">سال جاری</option><option value="quarter">سه‌ماهه اخیر</option><option value="month">ماه اخیر</option></select></label><label>اداره <select id="reportDept"><option value="">همه ادارات</option><option value="1">اداره ۱</option><option value="2">اداره ۲</option><option value="3">اداره ۳</option><option value="4">اداره ۴</option><option value="6">اداره ۶</option><option value="7">اداره ۷</option><option value="8">اداره ۸</option><option value="HQ">ستاد معاونت ۷</option></select></label><button id="reportRefresh" class="quiet">بروزرسانی گزارش</button></div>
-<div class="mission-kpis"><article><small>تعداد مأموریت‌ها</small><b id="rTotal">۰</b></article><article><small>تکمیل‌شده</small><b id="rDone">۰</b></article><article><small>در حال اجرا</small><b id="rActive">۰</b></article><article><small>معوق</small><b id="rLate">۰</b></article><article><small>میانگین پیشرفت</small><b id="rProgress">۰٪</b></article><article><small>میانگین تحقق هدف</small><b id="rGoal">—</b></article><article><small>پیشرفت مدیریتی</small><b id="rManagement">۰٪</b></article><article><small>پیشرفت دفتر معاون</small><b id="rOffice">۰٪</b></article><article><small>پیشرفت اداره</small><b id="rDepartment">۰٪</b></article><article><small>اقدامات معوق دفتر</small><b id="rOfficeLate">۰</b></article><article><small>میانگین کیفیت</small><b id="rQuality">—</b></article></div>
-<div class="report-grid"><article class="report-box"><h2>توزیع مأموریت بر اساس وضعیت</h2><div id="statusBars" class="report-bars"></div></article><article class="report-box"><h2>تعداد مأموریت به تفکیک اداره</h2><div id="deptBars" class="report-bars"></div></article><article class="report-box"><h2>عملکرد زمانی و تأخیر</h2><div id="timeSummary" class="report-summary"></div></article><article class="report-box"><h2>وضعیت اولویت‌ها</h2><div id="priorityBars" class="report-bars"></div></article><article class="report-box"><h2>مقایسه پیشرفت سه چرخه</h2><div id="trackBars" class="report-bars"></div></article></div>
+<div class="report-filter report-filter-extended">
+<label>بازه فعالیت <select id="reportPeriod"><option value="day">امروز</option><option value="week" selected>این هفته</option><option value="month">این ماه</option><option value="quarter">سه‌ماهه اخیر</option><option value="year">سال جاری</option><option value="all">کل دوره</option><option value="custom">بازه دلخواه</option></select></label>
+<label>از تاریخ <input id="reportFrom" type="date" disabled></label><label>تا تاریخ <input id="reportTo" type="date" disabled></label>
+<label>اداره <select id="reportDept"><option value="">همه ادارات</option><option value="1">اداره ۱</option><option value="2">اداره ۲</option><option value="3">اداره ۳</option><option value="4">اداره ۴</option><option value="6">اداره ۶</option><option value="7">اداره ۷</option><option value="8">اداره ۸</option><option value="HQ">ستاد معاونت ۷</option></select></label><button id="reportRefresh" class="quiet" type="button">بروزرسانی گزارش</button></div>
+<div class="mission-report-section-head"><div><span class="eyebrow">پرتفوی مأموریت‌ها</span><h2>وضعیت کلی پروژه‌های اجرایی</h2></div><small>نمای کل مأموریت‌های ثبت‌شده در اداره انتخابی</small></div>
+<div class="mission-kpis mission-kpis-wide">
+<article><small>کل مأموریت‌ها</small><b id="rTotal">۰</b></article><article><small>تکمیل‌شده</small><b id="rDone">۰</b></article><article><small>در حال اجرا</small><b id="rActive">۰</b></article><article><small>معوق</small><b id="rLate">۰</b></article><article><small>میانگین پیشرفت</small><b id="rProgress">۰٪</b></article><article><small>میانگین تحقق هدف</small><b id="rGoal">—</b></article><article><small>پیشرفت مدیریتی</small><b id="rManagement">۰٪</b></article><article><small>پیشرفت دفتر معاون</small><b id="rOffice">۰٪</b></article><article><small>پیشرفت اداره</small><b id="rDepartment">۰٪</b></article><article><small>اقدامات معوق دفتر</small><b id="rOfficeLate">۰</b></article><article><small>میانگین کیفیت</small><b id="rQuality">—</b></article></div>
+<div class="mission-report-section-head"><div><span class="eyebrow">عملکرد در بازه انتخابی</span><h2>رویدادهای زمانی</h2></div><small id="reportRangeLabel">—</small></div>
+<div class="mission-kpis mission-event-kpis"><article><small>مأموریت‌های ایجادشده</small><b id="rCreated">۰</b></article><article><small>شروع‌شده</small><b id="rStarted">۰</b></article><article><small>خاتمه‌یافته</small><b id="rFinished">۰</b></article><article><small>اقدامات ثبت‌شده</small><b id="rActions">۰</b></article><article><small>تغییر وضعیت</small><b id="rStatusChanges">۰</b></article></div>
+<div class="report-grid report-grid-expanded">
+<article class="report-box report-box-wide"><h2>روند زمانی شروع، خاتمه و اقدامات</h2><div id="timelineChart" class="report-timeline-chart"></div><div class="report-legend"><span><i class="legend-created"></i>ایجاد</span><span><i class="legend-started"></i>شروع</span><span><i class="legend-finished"></i>خاتمه</span><span><i class="legend-actions"></i>اقدامات</span></div></article>
+<article class="report-box"><h2>تعداد مأموریت به تفکیک اداره</h2><div id="deptBars" class="report-bars"></div></article><article class="report-box"><h2>میانگین پیشرفت اداره‌ها</h2><div id="deptProgressBars" class="report-bars"></div></article><article class="report-box"><h2>توزیع مأموریت بر اساس وضعیت</h2><div id="statusBars" class="report-bars"></div></article><article class="report-box"><h2>وضعیت اولویت‌ها</h2><div id="priorityBars" class="report-bars"></div></article><article class="report-box"><h2>مقایسه پیشرفت سه چرخه</h2><div id="trackBars" class="report-bars"></div></article><article class="report-box"><h2>عملکرد زمانی و منابع</h2><div id="timeSummary" class="report-summary"></div></article></div>
+<article class="report-box report-gantt-box"><div class="mission-report-section-head"><div><span class="eyebrow">برنامه زمان‌بندی</span><h2>گانت مأموریت‌ها</h2></div><small>بر پایه تاریخ شروع و پایان برنامه‌ای ثبت‌شده</small></div><div id="missionGantt" class="mission-gantt"></div></article>
+<article class="report-box report-detail-box"><div class="mission-report-section-head"><div><span class="eyebrow">پایش پرونده</span><h2>جزئیات هر مأموریت</h2></div><label class="mission-select-label">انتخاب مأموریت <select id="missionDetailSelect"><option value="">انتخاب کنید</option></select></label></div><div id="missionDetail" class="mission-detail-empty">برای مشاهده درصد پیشرفت، تاریخ‌ها، چرخه‌های مسئولیت و سوابق، یک مأموریت را انتخاب کنید.</div></article>
 <div class="table-scroll"><table class="notice-breakdown"><thead><tr><th>اداره</th><th>کل مأموریت</th><th>تکمیل</th><th>در حال اجرا</th><th>معوق</th><th>پیشرفت کل</th><th>مدیریتی</th><th>دفتر معاون</th><th>اداره</th></tr></thead><tbody id="deptReportRows"></tbody></table></div>
-<p class="profile-hint">مبنای محاسبه: رکوردهای ذخیره‌شده در بانک مأموریت‌ها، تاریخ‌های برنامه‌ای و درصدهای پیشرفت ثبت‌شده. مأموریت‌های حذف‌شده یا صرفاً پیش‌نویس در شاخص تکمیل لحاظ نمی‌شوند. بازه زمانی بر اساس تاریخ ایجاد پرونده است.</p>
-</div></section>
+<p class="profile-hint">مبنای گزارش: بانک واقعی مأموریت‌ها، تاریخ‌های ایجاد/شروع/پایان، تاریخچه گردش کار، گزارش پیشرفت و اقدامات ثبت‌شده. مأموریت‌ها در این صفحه مانند پروژه‌های اجرایی تحلیل می‌شوند؛ ساختار و شناسه مأموریت‌ها تغییر نمی‌کند. تاریخ‌های ناموجود حدس زده نمی‌شوند.</p>>
 
 
 <footer class="ops-footer"></footer>
@@ -35,7 +45,7 @@
 <script src="../assets/js/main.js?v=mission-bank-20261114-2"></script>
 <script src="../assets/js/organization-modules.js?v=dept8-20261107"></script>
 <script src="../assets/js/mobile-nav.js?v=internal-routing-20261110" defer></script>
-<script type="module" src="../assets/js/mission-reports.js?v=mission-workflow-20261114-3"></script>
+<script type="module" src="../assets/js/mission-reports.js?v=mission-report-20261115-01"></script>
 <script>if("serviceWorker" in navigator)navigator.serviceWorker.register("../sw.js").catch(()=>{});</script>
 </body></html>
 
