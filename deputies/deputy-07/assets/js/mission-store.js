@@ -77,6 +77,59 @@ export const MissionStore = Object.freeze({
     await Vault.add("mission-meta", "mission-meta:" + String(key), "upsert", { ...data, updatedAt: new Date().toISOString() });
     return this.getMeta(key);
   },
+  async exportBankBackup() {
+    const raw = JSON.parse(await Vault.export());
+    const changes = (raw.payload?.changes || []).filter(row =>
+      ["mission", "mission-config", "mission-meta"].includes(row.body?.entity)
+    );
+    const attachments = (raw.payload?.attachments || []).filter(row =>
+      row.data?.meta?.entity === "mission"
+    );
+    const missions = changes.filter(row => row.body?.entity === "mission").length;
+    const backup = {
+      format: "H7MISSIONBANK",
+      version: 1,
+      createdAt: new Date().toISOString(),
+      counts: { changes: changes.length, missionChanges: missions, attachments: attachments.length },
+      payload: { changes, attachments }
+    };
+    return JSON.stringify(backup, null, 2);
+  },
+  async importBankBackup(text) {
+    let backup;
+    try { backup = JSON.parse(text); }
+    catch { throw new Error("فایل انتخاب‌شده JSON معتبر نیست."); }
+    if (backup?.format !== "H7MISSIONBANK" || backup?.version !== 1 ||
+        !Array.isArray(backup.payload?.changes) || !Array.isArray(backup.payload?.attachments)) {
+      throw new Error("این فایل، پشتیبان معتبر بانک مأموریت‌های معاونت ۷ نیست.");
+    }
+    const allowed = new Set(["mission", "mission-config", "mission-meta"]);
+    for (const row of backup.payload.changes) {
+      if (!row?.changeId || !row?.body || !allowed.has(row.body.entity)) {
+        throw new Error("ساختار تغییرات داخل فایل پشتیبان معتبر نیست.");
+      }
+    }
+    for (const row of backup.payload.attachments) {
+      if (!row?.attachmentId || typeof row.data?.content !== "string" ||
+          row.data?.meta?.entity !== "mission") {
+        throw new Error("ساختار پیوست‌های فایل پشتیبان معتبر نیست.");
+      }
+    }
+    const packageForVault = {
+      format: "H7BACKUP",
+      version: 2,
+      mode: "plain",
+      payload: {
+        format: "company-seven-backup",
+        schemaVersion: 1,
+        createdAt: backup.createdAt || new Date().toISOString(),
+        sourceDevice: "mission-bank-backup",
+        changes: backup.payload.changes,
+        attachments: backup.payload.attachments
+      }
+    };
+    return Vault.import(JSON.stringify(packageForVault));
+  },
   async summary() {
     const snapshot = await Vault.snapshot();
     const records = snapshot.records.filter(row => row.entity === ENTITY);
