@@ -334,3 +334,25 @@ body.ops-page:has(.mission-bank-panel) .bank-delete{display:inline-flex;align-it
 body.ops-page:has(.mission-bank-panel) .bank-delete{border-color:#ecdada;background:#fff7f7;color:#a56e73}
 body.ops-page:has(.mission-bank-panel) .bank-delete:hover{background:#fbecee;border-color:#dfc0c4}
 body.ops-page:has(.mission-bank-panel) .mission-kpis article:nth-child(n+6){display:none!important}
+
+
+/* شاخص روزهای مأموریت: بانک و گزارش */
+body.ops-page:has(.mission-bank-panel) .mission-table{min-width:1040px!important}
+body.ops-page:has(.mission-bank-panel) .bank-days{display:grid;gap:3px;min-width:110px;text-align:right;white-space:nowrap}
+body.ops-page:has(.mission-bank-panel) .bank-days>b{font-size:10px;color:#456f83}
+body.ops-page:has(.mission-bank-panel) .bank-days small{font-size:9px;color:#718895}
+body.ops-page:has(.mission-report-panel) .mission-days-kpi{background:#eef8fc!important;border-color:#cfe7f0!important}
+body.ops-page:has(.mission-report-panel) .mission-days-kpi b{color:#347d9b!important}
+body.ops-page:has(.mission-report-panel) .mission-days-kpi em{font-size:9px;color:#7895a2;font-style:normal}
+body.ops-page:has(.mission-report-panel) .mission-days-summary{grid-column:1/-1;margin:0 0 10px;padding:13px;border:1px solid #d8e9f0;border-radius:11px;background:linear-gradient(110deg,#f2f9fc,#f5fbfa)}
+body.ops-page:has(.mission-report-panel) .mission-days-summary-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:10px;color:#456b7b;font-size:11px}
+body.ops-page:has(.mission-report-panel) .mission-days-summary-head span{font-size:9px;color:#8299a3}
+body.ops-page:has(.mission-report-panel) .mission-days-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+body.ops-page:has(.mission-report-panel) .mission-days-metrics>div{display:grid;gap:5px;padding:9px;border:1px solid #e0edf1;border-radius:8px;background:#fff}
+body.ops-page:has(.mission-report-panel) .mission-days-metrics small{font-size:9px;color:#78909a}
+body.ops-page:has(.mission-report-panel) .mission-days-metrics b{font-size:16px;color:#4d7180;font-variant-numeric:tabular-nums}
+body.ops-page:has(.mission-report-panel) .mission-days-metrics b small{font-size:9px;font-weight:500}
+body.ops-page:has(.mission-report-panel) .mission-days-metrics .is-completed{background:#eef8f7;border-color:#d5ebe7}
+body.ops-page:has(.mission-report-panel) .mission-days-metrics .is-completed b{color:#3c827d}
+body.ops-page:has(.mission-report-panel) .mission-days-metrics .is-delta{background:#f4f7fb;border-color:#dfe8ef}
+@media(max-width:600px){body.ops-page:has(.mission-report-panel) .mission-days-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
