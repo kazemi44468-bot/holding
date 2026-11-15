@@ -270,3 +270,23 @@ body.ops-page:has(.mission-report-panel) .mission-detail-box .mission-report-sec
 body.ops-page:has(.mission-report-panel) .comparison-custom-dates[hidden],
 body.ops-page:has(.mission-report-panel) #comparisonDeptPicker[hidden],
 body.ops-page:has(.mission-report-panel) #comparisonSingleDeptWrap[hidden]{display:none!important}
+
+/* پالت خنثی آبی و فیروزه‌ای برای تحلیل و انتخاب */
+body.ops-page:has(.mission-report-panel) .comparison-toolbar{background:#f5f9fb;border-color:#dce9ef}
+body.ops-page:has(.mission-report-panel) .comparison-toolbar>label,
+body.ops-page:has(.mission-report-panel) .comparison-selectors>label{color:#4f6877}
+body.ops-page:has(.mission-report-panel) .comparison-toolbar select,
+body.ops-page:has(.mission-report-panel) .comparison-toolbar input,
+body.ops-page:has(.mission-report-panel) .comparison-selectors input,
+body.ops-page:has(.mission-report-panel) .comparison-selectors select{border-color:#d5e4eb;color:#456474}
+body.ops-page:has(.mission-report-panel) .comparison-choice{border-color:#dce8ed;color:#536d7b}
+body.ops-page:has(.mission-report-panel) .comparison-choice:has(input:checked){border-color:#80bdca;background:#edf7fa;color:#356f80}
+body.ops-page:has(.mission-report-panel) .comparison-choice input{accent-color:#4d9eb3}
+body.ops-page:has(.mission-report-panel) .comparison-selected span{background:#eaf4f7;color:#4b7180}
+body.ops-page:has(.mission-report-panel) .comparison-summary{border-right-color:#70b5c5;background:#f2f8fa;color:#4c6876}
+body.ops-page:has(.mission-report-panel) .comparison-bar-value{color:#416c7d}
+body.ops-page:has(.mission-report-panel) .comparison-bar-track i{background:#78b9ca}
+body.ops-page:has(.mission-report-panel) .comparison-bar-item>b{color:#4e6877}
+body.ops-page:has(.mission-report-panel) .mission-choice{border-color:#dce8ed;color:#536d7b}
+body.ops-page:has(.mission-report-panel) .mission-choice.is-selected{border-color:#75b6c5;background:#eef7fa;box-shadow:inset -3px 0 #75b6c5}
+body.ops-page:has(.mission-report-panel) .mission-selected-card{border-color:#d5e7ed;background:#f0f8fa;color:#4d7180}
