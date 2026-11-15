@@ -469,7 +469,7 @@ async function renderAttachments(recordId){
 async function loadMission(id){
  const mission=await MissionStore.get(id);if(!mission)throw new Error("مأموریت موردنظر در بانک پیدا نشد.");if(window.Deputy7Access?.isReady()&&!window.Deputy7Access.canCurrent("edit",{departmentId:String(mission.executorDepartment||"")}))throw new Error("مجوز ویرایش این مأموریت برای حساب کاربری شما صادر نشده است.");
  currentMission=mission;document.body.classList.add("mission-edit-mode");fill(mission);
- await renderAttachments(id);$("pageTitle").textContent="ویرایش مأموریت · "+mission.missionCode;
+ await renderAttachments(id);document.title="ویرایش مأموریت "+mission.missionCode+" | معاونت ۷";$("pageTitle").textContent="ویرایش مأموریت · "+mission.missionCode;
  $("missionMeta").textContent="کد مأموریت: "+mission.missionCode+" · تاریخ ثبت: "+new Date(mission.createdAt).toLocaleDateString("fa-IR");
  $("statusLabel").textContent=statusLabel(mission.status);
  updateProgress();renderProgressHistory(mission.progressLog||[]);renderWorkflowHistory(mission.workflowLog||[]);
