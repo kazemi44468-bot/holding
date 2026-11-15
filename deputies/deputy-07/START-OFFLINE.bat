@@ -1,23 +1,28 @@
 @echo off
 setlocal
-cd /d "%~dp0..\.."
+for %%I in ("%~dp0..\..") do set "ROOT=%%~fI"
 set "URL=http://127.0.0.1:8765/deputies/deputy-07/pages/mission-create.html"
+netstat -ano | findstr /R /C:":8765 .*LISTENING" >nul
+if not errorlevel 1 goto openpage
 where py >nul 2>nul
-if %errorlevel%==0 (
-  start "معاونت ۷ - سرور آفلاین" /D "%CD%" py -3 -m http.server 8765 --bind 127.0.0.1
-) else (
-  where python >nul 2>nul
-  if errorlevel 1 (
-    echo Python 3 was not found. Install Python 3 or run this folder through another localhost web server.
-    pause
-    exit /b 1
-  )
-  start "معاونت ۷ - سرور آفلاین" /D "%CD%" python -m http.server 8765 --bind 127.0.0.1
+if not errorlevel 1 (
+  start "معاونت ۷ - اجرای محلی" /D "%ROOT%" py -3 -m http.server 8765 --bind 127.0.0.1
+  goto openpage
 )
+where python >nul 2>nul
+if not errorlevel 1 (
+  start "معاونت ۷ - اجرای محلی" /D "%ROOT%" python -m http.server 8765 --bind 127.0.0.1
+  goto openpage
+)
+start "معاونت ۷ - اجرای محلی" powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0START-MISSIONS-SERVER.ps1" -Root "%ROOT%" -Port 8765
+:openpage
 timeout /t 2 /nobreak >nul
 start "" "%URL%"
 echo.
-echo Local server is running at http://127.0.0.1:8765
-echo Keep the server window open. The mission registration page is now open on localhost.\necho IndexedDB data is stored in this browser profile for this localhost address.\necho Export regular backups from the local data center before changing browser or computer.
+echo سامانه مأموریت‌ها در نشانی محلی باز شد:
+echo %URL%
+echo پنجره سرور را تا پایان کار باز نگه دارید.
+echo اطلاعات در مرورگر همین رایانه و در IndexedDB ذخیره می‌شود.
+echo برای انتقال یا نگهداری نسخه مستقل، از صفحه «مدیریت داده‌های محلی» فایل اطلاعات بگیرید.
 echo.
 pause
