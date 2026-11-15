@@ -212,7 +212,7 @@ function load(data){
  document.getElementById("globalNotes").value=data.globalNotes||"";
  applyPageLabels();saveLocal();
 }
-function clearAll(){if(!confirm("همه پیشنهادهای واردشده در این کاربرگ پاک شود؟"))return;document.querySelectorAll('#sections [data-k="change"],#sections .new-row').forEach(el=>{if(el.matches("tr"))el.remove();else el.value="";});document.querySelectorAll('#sections [data-k="label"]').forEach(el=>{if(el.closest("tr")?.classList.contains("new-row"))el.value="";});document.getElementById("globalNotes").value="";saveLocal();}
+function clearAll(){if(!confirm("همه پیشنهادها، حذف‌ها، عنوان‌های سفارشی و ترتیب تغییر‌یافته پاک شود؟"))return;localStorage.removeItem("h7-mission-form-review-v2");localStorage.removeItem("h7-mission-form-review-v1");location.reload();}
 render();
 try{const saved=localStorage.getItem("h7-mission-form-review-v2")||localStorage.getItem("h7-mission-form-review-v1");if(saved)load(JSON.parse(saved));}catch(e){}
 document.getElementById("exportReview").onclick=download;document.getElementById("exportReviewBottom").onclick=download;
