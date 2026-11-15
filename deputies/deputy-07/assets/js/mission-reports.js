@@ -67,7 +67,7 @@ function buckets(r){
 function renderTimeline(rows,r){
  const host=$("timelineChart");
  if($("reportPeriod").value==="custom"&&!r.from){host.textContent=r.label;return}
- const ev=eventList(rows).filter(x=>inside(x.at,r)),types=["created","started","finished","action"],labels={created:"ایجاد",started:"شروع",finished:"خاتمه",action:"اقدامات"},bs=buckets(r);
+ const ev=eventList(rows).filter(x=>inside(x.at,r)),types=["created","started","finished","action","status"],labels={created:"ایجاد",started:"شروع",finished:"خاتمه",action:"اقدامات",status:"تغییر وضعیت"},bs=buckets(r);
  const vals=bs.map(b=>({b,c:Object.fromEntries(types.map(t=>[t,ev.filter(e=>{const d=date(e.at);return e.type===t&&d&&d>=b.from&&d<b.to}).length]))}));
  const max=Math.max(1,...vals.flatMap(x=>types.map(t=>x.c[t]))),ticks=[max,Math.ceil(max/2),0];
  const axis='<div class="report-timeline-axis">'+ticks.map(v=>'<span>'+fa(v)+'</span>').join("")+'</div>';
