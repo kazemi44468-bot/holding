@@ -155,7 +155,7 @@ function setupComparison(){
 }
 function applyChartFilters(){
  const rows=rowsForDept();
- renderIndependentTimeline(rows);
+
  const a=chartRows(rows,"dept"),c=chartRows(rows,"status"),d=chartRows(rows,"priority"),scopeRows=chartRows(rows,"scope"),scheduleRows=chartRows(rows,"schedule"),continuityRows=chartRows(rows,"continuity");
  drawBars("deptBars",Object.entries(depts).map(([id,label])=>({label,value:a.filter(m=>String(m.executorDepartment)===id).length})).filter(x=>x.value),false,true);
  const statusCounts={};c.forEach(m=>{const key=statuses[m.status]?m.status:"__unknown";statusCounts[key]=(statusCounts[key]||0)+1});drawBars("statusBars",Object.entries(statusCounts).map(([id,value])=>({label:statuses[id]||"بدون وضعیت ثبت‌شده",value})));
