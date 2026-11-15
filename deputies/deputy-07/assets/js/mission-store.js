@@ -90,7 +90,7 @@ export const MissionStore = Object.freeze({
       format: "H7MISSIONBANK",
       version: 1,
       createdAt: new Date().toISOString(),
-      counts: { changes: changes.length, missionChanges: missions, attachments: attachments.length },
+      counts: { changes: changes.length, missionChanges: missions, missions: new Set(changes.filter(row => row.body?.entity === "mission").map(row => row.body.recordId)).size, attachments: attachments.length },
       payload: { changes, attachments }
     };
     return JSON.stringify(backup, null, 2);
