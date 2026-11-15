@@ -31,7 +31,7 @@ export const MissionStore = Object.freeze({
   async save(data, id) {
     Vault.ensure();
     if (!data || typeof data !== "object" || Array.isArray(data)) throw new Error("اطلاعات مأموریت باید یک شیء معتبر باشد.");
-    const missionId = String(id || data.id || crypto.randomUUID());
+    const missionId = String(id || data.id || (crypto.randomUUID ? crypto.randomUUID() : "mission-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2)));
     const prior = await this.get(missionId);
     const now = new Date().toISOString();
     const record = { ...data, id: missionId, schemaVersion: Number(data.schemaVersion ?? prior?.schemaVersion ?? 1), createdAt: data.createdAt || prior?.createdAt || now, updatedAt: now };
