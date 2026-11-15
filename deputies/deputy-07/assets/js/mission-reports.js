@@ -89,11 +89,11 @@ function chartRange(period,id){
  let from,to=end;
  if(period==="day")from=new Date(now.getFullYear(),now.getMonth(),now.getDate());
  else if(period==="week"){from=new Date(now.getFullYear(),now.getMonth(),now.getDate());from.setDate(from.getDate()-((from.getDay()+6)%7))}
- else if(period==="month")from=new Date(now.getFullYear(),now.getMonth(),1);
- else if(period==="previous"){from=new Date(now.getFullYear(),now.getMonth()-1,1);to=new Date(now.getFullYear(),now.getMonth(),1)}
- else if(period==="quarter")from=new Date(now.getFullYear(),now.getMonth()-2,1);
- else if(period==="half")from=new Date(now.getFullYear(),now.getMonth()-5,1);
- else if(period==="year")from=new Date(now.getFullYear(),0,1);
+ else if(period==="month")from=jalaliMonthStart(now);
+ else if(period==="previous"){from=jalaliStartOffset(now,1);to=jalaliMonthStart(now)}
+ else if(period==="quarter")from=jalaliStartOffset(now,2);
+ else if(period==="half")from=jalaliStartOffset(now,5);
+ else if(period==="year")from=jalaliYearStart(now);
  else if(period==="custom"){
   from=date($("chartFrom-"+id)?.value);const endDate=date($("chartTo-"+id)?.value);
   if(!from||!endDate||from>endDate)return {from:null,to:null,label:"تاریخ شروع و پایان را انتخاب کنید",invalid:true};
