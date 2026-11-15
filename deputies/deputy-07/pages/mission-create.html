@@ -227,11 +227,11 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
  <div id="fieldEditorStatus" class="mission-status"></div>
 </div>
 <section class="mission-card mission-section active" data-section="general">
-<div class="section-head"><div><h2>۱. اطلاعات عمومی</h2><p>مشخصات پایه و هدف مأموریت</p></div></div>
+<div class="section-head"><div><h2>اطلاعات عمومی</h2><p>مشخصات پایه و هدف مأموریت</p></div></div>
 <div class="form-grid">
 <div class="field"><label for="communicationType">نوع اعلام / مکاتبه <span class="req">*</span></label><select id="communicationType" required><option value="">انتخاب کنید</option><option>نامه رسمی</option><option>درخواست شفاهی</option><option>مکاتبه داخلی</option><option>صورتجلسه</option><option>دستور مقام مافوق</option><option>گزارش یا اعلام نیاز</option></select></div>
 <div class="field"><label for="requestNumber">شماره درخواست / نامه</label><input id="requestNumber" placeholder="شماره نامه یا شناسه درخواست"></div>
-<div class="field"><label for="requestDate">تاریخ درخواست</label><input id="requestDate" type="date"></div>
+<div class="field"><label for="requestDate">تاریخ دریافت به معاونت</label><input id="requestDate" type="date"></div>
 <div class="field"><label for="requestChannel">نحوه وصول</label><select id="requestChannel"><option>دبیرخانه</option><option>سامانه مکاتبات</option><option>ارجاع مستقیم</option><option>جلسه</option><option>تماس یا اعلام شفاهی</option><option>سایر</option></select></div>
 <div class="field full"><label for="missionTitle">نام و عنوان مأموریت <span class="req">*</span></label><input id="missionTitle" required placeholder="عنوان کوتاه، دقیق و قابل گزارش مأموریت"></div>
 <div class="field full"><label for="missionSubject">شرح موضوع، ضرورت و مسئله اصلی <span class="req">*</span></label><textarea id="missionSubject" required placeholder="شرح درخواست، مسئله، ضرورت اقدام و وضعیت موجود"></textarea></div>
@@ -241,7 +241,7 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 </div>
 </section>
 <section class="mission-card mission-section" data-section="origin">
-<div class="section-head"><div><h2>۲. مبدأ درخواست</h2><p>مرجع درخواست‌کننده، مکاتبه و زمان وصول</p></div></div>
+<div class="section-head"><div><h2>مبدأ درخواست</h2><p>مرجع درخواست‌کننده، مکاتبه و زمان وصول</p></div></div>
 <div class="form-grid">
 <div class="field"><label for="requesterType">نوع درخواست‌کننده</label><select id="requesterType"><option>ریاست معاونت</option><option>معاونت</option><option>مرکز</option><option>اداره</option><option>مدیریت</option><option>واحد یا شخص</option><option>سازمان بیرونی</option></select></div>
 <div class="field"><label for="requesterName">نام معاونت / مرکز / اداره / مدیریت</label><input id="requesterName" placeholder="نام مرجع درخواست‌کننده"></div>
@@ -258,7 +258,7 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 <div class="custom-fields" id="departmentFields"><h3>اطلاعات اختصاصی اداره انتخاب‌شده</h3><p class="hint">با انتخاب اداره، فرم تخصصی همان اداره در این قسمت نمایش داده می‌شود.</p></div>
 </section>
 <section class="mission-card mission-section" data-section="deputy">
-<div class="section-head"><div><h2>۳. دستور معاونت</h2><p>بررسی، تصمیم، دستور و مهلت موردنظر معاون</p></div></div>
+<div class="section-head"><div><h2>دستور معاونت</h2><p>بررسی، تصمیم، دستور و مهلت موردنظر معاون</p></div></div>
 <div class="form-grid">
 <div class="field"><label for="receivedAt">تاریخ و زمان وصول درخواست</label><input id="receivedAt" type="datetime-local"></div>
 <div class="field"><label for="deliveredToDeputyAt">تحویل به معاونت</label><input id="deliveredToDeputyAt" type="datetime-local"></div>
@@ -274,7 +274,7 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 </div>
 </section>
 <section class="mission-card mission-section" data-section="routing">
-<div class="section-head"><div><h2>۴. دسته‌بندی و ارجاع</h2><p>تعیین اداره مسئول، همکاران، مسئول مستقیم و زمان وصول ارجاع</p></div></div>
+<div class="section-head"><div><h2>دسته‌بندی و ارجاع</h2><p>تعیین اداره مسئول، همکاران، مسئول مستقیم و زمان وصول ارجاع</p></div></div>
 <div class="field"><label>آیا سابقه انجام مأموریت مشابه وجود دارد؟</label><div class="choice-row"><label><input type="radio" name="hasPrevious" value="no" checked> خیر</label><label><input type="radio" name="hasPrevious" value="yes"> بله</label></div></div>
 <div id="previousFields" class="form-grid hidden">
 <div class="field"><label for="previousMissionCode">کد مأموریت قبلی</label><input id="previousMissionCode" placeholder="کد پرونده قبلی"></div>
@@ -284,7 +284,7 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 </div>
 </section>
 <section class="mission-card mission-section" data-section="action">
-<div class="section-head"><div><h2>۵. گزارش اقدام اداره</h2><p>ثبت شروع، اقدامات، پیشرفت، موانع و پایان عملیات</p></div></div>
+<div class="section-head"><div><h2>گزارش اقدام اداره</h2><p>ثبت شروع، اقدامات، پیشرفت، موانع و پایان عملیات</p></div></div>
 <div class="form-grid">
 <div class="field"><label for="teamLead">مسئول / مدیر مأموریت</label><input id="teamLead" placeholder="کد پرسنلی یا نام"></div>
 <div class="field"><label for="supervisor">ناظر و مقام پاسخ‌خواه</label><input id="supervisor"></div>
@@ -294,7 +294,7 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 </div>
 </section>
 <section class="mission-card mission-section" data-section="response">
-<div class="section-head"><div><h2>۶. پاسخ‌گویی و ابلاغ</h2><p>تهیه پاسخ، تأیید، ارسال و اطلاع‌رسانی به مرجع درخواست‌کننده</p></div></div>
+<div class="section-head"><div><h2>پاسخ‌گویی و ابلاغ</h2><p>تهیه پاسخ، تأیید، ارسال و اطلاع‌رسانی به مرجع درخواست‌کننده</p></div></div>
 <div class="form-grid">
 <div class="field"><label for="deliverableType">نوع محصول اصلی</label><select id="deliverableType"><option>گزارش مکتوب</option><option>خدمت انجام‌شده</option><option>تعمیر / تجهیز آماده بهره‌برداری</option><option>سامانه یا قابلیت نرم‌افزاری</option><option>طرح و پیشنهاد</option><option>داده و مستندات</option><option>عملیات میدانی تکمیل‌شده</option><option>سایر</option></select></div>
 <div class="field"><label for="deliveryDate">تاریخ تحویل نتیجه</label><input id="deliveryDate" type="date"></div>
@@ -305,7 +305,7 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 </div>
 </section>
 <section class="mission-card mission-section" data-section="evaluation">
-<div class="section-head"><div><h2>۷. چک‌لیست ارزیابی</h2><p>سنجش کیفیت، تحقق هدف و رعایت زمان‌بندی</p></div></div>
+<div class="section-head"><div><h2>چک‌لیست ارزیابی</h2><p>سنجش کیفیت، تحقق هدف و رعایت زمان‌بندی</p></div></div>
 <div class="form-grid">
 <div class="field"><label for="progress">درصد پیشرفت واقعی</label><input id="progress" type="number" min="0" max="100" value="0"></div>
 <div class="field"><label for="executionStatus">وضعیت اجرا</label><select id="executionStatus"><option value="draft">پیش‌نویس</option><option value="registered">ثبت‌شده</option><option value="referred">ارجاع‌شده</option><option value="in-progress">در حال اجرا</option><option value="blocked">متوقف / دارای مانع</option><option value="review">در انتظار بررسی نتیجه</option><option value="completed">تکمیل‌شده</option><option value="closed">مختومه</option><option value="cancelled">لغوشده</option></select></div>
@@ -321,7 +321,7 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 <div id="progressHistory" class="repeat-note">گزارش‌های پیشرفت پس از ذخیره مأموریت در تاریخچه ثبت می‌شوند.</div>
 </section>
 <section class="mission-card mission-section" data-section="knowledge">
-<div class="section-head"><div><h2>۸. دانش و تجربه‌نگاری</h2><p>ثبت درس‌آموخته‌ها، تجربه‌ها و دانش قابل استفاده مجدد</p></div></div>
+<div class="section-head"><div><h2>دانش و تجربه‌نگاری</h2><p>ثبت درس‌آموخته‌ها، تجربه‌ها و دانش قابل استفاده مجدد</p></div></div>
 <div class="form-grid">
 <div class="field full"><label for="missionFiles">انتخاب پیوست‌ها</label><input id="missionFiles" type="file" multiple><small>پیوست‌ها پس از ذخیره پرونده در مخزن امن معاونت ۷ نگهداری می‌شوند.</small></div><div class="field full"><label>پیوست‌های ثبت‌شده در این پرونده</label><div id="missionAttachmentList" class="repeat-note">پس از بارگذاری پرونده، پیوست‌های قبلی نمایش داده می‌شوند.</div></div>
 <div class="field full"><label for="documentRegister">فهرست اسناد و ارجاعات (هر سطر: نوع سند | شماره | تاریخ | توضیح)</label><textarea id="documentRegister"></textarea></div>
@@ -330,7 +330,7 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 </div>
 </section>
 <section class="mission-card mission-section" data-section="costs">
-<div class="section-head"><div><h2>۹. هزینه‌ها و منابع</h2><p>برآورد، اعتبار، هزینه قطعی و مستندات مالی</p></div></div>
+<div class="section-head"><div><h2>هزینه‌ها و منابع</h2><p>برآورد، اعتبار، هزینه قطعی و مستندات مالی</p></div></div>
 <div class="form-grid">
 <div class="field"><label for="costStatus">وضعیت نیاز مالی</label><select id="costStatus"><option>بدون هزینه مستقیم</option><option>نیازمند برآورد</option><option>در انتظار تأمین اعتبار</option><option>اعتبار تخصیص‌یافته</option><option>دارای هزینه قطعی</option></select></div>
 <div class="field"><label for="costCurrency">واحد پول</label><select id="costCurrency"><option>تومان</option><option>ریال</option></select></div>
@@ -343,11 +343,11 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 </div>
 </section>
 <section class="mission-card mission-section" data-section="rewards">
-<div class="section-head"><div><h2>۱۰. تشویقات و تنبیهات</h2><p>ثبت پیشنهادها، تصمیم‌های مصوب و سوابق رسیدگی مرتبط با مأموریت</p></div></div>
+<div class="section-head"><div><h2>تشویقات و تنبیهات</h2><p>ثبت پیشنهادها، تصمیم‌های مصوب و سوابق رسیدگی مرتبط با مأموریت</p></div></div>
 <div class="form-grid"></div>
 </section>
 <section class="mission-card mission-section" data-section="paraphs">
-<div class="section-head"><div><h2>۱۱. پاراف‌ها و نظرات مدیریتی</h2><p>ثبت زنجیره تصمیم‌ها، پاراف‌ها و پیگیری دستورات</p></div></div>
+<div class="section-head"><div><h2>پاراف‌ها و نظرات مدیریتی</h2><p>ثبت زنجیره تصمیم‌ها، پاراف‌ها و پیگیری دستورات</p></div></div>
 <div class="form-grid">
 <div class="field full"><label for="headOfDepartmentOrder">دستور / پاراف رئیس اداره</label><textarea id="headOfDepartmentOrder"></textarea></div>
 <div class="field"><label for="headOfDepartmentBy">نام یا کد رئیس اداره</label><input id="headOfDepartmentBy"></div>
