@@ -75,7 +75,8 @@ function drawDonut(id,items){
 }
 function renderIndependentTimeline(rows){
  const r=chartRange($("chartPeriod-timeline")?.value||"all"),now=new Date(),ids=["rCreated","rStarted","rFinished","rActions","rStatusChanges","reportRangeLabel"],saved=ids.map(id=>$(id).textContent);
- const rangeValue=r.from?{from:r.from,to:new Date(r.to.getTime()-86400000),label:r.label}:{from:new Date(now.getFullYear(),now.getMonth()-11,1),to:now,label:"۱۲ ماه اخیر"};
+ const events=eventList(rows).map(e=>date(e.at)).filter(Boolean),earliest=events.length?new Date(Math.min(...events)):new Date(now.getFullYear(),now.getMonth()-11,1);
+ const rangeValue=r.from?{from:r.from,to:new Date(r.to.getTime()-86400000),label:r.label}:{from:new Date(earliest.getFullYear(),earliest.getMonth(),1),to:now,label:"کل سوابق"};
  const control=$("reportPeriod"),old=control.value;control.value="custom";renderTimeline(rows,rangeValue);control.value=old;ids.forEach((id,i)=>$(id).textContent=saved[i]);
 }
 function setupComparisonMonths(){
