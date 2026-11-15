@@ -432,6 +432,7 @@ async function saveMission(asDraft=false){
  if(!asDraft&&$("deputyApproval").value==="approved"&&(!$("deputyReferralDepartment").value||!$("deputyReferralPerson").value.trim()||!$("deputyReferralAt").value))throw new Error("پس از تأیید معاون، اداره مقصد، نفر مسئول و تاریخ ارجاع را تکمیل کنید.");
  if(selectedRadio("calendarEnabled")!=="no"&&$("calendarStart").value&&$("calendarEnd").value&&$("calendarStart").value>$("calendarEnd").value)throw new Error("پایان بازه رویداد تقویم نمی‌تواند قبل از شروع آن باشد.");
  const data=collect();data.attachments=currentMission?.attachments||[];if(window.Deputy7Access?.isReady()){const permission=currentMission?"edit":"create";if(!window.Deputy7Access.canCurrent(permission,{departmentId:String(data.executorDepartment||"")}))throw new Error("حساب کاربری شما برای این عملیات در اداره انتخاب‌شده مجوز ندارد.");}if(asDraft&&data.status==="draft")data.status="draft";else if(data.status==="draft")data.status="registered";
+ data.missionPhase=missionPhase(data.status);
  data.executionStatus=data.status;data.workflow.stage=data.status;
  data.processTracks=data.processTracks||readProcessTracks();if(data.status==="referred"&&data.processTracks.department?.status==="not-started"){data.processTracks.department.status="in-progress";data.processTracks.department.owner=data.processTracks.department.owner||data.directOwner||data.assignedExpert||"";data.processTracks.department.dueDate=data.processTracks.department.dueDate||data.plannedEnd||"";}recordProcessTrackChanges(data);
  const now=new Date().toISOString();
@@ -489,6 +490,8 @@ $("progress").addEventListener("input",updateProgress);$("executionStatus").addE
 $("actualStart").addEventListener("change",()=>{if($("actualStart").value&&["draft","registered","referred"].includes($("executionStatus").value))$("executionStatus").value="in-progress";updateProgress();});
 $("actualEnd").addEventListener("change",()=>{if($("actualEnd").value)$("executionStatus").value="completed";updateProgress();});
 $("deputyApproval").addEventListener("change",()=>{applyFieldConditions();if($("deputyApproval").value==="approved"&&!$("deputyReferralAt").value)$("deputyReferralAt").value=localDateTimeNow();});
+$("deputyReferralDepartment").addEventListener("change",()=>{if($("deputyApproval").value==="approved"&&$("deputyReferralDepartment").value)$("executorDepartment").value=$("deputyReferralDepartment").value;renderDepartmentFields();applyFieldConditions();});
+$("deputyReferralPerson").addEventListener("input",()=>{if($("deputyApproval").value==="approved")$("assignedExpert").value=$("deputyReferralPerson").value;});
 $("addMilestone").addEventListener("click",()=>addMilestoneRow());
 $("calculateMilestoneProgress").addEventListener("click",()=>{const rows=readMilestones();const weight=rows.reduce((s,x)=>s+Math.max(0,x.weight),0);if(!weight){$("saveResult").textContent="برای محاسبه، وزن نقاط عطف را وارد کنید.";return;}const value=Math.round(rows.reduce((s,x)=>s+Math.max(0,x.weight)*x.progress,0)/weight);$("progress").value=value;updateProgress();$("saveResult").textContent="پیشرفت وزنی نقاط عطف محاسبه شد: "+toFa(value)+"٪";});
 
