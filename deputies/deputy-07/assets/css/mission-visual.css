@@ -134,3 +134,31 @@ body.ops-page:has(.mission-report-panel) .mission-detail-empty{padding:18px;bord
 .mission-sample-tools button{min-height:36px;padding:7px 12px;border-radius:8px;font:inherit;font-size:11px}
 .mission-sample-tools #sampleDataState{flex:1 1 100%;color:#648778}
 @media(max-width:650px){.mission-sample-tools{align-items:stretch}.mission-sample-tools button{width:100%}}
+
+
+/* Independent time controls and monthly comparison for mission analytics */
+body.ops-page:has(.mission-report-panel) .chart-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 0 12px}
+body.ops-page:has(.mission-report-panel) .chart-head h2{margin:0!important;padding:0!important;border:0!important}
+body.ops-page:has(.mission-report-panel) .chart-period-label{display:flex;align-items:center;gap:7px;padding:5px 8px;border:1px solid #e1e9e6;border-radius:9px;background:#f8fbfa;color:#788780;font-size:10px;white-space:nowrap}
+body.ops-page:has(.mission-report-panel) .chart-period-label select{max-width:180px;min-height:30px;padding:4px 8px;border:1px solid #dce8e3;border-radius:7px;background:#fff;color:#536b62;font:inherit;font-size:10px}
+body.ops-page:has(.mission-report-panel) .comparison-box{margin:15px 0;padding:17px;border:1px solid #e3ebe6;border-radius:13px;background:#fff;overflow:hidden}
+body.ops-page:has(.mission-report-panel) .comparison-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:12px 0}
+body.ops-page:has(.mission-report-panel) .comparison-kpis>div{display:grid;gap:5px;min-width:0;padding:11px;border:1px solid #e5ece8;border-radius:10px;background:#f8fbfa}
+body.ops-page:has(.mission-report-panel) .comparison-kpis small{color:#7a8982;font-size:10px}
+body.ops-page:has(.mission-report-panel) .comparison-kpis b{color:#4f8f7d;font-size:14px;overflow-wrap:anywhere}
+body.ops-page:has(.mission-report-panel) .comparison-kpis span{color:#87938d;font-size:9px}
+body.ops-page:has(.mission-report-panel) .comparison-note{padding:12px;color:#89958e;font-size:11px}
+body.ops-page:has(.mission-report-panel) .comparison-chart{overflow-x:auto;padding:8px 0}
+body.ops-page:has(.mission-report-panel) .comparison-month-grid{display:grid;grid-auto-columns:minmax(175px,1fr);grid-auto-flow:column;gap:9px;min-width:max-content}
+body.ops-page:has(.mission-report-panel) .comparison-month-grid>section{display:grid;gap:10px;padding:12px;border:1px solid #e7eeea;border-radius:10px;background:#fbfdfc}
+body.ops-page:has(.mission-report-panel) .comparison-month-title{padding-bottom:7px;border-bottom:1px solid #e8eeea;color:#5c746a;font-size:11px}
+body.ops-page:has(.mission-report-panel) .comparison-value{display:grid;grid-template-columns:70px minmax(35px,1fr) 30px;align-items:center;gap:6px;color:#7c8982;font-size:9px}
+body.ops-page:has(.mission-report-panel) .comparison-value>i{height:8px;border-radius:8px;background:#edf2ef;overflow:hidden}
+body.ops-page:has(.mission-report-panel) .comparison-value>i>em{display:block;height:100%;border-radius:8px;background:#7bb9aa}
+body.ops-page:has(.mission-report-panel) .comparison-value>b{color:#596f65;text-align:left;font-size:9px}
+body.ops-page:has(.mission-report-panel) .mission-report-panel .report-filter-extended{background:#f8fbfa;border-color:#e1eae5}
+body.ops-page:has(.mission-report-panel) .mission-report-panel .report-filter-extended select:focus,
+body.ops-page:has(.mission-report-panel) .mission-report-panel .report-filter-extended input:focus,
+body.ops-page:has(.mission-report-panel) .chart-period-label select:focus{outline:2px solid #b9ded3;outline-offset:1px}
+@media(max-width:850px){body.ops-page:has(.mission-report-panel) .comparison-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){body.ops-page:has(.mission-report-panel) .chart-head{align-items:stretch}body.ops-page:has(.mission-report-panel) .chart-period-label{justify-content:space-between}body.ops-page:has(.mission-report-panel) .chart-period-label select{flex:1;max-width:none}body.ops-page:has(.mission-report-panel) .comparison-kpis{grid-template-columns:1fr}}
