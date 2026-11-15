@@ -158,7 +158,7 @@ function render(){
  document.querySelectorAll("[data-row-remove]").forEach(b=>b.onclick=()=>{const tr=b.closest("tr");if(confirm("این فیلد از پیشنهاد نهایی حذف شود؟")){removedIds.add(tr.dataset.id);tr.remove();saveLocal();}});
  document.querySelectorAll("[data-sec-up]").forEach(b=>b.onclick=()=>{const el=b.closest(".review-section");if(el.previousElementSibling)host.insertBefore(el,el.previousElementSibling);applyPageLabels();saveLocal();});
  document.querySelectorAll("[data-sec-down]").forEach(b=>b.onclick=()=>{const el=b.closest(".review-section");if(el.nextElementSibling)host.insertBefore(el.nextElementSibling,el);applyPageLabels();saveLocal();});
- document.querySelectorAll("[data-sec-remove]").forEach(b=>b.onclick=()=>{const el=b.closest(".review-section");if(confirm("کل بخش و فیلدهای آن حذف شوند؟")){el.querySelectorAll("tbody tr").forEach(tr=>removedIds.add(tr.dataset.id));el.remove();applyPageLabels();saveLocal();}});
+ document.querySelectorAll("[data-sec-remove]").forEach(b=>b.onclick=()=>{const el=b.closest(".review-section");if(confirm("کل بخش و فیلدهای آن حذف شوند؟")){el.querySelectorAll("tbody tr").forEach(tr=>removedIds.add(tr.dataset.id));removedSections.add(el.dataset.group);el.remove();applyPageLabels();saveLocal();}});
  document.querySelectorAll("#sections input,#sections textarea,#sections select,#globalNotes,#brandTitle,#brandSubtitle,#pageEyebrow,#pageHeading,#pageDescription").forEach(el=>el.addEventListener("input",()=>{applyPageLabels();saveLocal();}));
  applyPageLabels();updateCounts();
 }
