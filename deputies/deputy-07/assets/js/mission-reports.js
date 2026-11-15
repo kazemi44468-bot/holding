@@ -1,5 +1,5 @@
 import { MissionStore } from "./mission-store.js?v=20261115-02";
-import { ensureMissionSamples, removeMissionSamples } from "./mission-samples.js?v=20261115-03";
+import { ensureMissionSamples, removeMissionSamples } from "./mission-samples.js?v=20261115-04";
 const $=id=>document.getElementById(id),fa=n=>Number(n||0).toLocaleString("fa-IR");
 const depts={"1":"اداری و پشتیبانی","2":"تحقیق و توسعه","3":"پارکبان و معبربانان","4":"تأسیسات فنی و نگهداری","6":"فاوا و خدمات فنی","7":"جمع‌آوری و بازیافت پسماند","8":"بازرسی و تحقیقات محلی","HQ":"ستاد معاونت ۷"};
 const statuses={draft:"پیش‌نویس",registered:"برنامه‌ریزی قبل از اجرا",referred:"ارجاع‌شده / در انتظار شروع","in-progress":"در حال اجرا",blocked:"دارای مانع",review:"در انتظار بررسی",revision:"نیازمند اصلاح",completed:"اتمام و پایان کار",closed:"مختومه",cancelled:"لغوشده"};
@@ -164,6 +164,11 @@ function applyChartFilters(){
  const pn={critical:"بحرانی",urgent:"فوری",important:"مهم",normal:"عادی"};
  drawBars("priorityBars",Object.entries(pn).map(([id,label])=>({label,value:d.filter(m=>m.priority===id).length})).filter(x=>x.value));
  drawBars("trackBars",[{label:"مدیریتی معاون",value:avg(e,"management")},{label:"دفتر معاون",value:avg(e,"office")},{label:"اجرای اداره",value:avg(e,"department")}],true);
+ drawDonut("scopeBars",[{label:"داخل استان",value:scopeRows.filter(m=>m.locationScope==="inside-province").length},{label:"خارج از استان",value:scopeRows.filter(m=>m.locationScope==="outside-province").length}]);
+ drawBars("scheduleBars",[{label:"روزانه",value:scheduleRows.filter(m=>m.workSchedule==="daytime").length},{label:"شبانه‌روزی",value:scheduleRows.filter(m=>m.workSchedule==="continuous-24h").length}],false,true);
+ drawBars("continuityBars",[{label:"پیوسته و مستمر",value:continuityRows.filter(m=>m.continuityType==="continuous").length},{label:"ناپیوسته / مقطعی",value:continuityRows.filter(m=>m.continuityType==="intermittent").length}],false,true);
+ const phaseOf=m=>m.missionPhase||(["completed","closed"].includes(m.status)?"completed":["in-progress","blocked","review","revision"].includes(m.status)?"active":"planned");
+ drawDonut("phaseBars",[{label:"برنامه‌ریزی قبل از اجرا",value:phaseRows.filter(m=>phaseOf(m)==="planned").length},{label:"در حال اجرا",value:phaseRows.filter(m=>phaseOf(m)==="active").length},{label:"اتمام و پایان کار",value:phaseRows.filter(m=>phaseOf(m)==="completed").length}]);
  renderGantt(g);
 }
 
