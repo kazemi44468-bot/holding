@@ -480,7 +480,7 @@ async function unlock(){
  $("unlockVault").disabled=true;const canManageSchema=!!window.Deputy7Access?.canCurrent("manageSchema",{kind:"configuration"});$("schemaAdmin").hidden=!canManageSchema;$("schemaAdmin").classList.toggle("hidden",!canManageSchema);
  await loadSchema();
  if(editingId)await loadMission(editingId);
- else{writeField("requestDate",dateNow());writeField("receivedAt",localDateTimeNow());renderProcessTracks({});}
+ else{$("executionStatus").value="registered";writeField("requestDate",dateNow());writeField("receivedAt",localDateTimeNow());renderProcessTracks({});updateProgress();}
 }
 $("unlockVault").addEventListener("click",async()=>{try{await unlock();}catch(e){$("authState").textContent=e.message;}});
 $("executorDepartment").addEventListener("change",()=>{renderDepartmentFields();applyFieldConditions();});
