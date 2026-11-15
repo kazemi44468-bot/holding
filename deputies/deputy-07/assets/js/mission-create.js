@@ -426,6 +426,7 @@ function renderProgressHistory(log=[]){
 async function saveMission(asDraft=false){
  const required=asDraft?["missionTitle"]:["missionTitle","missionSubject","executorDepartment","plannedEnd"];
  for(const id of required){const el=$(id);if(!el.value.trim()){el.focus();throw new Error(asDraft?"برای ذخیره پیش‌نویس، عنوان مأموریت را وارد کنید.":"فیلدهای عنوان، شرح موضوع، اداره مجری و مهلت اتمام الزامی هستند.");}}
+ for(const id of ["missionDaysRequested","missionDaysApproved","missionDaysCompleted"]){const raw=$(id)?.value;if(raw!==""&&raw!=null&&(!Number.isInteger(Number(raw))||Number(raw)<0))throw new Error("تعداد روزهای مأموریت باید عدد صحیح و صفر یا بیشتر باشد.");}
  if(!asDraft){validateDynamicRequired();if(!$("missionForm").reportValidity())throw new Error("لطفاً فیلدهای الزامی را تکمیل کنید.");}
  if(!asDraft&&$("plannedStart").value&&$("plannedEnd").value&&$("plannedStart").value>$("plannedEnd").value)throw new Error("تاریخ شروع برنامه‌ای نمی‌تواند بعد از مهلت پایان باشد.");
  if(!asDraft&&$("actualStart").value&&$("actualEnd").value&&$("actualStart").value>$("actualEnd").value)throw new Error("تاریخ اتمام واقعی نمی‌تواند قبل از تاریخ شروع واقعی باشد.");
