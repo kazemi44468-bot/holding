@@ -494,3 +494,62 @@ body.ops-page:has(#missionForm) .field-editor-condition-grid select{border-color
  body.ops-page:has(.mission-bank-panel) .mission-bank-filters{grid-template-columns:1fr!important}
  body.ops-page:has(.mission-report-panel) .report-grid{grid-template-columns:1fr!important}
 }
+
+
+/* Dedicated mission editing workspace */
+body.ops-page.mission-edit-mode{background:#f2f6f9!important}
+body.ops-page.mission-edit-mode .ops-intro{margin-bottom:12px!important;padding:15px 20px!important;background:#fff!important;border:1px solid #dce8ef!important;box-shadow:0 3px 12px rgba(55,105,130,.045)!important}
+body.ops-page.mission-edit-mode .ops-intro h1{font-size:21px!important;color:#315f75!important}
+body.ops-page.mission-edit-mode .ops-intro .eyebrow{color:#6792a3!important}
+body.ops-page.mission-edit-mode #workArea{display:grid!important;grid-template-columns:minmax(220px,260px) minmax(0,1fr)!important;align-items:start!important;gap:14px!important}
+body.ops-page.mission-edit-mode #schemaTransferTools{display:none!important}
+body.ops-page.mission-edit-mode #workArea>.mission-card:not(#schemaTransferTools){grid-column:1/-1!important;margin:0!important;padding:13px 17px!important;border-color:#dce8ef!important;border-radius:13px!important}
+body.ops-page.mission-edit-mode #workArea>.mission-card .section-head{padding:0!important;margin:0 0 8px!important;border:0!important}
+body.ops-page.mission-edit-mode #workArea>.mission-card .section-head h2{font-size:14px!important;color:#3c7186!important}
+body.ops-page.mission-edit-mode #workArea>.mission-card .section-head p{font-size:11px!important}
+body.ops-page.mission-edit-mode #workArea>.mission-card .mission-progress{margin:8px 0!important}
+body.ops-page.mission-edit-mode #missionTabs{grid-column:1!important;grid-row:3!important;position:sticky!important;top:14px!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:6px!important;max-height:calc(100vh - 28px)!important;overflow-y:auto!important;margin:0!important;padding:9px!important;border:1px solid #dce8ef!important;border-radius:14px!important;background:#fff!important;box-shadow:0 4px 14px rgba(53,100,125,.055)!important}
+body.ops-page.mission-edit-mode #missionTabs .mission-tab{width:100%!important;min-height:40px!important;justify-content:flex-start!important;padding:7px 9px!important;border:1px solid transparent!important;border-radius:9px!important;background:#f6f9fb!important;color:#506a79!important;font-size:11px!important;text-align:right!important}
+body.ops-page.mission-edit-mode #missionTabs .mission-tab[aria-selected=true]{background:#e5f3f8!important;border-color:#b9d9e4!important;color:#285f75!important;box-shadow:inset -3px 0 #4d9bb2!important}
+body.ops-page.mission-edit-mode #missionTabs .step-count{background:#fff!important;border-color:#d5e5eb!important;color:#52788a!important}
+body.ops-page.mission-edit-mode #missionForm{grid-column:2!important;grid-row:3!important;display:flex!important;flex-direction:column!important;gap:12px!important;min-width:0!important}
+body.ops-page.mission-edit-mode #missionForm>.mission-section{display:block!important;position:relative!important;scroll-margin-top:16px!important;margin:0!important;padding:18px 20px!important;border:1px solid #dce7ed!important;border-radius:13px!important;background:#fff!important;box-shadow:0 3px 12px rgba(50,91,116,.045)!important}
+body.ops-page.mission-edit-mode #missionForm>.mission-section .section-head{margin-bottom:12px!important;padding-bottom:10px!important;border-bottom:1px solid #edf2f5!important}
+body.ops-page.mission-edit-mode #missionForm>.mission-section .section-head h2{color:#386f86!important;font-size:15px!important}
+body.ops-page.mission-edit-mode #missionForm .form-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px 14px!important}
+body.ops-page.mission-edit-mode #missionForm .field{margin:5px 0!important}
+body.ops-page.mission-edit-mode #missionForm .field label{font-size:11px!important;color:#506b7a!important}
+body.ops-page.mission-edit-mode #missionForm .field input,
+body.ops-page.mission-edit-mode #missionForm .field select,
+body.ops-page.mission-edit-mode #missionForm .field textarea,
+body.ops-page.mission-edit-mode #missionForm .process-track-card input,
+body.ops-page.mission-edit-mode #missionForm .process-track-card select,
+body.ops-page.mission-edit-mode #missionForm .process-track-card textarea{border-color:#d9e5eb!important;border-radius:8px!important;background:#fbfdfe!important;color:#344f5e!important}
+body.ops-page.mission-edit-mode #missionForm .field input:focus,
+body.ops-page.mission-edit-mode #missionForm .field select:focus,
+body.ops-page.mission-edit-mode #missionForm .field textarea:focus{border-color:#6bb3c5!important;box-shadow:0 0 0 3px rgba(75,157,181,.13)!important;background:#fff!important}
+body.ops-page.mission-edit-mode #missionForm .mission-actions{position:sticky!important;bottom:8px!important;z-index:8!important;align-items:center!important;margin:0!important;padding:10px 12px!important;border:1px solid #d6e5ec!important;border-radius:12px!important;background:rgba(255,255,255,.97)!important;box-shadow:0 5px 20px rgba(40,78,98,.12)!important;backdrop-filter:blur(8px)!important}
+body.ops-page.mission-edit-mode #missionForm #prevStep,
+body.ops-page.mission-edit-mode #missionForm #nextStep{display:none!important}
+body.ops-page.mission-edit-mode #missionForm #saveMission{min-width:180px!important;background:#398da5!important;border-color:#398da5!important}
+body.ops-page.mission-edit-mode #missionForm #saveDraft{background:#f1f6f9!important;border-color:#d9e6ed!important;color:#4e6e7e!important}
+body.ops-page.mission-edit-mode #schemaAdmin{display:none!important}
+body.ops-page.mission-edit-mode .mission-auth{margin-bottom:10px!important;padding:9px 13px!important;background:#eef6fa!important;border-color:#d8e8ef!important;color:#547487!important}
+body.ops-page.mission-edit-mode .mission-progress span{background:#55a7bd!important}
+body.ops-page.mission-edit-mode .process-track-area{background:#f4f9fb!important;border-color:#dce8ef!important}
+body.ops-page.mission-edit-mode .process-track-card{background:#fff!important;border-color:#dce7ed!important}
+@media(max-width:1050px){
+ body.ops-page.mission-edit-mode #workArea{grid-template-columns:190px minmax(0,1fr)!important}
+ body.ops-page.mission-edit-mode #missionForm .form-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:760px){
+ body.ops-page.mission-edit-mode #workArea{grid-template-columns:minmax(0,1fr)!important;gap:10px!important}
+ body.ops-page.mission-edit-mode #workArea>.mission-card:not(#schemaTransferTools){grid-column:1!important}
+ body.ops-page.mission-edit-mode #missionTabs{grid-column:1!important;grid-row:auto!important;position:sticky!important;top:0!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;max-height:220px!important;gap:5px!important;padding:7px!important}
+ body.ops-page.mission-edit-mode #missionTabs .mission-tab{min-height:37px!important;font-size:10px!important}
+ body.ops-page.mission-edit-mode #missionForm{grid-column:1!important;grid-row:auto!important}
+ body.ops-page.mission-edit-mode #missionForm>.mission-section{padding:13px!important}
+ body.ops-page.mission-edit-mode #missionForm .form-grid{grid-template-columns:1fr!important}
+ body.ops-page.mission-edit-mode #missionForm .mission-actions{bottom:5px!important}
+ body.ops-page.mission-edit-mode #missionForm #saveMission{min-width:0!important}
+}
