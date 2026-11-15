@@ -183,7 +183,7 @@ function renderComparison(){
  if(!r){$("comparisonSummary").textContent="برای نمایش مقایسه، تاریخ شروع و پایان معتبر انتخاب کنید.";$("comparisonCaption").textContent="";host.innerHTML="";return}
  const fmt=metricLabels[metric],bars=[];
  if(mode==="departments"){
-  const selected=[...document.querySelectorAll("[data-compare-dept]:checked")].map(x=>x.value);
+  const selected=[...comparisonSelectedDepts];
   const departments=selected.length?selected:[];
   departments.forEach(id=>{const q=all.filter(m=>String(m.executorDepartment)===id);bars.push({label:depts[id]||"اداره "+id,value:metricCount(q,metric,r.from,r.to),detail:fa(q.length)+" پرونده در بانک"})});
   $("comparisonDeptPicker").hidden=false;$("comparisonSingleDeptWrap").hidden=true;
