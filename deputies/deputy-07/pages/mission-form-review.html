@@ -157,7 +157,7 @@ function render(){
 function addRow(key){
  const g=groups.find(x=>x.key===key),tbody=document.querySelector('[data-group="'+key+'"] tbody'),tr=document.createElement("tr");tr.className="new-row";tr.dataset.id="NEW-"+key+"-"+(tbody.children.length+1);
  tr.innerHTML='<td><div class="field-id">'+tr.dataset.id+'</div><span class="badge">جدید</span></td><td><input class="field-label" data-k="label" placeholder="عنوان فیلد جدید"></td><td><select data-k="type">'+Object.entries(typeLabels).map(([v,l])=>'<option value="'+v+'">'+l+'</option>').join("")+'</select></td><td style="text-align:center"><input class="required" type="checkbox" data-k="required"></td><td><textarea class="options" data-k="options" placeholder="گزینه‌ها یا واحد اندازه‌گیری"></textarea></td><td><select class="priority-select" data-k="priority"><option value="normal">عادی</option><option value="high">زیاد</option><option value="critical">ضروری</option><option value="low">کم</option></select></td><td><select class="layout-select" data-k="layout"><option value="full">تمام‌عرض</option><option value="half">نیم‌عرض</option><option value="third">یک‌سوم</option></select></td><td><textarea class="change" data-k="change" placeholder="هدف و منطق افزودن این فیلد"></textarea></td><td><select class="move-select" data-move-to><option value="">انتقال به…</option>'+sectionOptions(key)+'</select></td><td><div class="row-tools"><button type="button" data-row-up>↑</button><button type="button" data-row-down>↓</button><button type="button" class="row-remove" data-row-remove>حذف</button></div></td>';
- tbody.append(tr);tr.querySelectorAll("input,textarea,select").forEach(el=>{el.addEventListener("input",saveLocal);el.addEventListener("change",saveLocal);});tr.querySelector("[data-row-remove]").onclick=()=>{if(confirm("این زیرآیتم از ساختار پیشنهادی حذف شود؟")){tr.remove();saveLocal();}};saveLocal();tr.scrollIntoView({behavior:"smooth",block:"center"});
+ tbody.append(tr);tr.querySelectorAll("input,textarea,select").forEach(el=>{el.addEventListener("input",saveLocal);el.addEventListener("change",saveLocal);});tr.querySelector("[data-row-remove]").onclick=()=>{if(confirm("این زیرآیتم از ساختار پیشنهادی حذف شود؟")){tr.remove();saveLocal();}};tr.querySelector("[data-row-up]").onclick=()=>{const prev=tr.previousElementSibling;if(prev){tbody.insertBefore(tr,prev);saveLocal();}};tr.querySelector("[data-row-down]").onclick=()=>{const next=tr.nextElementSibling;if(next){tbody.insertBefore(next,tr);saveLocal();}};tr.querySelector("[data-move-to]").onchange=e=>{const key=e.target.value;if(!key)return;const target=document.querySelector('[data-group="'+key+'"] tbody');if(target){target.append(tr);tr.querySelector("[data-move-to]").innerHTML='<option value="">انتقال به…</option>'+sectionOptions(key);tr.querySelector("[data-move-to]").value="";saveLocal();}};saveLocal();tr.scrollIntoView({behavior:"smooth",block:"center"});
 }
 function collect(){
  const sections=[...document.querySelectorAll(".review-section")].map(sec=>({key:sec.dataset.group,title:sec.querySelector("[data-section-title]").value,description:sec.querySelector("[data-section-desc]").value,items:[...sec.querySelectorAll("tbody tr")].map(tr=>({id:tr.dataset.id,priority:tr.querySelector('[data-k="priority"]')?.value||"normal",layout:tr.querySelector('[data-k="layout"]')?.value||"full",label:tr.querySelector('[data-k="label"]')?.value||"",type:tr.querySelector('[data-k="type"]')?.value||"",required:!!tr.querySelector('[data-k="required"]')?.checked,options:tr.querySelector('[data-k="options"]')?.value||"",change:tr.querySelector('[data-k="change"]')?.value||""}))}));
@@ -169,27 +169,29 @@ function updateCounts(){const data=collect(),items=data.sections.flatMap(x=>x.it
 function download(){const blob=new Blob([JSON.stringify(collect(),null,2)],{type:"application/json;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="mission-form-review-deputy-07.json";a.click();URL.revokeObjectURL(url);}
 function load(data){
  if(data?.format!=="H7-MISSION-FORM-REVIEW"||!Array.isArray(data.sections))throw new Error("ساختار فایل بازبینی معتبر نیست.");
- const keep=new Set(data.sections.map(x=>x.key));
- document.querySelectorAll(".review-section").forEach(sec=>{if(!keep.has(sec.dataset.group))sec.remove();});
+ const keepKeys=new Set(data.sections.map(x=>x.key));
+ document.querySelectorAll(".review-section").forEach(sec=>{if(!keepKeys.has(sec.dataset.group))sec.remove();});
  data.sections.forEach(s=>{
-  let sec=document.querySelector('[data-group="'+s.key+'"]');if(!sec)return;
+  const sec=document.querySelector('[data-group="'+s.key+'"]');if(!sec)return;
   sec.querySelector("[data-section-title]").value=s.title??"";
   sec.querySelector("[data-section-desc]").value=s.description??(groups.find(g=>g.key===s.key)?.desc||"");
-  const keepIds=new Set((s.items||[]).map(x=>x.id));
-  sec.querySelectorAll("tbody tr").forEach(tr=>{if(!keepIds.has(tr.dataset.id))tr.remove();});
   (s.items||[]).forEach(item=>{
-   let tr=[...sec.querySelectorAll("tbody tr")].find(x=>x.dataset.id===item.id);
-   if(!tr&&String(item.id).startsWith("NEW-")){addRow(s.key);tr=sec.querySelector("tbody tr:last-child");tr.dataset.id=item.id;tr.querySelector(".field-id").textContent=item.id;}
+   let tr=[...document.querySelectorAll("#sections tbody tr")].find(x=>x.dataset.id===item.id);
+   if(!tr&&String(item.id).startsWith("NEW-")){
+    addRow(s.key);tr=sec.querySelector("tbody tr:last-child");tr.dataset.id=item.id;tr.querySelector(".field-id").textContent=item.id;
+   }
    if(!tr)return;
    for(const k of ["label","type","options","change"]){const el=tr.querySelector('[data-k="'+k+'"]');if(el)el.value=item[k]??"";}
    const req=tr.querySelector('[data-k="required"]');if(req)req.checked=!!item.required;
    const priority=tr.querySelector('[data-k="priority"]');if(priority)priority.value=item.priority||"normal";
    const layout=tr.querySelector('[data-k="layout"]');if(layout)layout.value=item.layout||"full";
-   const move=tr.querySelector("[data-move-to]");if(move)move.innerHTML='<option value="">انتقال به…</option>'+sectionOptions(s.key);
+   const move=tr.querySelector("[data-move-to]");if(move){move.innerHTML='<option value="">انتقال به…</option>'+sectionOptions(s.key);move.value="";}
    sec.querySelector("tbody").appendChild(tr);
   });
   host.appendChild(sec);
  });
+ const keepIds=new Set(data.sections.flatMap(x=>(x.items||[]).map(i=>i.id)));
+ document.querySelectorAll("#sections tbody tr").forEach(tr=>{if(!keepIds.has(tr.dataset.id))tr.remove();});
  document.getElementById("globalNotes").value=data.globalNotes||"";
  saveLocal();
 }
