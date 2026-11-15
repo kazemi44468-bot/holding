@@ -3,7 +3,7 @@ import { ensureMissionSamples } from "./mission-samples.js?v=20261115-03";
 const $=id=>document.getElementById(id);
 const fa=n=>Number(n||0).toLocaleString("fa-IR");
 const names={"1":"اداره ۱ · اداری و پشتیبانی","2":"اداره ۲ · تحقیق و توسعه","3":"اداره ۳ · پارکبان و معبربانان","4":"اداره ۴ · تأسیسات فنی و نگهداری","6":"اداره ۶ · فاوا و خدمات فنی","7":"اداره ۷ · جمع‌آوری و بازیافت پسماند","8":"اداره ۸ · بازرسی و تحقیقات محلی","HQ":"ستاد معاونت ۷"};
-const labels={draft:"پیش‌نویس",registered:"ثبت‌شده",referred:"ارجاع‌شده","in-progress":"در حال اجرا",blocked:"دارای مانع",review:"در انتظار بررسی",revision:"نیازمند اصلاح",completed:"تکمیل‌شده",closed:"مختومه",cancelled:"لغوشده"};
+const labels={draft:"پیش‌نویس",registered:"برنامه‌ریزی قبل از اجرا",referred:"ارجاع‌شده / در انتظار شروع","in-progress":"در حال اجرا",blocked:"دارای مانع",review:"در انتظار بررسی",revision:"نیازمند اصلاح",completed:"اتمام و پایان کار",closed:"مختومه",cancelled:"لغوشده"};
 let missions=[];
 const trackOf=(m,k)=>m.processTracks?.[k]||{};
 const pct=(m,k)=>Math.max(0,Math.min(100,Number(trackOf(m,k).progress||0)));
