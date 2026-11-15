@@ -36,6 +36,8 @@ export const MissionStore = Object.freeze({
     const now = new Date().toISOString();
     const record = { ...data, id: missionId, schemaVersion: Number(data.schemaVersion ?? prior?.schemaVersion ?? 1), createdAt: data.createdAt || prior?.createdAt || now, updatedAt: now };
     await Vault.add(ENTITY, keyOf(missionId), "upsert", record);
+    const verified = await this.get(missionId);
+    if (!verified || verified.updatedAt !== record.updatedAt) throw new Error("ثبت مأموریت تأیید نشد؛ رکورد پس از نوشتن از پایگاه داده محلی بازیابی نشد. صفحه را نبندید و از بخش پشتیبان‌گیری وضعیت مخزن را بررسی کنید.");
     return missionId;
   },
   async remove(id) {
