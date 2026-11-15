@@ -1,4 +1,5 @@
 import { MissionStore } from "./mission-store.js";
+import { ensureMissionSamples } from "./mission-samples.js?v=20261115-01";
 const $=id=>document.getElementById(id);
 const fa=n=>Number(n||0).toLocaleString("fa-IR");
 const names={"1":"اداره ۱ · اداری و پشتیبانی","2":"اداره ۲ · تحقیق و توسعه","3":"اداره ۳ · پارکبان و معبربانان","4":"اداره ۴ · تأسیسات فنی و نگهداری","6":"اداره ۶ · فاوا و خدمات فنی","7":"اداره ۷ · جمع‌آوری و بازیافت پسماند","8":"اداره ۸ · بازرسی و تحقیقات محلی","HQ":"ستاد معاونت ۷"};
@@ -21,6 +22,6 @@ function render(){
 }
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 async function refresh(){missions=await MissionStore.list();const config=await MissionStore.config();for(const d of config?.departments||[])names[String(d.id)]=d.name;const core=config?.coreFields||{};const title=$("bankTitleHead"),deptHead=$("bankDeptHead"),owner=$("bankOwnerHead"),deadline=$("bankDeadlineHead");if(title)title.textContent=(core.missionTitle?.label||"عنوان مأموریت")+" / کد";if(deptHead)deptHead.textContent=core.executorDepartment?.label||"اداره مجری";if(owner)owner.textContent=core.directOwner?.label||"مسئول مستقیم";if(deadline)deadline.textContent=core.plannedEnd?.label||"مهلت پایان";const select=$("bankDept");for(const m of missions){const id=String(m.executorDepartment||"");if(!id)continue;if(m.executorDepartmentName)names[id]=m.executorDepartmentName;if(![...select.options].some(o=>o.value===id)){const option=document.createElement("option");option.value=id;option.textContent=names[id]||("اداره "+id);select.append(option);}}render();}
-async function initBank(){try{await MissionStore.unlock();$("bankContent").hidden=false;$("bankState").textContent="اتصال خودکار برقرار شد؛ پایگاه داده بدون رمز باز است.";await refresh();}catch(e){$("bankState").textContent=e.message;$("bankContent").hidden=true;}}initBank();
+async function initBank(){try{await MissionStore.unlock();await ensureMissionSamples();$("bankContent").hidden=false;$("bankState").textContent="اتصال خودکار برقرار شد؛ پایگاه داده بدون رمز باز است.";await refresh();}catch(e){$("bankState").textContent=e.message;$("bankContent").hidden=true;}}initBank();
 $("bankRefresh").addEventListener("click",async()=>{try{await refresh();}catch(e){$("bankState").textContent=e.message;}});
 ["bankSearch","bankDept","bankStatus","bankPriority"].forEach(id=>$(id).addEventListener(id==="bankSearch"?"input":"change",render));
