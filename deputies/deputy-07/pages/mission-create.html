@@ -414,7 +414,12 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 <div class="process-track-actions" data-track-actions></div></article>
 </div><div class="process-track-history"><b>تاریخچه تغییرات چرخه‌ها</b><div id="processTrackHistory">پس از ثبت مأموریت، تغییرات این سه چرخه نگهداری می‌شود.</div></div></div><div class="field full"><div class="mission-actions"><div class="right"><button type="button" id="returnForReview" class="quiet">ارسال نتیجه برای بررسی مقام ارجاع‌دهنده</button><button type="button" id="closeMission" class="primary">تأیید نهایی و مختومه‌کردن</button></div></div></div><div class="field full"><label>تاریخچه گردش و ارجاع</label><div id="workflowHistory" class="repeat-note">پس از ثبت مأموریت، تاریخچه گردش این پرونده نمایش داده می‌شود.</div></div>
 </section>
-<div class="mission-actions"><div class="right"><button type="button" id="prevStep" class="quiet">مرحله قبل</button><button type="button" id="nextStep" class="primary">مرحله بعد</button></div><div class="left"><button type="button" id="saveDraft" class="quiet">ذخیره پیش‌نویس</button><button type="submit" id="saveMission" class="primary"><svg aria-hidden="true" viewBox="0 0 24 24" width="17" height="17" style="vertical-align:-4px;margin-left:6px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round">
+<div class="mission-actions"><div class="right"><button type="button" id="prevStep" class="quiet">مرحله قبل</button><button type="button" id="nextStep" class="primary">مرحله بعد</button></div><div class="left"><button type="button" id="saveDraft" class="quiet">ذخیره پیش‌نویس</button><button type="submit" id="saveMission" class="primary"><svg aria-hidden="true" viewBox="0 0 24 24" width="17" height="17" style="vertical-align:-4px;margin-left:6px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M5 3h12l4 4v14H3V3z"/><path d="M7 3v6h10V3M7 21v-7h10v7"/></svg>ثبت و ذخیره مأموریت</button></div></div>
+<div id="saveResult" class="toast" role="status"></div>
+</form>
+</div>
+<details class="mission-admin hidden" id="schemaAdmin"><summary>مدیریت ساختار فرم و فیلدهای اختصاصی (ویژه مدیر ارشد فنی)</summary>
+
 <div class="field"><label for="schemaJson">تعریف فیلدها و دسته‌بندی اداره‌ها</label><textarea id="schemaJson" spellcheck="false"></textarea></div>
 <div class="mission-actions"><div class="right"><button type="button" id="loadSchema">بارگذاری ساختار فعلی</button><button type="button" id="resetSchema" class="quiet">بازگشت به ساختار پایه</button></div><div class="left"><button type="button" id="saveSchema" class="primary">ذخیره نسخه جدید ساختار</button></div></div>
 <div id="schemaResult" class="mission-status"></div>
