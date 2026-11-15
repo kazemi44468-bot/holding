@@ -439,7 +439,8 @@ async function loadMission(id){
 }
 async function unlock(){
  await MissionStore.unlock();
- unlocked=true;$("workArea").classList.remove("hidden");$("authState").textContent="پایگاه داده محلی بدون درخواست رمز فعال شد.";
+ const storageCheck=await MissionVault.healthCheck();
+ unlocked=true;$("workArea").classList.remove("hidden");$("authState").textContent="پایگاه داده محلی آماده است؛ آزمون نوشتن و خواندن موفق بود."+(storageCheck.persistent?" ماندگاری فضای ذخیره‌سازی نیز تأیید شد.":" مرورگر ماندگاری ویژه را تضمین نکرد؛ از پوشه داده‌ها پشتیبان منظم بگیرید.");
  $("unlockVault").disabled=true;const canManageSchema=!!window.Deputy7Access?.canCurrent("manageSchema",{kind:"configuration"});$("schemaAdmin").hidden=!canManageSchema;$("schemaAdmin").classList.toggle("hidden",!canManageSchema);
  await loadSchema();
  if(editingId)await loadMission(editingId);
