@@ -162,3 +162,22 @@ body.ops-page:has(.mission-report-panel) .mission-report-panel .report-filter-ex
 body.ops-page:has(.mission-report-panel) .chart-period-label select:focus{outline:2px solid #b9ded3;outline-offset:1px}
 @media(max-width:850px){body.ops-page:has(.mission-report-panel) .comparison-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){body.ops-page:has(.mission-report-panel) .chart-head{align-items:stretch}body.ops-page:has(.mission-report-panel) .chart-period-label{justify-content:space-between}body.ops-page:has(.mission-report-panel) .chart-period-label select{flex:1;max-width:none}body.ops-page:has(.mission-report-panel) .comparison-kpis{grid-template-columns:1fr}}
+
+body.ops-page:has(.mission-report-panel) .gantt-track{position:relative}
+body.ops-page:has(.mission-report-panel) .gantt-track .gantt-planned{z-index:1;background:#b9c8c2}
+body.ops-page:has(.mission-report-panel) .gantt-track .gantt-planned.status-completed{background:#b8d7e8}
+body.ops-page:has(.mission-report-panel) .gantt-track .gantt-planned.status-in-progress{background:#b9e2d8}
+body.ops-page:has(.mission-report-panel) .gantt-track .gantt-planned.status-blocked{background:#f1d9a8}
+body.ops-page:has(.mission-report-panel) .gantt-track .gantt-planned.status-review{background:#d8cbed}
+body.ops-page:has(.mission-report-panel) .gantt-track .gantt-planned.status-closed{background:#c9dbea}
+body.ops-page:has(.mission-report-panel) .gantt-track .gantt-planned>em{background:#5f9f91}
+body.ops-page:has(.mission-report-panel) .gantt-track .gantt-actual{position:absolute;z-index:2;top:0;height:100%;min-width:2px;border:1px dashed #5689ad;border-radius:8px;background:rgba(126,174,207,.22);pointer-events:none}
+body.ops-page:has(.mission-report-panel) .gantt-row.is-late{border-right:3px solid #d9ad66;background:#fffdf8}
+body.ops-page:has(.mission-report-panel) .gantt-axis>div{display:flex;justify-content:space-between;gap:8px}
+body.ops-page:has(.mission-report-panel) .gantt-axis>div small{font-size:9px;color:#84928b}
+body.ops-page:has(.mission-report-panel) .gantt-legend{display:flex;gap:14px;flex-wrap:wrap;padding:8px 10px;color:#7b8982;font-size:9px}
+body.ops-page:has(.mission-report-panel) .gantt-legend span{display:flex;align-items:center;gap:5px}
+body.ops-page:has(.mission-report-panel) .gantt-legend i{display:inline-block;width:16px;height:7px;border-radius:5px}
+body.ops-page:has(.mission-report-panel) .gantt-legend .planned-key{background:#b9dcd0}
+body.ops-page:has(.mission-report-panel) .gantt-legend .actual-key{border:1px dashed #5689ad;background:rgba(126,174,207,.22)}
+body.ops-page:has(.mission-report-panel) .gantt-legend .late-key{background:#e4bf7c}
