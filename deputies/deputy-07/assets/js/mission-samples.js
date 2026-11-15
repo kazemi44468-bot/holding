@@ -18,10 +18,10 @@ const sampleSpecs=[
 ];
 const sampleDeptName=id=>sampleDepartments[id]||("اداره "+id);
 function sampleDate(daysAgo){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-daysAgo);return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-")}
-export async function ensureMissionSamples(){
- const marker=await MissionStore.getMeta("mission-samples-v1");if(marker?.done)return 0;
+export async function ensureMissionSamples(force=false){
+ const marker=await MissionStore.getMeta("mission-samples-v1");if(marker?.done&&!force)return 0;
  const existing=await MissionStore.list(),known=new Set(existing.map(m=>String(m.id)));
- if(existing.some(m=>m.sampleBatch===SAMPLE_BATCH)){await MissionStore.saveMeta("mission-samples-v1",{done:true,batch:SAMPLE_BATCH,records:existing.filter(m=>m.sampleBatch===SAMPLE_BATCH).length});return 0;}
+ if(existing.some(m=>m.sampleBatch===SAMPLE_BATCH)&&!force){await MissionStore.saveMeta("mission-samples-v1",{done:true,batch:SAMPLE_BATCH,records:existing.filter(m=>m.sampleBatch===SAMPLE_BATCH).length});return 0;}
  let added=0;
  for(let i=0;i<sampleSpecs.length;i++){
   const [dept,title,status,progress,priority,createdAgo,startAgo,finishAgo]=sampleSpecs[i],id="sample-mission-"+String(i+1).padStart(2,"0");
