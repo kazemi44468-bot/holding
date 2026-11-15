@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f4f8fa">
+<title>کاربرگ بازبینی فرم مأموریت | معاونت ۷</title>
+<link rel="manifest" href="../offline.webmanifest">
+<link rel="preload" href="../assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/css/style.css?v=mission-suite-20261115-15">
+<style>
+:root{--rv-ink:#40566a;--rv-muted:#778b98;--rv-line:#dce8ee;--rv-blue:#eaf5fa;--rv-teal:#eaf6f5}
+body.ops-page{background:#f5f8fa;color:var(--rv-ink)}
+.ops-main{width:min(1500px,calc(100% - 32px));max-width:1500px}
+.ops-intro{background:#fff!important;border:1px solid var(--rv-line)!important;border-radius:13px!important;padding:18px 22px!important;margin:18px 0 14px!important}
+.ops-intro h1{font-size:22px;color:#3e6e86;margin:5px 0}.ops-intro p{font-size:12px;color:var(--rv-muted);line-height:2}
+.panel{background:#fff;border:1px solid var(--rv-line);border-radius:12px;padding:15px;margin:12px 0}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.toolbar button,.toolbar a,.section-head button{border:1px solid #d8e6ed;background:#f3f8fb;color:#45697d;border-radius:8px;padding:9px 12px;font:inherit;font-size:12px;text-decoration:none;cursor:pointer}.toolbar .primary{background:#5b9bb6;color:#fff;border-color:#5b9bb6}
+.note{font-size:11px;color:#748894;line-height:2;margin:8px 0}
+.summary{display:flex;gap:8px;flex-wrap:wrap}.summary span{background:#f1f7fa;border:1px solid #e1ebf0;border-radius:8px;padding:7px 10px;font-size:11px}
+.review-section{border:1px solid var(--rv-line);border-radius:11px;margin:12px 0;background:#fff;overflow:hidden}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;background:#f1f7fa;border-bottom:1px solid var(--rv-line)}
+.section-head h2{font-size:14px;margin:0;color:#426e84}.section-head p{font-size:10px;color:#7c909b;margin:4px 0 0}
+.section-head button{padding:6px 9px;white-space:nowrap}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:1050px;font-size:11px}
+th,td{padding:8px;border-bottom:1px solid #edf1f3;text-align:right;vertical-align:top}
+th{background:#fafcfd;color:#627987;font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td input,td select,td textarea{width:100%;min-width:90px;border:1px solid #dce6eb;border-radius:6px;padding:7px;background:#fff;color:#40566a;font:inherit;font-size:11px}
+td textarea{min-height:46px;resize:vertical;line-height:1.8}
+td .field-id{direction:ltr;text-align:left;color:#81919a;font-family:monospace;font-size:10px;overflow-wrap:anywhere}
+td .field-label{min-width:150px}
+td .options{min-width:190px;min-height:55px}
+td .change{min-width:210px;min-height:55px}
+td .required{width:auto;min-width:auto;accent-color:#5b9bb6}
+.badge{display:inline-block;padding:3px 6px;border-radius:5px;background:#f1f5f7;color:#667e8a;font-size:10px}
+.section-add{margin:10px 12px}
+.new-row{background:#fbfdfe}
+.footer-actions{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+@media(max-width:700px){.ops-main{width:calc(100% - 18px)}.ops-intro{padding:14px!important}.panel{padding:11px}.section-head{align-items:flex-start}.section-head h2{font-size:12px}}
+@media print{.ops-header,.toolbar,.section-head button,.section-add,.ops-footer{display:none!important}body.ops-page{background:#fff}.ops-main{width:100%;max-width:none}.panel,.review-section{break-inside:avoid;box-shadow:none}.ops-intro{margin:0!important}}
+</style>
+</head>
+<body class="ops-page">
+<header class="ops-header"><div class="ops-header-inner"><a class="ops-brand" href="../dashboard.html"><img class="ops-logo" src="../assets/images/iran-flag.svg" alt="پرچم ایران"><span><b>معاونت ۷</b><small>سامانه وضعیت و عملکرد</small></span></a><nav class="ops-nav" aria-label="منوی اصلی"></nav><div class="ops-clock"><span>زمان سامانه</span><b id="clock">—</b><small id="date">—</small></div></div></header>
+<main class="ops-main">
+<section class="ops-intro"><span class="eyebrow">کاربرگ طراحی و بازبینی</span><h1>بازبینی و نهایی‌سازی فرم ثبت مأموریت</h1><p>تمام اجزای فرم فعلی در این صفحه فهرست شده‌اند. تغییرات پیشنهادی را در ردیف همان مورد بنویس؛ این کاربرگ به‌تنهایی هیچ تغییری در فرم اصلی ایجاد نمی‌کند.</p></section>
+<section class="panel">
+<div class="toolbar">
+<button class="primary" id="exportReview">دریافت فایل تغییرات (JSON)</button>
+<button id="importReview">بارگذاری فایل تغییرات قبلی</button><input id="importFile" type="file" accept=".json,application/json" hidden>
+<button id="printReview">چاپ / ذخیره PDF</button>
+<button id="clearReview">پاک‌کردن پیشنهادهای واردشده</button>
+<a href="mission-create.html">مشاهده فرم اصلی مأموریت</a>
+</div>
+<p class="note">برای هر ردیف می‌توانی عنوان جدید، نوع فیلد، اجباری‌بودن، گزینه‌های انتخابی و شرح تغییر را وارد کنی. اگر موردی باید حذف شود، در شرح تغییر صریحاً بنویس «حذف شود». برای افزودن فیلد جدید از دکمه انتهای هر بخش استفاده کن. اطلاعات به‌صورت خودکار در همین مرورگر ذخیره می‌شود.</p>
+<div class="summary"><span id="fieldCount">—</span><span id="changeCount">۰ پیشنهاد تغییر</span><span>شناسه‌های فنی فعلی برای ارجاع دقیق درج شده‌اند</span></div>
+</section>
+<div id="sections"></div>
+<section class="panel footer-actions"><div><b>یادداشت کلی درباره فرم</b><p class="note">هر تغییر کلی در ترتیب بخش‌ها، ادغام یا تفکیک تب‌ها، منطق شرطی، گردش کار یا ارتباط با تقویم را اینجا بنویس.</p><textarea id="globalNotes" style="width:100%;min-height:100px;border:1px solid #dce6eb;border-radius:8px;padding:10px;font:inherit;font-size:12px"></textarea></div></section>
+<section class="panel"><div class="toolbar"><button class="primary" id="exportReviewBottom">دریافت فایل تغییرات (JSON)</button><button id="printBottom">چاپ / ذخیره PDF</button></div><p class="note">پس از تکمیل، فایل JSON را دریافت و همین‌جا برای من بارگذاری کن. لازم نیست همه ردیف‌ها را تغییر بدهی؛ فقط مواردی را که نظر داری تکمیل کن.</p></section>
+<footer class="ops-footer"></footer>
+</main>
+<script src="../assets/js/main.js?v=mission-suite-20261114-14"></script>
+<script src="../assets/js/organization-modules.js?v=dept8-20261107"></script>
+<script src="../assets/js/mobile-nav.js?v=internal-routing-20261110" defer></script>
+<script>
+const groups=[
+{key:"general",title:"۱. اطلاعات عمومی و منشأ درخواست",desc:"مشخصات مکاتبه، موضوع و ضرورت مأموریت",fields:[
+["communicationType","نوع اعلام / مکاتبه","select",1,"نامه رسمی؛ درخواست شفاهی؛ مکاتبه داخلی؛ صورتجلسه؛ دستور مقام مافوق؛ گزارش یا اعلام نیاز"],
+["requestNumber","شماره درخواست / نامه","text",0,""],["requestDate","تاریخ درخواست","date",0,""],["requestChannel","نحوه وصول","select",0,"دبیرخانه؛ سامانه مکاتبات؛ ارجاع مستقیم؛ جلسه؛ تماس یا اعلام شفاهی؛ سایر"],
+["missionTitle","نام و عنوان مأموریت","text",1,""],["missionSubject","شرح موضوع، ضرورت و مسئله اصلی","textarea",1,""],["expectedPurpose","هدف و نتیجه مورد انتظار","textarea",0,""],
+["priority","اولویت","select",0,"عادی؛ مهم؛ فوری؛ بحرانی"],["confidentiality","سطح دسترسی","select",0,"عادی؛ داخلی؛ محرمانه؛ محدود به مدیران"]
+]},
+{key:"routing",title:"۲. دسته‌بندی، درخواست‌کننده و ارجاع",desc:"تعیین مبدأ، مجری و زنجیره مسئولیت مأموریت",fields:[
+["requesterType","نوع درخواست‌کننده","select",0,"ریاست معاونت؛ معاونت؛ مرکز؛ اداره؛ مدیریت؛ واحد یا شخص؛ سازمان بیرونی"],["requesterName","نام معاونت / مرکز / اداره / مدیریت","text",0,""],
+["requesterPerson","نفر مسئول مستقیم درخواست‌کننده","text",0,""],["requesterContact","راه ارتباطی / سمت","text",0,""],
+["executorDepartment","اداره مجری مأموریت","select",1,"اداره ۱ اداری و پشتیبانی؛ اداره ۲ تحقیق و توسعه؛ اداره ۳ پارکبان و معبربانان؛ اداره ۴ تأسیسات فنی و امور نگهداری؛ اداره ۶ فاوا و خدمات فنی؛ اداره ۷ جمع‌آوری، نگهداری و بازیافت پسماند؛ اداره ۸ بازرسی و تحقیقات محلی؛ ستاد معاونت ۷"],
+["executorSubunit","زیراداره / واحد تخصصی","text",0,""],["directOwner","مدیر اداره / مسئول مستقیم","text",0,""],["assignedExpert","کارشناس یا نفر معرفی‌شده","text",0,""],
+["missionType","نوع اقدام مأموریت","select",0,"اجرایی؛ مطالعاتی و پژوهشی؛ نظارتی و بازرسی؛ فنی و تعمیراتی؛ پشتیبانی؛ برنامه‌ریزی و هماهنگی؛ خدماتی و عملیاتی؛ اصلاحی و رفع نقص؛ توسعه‌ای / پروژه‌ای؛ سایر"],
+["workNature","ماهیت کار","select",0,"مستمر؛ مقطعی؛ مرحله‌ای؛ پروژه‌ای؛ اضطراری"],["routingNote","دستور ارجاع و شرح انتظارات از اداره مجری","textarea",0,""]
+]},
+{key:"schedule",title:"۳. مدیریت زمان و نقاط کنترل",desc:"تاریخ‌های کلیدی، بازه اجرا و نقاط عطف",fields:[
+["receivedAt","تاریخ و زمان وصول درخواست","datetime",0,""],["deliveredToDeputyAt","تحویل به معاونت","datetime",0,""],["referredAt","ارجاع به اداره مربوطه","datetime",0,""],["coordinationAt","صورتجلسه / جلسه هماهنگی","datetime",0,""],
+["plannedStart","تاریخ شروع برنامه‌ای","date",0,""],["actualStart","تاریخ شروع واقعی","date",0,""],["plannedEnd","مهلت / تاریخ اتمام برنامه‌ای","date",1,""],["actualEnd","تاریخ اتمام واقعی","date",0,""],
+["reportFrequency","تناوب گزارش پیشرفت","select",0,"روزانه؛ هفتگی؛ دو هفته یک‌بار؛ ماهانه؛ در نقاط عطف"],["durationEstimate","مدت برآوردی (روز)","number",0,""],
+["milestones","نقاط عطف و موعدهای میانی","repeater",0,"عنوان نقطه عطف؛ موعد؛ مسئول؛ وزن؛ درصد پیشرفت"]
+]},
+{key:"history",title:"۴. سابقه مأموریت مشابه",desc:"اتصال پرونده جدید به سوابق قبلی",fields:[
+["hasPrevious","آیا سابقه انجام مأموریت مشابه وجود دارد؟","radio",0,"خیر؛ بله"],["previousMissionCode","کد مأموریت قبلی","text",0,""],["previousMissionTitle","نام مأموریت قبلی","text",0,""],["previousPeriod","بازه زمانی انجام","text",0,""],["previousNotes","توضیحات و نتایج قابل استفاده","textarea",0,""]
+]},
+{key:"costs",title:"۵. هزینه‌ها و منابع مالی",desc:"برآورد، تخصیص، هزینه واقعی و اسناد مالی",fields:[
+["costStatus","وضعیت نیاز مالی","select",0,"بدون هزینه مستقیم؛ نیازمند برآورد؛ در انتظار تأمین اعتبار؛ اعتبار تخصیص‌یافته؛ دارای هزینه قطعی"],["costCurrency","واحد پول","select",0,"تومان؛ ریال"],
+["estimatedCost","هزینه برآوردی","number",0,""],["approvedBudget","اعتبار مصوب / تخصیص‌یافته","number",0,""],["actualCost","هزینه واقعی","number",0,""],["costCenter","مرکز هزینه / ردیف اعتبار","text",0,""],
+["costBreakdown","ریز هزینه‌ها (عنوان | مبلغ | توضیح)","textarea",0,""],["financialNotes","توضیحات مالی و تعهدات","textarea",0,""]
+]},
+{key:"people",title:"۶. نفرات، نقش‌ها و مسئولیت‌ها",desc:"تیم مأموریت و تقسیم مسئولیت",fields:[
+["teamLead","مسئول / مدیر مأموریت","text",0,""],["supervisor","ناظر و مقام پاسخ‌خواه","text",0,""],["teamMembers","اعضای تیم (کد پرسنلی | نقش | مسئولیت)","textarea",0,""],["externalParticipants","همکاران یا عوامل بیرونی","textarea",0,""],["responsibilityMatrix","تقسیم مسئولیت و تحویل‌دادنی هر نفر","textarea",0,""]
+]},
+{key:"outputs",title:"۷. نتایج، محصولات و تحویل‌دادنی‌ها",desc:"خروجی‌های مورد انتظار و نتیجه واقعی",fields:[
+["deliverableType","نوع محصول اصلی","select",0,"گزارش مکتوب؛ خدمت انجام‌شده؛ تعمیر / تجهیز آماده بهره‌برداری؛ سامانه یا قابلیت نرم‌افزاری؛ طرح و پیشنهاد؛ داده و مستندات؛ عملیات میدانی تکمیل‌شده؛ سایر"],
+["deliveryDate","تاریخ تحویل نتیجه","date",0,""],["expectedDeliverables","فهرست خروجی‌های مورد انتظار","textarea",0,""],["actualResults","نتایج و محصولات واقعی","textarea",0,""],["handoverTo","تحویل به / دریافت‌کننده نتیجه","text",0,""],["handoverNotes","صورت تحویل، نواقص باقی‌مانده و ملاحظات","textarea",0,""]
+]},
+{key:"evaluation",title:"۸. سنجش، ارزیابی و پیشرفت",desc:"درصد پیشرفت، کیفیت و تحقق هدف",fields:[
+["progress","درصد پیشرفت واقعی","number",0,"۰ تا ۱۰۰"],["executionStatus","وضعیت اجرا","select",0,"پیش‌نویس؛ ثبت‌شده؛ ارجاع‌شده؛ در حال اجرا؛ متوقف / دارای مانع؛ در انتظار بررسی نتیجه؛ نیازمند اصلاح؛ تکمیل‌شده؛ مختومه؛ لغوشده"],
+["qualityScore","امتیاز کیفیت (از ۱۰۰)","number",0,"۰ تا ۱۰۰"],["goalAchievement","میزان تحقق هدف (درصد)","number",0,"۰ تا ۱۰۰"],["scheduleStatus","وضعیت زمان‌بندی","select",0,"مطابق برنامه؛ جلوتر از برنامه؛ دارای تأخیر؛ متوقف به علت مانع؛ تمدید مهلت"],
+["riskLevel","سطح ریسک / مانع","select",0,"بدون مانع؛ کم؛ متوسط؛ زیاد؛ بحرانی"],["progressDescription","گزارش آخرین پیشرفت و اقدامات انجام‌شده","textarea",0,""],["obstacles","موانع، وابستگی‌ها و تصمیم موردنیاز","textarea",0,""],["evaluationNotes","نظر ارزیاب و جمع‌بندی نهایی","textarea",0,""]
+]},
+{key:"documents",title:"۹. پیوست‌ها، مستندات و کاربرگ جلسات",desc:"اسناد، فایل‌ها و مصوبات مرتبط",fields:[
+["missionFiles","انتخاب پیوست‌ها","file",0,"امکان انتخاب چند فایل"],["documentRegister","فهرست اسناد و ارجاعات (نوع سند | شماره | تاریخ | توضیح)","textarea",0,""],["meetingMinutes","کاربرگ جلسات و صورتجلسات","textarea",0,""],["meetingActions","اقدامات حاصل از جلسات و پیگیری مصوبات","textarea",0,""]
+]},
+{key:"approvals",title:"۱۰. پاراف‌ها، دستور مقام‌ها و تقویم",desc:"گردش اداری، تأییدها و رویداد زمان‌دار",fields:[
+["headOfDepartmentOrder","دستور / پاراف رئیس اداره","textarea",0,""],["headOfDepartmentBy","نام یا کد رئیس اداره","text",0,""],["headOfDepartmentAt","تاریخ دستور رئیس اداره","datetime",0,""],
+["deputyOrder","دستور / پاراف معاون","textarea",0,""],["deputyBy","نام یا کد معاون","text",0,""],["deputyAt","تاریخ دستور معاون","datetime",0,""],
+["calendarEnabled","ثبت در تقویم مرکزی","radio",0,"بله؛ خیر"],["calendarTitle","عنوان رویداد تقویم","text",0,""],["calendarStart","شروع بازه رویداد","date",0,""],["calendarEnd","پایان بازه رویداد","date",0,""],["calendarReminder","یادآوری","select",0,"بدون یادآوری؛ یک روز قبل؛ سه روز قبل؛ یک هفته قبل"],["calendarDescription","توضیحات رویداد تقویم","textarea",0,""],
+["workflowHistory","تاریخچه گردش و ارجاع","system",0,"خودکار از رویدادهای ثبت‌شده پرونده"]
+]},
+{key:"department",title:"۱۱. فیلدهای اختصاصی اداره‌ها",desc:"این فیلدها با انتخاب اداره مجری در فرم اصلی ظاهر می‌شوند.",fields:[
+["D1.personnelNeed","اداره ۱ · تعداد نیروی موردنیاز","number",0,"واحد: نفر"],["D1.administrativeProcess","اداره ۱ · فرایند اداری مرتبط","select",0,"استخدام و احکام؛ حضور و غیاب؛ آموزش؛ رفاه و پشتیبانی؛ امور دبیرخانه؛ سایر"],["D1.serviceArea","اداره ۱ · حوزه پشتیبانی","text",0,""],
+["D2.researchField","اداره ۲ · حوزه پژوهش","select",0,"مطالعات شهری؛ ارزیابی عملکرد؛ تحلیل داده؛ توسعه روش‌ها؛ امکان‌سنجی؛ سایر"],["D2.researchMethod","اداره ۲ · روش مطالعه","text",0,""],["D2.researchOutput","اداره ۲ · خروجی علمی مورد انتظار","textarea",0,""],
+["D3.operationZone","اداره ۳ · منطقه / محدوده عملیاتی","text",0,""],["D3.shiftPlan","اداره ۳ · شیفت یا بازه عملیات","text",0,""],["D3.fieldTeamCount","اداره ۳ · تعداد نیروی میدانی","number",0,"واحد: نفر"],["D3.equipmentNeeded","اداره ۳ · تجهیزات و اقلام موردنیاز","textarea",0,""],
+["D4.facilityType","اداره ۴ · نوع تأسیسات / تجهیز","text",0,""],["D4.assetCode","اداره ۴ · کد اموال یا تجهیز","text",0,""],["D4.maintenanceType","اداره ۴ · نوع عملیات فنی","select",0,"بازدید دوره‌ای؛ نگهداری پیشگیرانه؛ تعمیر اضطراری؛ تعمیر اساسی؛ نصب و راه‌اندازی؛ بهسازی"],["D4.technicalRisk","اداره ۴ · وضعیت ایمنی و ریسک فنی","select",0,"عادی؛ نیازمند مراقبت؛ خطرناک؛ خارج از سرویس"],
+["D6.systemName","اداره ۶ · سامانه / زیرساخت مرتبط","text",0,""],["D6.serviceImpact","اداره ۶ · سطح اثر بر خدمت","select",0,"بدون اختلال؛ محدود؛ متوسط؛ گسترده؛ توقف خدمت"],["D6.technicalEnvironment","اداره ۶ · محیط فنی / بستر اجرا","text",0,""],["D6.securityReview","اداره ۶ · نیازمند بررسی امنیتی","select",0,"خیر؛ بله"],
+["D7.wasteStream","اداره ۷ · نوع پسماند / جریان کاری","select",0,"عادی؛ خشک؛ تر؛ قابل بازیافت؛ عمرانی؛ ویژه؛ سایر"],["D7.operationRoute","اداره ۷ · مسیر / محدوده جمع‌آوری","text",0,""],["D7.fleetCount","اداره ۷ · تعداد خودرو یا ماشین‌آلات","number",0,"واحد: دستگاه"],["D7.estimatedVolume","اداره ۷ · حجم برآوردی عملیات","text",0,""],
+["D8.inspectionSubject","اداره ۸ · موضوع بازرسی","text",0,""],["D8.inspectionScope","اداره ۸ · دامنه و محل بررسی","textarea",0,""],["D8.inspectionMethod","اداره ۸ · روش بررسی","select",0,"بازدید میدانی؛ بررسی اسناد؛ مصاحبه؛ تحلیل داده؛ ترکیبی"],["D8.evidenceType","اداره ۸ · نوع مستندات مورد انتظار","textarea",0,""],
+["HQ.coordinationUnits","ستاد معاونت · واحدهای مشارکت‌کننده","textarea",0,""],["HQ.executiveSponsor","ستاد معاونت · حامی / مقام راهبر","text",0,""],["HQ.decisionNeeded","ستاد معاونت · تصمیم موردنیاز ریاست","textarea",0,""]
+]},
+{key:"tracking",title:"۱۲. چرخه‌های مستقل پیگیری مأموریت",desc:"سه مسیر پیگیری مستقل که هرکدام وضعیت، مسئول، مهلت و اقدامات جداگانه دارند.",fields:[
+["management.owner","چرخه مدیریتی معاون · مسئول پیگیری","text",0,""],["management.status","چرخه مدیریتی معاون · وضعیت","select",0,"شروع نشده؛ در حال انجام؛ در انتظار پاسخ / تصمیم؛ متوقف / دارای مانع؛ تکمیل شده؛ لغو شده"],["management.progress","چرخه مدیریتی معاون · درصد تکمیل","number",0,"۰ تا ۱۰۰"],["management.dueDate","چرخه مدیریتی معاون · مهلت چرخه","date",0,""],["management.actions","چرخه مدیریتی معاون · فهرست اقدامات","repeater",0,"عنوان اقدام؛ مسئول؛ مهلت؛ وضعیت؛ شرح / نتیجه"],
+["office.owner","چرخه دفتر معاون · مسئول دفتر / پیگیری","text",0,""],["office.status","چرخه دفتر معاون · وضعیت","select",0,"شروع نشده؛ در حال انجام؛ در انتظار پاسخ / تصمیم؛ متوقف / دارای مانع؛ تکمیل شده؛ لغو شده"],["office.progress","چرخه دفتر معاون · درصد تکمیل","number",0,"۰ تا ۱۰۰"],["office.dueDate","چرخه دفتر معاون · مهلت چرخه","date",0,""],["office.actions","چرخه دفتر معاون · فهرست اقدامات","repeater",0,"عنوان اقدام؛ مسئول؛ مهلت؛ وضعیت؛ شرح / نتیجه"],
+["department.owner","چرخه اجرایی اداره · مسئول اداره","text",0,""],["department.status","چرخه اجرایی اداره · وضعیت","select",0,"شروع نشده؛ در حال انجام؛ در انتظار پاسخ / تصمیم؛ متوقف / دارای مانع؛ تکمیل شده؛ لغو شده"],["department.progress","چرخه اجرایی اداره · درصد تکمیل","number",0,"۰ تا ۱۰۰"],["department.dueDate","چرخه اجرایی اداره · مهلت چرخه","date",0,""],["department.actions","چرخه اجرایی اداره · فهرست اقدامات","repeater",0,"عنوان اقدام؛ مسئول؛ مهلت؛ وضعیت؛ شرح / نتیجه"]
+]}
+];
+const typeLabels={text:"متن کوتاه",textarea:"متن چندخطی",number:"عدد",date:"تاریخ",datetime:"تاریخ و ساعت",select:"فهرست انتخابی",radio:"گزینه بله/خیر یا تک‌انتخابی",repeater:"فهرست چندردیفی",file:"فایل پیوست",system:"سیستمی / خودکار"};
+const host=document.getElementById("sections");
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function makeRow(f,idx){
+ const [id,label,type,required,options]=f;
+ return '<tr data-id="'+esc(id)+'"><td><div class="field-id">'+esc(id)+'</div><span class="badge">'+(idx+1)+'</span></td><td><input class="field-label" data-k="label" value="'+esc(label)+'"></td><td><select data-k="type">'+Object.entries(typeLabels).map(([v,l])=>'<option value="'+v+'" '+(v===type?'selected':'')+'>'+l+'</option>').join("")+'</select></td><td style="text-align:center"><input class="required" type="checkbox" data-k="required" '+(required?'checked':'')+'></td><td><textarea class="options" data-k="options" placeholder="گزینه‌ها؛ هر گزینه با ؛ جدا شود">'+esc(options)+'</textarea></td><td><textarea class="change" data-k="change" placeholder="مثلاً عنوان دقیق‌تر شود، حذف شود، با فیلد دیگر ادغام شود..."></textarea></td></tr>';
+}
+function render(){
+ host.innerHTML=groups.map(g=>'<section class="review-section" data-group="'+g.key+'"><div class="section-head"><div><h2>'+g.title+'</h2><p>'+g.desc+'</p></div><button type="button" data-add="'+g.key+'">＋ افزودن ردیف جدید</button></div><div class="table-wrap"><table><thead><tr><th>شناسه / ردیف</th><th>عنوان فعلی / عنوان پیشنهادی</th><th>نوع فیلد</th><th>اجباری</th><th>گزینه‌ها / توضیح نوع</th><th>اصلاح موردنظر شما</th></tr></thead><tbody>'+g.fields.map(makeRow).join("")+'</tbody></table></div></section>').join("");
+ document.querySelectorAll("[data-add]").forEach(b=>b.addEventListener("click",()=>addRow(b.dataset.add)));
+ document.querySelectorAll("#sections input,#sections textarea,#sections select,#globalNotes").forEach(el=>el.addEventListener("input",saveLocal));
+ updateCounts();
+}
+function addRow(key){
+ const g=groups.find(x=>x.key===key),tbody=document.querySelector('[data-group="'+key+'"] tbody'),tr=document.createElement("tr");tr.className="new-row";tr.dataset.id="NEW-"+key+"-"+(tbody.children.length+1);
+ tr.innerHTML='<td><div class="field-id">'+tr.dataset.id+'</div><span class="badge">جدید</span></td><td><input class="field-label" data-k="label" placeholder="عنوان فیلد جدید"></td><td><select data-k="type">'+Object.entries(typeLabels).map(([v,l])=>'<option value="'+v+'">'+l+'</option>').join("")+'</select></td><td style="text-align:center"><input class="required" type="checkbox" data-k="required"></td><td><textarea class="options" data-k="options" placeholder="گزینه‌ها یا واحد اندازه‌گیری"></textarea></td><td><textarea class="change" data-k="change" placeholder="هدف و منطق افزودن این فیلد"></textarea></td>';
+ tbody.append(tr);tr.querySelectorAll("input,textarea,select").forEach(el=>el.addEventListener("input",saveLocal));saveLocal();tr.scrollIntoView({behavior:"smooth",block:"center"});
+}
+function collect(){
+ return {format:"H7-MISSION-FORM-REVIEW",version:1,createdAt:new Date().toISOString(),scope:"deputy-07 mission creation form",globalNotes:document.getElementById("globalNotes").value,sections:[...document.querySelectorAll(".review-section")].map(sec=>({key:sec.dataset.group,title:sec.querySelector("h2").textContent,items:[...sec.querySelectorAll("tbody tr")].map(tr=>({id:tr.dataset.id,label:tr.querySelector('[data-k="label"]')?.value||"",type:tr.querySelector('[data-k="type"]')?.value||"",required:!!tr.querySelector('[data-k="required"]')?.checked,options:tr.querySelector('[data-k="options"]')?.value||"",change:tr.querySelector('[data-k="change"]')?.value||""}))}))};
+}
+function saveLocal(){try{localStorage.setItem("h7-mission-form-review-v1",JSON.stringify(collect()));}catch(e){}updateCounts();}
+function updateCounts(){const data=collect(),items=data.sections.flatMap(x=>x.items);document.getElementById("fieldCount").textContent=items.length.toLocaleString("fa-IR")+" ردیف قابل بررسی";const n=items.filter(x=>x.change.trim()||x.id.startsWith("NEW-")&&x.label.trim()).length+(data.globalNotes.trim()?1:0);document.getElementById("changeCount").textContent=n.toLocaleString("fa-IR")+" پیشنهاد تغییر";}
+function download(){const blob=new Blob([JSON.stringify(collect(),null,2)],{type:"application/json;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="mission-form-review-deputy-07.json";a.click();URL.revokeObjectURL(url);}
+function load(data){if(data?.format!=="H7-MISSION-FORM-REVIEW"||!Array.isArray(data.sections))throw new Error("ساختار فایل بازبینی معتبر نیست.");data.sections.forEach(s=>{const sec=document.querySelector('[data-group="'+s.key+'"]');if(!sec)return;s.items?.forEach(item=>{let tr=[...sec.querySelectorAll("tbody tr")].find(x=>x.dataset.id===item.id);if(!tr&&String(item.id).startsWith("NEW-")){const btn=sec.querySelector("[data-add]");addRow(s.key);tr=sec.querySelector("tbody tr:last-child");tr.dataset.id=item.id;tr.querySelector(".field-id").textContent=item.id;}if(!tr)return;for(const k of ["label","type","options","change"]){const el=tr.querySelector('[data-k="'+k+'"]');if(el)el.value=item[k]??"";}const req=tr.querySelector('[data-k="required"]');if(req)req.checked=!!item.required;});});document.getElementById("globalNotes").value=data.globalNotes||"";saveLocal();}
+function clearAll(){if(!confirm("همه پیشنهادهای واردشده در این کاربرگ پاک شود؟"))return;document.querySelectorAll('#sections [data-k="change"],#sections .new-row').forEach(el=>{if(el.matches("tr"))el.remove();else el.value="";});document.querySelectorAll('#sections [data-k="label"]').forEach(el=>{if(el.closest("tr")?.classList.contains("new-row"))el.value="";});document.getElementById("globalNotes").value="";saveLocal();}
+render();
+try{const saved=localStorage.getItem("h7-mission-form-review-v1");if(saved)load(JSON.parse(saved));}catch(e){}
+document.getElementById("exportReview").onclick=download;document.getElementById("exportReviewBottom").onclick=download;
+document.getElementById("importReview").onclick=()=>document.getElementById("importFile").click();
+document.getElementById("importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{load(JSON.parse(await f.text()));alert("فایل بازبینی بارگذاری شد.");}catch(err){alert("خطا در خواندن فایل: "+err.message);}e.target.value="";};
+document.getElementById("printReview").onclick=()=>print();document.getElementById("printBottom").onclick=()=>print();document.getElementById("clearReview").onclick=clearAll;
+</script>
+<script>if("serviceWorker" in navigator)navigator.serviceWorker.register("../sw.js").catch(()=>{});</script>
+</body></html>
