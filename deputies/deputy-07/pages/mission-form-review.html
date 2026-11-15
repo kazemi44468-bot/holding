@@ -165,7 +165,6 @@ function render(){
 function addRow(key){
  const g=groups.find(x=>x.key===key),tbody=document.querySelector('[data-group="'+key+'"] tbody'),tr=document.createElement("tr");tr.className="new-row";tr.dataset.id="NEW-"+key+"-"+(tbody.children.length+1);
  tr.innerHTML='<td><div class="field-id">'+tr.dataset.id+'</div><span class="badge">جدید</span></td><td><input class="field-label" data-k="label" placeholder="عنوان فیلد جدید"></td><td><select data-k="type">'+Object.entries(typeLabels).map(([v,l])=>'<option value="'+v+'">'+l+'</option>').join("")+'</select></td><td style="text-align:center"><input class="required" type="checkbox" data-k="required"></td><td><textarea class="options" data-k="options" placeholder="گزینه‌ها یا واحد اندازه‌گیری"></textarea></td><td><textarea class="change" data-k="change" placeholder="هدف و منطق افزودن این فیلد"></textarea></td>';
- tr.lastElementChild?.remove();
  tr.insertAdjacentHTML("beforeend",'<td><div class="row-tools"><button type="button" data-row-up>↑</button><button type="button" data-row-down>↓</button><button type="button" class="remove" data-row-remove>حذف</button></div></td>');
  tbody.append(tr);
  tr.querySelectorAll("input,textarea,select").forEach(el=>el.addEventListener("input",saveLocal));
