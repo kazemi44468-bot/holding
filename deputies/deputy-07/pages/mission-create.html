@@ -176,15 +176,16 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 </div>
 <nav class="mission-tabs" id="missionTabs" aria-label="بخش‌های فرم مأموریت">
 <button class="mission-tab" data-tab="general" aria-selected="true"><span class="step-count">۱</span>اطلاعات عمومی</button>
-<button class="mission-tab" data-tab="routing" aria-selected="false"><span class="step-count">۲</span>دسته‌بندی و ارجاع</button>
-<button class="mission-tab" data-tab="schedule" aria-selected="false"><span class="step-count">۳</span>مدیریت زمان</button>
-<button class="mission-tab" data-tab="history" aria-selected="false"><span class="step-count">۴</span>سوابق قبلی</button>
-<button class="mission-tab" data-tab="costs" aria-selected="false"><span class="step-count">۵</span>هزینه‌ها</button>
-<button class="mission-tab" data-tab="people" aria-selected="false"><span class="step-count">۶</span>نفرات و مسئولیت</button>
-<button class="mission-tab" data-tab="outputs" aria-selected="false"><span class="step-count">۷</span>نتایج و محصولات</button>
-<button class="mission-tab" data-tab="evaluation" aria-selected="false"><span class="step-count">۸</span>سنجش و ارزیابی</button>
-<button class="mission-tab" data-tab="documents" aria-selected="false"><span class="step-count">۹</span>پیوست و جلسات</button>
-<button class="mission-tab" data-tab="approvals" aria-selected="false"><span class="step-count">۱۰</span>پاراف، تقویم و گردش</button>
+<button class="mission-tab" data-tab="origin" aria-selected="false"><span class="step-count">۲</span>مبدأ درخواست</button>
+<button class="mission-tab" data-tab="deputy" aria-selected="false"><span class="step-count">۳</span>دستور معاونت</button>
+<button class="mission-tab" data-tab="routing" aria-selected="false"><span class="step-count">۴</span>دسته‌بندی و ارجاع</button>
+<button class="mission-tab" data-tab="action" aria-selected="false"><span class="step-count">۵</span>گزارش اقدام اداره</button>
+<button class="mission-tab" data-tab="response" aria-selected="false"><span class="step-count">۶</span>پاسخ‌گویی و ابلاغ</button>
+<button class="mission-tab" data-tab="evaluation" aria-selected="false"><span class="step-count">۷</span>چک‌لیست ارزیابی</button>
+<button class="mission-tab" data-tab="knowledge" aria-selected="false"><span class="step-count">۸</span>دانش و تجربه‌نگاری</button>
+<button class="mission-tab" data-tab="costs" aria-selected="false"><span class="step-count">۹</span>هزینه‌ها و منابع</button>
+<button class="mission-tab" data-tab="rewards" aria-selected="false"><span class="step-count">۱۰</span>تشویقات و تنبیهات</button>
+<button class="mission-tab" data-tab="paraphs" aria-selected="false"><span class="step-count">۱۱</span>پاراف‌ها و نظرات مدیریتی</button>
 </nav>
 <form id="missionForm" novalidate>
 <div id="fieldEditor" class="field-editor" hidden>
@@ -192,7 +193,17 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
  <div class="field-editor-grid">
   <label>عنوان فیلد<input id="fieldEditorLabel" maxlength="100"></label>
   <label>تب مقصد / دسته‌بندی<select id="fieldEditorDestination">
-   <option value="general">اطلاعات عمومی</option><option value="routing">دسته‌بندی و ارجاع</option><option value="schedule">زمان‌بندی و اجرا</option><option value="history">سوابق و گردش کار</option><option value="costs">هزینه‌ها و منابع</option><option value="people">نیروی انسانی</option><option value="outputs">خروجی‌ها و نتایج</option><option value="evaluation">ارزیابی و کیفیت</option><option value="documents">پیوست و جلسات</option><option value="approvals">پاراف و گردش</option>
+   <option value="general">اطلاعات عمومی</option>
+   <option value="origin">مبدأ درخواست</option>
+   <option value="deputy">دستور معاونت</option>
+   <option value="routing">دسته‌بندی و ارجاع</option>
+   <option value="action">گزارش اقدام اداره</option>
+   <option value="response">پاسخ‌گویی و ابلاغ</option>
+   <option value="evaluation">چک‌لیست ارزیابی</option>
+   <option value="knowledge">دانش و تجربه‌نگاری</option>
+   <option value="costs">هزینه‌ها و منابع</option>
+   <option value="rewards">تشویقات و تنبیهات</option>
+   <option value="paraphs">پاراف‌ها و نظرات مدیریتی</option>
   </select></label>
   <label>جایگاه در تب<input id="fieldEditorOrder" type="number" min="1" step="1" value="1"></label>
   <label>نوع فیلد<select id="fieldEditorType"><option value="text">متن کوتاه</option><option value="textarea">متن چندخطی</option><option value="number">عدد</option><option value="date">تاریخ</option><option value="select">فهرست انتخابی (تک‌گزینه‌ای)</option><option value="checkbox">چک‌باکس بله / خیر</option><option value="yesno">انتخاب بله / خیر</option><option value="checklist">چک‌لیست چندگزینه‌ای</option><option value="datetime-local">تاریخ و ساعت</option></select></label>
@@ -216,7 +227,7 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
  <div id="fieldEditorStatus" class="mission-status"></div>
 </div>
 <section class="mission-card mission-section active" data-section="general">
-<div class="section-head"><div><h2>۱. اطلاعات عمومی و منشأ درخواست</h2><p>مشخصات مکاتبه و موضوع مأموریت</p></div></div>
+<div class="section-head"><div><h2>۱. اطلاعات عمومی</h2><p>مشخصات پایه و هدف مأموریت</p></div></div>
 <div class="form-grid">
 <div class="field"><label for="communicationType">نوع اعلام / مکاتبه <span class="req">*</span></label><select id="communicationType" required><option value="">انتخاب کنید</option><option>نامه رسمی</option><option>درخواست شفاهی</option><option>مکاتبه داخلی</option><option>صورتجلسه</option><option>دستور مقام مافوق</option><option>گزارش یا اعلام نیاز</option></select></div>
 <div class="field"><label for="requestNumber">شماره درخواست / نامه</label><input id="requestNumber" placeholder="شماره نامه یا شناسه درخواست"></div>
@@ -229,8 +240,8 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 <div class="field"><label for="confidentiality">سطح دسترسی</label><select id="confidentiality"><option>عادی</option><option>داخلی</option><option>محرمانه</option><option>محدود به مدیران</option></select></div>
 </div>
 </section>
-<section class="mission-card mission-section" data-section="routing">
-<div class="section-head"><div><h2>۲. دسته‌بندی، درخواست‌کننده و ارجاع</h2><p>تعیین مبدأ، مجری و زنجیره مسئولیت مأموریت</p></div></div>
+<section class="mission-card mission-section" data-section="origin">
+<div class="section-head"><div><h2>۲. مبدأ درخواست</h2><p>مرجع درخواست‌کننده، مکاتبه و زمان وصول</p></div></div>
 <div class="form-grid">
 <div class="field"><label for="requesterType">نوع درخواست‌کننده</label><select id="requesterType"><option>ریاست معاونت</option><option>معاونت</option><option>مرکز</option><option>اداره</option><option>مدیریت</option><option>واحد یا شخص</option><option>سازمان بیرونی</option></select></div>
 <div class="field"><label for="requesterName">نام معاونت / مرکز / اداره / مدیریت</label><input id="requesterName" placeholder="نام مرجع درخواست‌کننده"></div>
@@ -246,8 +257,8 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 </div>
 <div class="custom-fields" id="departmentFields"><h3>اطلاعات اختصاصی اداره انتخاب‌شده</h3><p class="hint">با انتخاب اداره، فرم تخصصی همان اداره در این قسمت نمایش داده می‌شود.</p></div>
 </section>
-<section class="mission-card mission-section" data-section="schedule">
-<div class="section-head"><div><h2>۳. مدیریت زمان و نقاط کنترل</h2><p>ثبت تاریخ‌های کلیدی و بازه اجرای مأموریت</p></div></div>
+<section class="mission-card mission-section" data-section="deputy">
+<div class="section-head"><div><h2>۳. دستور معاونت</h2><p>بررسی، تصمیم، دستور و مهلت موردنظر معاون</p></div></div>
 <div class="form-grid">
 <div class="field"><label for="receivedAt">تاریخ و زمان وصول درخواست</label><input id="receivedAt" type="datetime-local"></div>
 <div class="field"><label for="deliveredToDeputyAt">تحویل به معاونت</label><input id="deliveredToDeputyAt" type="datetime-local"></div>
@@ -262,8 +273,8 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 <div class="field full"><label>نقاط عطف و موعدهای میانی</label><div id="milestoneRows" class="milestone-rows"></div><div class="mission-actions"><div class="right"><button type="button" id="addMilestone" class="quiet">＋ افزودن نقطه عطف</button><button type="button" id="calculateMilestoneProgress" class="quiet">محاسبه پیشرفت از نقاط عطف</button></div></div><small>برای هر نقطه عطف، موعد، مسئول، وزن و درصد پیشرفت را ثبت کنید. نقاط عطف بخشی از برنامه اجرایی مأموریت هستند.</small></div>
 </div>
 </section>
-<section class="mission-card mission-section" data-section="history">
-<div class="section-head"><div><h2>۴. سابقه مأموریت مشابه</h2><p>اتصال مأموریت جدید به سوابق قبلی برای جلوگیری از دوباره‌کاری</p></div></div>
+<section class="mission-card mission-section" data-section="routing">
+<div class="section-head"><div><h2>۴. دسته‌بندی و ارجاع</h2><p>تعیین اداره مسئول، همکاران، مسئول مستقیم و زمان وصول ارجاع</p></div></div>
 <div class="field"><label>آیا سابقه انجام مأموریت مشابه وجود دارد؟</label><div class="choice-row"><label><input type="radio" name="hasPrevious" value="no" checked> خیر</label><label><input type="radio" name="hasPrevious" value="yes"> بله</label></div></div>
 <div id="previousFields" class="form-grid hidden">
 <div class="field"><label for="previousMissionCode">کد مأموریت قبلی</label><input id="previousMissionCode" placeholder="کد پرونده قبلی"></div>
@@ -272,21 +283,8 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 <div class="field full"><label for="previousNotes">توضیحات و نتایج قابل استفاده</label><textarea id="previousNotes"></textarea></div>
 </div>
 </section>
-<section class="mission-card mission-section" data-section="costs">
-<div class="section-head"><div><h2>۵. هزینه‌ها و منابع مالی</h2><p>برآورد، تخصیص، هزینه واقعی و اسناد مالی</p></div></div>
-<div class="form-grid">
-<div class="field"><label for="costStatus">وضعیت نیاز مالی</label><select id="costStatus"><option>بدون هزینه مستقیم</option><option>نیازمند برآورد</option><option>در انتظار تأمین اعتبار</option><option>اعتبار تخصیص‌یافته</option><option>دارای هزینه قطعی</option></select></div>
-<div class="field"><label for="costCurrency">واحد پول</label><select id="costCurrency"><option>تومان</option><option>ریال</option></select></div>
-<div class="field"><label for="estimatedCost">هزینه برآوردی</label><input id="estimatedCost" type="number" min="0"></div>
-<div class="field"><label for="approvedBudget">اعتبار مصوب / تخصیص‌یافته</label><input id="approvedBudget" type="number" min="0"></div>
-<div class="field"><label for="actualCost">هزینه واقعی</label><input id="actualCost" type="number" min="0"></div>
-<div class="field"><label for="costCenter">مرکز هزینه / ردیف اعتبار</label><input id="costCenter"></div>
-<div class="field full"><label for="costBreakdown">ریز هزینه‌ها (هر سطر: عنوان | مبلغ | توضیح)</label><textarea id="costBreakdown" placeholder="خرید قطعه | ۰ | شرح هزینه"></textarea></div>
-<div class="field full"><label for="financialNotes">توضیحات مالی و تعهدات</label><textarea id="financialNotes"></textarea></div>
-</div>
-</section>
-<section class="mission-card mission-section" data-section="people">
-<div class="section-head"><div><h2>۶. نفرات، نقش‌ها و مسئولیت‌ها</h2><p>ثبت تیم مأموریت، مسئولیت و سهم مشارکت</p></div></div>
+<section class="mission-card mission-section" data-section="action">
+<div class="section-head"><div><h2>۵. گزارش اقدام اداره</h2><p>ثبت شروع، اقدامات، پیشرفت، موانع و پایان عملیات</p></div></div>
 <div class="form-grid">
 <div class="field"><label for="teamLead">مسئول / مدیر مأموریت</label><input id="teamLead" placeholder="کد پرسنلی یا نام"></div>
 <div class="field"><label for="supervisor">ناظر و مقام پاسخ‌خواه</label><input id="supervisor"></div>
@@ -295,8 +293,8 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 <div class="field full"><label for="responsibilityMatrix">تقسیم مسئولیت و تحویل‌دادنی هر نفر</label><textarea id="responsibilityMatrix" placeholder="نام/کد | مسئولیت | موعد | معیار تحویل"></textarea></div>
 </div>
 </section>
-<section class="mission-card mission-section" data-section="outputs">
-<div class="section-head"><div><h2>۷. نتایج، محصولات و تحویل‌دادنی‌ها</h2><p>آنچه باید در پایان مأموریت تحویل و مستند شود</p></div></div>
+<section class="mission-card mission-section" data-section="response">
+<div class="section-head"><div><h2>۶. پاسخ‌گویی و ابلاغ</h2><p>تهیه پاسخ، تأیید، ارسال و اطلاع‌رسانی به مرجع درخواست‌کننده</p></div></div>
 <div class="form-grid">
 <div class="field"><label for="deliverableType">نوع محصول اصلی</label><select id="deliverableType"><option>گزارش مکتوب</option><option>خدمت انجام‌شده</option><option>تعمیر / تجهیز آماده بهره‌برداری</option><option>سامانه یا قابلیت نرم‌افزاری</option><option>طرح و پیشنهاد</option><option>داده و مستندات</option><option>عملیات میدانی تکمیل‌شده</option><option>سایر</option></select></div>
 <div class="field"><label for="deliveryDate">تاریخ تحویل نتیجه</label><input id="deliveryDate" type="date"></div>
@@ -307,7 +305,7 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 </div>
 </section>
 <section class="mission-card mission-section" data-section="evaluation">
-<div class="section-head"><div><h2>۸. سنجش، ارزیابی و پیشرفت</h2><p>درصد پیشرفت، کیفیت خروجی و میزان تحقق هدف</p></div></div>
+<div class="section-head"><div><h2>۷. چک‌لیست ارزیابی</h2><p>سنجش کیفیت، تحقق هدف و رعایت زمان‌بندی</p></div></div>
 <div class="form-grid">
 <div class="field"><label for="progress">درصد پیشرفت واقعی</label><input id="progress" type="number" min="0" max="100" value="0"></div>
 <div class="field"><label for="executionStatus">وضعیت اجرا</label><select id="executionStatus"><option value="draft">پیش‌نویس</option><option value="registered">ثبت‌شده</option><option value="referred">ارجاع‌شده</option><option value="in-progress">در حال اجرا</option><option value="blocked">متوقف / دارای مانع</option><option value="review">در انتظار بررسی نتیجه</option><option value="completed">تکمیل‌شده</option><option value="closed">مختومه</option><option value="cancelled">لغوشده</option></select></div>
@@ -322,8 +320,8 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 <div class="mission-actions"><div class="right"><button type="button" id="addProgress" class="quiet">ثبت گزارش پیشرفت در تاریخچه</button></div></div>
 <div id="progressHistory" class="repeat-note">گزارش‌های پیشرفت پس از ذخیره مأموریت در تاریخچه ثبت می‌شوند.</div>
 </section>
-<section class="mission-card mission-section" data-section="documents">
-<div class="section-head"><div><h2>۹. پیوست‌ها، مستندات و کاربرگ جلسات</h2><p>نگهداری مستندات مأموریت در مخزن محلی مشترک</p></div></div>
+<section class="mission-card mission-section" data-section="knowledge">
+<div class="section-head"><div><h2>۸. دانش و تجربه‌نگاری</h2><p>ثبت درس‌آموخته‌ها، تجربه‌ها و دانش قابل استفاده مجدد</p></div></div>
 <div class="form-grid">
 <div class="field full"><label for="missionFiles">انتخاب پیوست‌ها</label><input id="missionFiles" type="file" multiple><small>پیوست‌ها پس از ذخیره پرونده در مخزن امن معاونت ۷ نگهداری می‌شوند.</small></div><div class="field full"><label>پیوست‌های ثبت‌شده در این پرونده</label><div id="missionAttachmentList" class="repeat-note">پس از بارگذاری پرونده، پیوست‌های قبلی نمایش داده می‌شوند.</div></div>
 <div class="field full"><label for="documentRegister">فهرست اسناد و ارجاعات (هر سطر: نوع سند | شماره | تاریخ | توضیح)</label><textarea id="documentRegister"></textarea></div>
@@ -331,8 +329,25 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 <div class="field full"><label for="meetingActions">اقدامات حاصل از جلسات و پیگیری مصوبات</label><textarea id="meetingActions"></textarea></div>
 </div>
 </section>
-<section class="mission-card mission-section" data-section="approvals">
-<div class="section-head"><div><h2>۱۰. پاراف‌ها، دستور مقام‌ها و تقویم</h2><p>ثبت گردش اداری، تأییدها و رویداد زمان‌دار مأموریت</p></div></div>
+<section class="mission-card mission-section" data-section="costs">
+<div class="section-head"><div><h2>۹. هزینه‌ها و منابع</h2><p>برآورد، اعتبار، هزینه قطعی و مستندات مالی</p></div></div>
+<div class="form-grid">
+<div class="field"><label for="costStatus">وضعیت نیاز مالی</label><select id="costStatus"><option>بدون هزینه مستقیم</option><option>نیازمند برآورد</option><option>در انتظار تأمین اعتبار</option><option>اعتبار تخصیص‌یافته</option><option>دارای هزینه قطعی</option></select></div>
+<div class="field"><label for="costCurrency">واحد پول</label><select id="costCurrency"><option>تومان</option><option>ریال</option></select></div>
+<div class="field"><label for="estimatedCost">هزینه برآوردی</label><input id="estimatedCost" type="number" min="0"></div>
+<div class="field"><label for="approvedBudget">اعتبار مصوب / تخصیص‌یافته</label><input id="approvedBudget" type="number" min="0"></div>
+<div class="field"><label for="actualCost">هزینه واقعی</label><input id="actualCost" type="number" min="0"></div>
+<div class="field"><label for="costCenter">مرکز هزینه / ردیف اعتبار</label><input id="costCenter"></div>
+<div class="field full"><label for="costBreakdown">ریز هزینه‌ها (هر سطر: عنوان | مبلغ | توضیح)</label><textarea id="costBreakdown" placeholder="خرید قطعه | ۰ | شرح هزینه"></textarea></div>
+<div class="field full"><label for="financialNotes">توضیحات مالی و تعهدات</label><textarea id="financialNotes"></textarea></div>
+</div>
+</section>
+<section class="mission-card mission-section" data-section="rewards">
+<div class="section-head"><div><h2>۱۰. تشویقات و تنبیهات</h2><p>ثبت پیشنهادها، تصمیم‌های مصوب و سوابق رسیدگی مرتبط با مأموریت</p></div></div>
+<div class="form-grid"></div>
+</section>
+<section class="mission-card mission-section" data-section="paraphs">
+<div class="section-head"><div><h2>۱۱. پاراف‌ها و نظرات مدیریتی</h2><p>ثبت زنجیره تصمیم‌ها، پاراف‌ها و پیگیری دستورات</p></div></div>
 <div class="form-grid">
 <div class="field full"><label for="headOfDepartmentOrder">دستور / پاراف رئیس اداره</label><textarea id="headOfDepartmentOrder"></textarea></div>
 <div class="field"><label for="headOfDepartmentBy">نام یا کد رئیس اداره</label><input id="headOfDepartmentBy"></div>
@@ -410,7 +425,7 @@ if(location.protocol==="file:"){
 <script src="../assets/js/main.js?v=mission-suite-20261114-14"></script>
 <script src="../assets/js/organization-modules.js?v=dept8-20261107"></script>
 <script src="../assets/js/mobile-nav.js?v=internal-routing-20261110" defer></script>
-<script type="module" src="../assets/js/mission-create.js?v=mission-local-db-fix-20261115-1"></script>
+<script type="module" src="../assets/js/mission-create.js?v=mission-workflow-v19-20261115"></script>
 <script>if("serviceWorker" in navigator)navigator.serviceWorker.register("../sw.js").catch(()=>{});</script>
 </body></html>
 
