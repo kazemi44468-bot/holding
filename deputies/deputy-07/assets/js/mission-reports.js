@@ -3,7 +3,7 @@ import { ensureMissionSamples, removeMissionSamples } from "./mission-samples.js
 const $=id=>document.getElementById(id),fa=n=>Number(n||0).toLocaleString("fa-IR");
 const depts={"1":"اداری و پشتیبانی","2":"تحقیق و توسعه","3":"پارکبان و معبربانان","4":"تأسیسات فنی و نگهداری","6":"فاوا و خدمات فنی","7":"جمع‌آوری و بازیافت پسماند","8":"بازرسی و تحقیقات محلی","HQ":"ستاد معاونت ۷"};
 const statuses={draft:"پیش‌نویس",registered:"برنامه‌ریزی قبل از اجرا",referred:"ارجاع‌شده / در انتظار شروع","in-progress":"در حال اجرا",blocked:"دارای مانع",review:"در انتظار بررسی",revision:"نیازمند اصلاح",completed:"اتمام و پایان کار",closed:"مختومه",cancelled:"لغوشده"};
-let all=[];
+let all=[];let comparisonSelectedDepts=new Set();
 const today=()=>{const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-")};
 const date=v=>{if(!v)return null;const m=String(v).match(/^(\d{4})-(\d{2})-(\d{2})/);const d=m?new Date(+m[1],+m[2]-1,+m[3]):new Date(v);return isNaN(d)?null:d};
 const iso=d=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-");
@@ -175,7 +175,7 @@ function metricCount(rows,metric,from,to){
 }
 function periodList(r){
  const out=[];let d=jalaliMonthStart(r.from),guard=0;
- while(d<r.to&&guard++<24){const b=monthBounds(d),to=b.to<r.to?b.to:r.to;out.push({from:b.from,to,label:b.from.toLocaleDateString("fa-IR",{month:"short",year:"numeric"})});d=b.to}
+ while(d<r.to&&guard++<24){const b=monthBounds(d),from=b.from<r.from?r.from:b.from,to=b.to<r.to?b.to:r.to;out.push({from,to,label:b.from.toLocaleDateString("fa-IR",{month:"short",year:"numeric"})});d=b.to}
  return out;
 }
 function renderComparison(){
@@ -184,7 +184,7 @@ function renderComparison(){
  const fmt=metricLabels[metric],bars=[];
  if(mode==="departments"){
   const selected=[...document.querySelectorAll("[data-compare-dept]:checked")].map(x=>x.value);
-  const departments=selected.length?selected:Object.keys(depts);
+  const departments=selected.length?selected:[];
   departments.forEach(id=>{const q=all.filter(m=>String(m.executorDepartment)===id);bars.push({label:depts[id]||"اداره "+id,value:metricCount(q,metric,r.from,r.to),detail:fa(q.length)+" پرونده در بانک"})});
   $("comparisonDeptPicker").hidden=false;$("comparisonSingleDeptWrap").hidden=true;
   $("comparisonSummary").textContent=fa(bars.length)+" اداره · "+r.label+" · شاخص: "+fmt;
@@ -197,22 +197,21 @@ function renderComparison(){
   $("comparisonCaption").textContent="هر ستون تعداد "+fmt+" را در همان ماه نشان می‌دهد. این نما برای مقایسه اداره با عملکرد ماه‌های قبلی خودش است؛ ماه‌های بدون رویداد نیز با مقدار صفر نمایش داده می‌شوند.";
  }
  if(!bars.length){host.innerHTML='<p class="comparison-note">برای این فیلترها داده‌ای وجود ندارد.</p>';return}
+ if(mode==="departments"&&!bars.length){host.innerHTML="<p class=\\"comparison-note\\">برای مقایسه، دست‌کم یک اداره را انتخاب کنید.</p>";return}
  const max=Math.max(1,...bars.map(x=>x.value));
  host.innerHTML='<div class="comparison-axis"><span>۰</span><span>'+fa(Math.ceil(max/2))+'</span><span>'+fa(max)+'</span></div><div class="comparison-bars">'+bars.map((x,i)=>'<div class="comparison-bar-item" title="'+esc(x.label)+' · '+fa(x.value)+'"><div class="comparison-bar-value">'+fa(x.value)+'</div><div class="comparison-bar-track"><i style="height:'+Math.max(x.value?3:0,x.value/max*100)+'%"></i></div><b>'+esc(x.label)+'</b>'+(x.detail?'<small>'+esc(x.detail)+'</small>':"")+'</div>').join("")+'</div>';
 }
 function renderComparisonDepartments(){
- const host=$("comparisonDeptChoices"),query=$("comparisonDeptSearch").value.trim().toLocaleLowerCase("fa"),selected=new Set([...document.querySelectorAll("[data-compare-dept]:checked")].map(x=>x.value));
+ const host=$("comparisonDeptChoices"),query=$("comparisonDeptSearch").value.trim().toLocaleLowerCase("fa"),selected=comparisonSelectedDepts;
  const entries=Object.entries(depts).filter(([id,name])=>!query||(name+" "+id).toLocaleLowerCase("fa").includes(query));
  host.innerHTML=entries.map(([id,name])=>'<label class="comparison-choice"><input type="checkbox" data-compare-dept value="'+esc(id)+'" '+(selected.has(id)?"checked":"")+'><span>'+esc(name)+'</span></label>').join("");
- const chosen=[...selected].map(id=>depts[id]||("اداره "+id));
+ const chosen=[...comparisonSelectedDepts].map(id=>depts[id]||("اداره "+id));
  $("comparisonSelected").innerHTML=chosen.length?chosen.map(x=>'<span>'+esc(x)+'</span>').join(""):'<small>هنوز اداره‌ای انتخاب نشده است.</small>';
- host.querySelectorAll("[data-compare-dept]").forEach(x=>x.addEventListener("change",()=>{renderComparisonDepartments();renderComparison()}));
+ host.querySelectorAll("[data-compare-dept]").forEach(x=>x.addEventListener("change",()=>{if(x.checked)comparisonSelectedDepts.add(x.value);else comparisonSelectedDepts.delete(x.value);renderComparisonDepartments();renderComparison()}));
 }
 function setupComparison(){
  const sel=$("comparisonSingleDept");sel.innerHTML=Object.entries(depts).map(([id,name])=>'<option value="'+esc(id)+'">'+esc(name)+'</option>').join("");
- const initial=Object.keys(depts).filter(id=>id!=="HQ").slice(0,4);
- renderComparisonDepartments();
- document.querySelectorAll("[data-compare-dept]").forEach(x=>x.checked=initial.includes(x.value));
+ if(!comparisonSelectedDepts.size)comparisonSelectedDepts=new Set(Object.keys(depts).filter(id=>id!=="HQ"));
  renderComparisonDepartments();
 }
 function renderMissionPicker(){
