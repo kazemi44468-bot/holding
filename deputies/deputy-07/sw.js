@@ -1,5 +1,5 @@
 "use strict";
-const CACHE_NAME="deputy-07-missions-v76";
+const CACHE_NAME="deputy-07-missions-v77";
 const CORE_FILES=[
  "./pages/mission-bank.html",
  "./pages/mission-create.html",
