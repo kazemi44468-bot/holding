@@ -32,7 +32,7 @@ const pn={critical:"بحرانی",urgent:"فوری",important:"مهم",normal:"�
 drawBars("trackBars",[{label:"مدیریتی معاون",value:avg(rows,"management")},{label:"دفتر معاون",value:avg(rows,"office")},{label:"اجرای اداره",value:avg(rows,"department")}],true);
 const lateDone=done.filter(m=>m.plannedEnd&&m.actualEnd&&m.actualEnd>m.plannedEnd).length,noEnd=rows.filter(m=>!m.plannedEnd).length,durations=rows.filter(m=>m.plannedStart&&m.plannedEnd).map(m=>(date(m.plannedEnd)-date(m.plannedStart))/86400000),cost=rows.reduce((s,m)=>s+Number(m.actualCost||0),0),budget=rows.reduce((s,m)=>s+Number(m.estimatedCost||0),0),milestones=rows.reduce((s,m)=>s+(m.milestones||[]).length,0);$("timeSummary").innerHTML='<div>دارای مهلت برنامه‌ای: <b>'+fa(rows.length-noEnd)+'</b></div><div>فاقد تاریخ پایان: <b>'+fa(noEnd)+'</b></div><div>تکمیل‌شده با تأخیر: <b>'+fa(lateDone)+'</b></div><div>میانگین مدت برنامه: <b>'+fa(durations.length?Math.round(durations.reduce((a,b)=>a+b,0)/durations.length):0)+' روز</b></div><div>دارای مانع: <b>'+fa(rows.filter(m=>m.status==="blocked").length)+'</b></div><div>برآورد هزینه: <b>'+fa(budget)+' تومان</b></div><div>هزینه واقعی: <b>'+fa(cost)+' تومان</b></div><div>نقاط عطف: <b>'+fa(milestones)+'</b></div>';
 $("deptReportRows").innerHTML=Object.entries(depts).map(([id,name])=>{const a=rows.filter(m=>String(m.executorDepartment)===id),d=a.filter(statusDone).length,p=a.length?Math.round(a.reduce((s,m)=>s+Number(m.progress||0),0)/a.length):0;return '<tr><td>'+esc(name)+'</td><td>'+fa(a.length)+'</td><td>'+fa(d)+'</td><td>'+fa(a.filter(m=>active.includes(m)).length)+'</td><td>'+fa(a.filter(isLate).length)+'</td><td>'+fa(p)+'٪</td><td>'+fa(avg(a,"management"))+'٪</td><td>'+fa(avg(a,"office"))+'٪</td><td>'+fa(avg(a,"department"))+'٪</td></tr>'}).join("");
-const sel=$("missionDetailSelect"),old=sel.value;sel.innerHTML='<option value="">انتخاب کنید</option>'+rows.map(m=>'<option value="'+esc(m.id)+'">'+esc((m.missionCode||"بدون کد")+" · "+(m.missionTitle||"بدون عنوان"))+'</option>').join("");sel.value=rows.some(m=>String(m.id)===old)?old:"";renderGantt(rows);renderDetail()}
+const sel=$("missionDetailSelect"),old=sel.value;sel.innerHTML='<option value="">انتخاب کنید</option>'+rows.map(m=>'<option value="'+esc(m.id)+'">'+esc((m.missionCode||"بدون کد")+" · "+(m.missionTitle||"بدون عنوان"))+'</option>').join("");sel.value=rows.some(m=>String(m.id)===old)?old:"";renderGantt(rows);renderDetail();applyChartFilters();renderComparison()}
 
 const SAMPLE_BATCH="mission-report-demo-2026-11";
 const sampleSpecs=[
@@ -87,6 +87,73 @@ async function removeMissionSamples(){
  $("sampleDataState").textContent=samples.length?fa(samples.length)+" مأموریت آزمایشی حذف شد.":"داده آزمایشی برای حذف وجود نداشت.";
 }
 
+
+function chartRange(period){
+ const now=new Date(),end=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1);
+ if(period==="all")return {from:null,to:end,label:"کل سوابق"};
+ let from;
+ if(period==="month")from=new Date(now.getFullYear(),now.getMonth(),1);
+ else if(period==="previous") {from=new Date(now.getFullYear(),now.getMonth()-1,1);return {from,to:new Date(now.getFullYear(),now.getMonth(),1),label:from.toLocaleDateString("fa-IR",{month:"long",year:"numeric"})};}
+ else if(period==="quarter")from=new Date(now.getFullYear(),now.getMonth()-2,1);
+ else if(period==="half")from=new Date(now.getFullYear(),now.getMonth()-5,1);
+ else if(period==="year")from=new Date(now.getFullYear(),0,1);
+ else return {from:null,to:end,label:"کل سوابق"};
+ return {from,to:end,label:from.toLocaleDateString("fa-IR")+" تا امروز"};
+}
+function chartRows(rows,id){
+ const r=chartRange($("chartPeriod-"+id)?.value||"all");
+ if(!r.from)return rows;
+ return rows.filter(m=>{const d=date(m.createdAt)||date(m.actualStart)||date(m.plannedStart)||date(m.updatedAt);return d&&d>=r.from&&d<r.to});
+}
+function renderIndependentTimeline(rows){
+ const r=chartRange($("chartPeriod-timeline")?.value||"all"),now=new Date();
+ const rangeValue=r.from?{from:r.from,to:new Date(r.to.getTime()-86400000),label:r.label}:{from:new Date(now.getFullYear(),now.getMonth()-11,1),to:now,label:"۱۲ ماه اخیر"};
+ const control=$("reportPeriod"),old=control.value;control.value="custom";renderTimeline(rows,rangeValue);control.value=old;
+}
+function setupComparisonMonths(){
+ const sel=$("comparisonMonths"),now=new Date();sel.replaceChildren();
+ for(let i=11;i>=0;i--){const d=new Date(now.getFullYear(),now.getMonth()-i,1),v=iso(d).slice(0,7),o=document.createElement("option");o.value=v;o.textContent=d.toLocaleDateString("fa-IR",{month:"long",year:"numeric"});if(i<=2)o.selected=true;sel.append(o)}
+}
+function monthStats(rows,month){
+ const [y,m]=month.split("-").map(Number),from=new Date(y,m-1,1),to=new Date(y,m,1),events=eventList(rows);
+ const created=events.filter(e=>e.type==="created"&&date(e.at)>=from&&date(e.at)<to).length;
+ const started=events.filter(e=>e.type==="started"&&date(e.at)>=from&&date(e.at)<to).length;
+ const finished=events.filter(e=>e.type==="finished"&&date(e.at)>=from&&date(e.at)<to).length;
+ const snapshots=rows.filter(x=>{const c=date(x.createdAt);return c&&c<to}).map(x=>{
+  const logs=(x.progressLog||[]).filter(z=>date(z.at)&&date(z.at)<to).sort((a,b)=>String(b.at).localeCompare(String(a.at)));
+  if(logs.length)return Number(logs[0].progress||0);
+  const updated=date(x.updatedAt);return updated&&updated<to?Number(x.progress||0):0;
+ });
+ return {month,created,started,finished,progress:snapshots.length?Math.round(snapshots.reduce((a,b)=>a+b,0)/snapshots.length):0};
+}
+function changeText(first,last){
+ const delta=last-first;
+ if(first===0)return delta===0?"بدون تغییر":"مبنای مقایسه صفر";
+ const pctChange=Math.round(delta/Math.abs(first)*100);
+ return (delta>0?"+":"")+fa(delta)+" · "+(pctChange>0?"+":"")+fa(pctChange)+"٪";
+}
+function renderComparison(){
+ const sel=$("comparisonMonths"),chosen=[...sel.selectedOptions].map(o=>o.value).sort();
+ if(chosen.length<2){$("comparisonMetrics").innerHTML='<div class="comparison-note">برای مقایسه، حداقل دو ماه انتخاب کنید.</div>';$("comparisonChart").innerHTML="";return}
+ const rows=rowsForDept(),stats=chosen.map(m=>monthStats(rows,m)),first=stats[0],last=stats[stats.length-1];
+ const metrics=[["مأموریت ایجادشده",first.created,last.created],["شروع مأموریت",first.started,last.started],["خاتمه مأموریت",first.finished,last.finished],["میانگین پیشرفت",first.progress,last.progress]];
+ $("comparisonMetrics").innerHTML=metrics.map(([label,a,b])=>'<div><small>'+label+'</small><b>'+changeText(a,b)+'</b><span>از '+fa(a)+(label==="میانگین پیشرفت"?"٪":"")+' به '+fa(b)+(label==="میانگین پیشرفت"?"٪":"")+'</span></div>').join("");
+ const keys=[["created","ایجاد"],["started","شروع"],["finished","خاتمه"],["progress","میانگین پیشرفت"]];
+ $("comparisonChart").innerHTML='<div class="comparison-month-grid">'+stats.map(x=>'<section><b class="comparison-month-title">'+new Date(Number(x.month.slice(0,4)),Number(x.month.slice(5,7))-1,1).toLocaleDateString("fa-IR",{month:"short",year:"numeric"})+'</b>'+keys.map(([k,label])=>{const max=Math.max(1,...stats.map(z=>z[k]));return '<div class="comparison-value"><span>'+label+'</span><i><em style="width:'+Math.max(x[k]?2:0,x[k]/max*100)+'%"></em></i><b>'+fa(x[k])+(k==="progress"?"٪":"")+'</b></div>'}).join("")+'</section>').join("")+'</div>';
+}
+function applyChartFilters(){
+ const rows=rowsForDept();
+ renderIndependentTimeline(rows);
+ const a=chartRows(rows,"dept"),b=chartRows(rows,"progress"),c=chartRows(rows,"status"),d=chartRows(rows,"priority"),e=chartRows(rows,"tracks"),g=chartRows(rows,"gantt");
+ drawBars("deptBars",Object.entries(depts).map(([id,label])=>({label,value:a.filter(m=>String(m.executorDepartment)===id).length})).filter(x=>x.value),false,true);
+ drawBars("deptProgressBars",Object.entries(depts).map(([id,label])=>{const q=b.filter(m=>String(m.executorDepartment)===id);return {label,value:q.length?Math.round(q.reduce((s,m)=>s+Number(m.progress||0),0)/q.length):0}}).filter(x=>b.some(m=>String(m.executorDepartment)===String(Object.keys(depts).find(k=>depts[k]===x.label)))),true);
+ drawBars("statusBars",Object.entries(statuses).map(([id,label])=>({label,value:c.filter(m=>m.status===id).length})).filter(x=>x.value));
+ const pn={critical:"بحرانی",urgent:"فوری",important:"مهم",normal:"عادی"};
+ drawBars("priorityBars",Object.entries(pn).map(([id,label])=>({label,value:d.filter(m=>m.priority===id).length})).filter(x=>x.value));
+ drawBars("trackBars",[{label:"مدیریتی معاون",value:avg(e,"management")},{label:"دفتر معاون",value:avg(e,"office")},{label:"اجرای اداره",value:avg(e,"department")}],true);
+ renderGantt(g);
+}
+
 async function refresh(){all=await MissionStore.list();const cfg=await MissionStore.config();for(const d of cfg?.departments||[])depts[String(d.id)]=d.name;const sel=$("reportDept");for(const m of all){const id=String(m.executorDepartment||"");if(id&&m.executorDepartmentName)depts[id]=m.executorDepartmentName;if(id&&![...sel.options].some(o=>o.value===id)){const o=document.createElement("option");o.value=id;o.textContent=depts[id]||"اداره "+id;sel.append(o)}}render()}
-async function init(){try{await MissionStore.unlock();$("reportContent").hidden=false;$("reportState").textContent="اتصال برقرار است؛ داده‌ها مستقیماً از بانک مأموریت‌های معاونت ۷ خوانده می‌شوند.";const t=today();$("reportFrom").value=t;$("reportTo").value=t;await refresh()}catch(e){$("reportState").textContent=e.message;$("reportContent").hidden=true}}
-init();$("seedMissionSamples").addEventListener("click",()=>seedMissionSamples().catch(e=>$("sampleDataState").textContent="خطا: "+e.message));$("removeMissionSamples").addEventListener("click",()=>removeMissionSamples().catch(e=>$("sampleDataState").textContent="خطا: "+e.message));$("reportRefresh").addEventListener("click",()=>refresh().catch(e=>$("reportState").textContent=e.message));$("reportPeriod").addEventListener("change",()=>{const x=$("reportPeriod").value==="custom";$("reportFrom").disabled=!x;$("reportTo").disabled=!x;render()});$("reportDept").addEventListener("change",render);$("reportFrom").addEventListener("change",render);$("reportTo").addEventListener("change",render);$("missionDetailSelect").addEventListener("change",renderDetail);
+async function init(){try{await MissionStore.unlock();$("reportContent").hidden=false;$("reportState").textContent="اتصال برقرار است؛ داده‌ها مستقیماً از بانک مأموریت‌های معاونت ۷ خوانده می‌شوند.";const t=today();$("reportFrom").value=t;$("reportTo").value=t;setupComparisonMonths();await refresh();await seedMissionSamples()}catch(e){$("reportState").textContent=e.message;$("reportContent").hidden=true}}
+init();$("seedMissionSamples").addEventListener("click",()=>seedMissionSamples().catch(e=>$("sampleDataState").textContent="خطا: "+e.message));$("removeMissionSamples").addEventListener("click",()=>removeMissionSamples().catch(e=>$("sampleDataState").textContent="خطا: "+e.message));$("reportRefresh").addEventListener("click",()=>refresh().catch(e=>$("reportState").textContent=e.message));$("reportPeriod").addEventListener("change",()=>{const x=$("reportPeriod").value==="custom";$("reportFrom").disabled=!x;$("reportTo").disabled=!x;render()});$("reportDept").addEventListener("change",render);$("reportFrom").addEventListener("change",render);$("reportTo").addEventListener("change",render);$("missionDetailSelect").addEventListener("change",renderDetail);document.querySelectorAll("[id^=chartPeriod-]").forEach(x=>x.addEventListener("change",applyChartFilters));$("comparisonMonths").addEventListener("change",renderComparison);
