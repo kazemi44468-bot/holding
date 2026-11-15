@@ -22,6 +22,7 @@ body.ops-page{background:#f5f8fa;color:var(--rv-ink)}
 .section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;background:#f1f7fa;border-bottom:1px solid var(--rv-line)}
 .section-head h2{font-size:14px;margin:0;color:#426e84}.section-head p{font-size:10px;color:#7c909b;margin:4px 0 0}
 .section-head button{padding:6px 9px;white-space:nowrap}
+.section-head>div{flex:1;min-width:220px}.section-title-edit,.section-desc-edit{display:block;width:100%;border:1px solid #dce6eb;border-radius:7px;padding:7px;background:#fff;color:#40566a;font:inherit}.section-title-edit{font-weight:700;font-size:13px}.section-desc-edit{margin-top:6px;font-size:11px}.section-tools{display:flex;gap:6px;flex-wrap:wrap}.section-tools .danger,.row-remove{background:#fff5f4!important;border-color:#f0d6d2!important;color:#a45b53!important}.row-tools{display:flex;gap:4px;align-items:center}.row-tools button{border:1px solid #d8e6ed;background:#f3f8fb;color:#45697d;border-radius:6px;padding:5px 8px;font:inherit;font-size:10px;cursor:pointer}
 .table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:1050px;font-size:11px}
 th,td{padding:8px;border-bottom:1px solid #edf1f3;text-align:right;vertical-align:top}
 th{background:#fafcfd;color:#627987;font-weight:700;white-space:nowrap}
@@ -53,7 +54,7 @@ td .required{width:auto;min-width:auto;accent-color:#5b9bb6}
 <button id="clearReview">پاک‌کردن پیشنهادهای واردشده</button>
 <a href="mission-create.html">مشاهده فرم اصلی مأموریت</a>
 </div>
-<p class="note">برای هر ردیف می‌توانی عنوان جدید، نوع فیلد، اجباری‌بودن، گزینه‌های انتخابی و شرح تغییر را وارد کنی. اگر موردی باید حذف شود، در شرح تغییر صریحاً بنویس «حذف شود». برای افزودن فیلد جدید از دکمه انتهای هر بخش استفاده کن. اطلاعات به‌صورت خودکار در همین مرورگر ذخیره می‌شود.</p>
+<p class="note">عنوان هر یک از ۱۲ آیتم اصلی و توضیح آن را مستقیماً ویرایش کن؛ می‌توانی آیتم اصلی یا هر زیرآیتم را حذف کنی. برای زیرآیتم‌ها نیز عنوان، نوع، اجباری‌بودن و گزینه‌ها قابل ویرایش است. اگر موردی باید حذف شود، در شرح تغییر صریحاً بنویس «حذف شود». برای افزودن فیلد جدید از دکمه انتهای هر بخش استفاده کن. اطلاعات به‌صورت خودکار در همین مرورگر ذخیره می‌شود.</p>
 <div class="summary"><span id="fieldCount">—</span><span id="changeCount">۰ پیشنهاد تغییر</span><span>شناسه‌های فنی فعلی برای ارجاع دقیق درج شده‌اند</span></div>
 </section>
 <div id="sections"></div>
@@ -136,26 +137,50 @@ const host=document.getElementById("sections");
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function makeRow(f,idx){
  const [id,label,type,required,options]=f;
- return '<tr data-id="'+esc(id)+'"><td><div class="field-id">'+esc(id)+'</div><span class="badge">'+(idx+1)+'</span></td><td><input class="field-label" data-k="label" value="'+esc(label)+'"></td><td><select data-k="type">'+Object.entries(typeLabels).map(([v,l])=>'<option value="'+v+'" '+(v===type?'selected':'')+'>'+l+'</option>').join("")+'</select></td><td style="text-align:center"><input class="required" type="checkbox" data-k="required" '+(required?'checked':'')+'></td><td><textarea class="options" data-k="options" placeholder="گزینه‌ها؛ هر گزینه با ؛ جدا شود">'+esc(options)+'</textarea></td><td><textarea class="change" data-k="change" placeholder="مثلاً عنوان دقیق‌تر شود، حذف شود، با فیلد دیگر ادغام شود..."></textarea></td></tr>';
+ return '<tr data-id="'+esc(id)+'"><td><div class="field-id">'+esc(id)+'</div><span class="badge">'+(idx+1)+'</span></td><td><input class="field-label" data-k="label" value="'+esc(label)+'"></td><td><select data-k="type">'+Object.entries(typeLabels).map(([v,l])=>'<option value="'+v+'" '+(v===type?'selected':'')+'>'+l+'</option>').join("")+'</select></td><td style="text-align:center"><input class="required" type="checkbox" data-k="required" '+(required?'checked':'')+'></td><td><textarea class="options" data-k="options" placeholder="گزینه‌ها؛ هر گزینه با ؛ جدا شود">'+esc(options)+'</textarea></td><td><textarea class="change" data-k="change" placeholder="شرح اصلاح موردنظر شما"></textarea></td><td><button type="button" class="row-remove" data-row-remove>حذف زیرآیتم</button></td></tr>';
 }
 function render(){
- host.innerHTML=groups.map(g=>'<section class="review-section" data-group="'+g.key+'"><div class="section-head"><div><h2>'+g.title+'</h2><p>'+g.desc+'</p></div><button type="button" data-add="'+g.key+'">＋ افزودن ردیف جدید</button></div><div class="table-wrap"><table><thead><tr><th>شناسه / ردیف</th><th>عنوان فعلی / عنوان پیشنهادی</th><th>نوع فیلد</th><th>اجباری</th><th>گزینه‌ها / توضیح نوع</th><th>اصلاح موردنظر شما</th></tr></thead><tbody>'+g.fields.map(makeRow).join("")+'</tbody></table></div></section>').join("");
+ host.innerHTML=groups.map(g=>'<section class="review-section" data-group="'+g.key+'"><div class="section-head"><div><input class="section-title-edit" data-section-title value="'+esc(g.title)+'" aria-label="عنوان بخش اصلی"><input class="section-desc-edit" data-section-desc value="'+esc(g.desc)+'" aria-label="توضیح بخش اصلی"></div><div class="section-tools"><button type="button" data-add="'+g.key+'">＋ افزودن زیرآیتم</button><button type="button" class="danger" data-sec-remove>حذف آیتم اصلی</button></div></div><div class="table-wrap"><table><thead><tr><th>شناسه / ردیف</th><th>عنوان زیرآیتم</th><th>نوع فیلد</th><th>اجباری</th><th>گزینه‌ها / توضیح نوع</th><th>اصلاح موردنظر شما</th><th>مدیریت</th></tr></thead><tbody>'+g.fields.map(makeRow).join("")+'</tbody></table></div></section>').join("");
  document.querySelectorAll("[data-add]").forEach(b=>b.addEventListener("click",()=>addRow(b.dataset.add)));
- document.querySelectorAll("#sections input,#sections textarea,#sections select,#globalNotes").forEach(el=>el.addEventListener("input",saveLocal));
+ document.querySelectorAll("[data-row-remove]").forEach(b=>b.addEventListener("click",()=>{if(confirm("این زیرآیتم از ساختار پیشنهادی حذف شود؟")){b.closest("tr").remove();saveLocal();}}));
+ document.querySelectorAll("[data-sec-remove]").forEach(b=>b.addEventListener("click",()=>{const sec=b.closest(".review-section");if(confirm("آیتم اصلی و تمام زیرآیتم‌های آن حذف شوند؟")){sec.remove();saveLocal();}}));
+ document.querySelectorAll("#sections input,#sections textarea,#sections select,#globalNotes").forEach(el=>{el.addEventListener("input",saveLocal);el.addEventListener("change",saveLocal);});
  updateCounts();
 }
 function addRow(key){
  const g=groups.find(x=>x.key===key),tbody=document.querySelector('[data-group="'+key+'"] tbody'),tr=document.createElement("tr");tr.className="new-row";tr.dataset.id="NEW-"+key+"-"+(tbody.children.length+1);
- tr.innerHTML='<td><div class="field-id">'+tr.dataset.id+'</div><span class="badge">جدید</span></td><td><input class="field-label" data-k="label" placeholder="عنوان فیلد جدید"></td><td><select data-k="type">'+Object.entries(typeLabels).map(([v,l])=>'<option value="'+v+'">'+l+'</option>').join("")+'</select></td><td style="text-align:center"><input class="required" type="checkbox" data-k="required"></td><td><textarea class="options" data-k="options" placeholder="گزینه‌ها یا واحد اندازه‌گیری"></textarea></td><td><textarea class="change" data-k="change" placeholder="هدف و منطق افزودن این فیلد"></textarea></td>';
- tbody.append(tr);tr.querySelectorAll("input,textarea,select").forEach(el=>el.addEventListener("input",saveLocal));saveLocal();tr.scrollIntoView({behavior:"smooth",block:"center"});
+ tr.innerHTML='<td><div class="field-id">'+tr.dataset.id+'</div><span class="badge">جدید</span></td><td><input class="field-label" data-k="label" placeholder="عنوان فیلد جدید"></td><td><select data-k="type">'+Object.entries(typeLabels).map(([v,l])=>'<option value="'+v+'">'+l+'</option>').join("")+'</select></td><td style="text-align:center"><input class="required" type="checkbox" data-k="required"></td><td><textarea class="options" data-k="options" placeholder="گزینه‌ها یا واحد اندازه‌گیری"></textarea></td><td><textarea class="change" data-k="change" placeholder="هدف و منطق افزودن این فیلد"></textarea></td><td><button type="button" class="row-remove" data-row-remove>حذف زیرآیتم</button></td>';
+ tbody.append(tr);tr.querySelectorAll("input,textarea,select").forEach(el=>{el.addEventListener("input",saveLocal);el.addEventListener("change",saveLocal);});tr.querySelector("[data-row-remove]").onclick=()=>{if(confirm("این زیرآیتم از ساختار پیشنهادی حذف شود؟")){tr.remove();saveLocal();}};saveLocal();tr.scrollIntoView({behavior:"smooth",block:"center"});
 }
 function collect(){
- return {format:"H7-MISSION-FORM-REVIEW",version:1,createdAt:new Date().toISOString(),scope:"deputy-07 mission creation form",globalNotes:document.getElementById("globalNotes").value,sections:[...document.querySelectorAll(".review-section")].map(sec=>({key:sec.dataset.group,title:sec.querySelector("h2").textContent,items:[...sec.querySelectorAll("tbody tr")].map(tr=>({id:tr.dataset.id,label:tr.querySelector('[data-k="label"]')?.value||"",type:tr.querySelector('[data-k="type"]')?.value||"",required:!!tr.querySelector('[data-k="required"]')?.checked,options:tr.querySelector('[data-k="options"]')?.value||"",change:tr.querySelector('[data-k="change"]')?.value||""}))}))};
+ const sections=[...document.querySelectorAll(".review-section")].map(sec=>({key:sec.dataset.group,title:sec.querySelector("[data-section-title]").value,description:sec.querySelector("[data-section-desc]").value,items:[...sec.querySelectorAll("tbody tr")].map(tr=>({id:tr.dataset.id,label:tr.querySelector('[data-k="label"]')?.value||"",type:tr.querySelector('[data-k="type"]')?.value||"",required:!!tr.querySelector('[data-k="required"]')?.checked,options:tr.querySelector('[data-k="options"]')?.value||"",change:tr.querySelector('[data-k="change"]')?.value||""}))}));
+ const liveKeys=new Set(sections.map(x=>x.key)),liveIds=new Set(sections.flatMap(x=>x.items.map(i=>i.id)));
+ return {format:"H7-MISSION-FORM-REVIEW",version:2,createdAt:new Date().toISOString(),scope:"deputy-07 mission creation form",globalNotes:document.getElementById("globalNotes").value,removedSections:groups.filter(g=>!liveKeys.has(g.key)).map(g=>({key:g.key,title:g.title})),removedFields:groups.flatMap(g=>g.fields.map(f=>f[0])).filter(id=>!liveIds.has(id)),sections};
 }
 function saveLocal(){try{localStorage.setItem("h7-mission-form-review-v1",JSON.stringify(collect()));}catch(e){}updateCounts();}
-function updateCounts(){const data=collect(),items=data.sections.flatMap(x=>x.items);document.getElementById("fieldCount").textContent=items.length.toLocaleString("fa-IR")+" ردیف قابل بررسی";const n=items.filter(x=>x.change.trim()||x.id.startsWith("NEW-")&&x.label.trim()).length+(data.globalNotes.trim()?1:0);document.getElementById("changeCount").textContent=n.toLocaleString("fa-IR")+" پیشنهاد تغییر";}
+function updateCounts(){const data=collect(),items=data.sections.flatMap(x=>x.items);document.getElementById("fieldCount").textContent=items.length.toLocaleString("fa-IR")+" ردیف قابل بررسی";const n=items.filter(x=>x.change.trim()||x.id.startsWith("NEW-")&&x.label.trim()).length+(data.globalNotes.trim()?1:0)+data.removedSections.length+data.removedFields.length;document.getElementById("changeCount").textContent=n.toLocaleString("fa-IR")+" پیشنهاد تغییر";}
 function download(){const blob=new Blob([JSON.stringify(collect(),null,2)],{type:"application/json;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="mission-form-review-deputy-07.json";a.click();URL.revokeObjectURL(url);}
-function load(data){if(data?.format!=="H7-MISSION-FORM-REVIEW"||!Array.isArray(data.sections))throw new Error("ساختار فایل بازبینی معتبر نیست.");data.sections.forEach(s=>{const sec=document.querySelector('[data-group="'+s.key+'"]');if(!sec)return;s.items?.forEach(item=>{let tr=[...sec.querySelectorAll("tbody tr")].find(x=>x.dataset.id===item.id);if(!tr&&String(item.id).startsWith("NEW-")){const btn=sec.querySelector("[data-add]");addRow(s.key);tr=sec.querySelector("tbody tr:last-child");tr.dataset.id=item.id;tr.querySelector(".field-id").textContent=item.id;}if(!tr)return;for(const k of ["label","type","options","change"]){const el=tr.querySelector('[data-k="'+k+'"]');if(el)el.value=item[k]??"";}const req=tr.querySelector('[data-k="required"]');if(req)req.checked=!!item.required;});});document.getElementById("globalNotes").value=data.globalNotes||"";saveLocal();}
+function load(data){
+ if(data?.format!=="H7-MISSION-FORM-REVIEW"||!Array.isArray(data.sections))throw new Error("ساختار فایل بازبینی معتبر نیست.");
+ const keep=new Set(data.sections.map(x=>x.key));
+ document.querySelectorAll(".review-section").forEach(sec=>{if(!keep.has(sec.dataset.group))sec.remove();});
+ data.sections.forEach(s=>{
+  let sec=document.querySelector('[data-group="'+s.key+'"]');if(!sec)return;
+  sec.querySelector("[data-section-title]").value=s.title??"";
+  sec.querySelector("[data-section-desc]").value=s.description??"";
+  const keepIds=new Set((s.items||[]).map(x=>x.id));
+  sec.querySelectorAll("tbody tr").forEach(tr=>{if(!keepIds.has(tr.dataset.id))tr.remove();});
+  (s.items||[]).forEach(item=>{
+   let tr=[...sec.querySelectorAll("tbody tr")].find(x=>x.dataset.id===item.id);
+   if(!tr&&String(item.id).startsWith("NEW-")){addRow(s.key);tr=sec.querySelector("tbody tr:last-child");tr.dataset.id=item.id;tr.querySelector(".field-id").textContent=item.id;}
+   if(!tr)return;
+   for(const k of ["label","type","options","change"]){const el=tr.querySelector('[data-k="'+k+'"]');if(el)el.value=item[k]??"";}
+   const req=tr.querySelector('[data-k="required"]');if(req)req.checked=!!item.required;
+  });
+ });
+ document.getElementById("globalNotes").value=data.globalNotes||"";
+ saveLocal();
+}
 function clearAll(){if(!confirm("همه پیشنهادهای واردشده در این کاربرگ پاک شود؟"))return;document.querySelectorAll('#sections [data-k="change"],#sections .new-row').forEach(el=>{if(el.matches("tr"))el.remove();else el.value="";});document.querySelectorAll('#sections [data-k="label"]').forEach(el=>{if(el.closest("tr")?.classList.contains("new-row"))el.value="";});document.getElementById("globalNotes").value="";saveLocal();}
 render();
 try{const saved=localStorage.getItem("h7-mission-form-review-v1");if(saved)load(JSON.parse(saved));}catch(e){}
