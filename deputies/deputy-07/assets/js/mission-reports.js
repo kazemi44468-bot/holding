@@ -66,6 +66,13 @@ function chartRows(rows,id){
  if(id==="gantt")return rows.filter(m=>{const a=date(m.plannedStart)||date(m.createdAt),b=date(m.plannedEnd)||date(m.actualEnd)||a;return a&&b&&a<r.to&&b>=r.from});
  return rows.filter(m=>{const d=date(m.createdAt)||date(m.actualStart)||date(m.plannedStart)||date(m.updatedAt);return d&&d>=r.from&&d<r.to});
 }
+function drawDonut(id,items){
+ const host=$(id),valid=items.filter(x=>x.value>0),total=valid.reduce((sum,x)=>sum+x.value,0),colors=["#79b9a8","#82afd2","#e4bf72","#b6a6d8","#d9a1a1","#a8b8c4","#8fc6cb"];
+ if(!total){host.innerHTML='<span class="profile-hint">داده‌ای برای نمایش وجود ندارد.</span>';return}
+ let cursor=0;const parts=valid.map((x,i)=>{const start=cursor;cursor+=x.value/total*100;return { ...x,color:colors[i%colors.length],start,end:cursor}});
+ const gradient=parts.map(x=>x.color+" "+x.start+"% "+x.end+"%").join(",");
+ host.innerHTML='<div class="mission-donut-layout"><div class="mission-donut" style="background:conic-gradient('+gradient+')"><span>'+fa(total)+'<small>مأموریت</small></span></div><div class="mission-donut-legend">'+parts.map(x=>'<div><i style="background:'+x.color+'"></i><span>'+esc(x.label)+'</span><b>'+fa(x.value)+'</b></div>').join("")+'</div></div>';
+}
 function renderIndependentTimeline(rows){
  const r=chartRange($("chartPeriod-timeline")?.value||"all"),now=new Date(),ids=["rCreated","rStarted","rFinished","rActions","rStatusChanges","reportRangeLabel"],saved=ids.map(id=>$(id).textContent);
  const rangeValue=r.from?{from:r.from,to:new Date(r.to.getTime()-86400000),label:r.label}:{from:new Date(now.getFullYear(),now.getMonth()-11,1),to:now,label:"۱۲ ماه اخیر"};
@@ -108,7 +115,7 @@ function applyChartFilters(){
  const a=chartRows(rows,"dept"),b=chartRows(rows,"progress"),c=chartRows(rows,"status"),d=chartRows(rows,"priority"),e=chartRows(rows,"tracks"),g=chartRows(rows,"gantt");
  drawBars("deptBars",Object.entries(depts).map(([id,label])=>({label,value:a.filter(m=>String(m.executorDepartment)===id).length})).filter(x=>x.value),false,true);
  drawBars("deptProgressBars",Object.entries(depts).map(([id,label])=>{const q=b.filter(m=>String(m.executorDepartment)===id);return {label,value:q.length?Math.round(q.reduce((s,m)=>s+Number(m.progress||0),0)/q.length):0}}).filter(x=>b.some(m=>depts[String(m.executorDepartment)]===x.label)),true);
- drawBars("statusBars",Object.entries(statuses).map(([id,label])=>({label,value:c.filter(m=>m.status===id).length})).filter(x=>x.value));
+ drawDonut("statusBars",Object.entries(statuses).map(([id,label])=>({label,value:c.filter(m=>m.status===id).length})).filter(x=>x.value));
  const pn={critical:"بحرانی",urgent:"فوری",important:"مهم",normal:"عادی"};
  drawBars("priorityBars",Object.entries(pn).map(([id,label])=>({label,value:d.filter(m=>m.priority===id).length})).filter(x=>x.value));
  drawBars("trackBars",[{label:"مدیریتی معاون",value:avg(e,"management")},{label:"دفتر معاون",value:avg(e,"office")},{label:"اجرای اداره",value:avg(e,"department")}],true);
