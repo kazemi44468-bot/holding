@@ -29,7 +29,7 @@ export async function ensureMissionSamples(){
   const created=sampleDate(createdAgo),started=startAgo===null?null:sampleDate(startAgo),finished=finishAgo===null?null:sampleDate(finishAgo),plannedStart=sampleDate(createdAgo),plannedEnd=sampleDate(Math.max(0,createdAgo-14));
   const now=new Date().toISOString(),code="TST-1405-"+String(i+1).padStart(3,"0");
   const actionAt=sampleDate(Math.max(0,(startAgo??createdAgo)-1))+"T10:30:00";
-  const trackStatus=status==="completed"||status==="closed"?"completed":status==="registered"?"not-started":status==="referred"?"pending":"in-progress";
+  const trackStatus=status==="completed"||status==="closed"?"completed":status==="registered"?"not-started":status==="referred"||status==="review"?"waiting":status==="blocked"?"blocked":"in-progress";
   const record={
    id,missionCode:code,missionTitle:title,missionSubject:"پرونده نمونه برای ارزیابی گزارش‌های زمانی، نمودار پیشرفت و برنامه زمان‌بندی.",executorDepartment:dept,executorDepartmentName:sampleDeptName(dept),missionType:"اجرایی",workNature:"پروژه‌ای",priority,confidentiality:"داخلی",status,executionStatus:status,progress,qualityScore:status==="completed"||status==="closed"?90:70+i%4,goalAchievement:status==="completed"||status==="closed"?100:Math.min(100,progress+5),scheduleStatus:finishAgo!==null&&finishAgo>Math.max(0,createdAgo-14)?"دارای تأخیر":"مطابق برنامه",plannedStart,plannedEnd,actualStart:started,actualEnd:finished,createdAt:created+"T09:00:00",updatedAt:now,isSampleData:true,sampleBatch:SAMPLE_BATCH,sampleLabel:"داده آزمایشی",
    directOwner:"مسئول نمونه",assignedExpert:"کارشناس آزمایشی",progressDescription:"ثبت آزمایشی برای ارزیابی صفحه گزارش.",
