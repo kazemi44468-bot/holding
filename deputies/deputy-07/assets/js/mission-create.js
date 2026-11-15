@@ -467,4 +467,51 @@ $("addProgress").addEventListener("click",async()=>{try{if(!currentMission)throw
 $("loadSchema").addEventListener("click",()=>{try{$("schemaJson").value=JSON.stringify(schema,null,2);$("schemaResult").textContent="ساختار فعال بارگذاری شد.";}catch(e){$("schemaResult").textContent=e.message;}});
 $("resetSchema").addEventListener("click",()=>{$("schemaJson").value=JSON.stringify(defaultConfig(),null,2);});
 $("saveSchema").addEventListener("click",async()=>{try{if(!window.Deputy7Access?.canCurrent("manageSchema",{kind:"configuration"}))throw new Error("حساب کاربری شما مجوز مدیریت ساختار فرم مأموریت را ندارد.");const next=JSON.parse($("schemaJson").value);if(!Array.isArray(next.departments))throw new Error("آرایه departments الزامی است.");const departmentIds=new Set();for(const d of next.departments){if(!d.id||!d.name||!Array.isArray(d.fields))throw new Error("هر اداره باید شناسه، نام و آرایه fields داشته باشد.");if(departmentIds.has(String(d.id)))throw new Error("شناسه اداره تکراری است: "+d.id);departmentIds.add(String(d.id));const fieldIds=new Set();for(const f of d.fields){if(!f.id||!f.label||!["text","textarea","number","date","datetime-local","select","checkbox","yesno","checklist"].includes(f.type))throw new Error("هر فیلد باید id، label و نوع معتبر داشته باشد.");if(fieldIds.has(String(f.id)))throw new Error("شناسه فیلد در اداره "+d.name+" تکراری است: "+f.id);fieldIds.add(String(f.id));if(f.type==="select"&&(!Array.isArray(f.options)||!f.options.length))throw new Error("برای فیلد انتخابی "+f.label+" باید گزینه تعریف کنید.");}}if(next.options&&Object.values(next.options).some(v=>!Array.isArray(v)))throw new Error("گزینه‌های دسته‌بندی باید به‌صورت آرایه تعریف شوند.");schema=await MissionStore.saveConfig({...next,schemaId:"mission-form"});$("schemaJson").value=JSON.stringify(schema,null,2);applySchemaOptions();renderDepartmentFields();$("schemaResult").textContent="نسخه "+toFa(schema.version)+" از ساختار فرم ذخیره شد. مأموریت‌های قبلی تعریف نسخه زمان ثبت خود را حفظ می‌کنند.";}catch(e){$("schemaResult").textContent="خطا: "+e.message;}});
+
+function validateImportedSchema(next){
+ if(!next||typeof next!=="object"||!Array.isArray(next.departments))throw new Error("فایل انتخاب‌شده ساختار معتبر فرم مأموریت نیست.");
+ if(next.schemaId&&next.schemaId!=="mission-form")throw new Error("این فایل مربوط به ساختار فرم مأموریت نیست.");
+ if(next.coreFields!==undefined&&(typeof next.coreFields!=="object"||Array.isArray(next.coreFields)))throw new Error("ساختار coreFields معتبر نیست.");
+ if(next.extraFields!==undefined&&!Array.isArray(next.extraFields))throw new Error("ساختار extraFields معتبر نیست.");
+ if(next.options!==undefined&&(!next.options||typeof next.options!=="object"||Object.values(next.options).some(v=>!Array.isArray(v))))throw new Error("گزینه‌های فرم باید به‌صورت فهرست تعریف شده باشند.");
+ const deptIds=new Set();
+ for(const d of next.departments){
+  if(!d?.id||!d.name||!Array.isArray(d.fields))throw new Error("هر اداره باید شناسه، عنوان و فهرست فیلد معتبر داشته باشد.");
+  if(deptIds.has(String(d.id)))throw new Error("شناسه اداره تکراری است: "+d.id);
+  deptIds.add(String(d.id));const fieldIds=new Set();
+  for(const field of d.fields){
+   if(!field?.id||!field.label||!["text","textarea","number","date","datetime-local","select","checkbox","yesno","checklist"].includes(field.type))throw new Error("یکی از فیلدهای اداره "+d.name+" مشخصات معتبر ندارد.");
+   if(fieldIds.has(String(field.id)))throw new Error("شناسه فیلد تکراری است: "+field.id);
+   fieldIds.add(String(field.id));
+   if(field.type==="select"&&(!Array.isArray(field.options)||!field.options.length))throw new Error("برای فیلد انتخابی «"+field.label+"» گزینه تعریف نشده است.");
+  }
+ }
+ return {...next,schemaId:"mission-form",coreFields:next.coreFields||{},extraFields:Array.isArray(next.extraFields)?next.extraFields:[],options:next.options||{}};
+}
+$("exportSchemaConfig")?.addEventListener("click",()=>{
+ try{
+  if(!window.Deputy7Access?.canCurrent("manageSchema",{kind:"configuration"}))throw new Error("مجوز مدیریت ساختار فرم برای این حساب فعال نیست.");
+  const payload={...schema,schemaId:"mission-form",exportedAt:new Date().toISOString(),exportFormat:"deputy7-mission-form-schema"};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json;charset=utf-8"});
+  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="mission-form-schema.json";document.body.append(a);a.click();a.remove();URL.revokeObjectURL(url);
+  $("schemaTransferStatus").textContent="فایل ساختار فعال دریافت شد. برای انتقال، همین فایل را در سامانه مقصد بارگذاری کنید.";
+ }catch(error){$("schemaTransferStatus").textContent=error.message;}
+});
+$("chooseSchemaConfigFile")?.addEventListener("click",()=>{
+ if(!window.Deputy7Access?.canCurrent("manageSchema",{kind:"configuration"})){$("schemaTransferStatus").textContent="مجوز مدیریت ساختار فرم برای این حساب فعال نیست.";return;}
+ $("importSchemaConfigFile").click();
+});
+$("importSchemaConfigFile")?.addEventListener("change",async event=>{
+ const file=event.target.files?.[0];if(!file)return;
+ try{
+  if(!window.Deputy7Access?.canCurrent("manageSchema",{kind:"configuration"}))throw new Error("مجوز مدیریت ساختار فرم برای این حساب فعال نیست.");
+  const parsed=JSON.parse(await file.text()),next=validateImportedSchema(parsed);
+  if(!confirm("ساختار فرم فعلی با ساختار موجود در فایل جایگزین شود؟ اطلاعات مأموریت‌های ثبت‌شده قبلی حذف نخواهد شد."))return;
+  schema=await MissionStore.saveConfig(next);await loadSchema();
+  $("schemaTransferStatus").textContent="ساختار نسخه "+toFa(schema.version)+" با موفقیت در پایگاه داده این سامانه بارگذاری و فعال شد.";
+  $("schemaResult").textContent="ساختار فرم از فایل بارگذاری و فعال شد.";
+ }catch(error){$("schemaTransferStatus").textContent="بارگذاری انجام نشد: "+error.message;}
+ finally{event.target.value="";}
+});
+
 goStep(0);updateProgress();
