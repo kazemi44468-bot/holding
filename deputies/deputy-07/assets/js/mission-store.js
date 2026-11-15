@@ -66,6 +66,17 @@ export const MissionStore = Object.freeze({
     const nextProgress = Math.max(0, Math.min(100, Number(entry.progress ?? prior.progress ?? 0)));
     return this.save({ ...prior, progress: nextProgress, progressLog: updates, lastProgressAt: new Date().toISOString() }, id);
   },
+  async getMeta(key) {
+    const snapshot = await Vault.snapshot();
+    const row = snapshot.records.find(item => item.entity === "mission-meta" && item.recordId === "mission-meta:" + String(key));
+    return row?.data || null;
+  },
+  async saveMeta(key, data) {
+    Vault.ensure();
+    if (!data || typeof data !== "object" || Array.isArray(data)) throw new Error("ساختار داده تکمیلی معتبر نیست.");
+    await Vault.add("mission-meta", "mission-meta:" + String(key), "upsert", { ...data, updatedAt: new Date().toISOString() });
+    return this.getMeta(key);
+  },
   async summary() {
     const snapshot = await Vault.snapshot();
     const records = snapshot.records.filter(row => row.entity === ENTITY);
