@@ -364,7 +364,7 @@ function readMilestones(){return [...document.querySelectorAll("#milestoneRows .
 function validateDynamicRequired(){const wrappers=[...document.querySelectorAll("#missionForm .field")].filter(w=>!w.hidden);for(const wrap of wrappers){const el=wrap.querySelector("[data-field-type]");if(!el||!el.required)continue;const value=readControl(el,el.dataset.fieldType);const empty=value===null||value===undefined||value===""||(Array.isArray(value)&&!value.length)||(el.dataset.fieldType==="checkbox"&&!value);if(empty){el.scrollIntoView({behavior:"smooth",block:"center"});throw new Error("فیلد الزامی را تکمیل کنید: "+(wrap.querySelector("label")?.textContent||""));}}}
 function readCustom(){const out={};document.querySelectorAll("[data-custom-id]").forEach(el=>out[el.dataset.customId]=readControl(el,el.dataset.fieldType||el.dataset.customType||"text"));return out;}
 function writeCustom(values){Object.entries(values||{}).forEach(([id,value])=>{const el=document.querySelector('[data-custom-id="'+CSS.escape(id)+'"]');if(el)writeControl(el,value,el.dataset.fieldType||el.dataset.customType||"text");});applyFieldConditions();}
-function goStep(index){activeStep=Math.max(0,Math.min(sections.length-1,index));sections.forEach((s,i)=>s.classList.toggle("active",i===activeStep));tabs.forEach((t,i)=>t.setAttribute("aria-selected",String(i===activeStep)));$("prevStep").disabled=activeStep===0;$("nextStep").classList.toggle("hidden",activeStep===sections.length-1);$("saveMission").textContent=editingId?"ذخیره تغییرات مأموریت":"ثبت و ذخیره مأموریت";tabs[activeStep].scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"});}
+function goStep(index){activeStep=Math.max(0,Math.min(sections.length-1,index));sections.forEach((s,i)=>s.classList.toggle("active",i===activeStep));tabs.forEach((t,i)=>t.setAttribute("aria-selected",String(i===activeStep)));$("prevStep").disabled=activeStep===0;$("nextStep").classList.toggle("hidden",activeStep===sections.length-1);$("saveMission").innerHTML=(editingId?'<svg aria-hidden="true" viewBox="0 0 24 24" width="17" height="17" style="vertical-align:-4px;margin-left:6px;fill:none;stroke:currentColor;stroke-width:1.8"><path d="M4 4h13l3 3v13H4z"/><path d="M8 4v6h8V4M8 20v-6h8v6"/></svg>ذخیره تغییرات':'<svg aria-hidden="true" viewBox="0 0 24 24" width="17" height="17" style="vertical-align:-4px;margin-left:6px;fill:none;stroke:currentColor;stroke-width:1.8"><path d="M5 3h12l4 4v14H3V3z"/><path d="M7 3v6h10V3M7 21v-7h10v7"/></svg>ثبت و ذخیره مأموریت');if(document.body.classList.contains("mission-edit-mode"))sections[activeStep].scrollIntoView({block:"start",behavior:"smooth"});else tabs[activeStep].scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"});}
 function updateProgress(){const value=Math.max(0,Math.min(100,Number($("progress").value||0)));$("progressBar").style.width=value+"%";$("progressText").textContent="پیشرفت ثبت‌شده: "+toFa(value)+"٪ · وضعیت: "+statusLabel($("executionStatus").value);updateMissionStatusIndicator();}
 function archiveChangedFieldValues(data){
  if(!currentMission)return;
@@ -468,9 +468,9 @@ async function renderAttachments(recordId){
 }
 async function loadMission(id){
  const mission=await MissionStore.get(id);if(!mission)throw new Error("مأموریت موردنظر در بانک پیدا نشد.");if(window.Deputy7Access?.isReady()&&!window.Deputy7Access.canCurrent("edit",{departmentId:String(mission.executorDepartment||"")}))throw new Error("مجوز ویرایش این مأموریت برای حساب کاربری شما صادر نشده است.");
- currentMission=mission;fill(mission);
+ currentMission=mission;document.body.classList.add("mission-edit-mode");fill(mission);
  await renderAttachments(id);$("pageTitle").textContent="ویرایش مأموریت · "+mission.missionCode;
- $("missionMeta").textContent="کد مأموریت: "+mission.missionCode+" · ایجاد: "+new Date(mission.createdAt).toLocaleString("fa-IR");
+ $("missionMeta").textContent="کد مأموریت: "+mission.missionCode+" · تاریخ ثبت: "+new Date(mission.createdAt).toLocaleDateString("fa-IR");
  $("statusLabel").textContent=statusLabel(mission.status);
  updateProgress();renderProgressHistory(mission.progressLog||[]);renderWorkflowHistory(mission.workflowLog||[]);
 }
