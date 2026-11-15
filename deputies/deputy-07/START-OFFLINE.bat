@@ -1,28 +1,65 @@
 @echo off
-setlocal
+setlocal EnableExtensions
+title معاونت ۷ - اجرای محلی مأموریت‌ها
 for %%I in ("%~dp0..\..") do set "ROOT=%%~fI"
 set "URL=http://127.0.0.1:8765/deputies/deputy-07/pages/mission-create.html"
-netstat -ano | findstr /R /C:":8765 .*LISTENING" >nul
+
+echo ==========================================
+echo   سامانه مأموریت‌های معاونت ۷ - اجرای محلی
+echo ==========================================
+echo.
+
+REM If this local server is already running, reuse it.
+powershell -NoProfile -Command "try { $r=Invoke-WebRequest -UseBasicParsing -TimeoutSec 2 'http://127.0.0.1:8765/deputies/deputy-07/pages/mission-create.html'; if($r.StatusCode -eq 200){exit 0}else{exit 1} } catch { exit 1 }"
 if not errorlevel 1 goto openpage
+
 where py >nul 2>nul
 if not errorlevel 1 (
-  start "معاونت ۷ - اجرای محلی" /D "%ROOT%" py -3 -m http.server 8765 --bind 127.0.0.1
-  goto openpage
+  py -3 --version >nul 2>nul
+  if not errorlevel 1 (
+    start "سرور محلی معاونت ۷" /D "%ROOT%" cmd /k "py -3 -m http.server 8765 --bind 127.0.0.1"
+    goto waitserver
+  )
 )
+
 where python >nul 2>nul
 if not errorlevel 1 (
-  start "معاونت ۷ - اجرای محلی" /D "%ROOT%" python -m http.server 8765 --bind 127.0.0.1
-  goto openpage
+  python --version >nul 2>nul
+  if not errorlevel 1 (
+    start "سرور محلی معاونت ۷" /D "%ROOT%" cmd /k "python -m http.server 8765 --bind 127.0.0.1"
+    goto waitserver
+  )
 )
-start "معاونت ۷ - اجرای محلی" powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0START-MISSIONS-SERVER.ps1" -Root "%ROOT%" -Port 8765
-:openpage
-timeout /t 2 /nobreak >nul
-start "" "%URL%"
+
+echo Python 3 روی اين رايانه پيدا نشد.
 echo.
-echo سامانه مأموریت‌ها در نشانی محلی باز شد:
-echo %URL%
-echo پنجره سرور را تا پایان کار باز نگه دارید.
-echo اطلاعات در مرورگر همین رایانه و در IndexedDB ذخیره می‌شود.
-echo برای انتقال یا نگهداری نسخه مستقل، از صفحه «مدیریت داده‌های محلی» فایل اطلاعات بگیرید.
+echo فقط يک بار Python 3 را از نشانی رسمی نصب کن:
+echo https://www.python.org/downloads/windows/
+echo هنگام نصب، گزينه Add Python to PATH را فعال کن.
+echo سپس اين فايل را دوباره اجرا کن.
 echo.
 pause
+exit /b 1
+
+:waitserver
+echo در حال راه‌اندازی وب‌سرور محلی...
+for /L %%N in (1,1,15) do (
+  powershell -NoProfile -Command "try { $r=Invoke-WebRequest -UseBasicParsing -TimeoutSec 1 'http://127.0.0.1:8765/deputies/deputy-07/pages/mission-create.html'; if($r.StatusCode -eq 200){exit 0}else{exit 1} } catch { exit 1 }"
+  if not errorlevel 1 goto openpage
+  timeout /t 1 /nobreak >nul
+)
+echo.
+echo وب‌سرور در زمان مقرر آماده نشد. پنجره سرور را بررسی کن.
+pause
+exit /b 1
+
+:openpage
+echo.
+echo سامانه در نشانی زير باز می‌شود:
+echo %URL%
+echo برای پايان کار، پنجره «سرور محلی معاونت ۷» را ببند.
+echo اطلاعات در مرورگر همين رايانه و در IndexedDB ذخيره می‌شود.
+echo برای نگهداری نسخه مستقل، از صفحه مديريت داده‌های محلی خروجی بگير.
+echo.
+start "" "%URL%"
+exit /b 0
