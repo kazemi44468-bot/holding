@@ -54,7 +54,7 @@ td .required{width:auto;min-width:auto;accent-color:#5b9bb6}
 <button id="clearReview">پاک‌کردن پیشنهادهای واردشده</button>
 <a href="mission-create.html">مشاهده فرم اصلی مأموریت</a>
 </div>
-<p class="note">عنوان هر یک از ۱۲ آیتم اصلی و توضیح آن را مستقیماً ویرایش کن؛ می‌توانی آیتم اصلی یا هر زیرآیتم را حذف کنی. برای زیرآیتم‌ها نیز عنوان، نوع، اجباری‌بودن و گزینه‌ها قابل ویرایش است. اگر موردی باید حذف شود، در شرح تغییر صریحاً بنویس «حذف شود». برای افزودن فیلد جدید از دکمه انتهای هر بخش استفاده کن. اطلاعات به‌صورت خودکار در همین مرورگر ذخیره می‌شود.</p>
+<p class="note">عنوان هر یک از ۱۲ آیتم اصلی و توضیح آن را مستقیماً ویرایش کن؛ می‌توانی آیتم اصلی یا هر زیرآیتم را حذف کنی. برای زیرآیتم‌ها نیز عنوان، نوع، اجباری‌بودن و گزینه‌ها قابل ویرایش است. برای حذف ساختاری، از دکمه «حذف آیتم اصلی» یا «حذف زیرآیتم» استفاده کن؛ این حذف‌ها در فایل خروجی نیز ثبت می‌شوند. برای افزودن زیرآیتم از دکمه انتهای همان بخش استفاده کن. اطلاعات به‌صورت خودکار در همین مرورگر ذخیره می‌شود.</p>
 <div class="summary"><span id="fieldCount">—</span><span id="changeCount">۰ پیشنهاد تغییر</span><span>شناسه‌های فنی فعلی برای ارجاع دقیق درج شده‌اند</span></div>
 </section>
 <div id="sections"></div>
@@ -167,7 +167,7 @@ function load(data){
  data.sections.forEach(s=>{
   let sec=document.querySelector('[data-group="'+s.key+'"]');if(!sec)return;
   sec.querySelector("[data-section-title]").value=s.title??"";
-  sec.querySelector("[data-section-desc]").value=s.description??"";
+  sec.querySelector("[data-section-desc]").value=s.description??(groups.find(g=>g.key===s.key)?.desc||"");
   const keepIds=new Set((s.items||[]).map(x=>x.id));
   sec.querySelectorAll("tbody tr").forEach(tr=>{if(!keepIds.has(tr.dataset.id))tr.remove();});
   (s.items||[]).forEach(item=>{
