@@ -19,19 +19,6 @@ const isLate=m=>m.plannedEnd&&m.plannedEnd<today()&&!statusDone(m)&&m.status!=="
 const track=(m,k)=>m.processTracks?.[k]||{};
 const pct=(m,k)=>Math.max(0,Math.min(100,Number(track(m,k).progress||0)));
 const avg=(arr,k)=>arr.length?Math.round(arr.reduce((s,m)=>s+pct(m,k),0)/arr.length):0;
-function range(){
- const n=new Date(),p=$("reportPeriod").value;let from,to=new Date(n.getFullYear(),n.getMonth(),n.getDate());
- if(p==="day")from=to;
- else if(p==="week"){from=new Date(to);from.setDate(from.getDate()-((from.getDay()+1)%7))}
- else if(p==="month")from=jalaliMonthStart(n);
- else if(p==="quarter")from=jalaliStartOffset(n,2);
- else if(p==="year")from=jalaliYearStart(n);
- else if(p==="custom"){from=date($("reportFrom").value);to=date($("reportTo").value);if(!from||!to||from>to)return {from:null,to:null,label:"تاریخ شروع و پایان را انتخاب کنید"}}
- else if(p==="all"){const dates=eventList(rowsForDept()).map(e=>date(e.at)).filter(Boolean);from=dates.length?jalaliMonthStart(new Date(Math.min(...dates))):jalaliStartOffset(n,11);to=new Date(n.getFullYear(),n.getMonth(),n.getDate())}
- else return {from:null,to:null,label:"کل سوابق موجود"};
- return {from,to,label:from.toLocaleDateString("fa-IR")+" تا "+to.toLocaleDateString("fa-IR")}
-}
-function inside(v,r){if(!r.from&&!r.to)return true;const d=date(v);return !!d&&(!r.from||d>=r.from)&&(!r.to||d<plus(r.to,1))}
 function rowsForDept(){const d=$("reportDept").value;return all.filter(m=>!d||String(m.executorDepartment)===d)}
 function eventList(rows){const out=[],add=(m,type,at,label)=>{if(at)out.push({m,type,at:String(at),label})};for(const m of rows){add(m,"created",m.createdAt,"ایجاد");add(m,"started",m.actualStart,"شروع");add(m,"finished",m.actualEnd,"خاتمه");const w=m.workflowLog||[];if(!m.actualStart){const x=w.find(e=>e.stage==="in-progress");if(x)add(m,"started",x.at,"شروع از گردش کار")}if(!m.actualEnd&&statusDone(m)){const x=w.find(e=>["completed","closed"].includes(e.stage));add(m,"finished",x?.at||m.updatedAt,"خاتمه")};w.forEach(x=>add(m,"status",x.at,x.action||"تغییر وضعیت"));(m.progressLog||[]).forEach(x=>add(m,"action",x.at,"گزارش پیشرفت"));(m.processLog||[]).forEach(x=>add(m,"action",x.at,x.action||"اقدام"));Object.values(m.processTracks||{}).forEach(t=>(t.actions||[]).forEach(x=>add(m,"action",x.createdAt,"اقدام: "+(x.title||"ثبت‌شده"))))}
 const seen=new Set();return out.filter(e=>{const k=[e.m.id,e.type,e.at.slice(0,10),e.label].join("|");if(seen.has(k))return false;seen.add(k);return true})}
@@ -105,13 +92,6 @@ function drawDonut(id,items){
  let cursor=0;const parts=valid.map((x,i)=>{const start=cursor;cursor+=x.value/total*100;return { ...x,color:colors[i%colors.length],start,end:cursor}});
  const gradient=parts.map(x=>x.color+" "+x.start+"% "+x.end+"%").join(",");
  host.innerHTML='<div class="mission-donut-layout"><div class="mission-donut" style="background:conic-gradient('+gradient+')"><span>'+fa(total)+'<small>مورد در مجموع</small></span></div><div class="mission-donut-legend">'+parts.map(x=>'<div><i style="background:'+x.color+'"></i><span>'+esc(x.label)+'</span><b>'+fa(x.value)+' · '+fa(Math.round(x.value/total*100))+'٪</b></div>').join("")+'</div></div>';
-}
-function renderIndependentTimeline(rows){
- const r=chartRange($("chartPeriod-timeline")?.value||"all","timeline"),now=new Date(),ids=["rCreated","rStarted","rFinished","rActions","rStatusChanges","reportRangeLabel"],saved=ids.map(id=>$(id).textContent);
- if(r.invalid){$("timelineChart").textContent=r.label;return}
- const events=eventList(rows).map(e=>date(e.at)).filter(Boolean),earliest=events.length?new Date(Math.min(...events)):new Date(now.getFullYear(),now.getMonth()-11,1);
- const rangeValue=r.from?{from:r.from,to:new Date(r.to.getTime()-86400000),label:r.label}:{from:new Date(earliest.getFullYear(),earliest.getMonth(),1),to:now,label:"کل سوابق"};
- const control=$("reportPeriod"),old=control.value;control.value="custom";renderTimeline(rows,rangeValue);control.value=old;ids.forEach((id,i)=>$(id).textContent=saved[i]);
 }
 const metricLabels={created:"مأموریت‌های ایجادشده",started:"مأموریت‌های شروع‌شده",finished:"مأموریت‌های خاتمه‌یافته",actions:"اقدامات ثبت‌شده",active:"مأموریت‌های در جریان",completed:"مأموریت‌های پایان‌یافته",late:"مأموریت‌های معوق فعلی",total:"کل مأموریت‌های ایجادشده"};
 function monthBounds(d){const from=jalaliMonthStart(d),to=jalaliMonthStart(plus(from,35));return {from,to}}
