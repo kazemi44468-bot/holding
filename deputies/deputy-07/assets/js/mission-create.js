@@ -121,7 +121,9 @@ function prepareWorkflowSchema(){
    meta.section=section;meta.order=meta.order||1;meta.active=meta.active!==false;schema.coreFields[id]=meta;
   const generalOrder={"communicationType":1,"requestNumber":2,"requestDate":3,"requestChannel":4,"missionTitle":5,"missionSubject":6,"expectedPurpose":7,"priority":8,"confidentiality":9};
   if(Object.prototype.hasOwnProperty.call(generalOrder,id)){meta.section="general";meta.order=generalOrder[id];}
-  if(id==="requestDate")meta.label="تاریخ دریافت به معاونت";
+  const generalLabels={"communicationType":"نوع اعلام / مکاتبه","requestNumber":"شماره درخواست / نامه","requestDate":"تاریخ دریافت به معاونت","requestChannel":"نحوه وصول","missionTitle":"نام و عنوان مأموریت","missionSubject":"شرح موضوع، ضرورت و مسئله اصلی","expectedPurpose":"هدف و نتیجه مورد انتظار","priority":"اولویت","confidentiality":"سطح دسترسی"};
+  if(generalLabels[id])meta.label=generalLabels[id];
+  if(id==="confidentiality")meta.required=true;
   if(["communicationType","requestNumber","requestDate","requestChannel","missionTitle","missionSubject","expectedPurpose","priority","confidentiality"].includes(id))meta.options=fieldOptions($(id));
   }
   schema.extraFields=Array.isArray(schema.extraFields)?schema.extraFields:[];
