@@ -1,4 +1,4 @@
-import { MissionStore } from "./mission-store.js";
+import { MissionStore } from "./mission-store.js?v=20261115-02";
 import { ensureMissionSamples, removeMissionSamples } from "./mission-samples.js?v=20261115-01";
 const $=id=>document.getElementById(id),fa=n=>Number(n||0).toLocaleString("fa-IR");
 const depts={"1":"اداری و پشتیبانی","2":"تحقیق و توسعه","3":"پارکبان و معبربانان","4":"تأسیسات فنی و نگهداری","6":"فاوا و خدمات فنی","7":"جمع‌آوری و بازیافت پسماند","8":"بازرسی و تحقیقات محلی","HQ":"ستاد معاونت ۷"};
