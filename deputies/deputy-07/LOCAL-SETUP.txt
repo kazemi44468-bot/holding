@@ -17,7 +17,7 @@
 ------------
 1) فایل START-OFFLINE.bat را اجرا کن.
 2) سامانه در مرورگر با نشانی زیر باز می‌شود:
-   http://127.0.0.1:8765/deputies/deputy-07/pages/mission-create.html
+   http://127.0.0.1:8766/deputies/deputy-07/pages/mission-create.html
 3) پنجره سرور محلی را تا پایان استفاده باز نگه دار.
 4) برای توقف سرور، پنجره «سرور محلی معاونت ۷» را ببند.
 
