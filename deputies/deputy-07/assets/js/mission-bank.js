@@ -1,4 +1,4 @@
-import { MissionStore } from "./mission-store.js";
+import { MissionStore } from "./mission-store.js?v=20261115-02";
 import { ensureMissionSamples } from "./mission-samples.js?v=20261115-01";
 const $=id=>document.getElementById(id);
 const fa=n=>Number(n||0).toLocaleString("fa-IR");
