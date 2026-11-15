@@ -1,3 +1,14 @@
+/* فاوآیکن واحد هلدینگ در تمام صفحات داخلی معاونت ۷؛ مسیر بر اساس محل واقعی فایل اسکریپت تعیین می‌شود. */
+(()=> {
+ const script=[...document.scripts].find(node=>/assets\/js\/main\.js(?:\?|$)/.test(node.getAttribute("src")||""));
+ const base=script?.src?new URL("../../../../",script.src):new URL("../../",location.href);
+ const svg=new URL("favicon.svg?v=holding-favicon-20261115",base).href;
+ const ico=new URL("favicon.ico?v=holding-favicon-20261115",base).href;
+ const add=(rel,type,href)=>{let link=document.querySelector('link[rel="'+rel+'"][type="'+type+'"]');if(!link){link=document.createElement("link");link.rel=rel;link.type=type;document.head.appendChild(link);}link.href=href;};
+ add("icon","image/svg+xml",svg);
+ add("icon","image/x-icon",ico);
+})();
+
 /* هویت واحد معاونت ۷ در عنوان و متن صفحات داخلی */
 document.title=document.title.replaceAll("شرکت هفت","معاونت ۷").replaceAll("شهر بهشت","معاونت ۷").replace(/(?<![آ-ی])شرکت(?![آ-ی])/g,"معاونت");
 if(document.body){
