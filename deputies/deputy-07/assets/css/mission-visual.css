@@ -228,3 +228,41 @@ body.ops-page:has(.mission-report-panel) .report-chart-detail{grid-column:1/-1;c
 body.ops-page:has(.mission-report-panel) .report-column{height:auto!important;min-height:180px}
 body.ops-page:has(.mission-report-panel) .report-column-track{height:125px!important}
 body.ops-page:has(.mission-report-panel) .report-bar{grid-template-columns:minmax(76px,1fr) minmax(70px,2fr) 42px!important}
+
+/* بازطراحی تحلیل مقایسه‌ای و انتخاب مأموریت */
+body.ops-page:has(.mission-report-panel) .comparison-toolbar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:14px;background:#f5f9f8;border:1px solid #dce9e5;border-radius:12px}
+body.ops-page:has(.mission-report-panel) .comparison-toolbar>label,body.ops-page:has(.mission-report-panel) .comparison-selectors>label{display:grid;gap:6px;color:#536b62;font-size:11px;font-weight:600}
+body.ops-page:has(.mission-report-panel) .comparison-toolbar select,body.ops-page:has(.mission-report-panel) .comparison-toolbar input,body.ops-page:has(.mission-report-panel) .comparison-selectors input,body.ops-page:has(.mission-report-panel) .comparison-selectors select{width:100%;min-height:38px;padding:7px 10px;border:1px solid #d7e4df;border-radius:8px;background:#fff;color:#405c52;font:inherit;font-size:11px}
+body.ops-page:has(.mission-report-panel) .comparison-custom-dates{display:flex;gap:8px;align-items:end}
+body.ops-page:has(.mission-report-panel) .comparison-custom-dates[hidden]{display:none}
+body.ops-page:has(.mission-report-panel) .comparison-custom-dates label{display:grid;gap:5px;color:#687c73;font-size:10px}
+body.ops-page:has(.mission-report-panel) .comparison-selectors{display:grid;grid-template-columns:1fr 220px;gap:12px;margin:12px 0}
+body.ops-page:has(.mission-report-panel) .comparison-choice-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+body.ops-page:has(.mission-report-panel) .comparison-choice{display:flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid #dce8e3;border-radius:8px;background:#fff;color:#526b61;font-size:10px;cursor:pointer}
+body.ops-page:has(.mission-report-panel) .comparison-choice:has(input:checked){border-color:#83b9aa;background:#eaf5f1;color:#356e60}
+body.ops-page:has(.mission-report-panel) .comparison-choice input{accent-color:#589b89}
+body.ops-page:has(.mission-report-panel) .comparison-selected{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+body.ops-page:has(.mission-report-panel) .comparison-selected span{padding:4px 8px;border-radius:6px;background:#e8f1ef;color:#54766b;font-size:9px}
+body.ops-page:has(.mission-report-panel) .comparison-summary{margin:12px 0 5px;padding:10px 12px;border-right:3px solid #78ad9e;background:#f5f9f8;color:#536d63;font-size:11px}
+body.ops-page:has(.mission-report-panel) .comparison-chart{padding:12px 5px;overflow-x:auto}
+body.ops-page:has(.mission-report-panel) .comparison-axis{display:flex;justify-content:space-between;margin:0 5px 5px 5px;color:#87958e;font-size:9px}
+body.ops-page:has(.mission-report-panel) .comparison-bars{display:flex;align-items:stretch;gap:12px;min-height:230px;padding:10px 4px 0;border-bottom:1px solid #dfe9e4}
+body.ops-page:has(.mission-report-panel) .comparison-bar-item{display:flex;flex:1 0 76px;max-width:150px;min-width:76px;flex-direction:column;align-items:center;justify-content:end;gap:5px;text-align:center}
+body.ops-page:has(.mission-report-panel) .comparison-bar-value{font-size:11px;font-weight:800;color:#456c60}
+body.ops-page:has(.mission-report-panel) .comparison-bar-track{display:flex;align-items:end;justify-content:center;width:100%;height:145px;background:repeating-linear-gradient(to top,#f0f5f2 0,#f0f5f2 1px,transparent 1px,transparent 25%);border-bottom:1px solid #d9e5df}
+body.ops-page:has(.mission-report-panel) .comparison-bar-track i{display:block;width:min(34px,65%);min-height:0;border-radius:6px 6px 0 0;background:linear-gradient(to top,#6b9e90,#9ac8ba)}
+body.ops-page:has(.mission-report-panel) .comparison-bar-item>b{font-size:10px;color:#536b62;line-height:1.5}
+body.ops-page:has(.mission-report-panel) .comparison-bar-item>small{font-size:8px;color:#8b9891}
+body.ops-page:has(.mission-report-panel) .comparison-note{padding:12px;color:#849189;font-size:10px}
+body.ops-page:has(.mission-report-panel) .mission-picker{display:grid;grid-template-columns:1fr 190px;gap:7px 12px;align-items:end;max-width:720px}
+body.ops-page:has(.mission-report-panel) .mission-picker>label{color:#5a7066;font-size:10px}
+body.ops-page:has(.mission-report-panel) .mission-picker>input,body.ops-page:has(.mission-report-panel) .mission-picker>select{width:100%;min-height:37px;padding:7px 10px;border:1px solid #dce7e2;border-radius:8px;background:#fff;color:#4e665c;font:inherit;font-size:11px}
+body.ops-page:has(.mission-report-panel) .mission-choice-list{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:7px;max-height:230px;overflow:auto;padding:8px;border:1px solid #e2ebe6;border-radius:10px;background:#f8fbf9}
+body.ops-page:has(.mission-report-panel) .mission-choice{display:grid;gap:4px;padding:9px 10px;border:1px solid #e1eae5;border-radius:8px;background:#fff;text-align:right;color:#526b61;font:inherit;cursor:pointer}
+body.ops-page:has(.mission-report-panel) .mission-choice.is-selected{border-color:#69a995;background:#edf7f3;box-shadow:inset -3px 0 #69a995}
+body.ops-page:has(.mission-report-panel) .mission-choice b{font-size:10px}
+body.ops-page:has(.mission-report-panel) .mission-choice small{font-size:9px;color:#829088}
+body.ops-page:has(.mission-report-panel) .mission-selected-card{grid-column:1/-1;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:9px 12px;border:1px solid #d9e8e1;border-radius:9px;background:#f1f8f5;color:#547267;font-size:10px}
+body.ops-page:has(.mission-report-panel) .mission-selected-card button{margin-right:auto;border:1px solid #d8e4df;border-radius:7px;background:#fff;color:#657b71;padding:5px 9px;font:inherit;cursor:pointer}
+body.ops-page:has(.mission-report-panel) .mission-detail-box .mission-report-section-head{align-items:flex-start}
+@media(max-width:700px){body.ops-page:has(.mission-report-panel) .comparison-toolbar{grid-template-columns:1fr}body.ops-page:has(.mission-report-panel) .comparison-selectors{grid-template-columns:1fr}body.ops-page:has(.mission-report-panel) .mission-picker{grid-template-columns:1fr}body.ops-page:has(.mission-report-panel) .mission-choice-list{grid-template-columns:1fr}}
