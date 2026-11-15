@@ -483,7 +483,7 @@ async function unlock(){
  if(editingId)await loadMission(editingId);
  else{$("executionStatus").value="registered";writeField("requestDate",dateNow());writeField("receivedAt",localDateTimeNow());renderProcessTracks({});updateProgress();}
 }
-$("unlockVault").addEventListener("click",async()=>{try{await unlock();}catch(e){$("authState").textContent=e.message;}});
+$("unlockVault").hidden=true;$("authState").textContent="در حال آماده‌سازی ذخیره‌سازی محلی…";unlock().catch(e=>{$("authState").textContent="خطا در آماده‌سازی مخزن محلی: "+e.message;});
 $("executorDepartment").addEventListener("change",()=>{renderDepartmentFields();applyFieldConditions();});
 $("missionForm").addEventListener("input",applyFieldConditions);$("missionForm").addEventListener("change",applyFieldConditions);
 document.querySelectorAll('input[name="hasPrevious"]').forEach(el=>el.addEventListener("change",()=>$("previousFields").classList.toggle("hidden",selectedRadio("hasPrevious")!=="yes")));
