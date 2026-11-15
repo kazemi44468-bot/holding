@@ -301,3 +301,36 @@ body.ops-page:has(.mission-report-panel) .notice-breakdown tbody tr:nth-child(ev
 body.ops-page:has(.mission-report-panel) .notice-breakdown tbody tr:hover{background:#eef7fa}
 body.ops-page:has(.mission-report-panel) .mission-report-panel>.table-scroll{margin-top:18px;border:1px solid #dfe9ed;border-radius:11px;overflow:auto}
 body.ops-page:has(.mission-report-panel) .mission-report-panel>.table-scroll:before{content:"مقایسه عملکرد اداره‌ها";display:block;padding:12px 14px;background:#f3f8fa;color:#496778;font-size:12px;font-weight:700;border-bottom:1px solid #dfe9ed}
+
+
+/* Mission comparison: compact, aligned native checkboxes */
+body.ops-page:has(.mission-report-panel) .comparison-choice{min-height:32px;padding:5px 9px;gap:7px;border-radius:7px;font-size:10px;line-height:1.5}
+body.ops-page:has(.mission-report-panel) .comparison-choice input{width:14px!important;height:14px!important;min-width:14px!important;min-height:14px!important;margin:0!important;padding:0!important;flex:0 0 14px!important;accent-color:#4d9eb3;transform:none!important}
+body.ops-page:has(.mission-report-panel) .comparison-choice-list{gap:6px}
+body.ops-page:has(.mission-report-panel) .comparison-selectors{gap:10px}
+body.ops-page:has(.mission-report-panel) #comparisonDeptSearch{max-width:300px}
+body.ops-page:has(.mission-report-panel) .comparison-selected{gap:4px;margin-top:6px}
+body.ops-page:has(.mission-report-panel) .comparison-selected span{padding:3px 7px;font-size:9px}
+
+/* Mission bank: one project progress metric and clear status colors */
+body.ops-page:has(.mission-bank-panel) .mission-table{min-width:900px!important}
+body.ops-page:has(.mission-bank-panel) .mission-table .mission-status{display:inline-flex;align-items:center;justify-content:center;min-width:92px;padding:5px 9px;border:1px solid transparent;border-radius:7px;font-size:10px;font-weight:750;white-space:nowrap}
+body.ops-page:has(.mission-bank-panel) .mission-table .mission-status--draft{background:#f1f3f5;border-color:#dfe4e8;color:#66727b}
+body.ops-page:has(.mission-bank-panel) .mission-table .mission-status--registered{background:#edf4fb;border-color:#d7e5f3;color:#527594}
+body.ops-page:has(.mission-bank-panel) .mission-table .mission-status--referred{background:#eef7fa;border-color:#d3e8ee;color:#4e8392}
+body.ops-page:has(.mission-bank-panel) .mission-table .mission-status--in-progress{background:#eaf6f2;border-color:#cfe8de;color:#43836f}
+body.ops-page:has(.mission-bank-panel) .mission-table .mission-status--blocked{background:#fff2e8;border-color:#f0ddc9;color:#a56f43}
+body.ops-page:has(.mission-bank-panel) .mission-table .mission-status--review{background:#f5f0fb;border-color:#e3d9f1;color:#806a9d}
+body.ops-page:has(.mission-bank-panel) .mission-table .mission-status--revision{background:#fff0f1;border-color:#f1d9dc;color:#a66b73}
+body.ops-page:has(.mission-bank-panel) .mission-table .mission-status--completed{background:#eaf5f0;border-color:#d0e7db;color:#4b8068}
+body.ops-page:has(.mission-bank-panel) .mission-table .mission-status--closed{background:#eef1f4;border-color:#dce2e8;color:#687887}
+body.ops-page:has(.mission-bank-panel) .mission-table .mission-status--cancelled,
+body.ops-page:has(.mission-bank-panel) .mission-table .mission-status--unknown{background:#f4f4f4;border-color:#e5e5e5;color:#777}
+body.ops-page:has(.mission-bank-panel) .mission-table .progress-track{width:100px!important;height:8px!important;margin-bottom:3px!important;background:#edf2f4!important}
+body.ops-page:has(.mission-bank-panel) .mission-table .progress-track i{background:#75b9c8!important}
+body.ops-page:has(.mission-bank-panel) .bank-row-actions{white-space:nowrap}
+body.ops-page:has(.mission-bank-panel) .bank-edit,
+body.ops-page:has(.mission-bank-panel) .bank-delete{display:inline-flex;align-items:center;justify-content:center;min-width:48px;margin:2px;padding:5px 9px;border:1px solid #d8e6e9;border-radius:7px;background:#f3f8fa;color:#4c7885;font-size:10px;font-weight:700;text-decoration:none;cursor:pointer}
+body.ops-page:has(.mission-bank-panel) .bank-delete{border-color:#ecdada;background:#fff7f7;color:#a56e73}
+body.ops-page:has(.mission-bank-panel) .bank-delete:hover{background:#fbecee;border-color:#dfc0c4}
+body.ops-page:has(.mission-bank-panel) .mission-kpis article:nth-child(n+6){display:none!important}
