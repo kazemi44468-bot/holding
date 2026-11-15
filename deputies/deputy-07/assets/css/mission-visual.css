@@ -290,3 +290,14 @@ body.ops-page:has(.mission-report-panel) .comparison-bar-item>b{color:#4e6877}
 body.ops-page:has(.mission-report-panel) .mission-choice{border-color:#dce8ed;color:#536d7b}
 body.ops-page:has(.mission-report-panel) .mission-choice.is-selected{border-color:#75b6c5;background:#eef7fa;box-shadow:inset -3px 0 #75b6c5}
 body.ops-page:has(.mission-report-panel) .mission-selected-card{border-color:#d5e7ed;background:#f0f8fa;color:#4d7180}
+
+
+/* گزارش اداره‌ها: جدول توسعه‌یافته و قابل‌خواندن */
+body.ops-page:has(.mission-report-panel) .notice-breakdown{min-width:900px;width:100%;border-collapse:separate;border-spacing:0;background:#fff}
+body.ops-page:has(.mission-report-panel) .notice-breakdown th{padding:11px 9px;background:#edf5f8;color:#4d6878;font-size:10px;font-weight:700;white-space:nowrap;border-bottom:1px solid #d9e7ed}
+body.ops-page:has(.mission-report-panel) .notice-breakdown td{padding:10px 9px;color:#526b79;font-size:10px;text-align:center;border-bottom:1px solid #edf1f3;white-space:nowrap}
+body.ops-page:has(.mission-report-panel) .notice-breakdown td:first-child{text-align:right;font-weight:700;color:#405e70;min-width:175px}
+body.ops-page:has(.mission-report-panel) .notice-breakdown tbody tr:nth-child(even){background:#f8fbfc}
+body.ops-page:has(.mission-report-panel) .notice-breakdown tbody tr:hover{background:#eef7fa}
+body.ops-page:has(.mission-report-panel) .mission-report-panel>.table-scroll{margin-top:18px;border:1px solid #dfe9ed;border-radius:11px;overflow:auto}
+body.ops-page:has(.mission-report-panel) .mission-report-panel>.table-scroll:before{content:"مقایسه عملکرد اداره‌ها";display:block;padding:12px 14px;background:#f3f8fa;color:#496778;font-size:12px;font-weight:700;border-bottom:1px solid #dfe9ed}
