@@ -22,7 +22,7 @@ const avg=(arr,k)=>arr.length?Math.round(arr.reduce((s,m)=>s+pct(m,k),0)/arr.len
 function range(){
  const n=new Date(),p=$("reportPeriod").value;let from,to=new Date(n.getFullYear(),n.getMonth(),n.getDate());
  if(p==="day")from=to;
- else if(p==="week"){from=new Date(to);from.setDate(from.getDate()-((from.getDay()+6)%7))}
+ else if(p==="week"){from=new Date(to);from.setDate(from.getDate()-((from.getDay()+1)%7))}
  else if(p==="month")from=jalaliMonthStart(n);
  else if(p==="quarter")from=jalaliStartOffset(n,2);
  else if(p==="year")from=jalaliYearStart(n);
@@ -88,7 +88,7 @@ function chartRange(period,id){
  if(period==="all")return {from:null,to:end,label:"کل سوابق"};
  let from,to=end;
  if(period==="day")from=new Date(now.getFullYear(),now.getMonth(),now.getDate());
- else if(period==="week"){from=new Date(now.getFullYear(),now.getMonth(),now.getDate());from.setDate(from.getDate()-((from.getDay()+6)%7))}
+ else if(period==="week"){from=new Date(now.getFullYear(),now.getMonth(),now.getDate());from.setDate(from.getDate()-((from.getDay()+1)%7))}
  else if(period==="month")from=jalaliMonthStart(now);
  else if(period==="previous"){from=jalaliStartOffset(now,1);to=jalaliMonthStart(now)}
  else if(period==="quarter")from=jalaliStartOffset(now,2);
