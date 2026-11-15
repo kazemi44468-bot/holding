@@ -4,7 +4,7 @@ cd /d "%~dp0..\.."
 set "URL=http://127.0.0.1:8765/deputies/deputy-07/pages/mission-bank.html"
 where py >nul 2>nul
 if %errorlevel%==0 (
-  start "معاونت ۷ - سرور آفلاین" cmd /k "cd /d ""%CD%"" && py -3 -m http.server 8765 --bind 127.0.0.1"
+  start "معاونت ۷ - سرور آفلاین" /D "%CD%" py -3 -m http.server 8765 --bind 127.0.0.1
 ) else (
   where python >nul 2>nul
   if errorlevel 1 (
@@ -12,7 +12,7 @@ if %errorlevel%==0 (
     pause
     exit /b 1
   )
-  start "معاونت ۷ - سرور آفلاین" cmd /k "cd /d ""%CD%"" && python -m http.server 8765 --bind 127.0.0.1"
+  start "معاونت ۷ - سرور آفلاین" /D "%CD%" python -m http.server 8765 --bind 127.0.0.1
 )
 timeout /t 2 /nobreak >nul
 start "" "%URL%"
