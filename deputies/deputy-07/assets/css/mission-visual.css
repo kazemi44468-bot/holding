@@ -356,3 +356,141 @@ body.ops-page:has(.mission-report-panel) .mission-days-metrics .is-completed{bac
 body.ops-page:has(.mission-report-panel) .mission-days-metrics .is-completed b{color:#3c827d}
 body.ops-page:has(.mission-report-panel) .mission-days-metrics .is-delta{background:#f4f7fb;border-color:#dfe8ef}
 @media(max-width:600px){body.ops-page:has(.mission-report-panel) .mission-days-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+
+/* Mission suite refresh — coordinated cyan/blue palette, clear contrast and consistent components */
+:root{
+ --mv-ink:#30485b;--mv-muted:#718596;--mv-line:#dce8ef;
+ --mv-green:#4e9fb4;--mv-green-soft:#eaf6f9;
+ --mv-sky:#edf5fc;--mv-sun:#fff8e9;--mv-lilac:#f3f0fb;--mv-pink:#fff1f3;
+}
+body.ops-page:has(#missionForm),body.ops-page:has(.mission-bank-panel),body.ops-page:has(.mission-report-panel){
+ background:#f3f7fa!important;color:#30485b!important;
+}
+body.ops-page:has(#missionForm) .ops-intro,
+body.ops-page:has(.mission-bank-panel) .ops-intro,
+body.ops-page:has(.mission-report-panel) .ops-intro{
+ background:linear-gradient(115deg,#fff 0%,#edf7fb 62%,#f5f3fc 100%)!important;
+ border-color:#dce8ef!important;box-shadow:0 5px 18px rgba(55,105,130,.07)!important;
+}
+body.ops-page:has(#missionForm) .ops-intro h1,
+body.ops-page:has(.mission-bank-panel) .ops-intro h1,
+body.ops-page:has(.mission-report-panel) .ops-intro h1{color:#294b63!important}
+body.ops-page:has(#missionForm) .ops-intro p,
+body.ops-page:has(.mission-bank-panel) .ops-intro p,
+body.ops-page:has(.mission-report-panel) .ops-intro p{color:#708496!important}
+body.ops-page:has(#missionForm) .mission-auth,
+body.ops-page:has(.mission-bank-panel) .mission-auth,
+body.ops-page:has(.mission-report-panel) .mission-auth{
+ background:#eef7fb!important;border-color:#d8e9f0!important;color:#58778a!important
+}
+body.ops-page:has(#missionForm) .mission-section,
+body.ops-page:has(#missionForm) .mission-card,
+body.ops-page:has(#missionForm) .mission-admin,
+body.ops-page:has(.mission-bank-panel) .mission-bank-panel,
+body.ops-page:has(.mission-report-panel) .mission-report-panel{
+ border-color:#dce7ed!important;box-shadow:0 4px 16px rgba(52,91,116,.055)!important
+}
+body.ops-page:has(#missionForm) .mission-tabs{
+ background:rgba(247,251,253,.97)!important;border-color:#dce8ef!important
+}
+body.ops-page:has(#missionForm) .mission-tab{
+ border-color:#dce7ed!important;color:#526c7d!important
+}
+body.ops-page:has(#missionForm) .mission-tab[aria-selected=true]{
+ background:#dff1f6!important;border-color:#9bcbd6!important;color:#285f72!important;box-shadow:inset 0 -3px #55a9bd!important
+}
+body.ops-page:has(#missionForm) .step-count{
+ border-color:#d7e5eb!important;color:#587384!important
+}
+body.ops-page:has(#missionForm) .section-head h2,
+body.ops-page:has(#missionForm) .custom-fields h3,
+body.ops-page:has(#missionForm) .process-track-card h4{color:#3c7184!important}
+body.ops-page:has(#missionForm) .field label{color:#4d6577!important}
+body.ops-page:has(#missionForm) .field input,
+body.ops-page:has(#missionForm) .field select,
+body.ops-page:has(#missionForm) .field textarea,
+body.ops-page:has(#missionForm) .milestone-row input,
+body.ops-page:has(#missionForm) .milestone-row select{
+ border-color:#d8e4eb!important;background:#fbfdff!important;color:#30485b!important
+}
+body.ops-page:has(#missionForm) .field input:focus,
+body.ops-page:has(#missionForm) .field select:focus,
+body.ops-page:has(#missionForm) .field textarea:focus{
+ border-color:#65b5c6!important;box-shadow:0 0 0 3px rgba(83,169,190,.14)!important
+}
+body.ops-page:has(#missionForm) button.primary,
+body.ops-page:has(.mission-bank-panel) .primary-link{
+ background:#398da5!important;border-color:#398da5!important;color:#fff!important;box-shadow:0 3px 9px rgba(57,141,165,.18)!important
+}
+body.ops-page:has(#missionForm) button.primary:hover,
+body.ops-page:has(.mission-bank-panel) .primary-link:hover{background:#2f7d94!important}
+body.ops-page:has(#missionForm) button.quiet,
+body.ops-page:has(.mission-bank-panel) .mission-bank-toolbar button,
+body.ops-page:has(.mission-report-panel) .report-filter button{
+ background:#f0f6fa!important;border-color:#d8e5ed!important;color:#49697d!important
+}
+body.ops-page:has(#missionForm) .mission-progress span{background:linear-gradient(90deg,#58aec1,#8b9bd0)!important}
+body.ops-page:has(#missionForm) .process-track-area{background:#f1f8fb!important;border-color:#dce9ef!important}
+body.ops-page:has(#missionForm) .process-track-card:nth-child(3n+1){background:#f0f8fb!important}
+body.ops-page:has(#missionForm) .process-track-card:nth-child(3n+2){background:#f4f6fc!important}
+body.ops-page:has(#missionForm) .process-track-card:nth-child(3n){background:#fff9ed!important}
+body.ops-page:has(#missionForm) .repeat-note{background:#fff8e9!important;border-color:#f0e4c8!important;color:#786d50!important}
+body.ops-page:has(.mission-bank-panel) .mission-kpis article,
+body.ops-page:has(.mission-report-panel) .mission-kpis article{
+ border-color:#dce7ed!important;box-shadow:0 3px 12px rgba(52,91,116,.045)!important
+}
+body.ops-page:has(.mission-bank-panel) .mission-kpis article:nth-child(4n+1),
+body.ops-page:has(.mission-report-panel) .mission-kpis article:nth-child(4n+1){background:#eaf6f9!important}
+body.ops-page:has(.mission-bank-panel) .mission-kpis article:nth-child(4n+2),
+body.ops-page:has(.mission-report-panel) .mission-kpis article:nth-child(4n+2){background:#edf5fc!important}
+body.ops-page:has(.mission-bank-panel) .mission-kpis article:nth-child(4n+3),
+body.ops-page:has(.mission-report-panel) .mission-kpis article:nth-child(4n+3){background:#fff8e9!important}
+body.ops-page:has(.mission-bank-panel) .mission-kpis article:nth-child(4n),
+body.ops-page:has(.mission-report-panel) .mission-kpis article:nth-child(4n){background:#f3f0fb!important}
+body.ops-page:has(.mission-bank-panel) .mission-kpis b,
+body.ops-page:has(.mission-report-panel) .mission-kpis b{color:#347f98!important}
+body.ops-page:has(.mission-bank-panel) .mission-bank-filters,
+body.ops-page:has(.mission-report-panel) .report-filter{
+ background:#f2f7fa!important;border-color:#dce7ed!important
+}
+body.ops-page:has(.mission-bank-panel) .mission-table thead th,
+body.ops-page:has(.mission-report-panel) table thead th{
+ background:#eaf3f8!important;color:#41677d!important;border-color:#d7e5ed!important
+}
+body.ops-page:has(.mission-bank-panel) .mission-table tbody td,
+body.ops-page:has(.mission-report-panel) table tbody td{color:#526879!important}
+body.ops-page:has(.mission-bank-panel) .mission-table .progress-track i,
+body.ops-page:has(.mission-report-panel) .report-track i,
+body.ops-page:has(.mission-report-panel) .report-column-track i{background:#65b4c5!important}
+body.ops-page:has(.mission-report-panel) .report-box,
+body.ops-page:has(.mission-report-panel) .comparison-box,
+body.ops-page:has(.mission-report-panel) .report-gantt-box,
+body.ops-page:has(.mission-report-panel) .report-detail-box{
+ border-color:#dce7ed!important;box-shadow:0 3px 12px rgba(52,91,116,.035)!important
+}
+body.ops-page:has(.mission-report-panel) .report-box h2{color:#3e7185!important}
+body.ops-page:has(.mission-report-panel) .report-column-track{background:#edf3f7!important}
+body.ops-page:has(.mission-report-panel) .mission-donut-legend b,
+body.ops-page:has(.mission-report-panel) .comparison-kpis b{color:#347f98!important}
+body.ops-page:has(.mission-report-panel) .comparison-toolbar{background:#f0f6fa!important;border-color:#dce7ed!important}
+body.ops-page:has(.mission-report-panel) .comparison-value>i>em{background:#65b4c5!important}
+body.ops-page:has(.mission-report-panel) .mission-detail-progress i{background:#65b4c5!important}
+body.ops-page:has(.mission-report-panel) .mission-detail-tracks em{background:#65b4c5!important}
+body.ops-page:has(.mission-report-panel) .mission-status-indicator[data-phase="active"]{background:#eaf6fa!important;border-color:#cfe5ed!important;color:#39758a!important}
+body.ops-page:has(.mission-report-panel) .mission-status-indicator[data-phase="completed"]{background:#edf5fc!important;border-color:#d6e5f2!important;color:#426d8c!important}
+body.ops-page:has(.mission-report-panel) .mission-status-indicator[data-phase="blocked"]{background:#fff7eb!important;border-color:#f0e0c3!important;color:#8a7046!important}
+body.ops-page:has(.mission-bank-panel) .mission-table tbody tr:hover{background:#eef7fb!important}
+body.ops-page:has(#missionForm) .field-editor{background:#eff7fb!important;border-color:#cfe2eb!important}
+body.ops-page:has(#missionForm) .field-editor-grid input,
+body.ops-page:has(#missionForm) .field-editor-grid select,
+body.ops-page:has(#missionForm) .field-editor-grid textarea,
+body.ops-page:has(#missionForm) .field-editor-condition-grid input,
+body.ops-page:has(#missionForm) .field-editor-condition-grid select{border-color:#d8e5ed!important;color:#30485b!important}
+@media(max-width:760px){
+ body.ops-page:has(#missionForm) .form-grid{grid-template-columns:1fr!important}
+ body.ops-page:has(#missionForm) .mission-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ body.ops-page:has(#missionForm) .milestone-row{grid-template-columns:1fr 1fr!important}
+ body.ops-page:has(.mission-bank-panel) .mission-bank-filters{grid-template-columns:1fr!important}
+ body.ops-page:has(.mission-report-panel) .report-grid{grid-template-columns:1fr!important}
+}
