@@ -387,6 +387,15 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 </details>
 <footer class="ops-footer"></footer>
 </main>
+<script>
+if(location.protocol==="file:"){
+ const warning=document.createElement("div");
+ warning.setAttribute("role","alert");
+ warning.style.cssText="margin:12px auto;padding:12px 16px;max-width:1100px;border:1px solid #e7d6a8;border-radius:10px;background:#fff9e9;color:#78643a;font:12px/2 sans-serif";
+ warning.textContent="این صفحه مستقیماً از فایل محلی باز شده است. مرورگر در این حالت اجرای ماژول‌های سامانه و Service Worker را محدود می‌کند و ثبت اطلاعات قابل اتکا نیست. پوشه کامل مخزن را نگه دارید و فایل START-OFFLINE.bat را اجرا کنید؛ سپس صفحه را از نشانی localhost باز کنید.";
+ document.querySelector(".ops-main")?.prepend(warning);
+}
+</script>
 <script src="../assets/js/access-control.js?v=mission-suite-20261114-14"></script>
 <script src="../assets/js/main.js?v=mission-suite-20261114-14"></script>
 <script src="../assets/js/organization-modules.js?v=dept8-20261107"></script>
