@@ -75,6 +75,7 @@ body.ops-page:has(#missionForm) .mission-admin{background:#fbfcfc}
 @media(max-width:650px){.field-editor-condition-grid{grid-template-columns:1fr}}
 </style>
 <style>
+.mission-status-indicator{display:flex;align-items:center;gap:9px;margin:0 0 13px;padding:10px 13px;border:1px solid #d7e9f3;border-radius:10px;background:#f0f9ff;color:#356d91;font-size:12px;font-weight:700}.mission-status-indicator .status-icon{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:#fff;font-size:16px}.mission-status-indicator[data-phase="active"]{background:#effaf7;border-color:#cde9df;color:#347b68}.mission-status-indicator[data-phase="completed"]{background:#f2f8f1;border-color:#d8e8d3;color:#4e7950}.mission-status-indicator[data-phase="blocked"]{background:#fff7ee;border-color:#f0dfc7;color:#946a36}
 .process-track-area{margin-top:16px;padding:14px;border:1px solid #e1e9eb;border-radius:12px;background:#fbfdfd}.process-track-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.process-track-card{min-width:0;padding:12px;border:1px solid #e2e9eb;border-radius:10px;background:#fff}.process-track-card h4{margin:0 0 5px;color:#42656d;font-size:13px}.process-track-card>p{min-height:34px;margin:0 0 9px;color:#78878c;font-size:10px;line-height:1.8}.process-track-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.process-track-card label{display:grid;gap:4px;color:#5b6d73;font-size:10px}.process-track-card input,.process-track-card select,.process-track-card textarea{width:100%;min-width:0;padding:7px;border:1px solid #dce6e8;border-radius:7px;background:#fff;color:#40545d;font:inherit;font-size:11px}.process-action-entry{display:grid;gap:7px;margin-top:10px;padding-top:9px;border-top:1px solid #edf1f2}.process-action-entry button{justify-self:start;padding:6px 9px;font-size:10px}.process-track-actions{display:grid;gap:6px;margin-top:9px}.process-track-action{padding:8px;border:1px solid #edf1f2;border-radius:7px;background:#fafcfc;font-size:10px;color:#5c7076}.process-track-action b{color:#456a72}.process-track-action small{display:block;color:#849196;margin-top:3px}.process-track-history{margin-top:12px;padding:10px;border:1px solid #e6edef;border-radius:8px;background:#fff;font-size:11px;color:#60747a}.process-track-history>div{margin-top:7px;line-height:1.9}@media(max-width:900px){.process-track-grid{grid-template-columns:1fr 1fr}}@media(max-width:600px){.process-track-grid{grid-template-columns:1fr}.process-track-card>p{min-height:0}}
 </style><style>
 
@@ -262,19 +263,17 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 <div class="form-grid">
 <div class="field"><label for="receivedAt">تاریخ و زمان وصول درخواست</label><input id="receivedAt" type="datetime-local"></div>
 <div class="field"><label for="deliveredToDeputyAt">تحویل به معاونت</label><input id="deliveredToDeputyAt" type="datetime-local"></div>
-<div class="field"><label for="referredAt">ارجاع به اداره مربوطه</label><input id="referredAt" type="datetime-local"></div>
-<div class="field"><label for="coordinationAt">صورتجلسه / جلسه هماهنگی</label><input id="coordinationAt" type="datetime-local"></div>
-<div class="field"><label for="plannedStart">تاریخ شروع برنامه‌ای</label><input id="plannedStart" type="date"></div>
-<div class="field"><label for="actualStart">تاریخ شروع واقعی</label><input id="actualStart" type="date"></div>
-<div class="field"><label for="plannedEnd">مهلت / تاریخ اتمام برنامه‌ای <span class="req">*</span></label><input id="plannedEnd" type="date" required></div>
-<div class="field"><label for="actualEnd">تاریخ اتمام واقعی</label><input id="actualEnd" type="date"></div>
+<div class="field"><label for="deputyApproval">نتیجه تصمیم معاون</label><select id="deputyApproval"><option value="">در انتظار تصمیم</option><option value="approved">تأیید شد</option><option value="rejected">تأیید نشد</option><option value="returned">عودت برای تکمیل</option></select></div>
+<div class="field" data-condition-field="deputyApproval" data-condition-value="approved"><label for="deputyReferralDepartment">اداره مقصد پس از تأیید معاون</label><select id="deputyReferralDepartment"><option value="">انتخاب اداره</option><option value="1">اداره ۱ · اداری و پشتیبانی</option><option value="2">اداره ۲ · تحقیق و توسعه</option><option value="3">اداره ۳ · پارکبان و معبربانان</option><option value="4">اداره ۴ · تأسیسات فنی و امور نگهداری</option><option value="6">اداره ۶ · فاوا و خدمات فنی</option><option value="7">اداره ۷ · جمع‌آوری، نگهداری و بازیافت پسماند</option><option value="8">اداره ۸ · بازرسی و تحقیقات محلی</option><option value="HQ">ستاد معاونت ۷</option></select></div>
+<div class="field" data-condition-field="deputyApproval" data-condition-value="approved"><label for="deputyReferralPerson">نفر مسئول ارجاع پس از تأیید</label><input id="deputyReferralPerson" placeholder="نام یا کد پرسنلی فرد مسئول"></div>
+<div class="field" data-condition-field="deputyApproval" data-condition-value="approved"><label for="deputyReferralAt">تاریخ و ساعت ارجاع پس از تأیید</label><input id="deputyReferralAt" type="datetime-local"></div>
 <div class="field"><label for="reportFrequency">تناوب گزارش پیشرفت</label><select id="reportFrequency"><option>روزانه</option><option selected>هفتگی</option><option>دو هفته یک‌بار</option><option>ماهانه</option><option>در نقاط عطف</option></select></div>
 <div class="field"><label for="durationEstimate">مدت برآوردی (روز)</label><input id="durationEstimate" type="number" min="0" placeholder="خودکار از تاریخ‌ها قابل محاسبه است"></div>
 <div class="field full"><label>نقاط عطف و موعدهای میانی</label><div id="milestoneRows" class="milestone-rows"></div><div class="mission-actions"><div class="right"><button type="button" id="addMilestone" class="quiet">＋ افزودن نقطه عطف</button><button type="button" id="calculateMilestoneProgress" class="quiet">محاسبه پیشرفت از نقاط عطف</button></div></div><small>برای هر نقطه عطف، موعد، مسئول، وزن و درصد پیشرفت را ثبت کنید. نقاط عطف بخشی از برنامه اجرایی مأموریت هستند.</small></div>
 </div>
 </section>
 <section class="mission-card mission-section" data-section="routing">
-<div class="section-head"><div><h2>دسته‌بندی و ارجاع</h2><p>تعیین اداره مسئول، همکاران، مسئول مستقیم و زمان وصول ارجاع</p></div></div>
+<div class="section-head"><div><h2>دسته‌بندی و ارجاع</h2><p>تعیین اداره‌ای که مأموریت برای اقدام به آن ارجاع شده و مسئول اجرای آن</p></div></div>
 <div class="field"><label>آیا سابقه انجام مأموریت مشابه وجود دارد؟</label><div class="choice-row"><label><input type="radio" name="hasPrevious" value="no" checked> خیر</label><label><input type="radio" name="hasPrevious" value="yes"> بله</label></div></div>
 <div id="previousFields" class="form-grid hidden">
 <div class="field"><label for="previousMissionCode">کد مأموریت قبلی</label><input id="previousMissionCode" placeholder="کد پرونده قبلی"></div>
@@ -284,8 +283,17 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 </div>
 </section>
 <section class="mission-card mission-section" data-section="action">
-<div class="section-head"><div><h2>گزارش اقدام اداره</h2><p>ثبت شروع، اقدامات، پیشرفت، موانع و پایان عملیات</p></div></div>
+<div class="section-head"><div><h2>گزارش اقدام اداره</h2><p>زمان‌بندی، ویژگی‌های عملیاتی، وضعیت جاری و میزان پیشرفت مأموریت</p></div></div>
+<div id="missionStatusIndicator" class="mission-status-indicator" role="status" aria-live="polite"><span class="status-icon">🗓️</span><span class="status-text">برنامه‌ریزی قبل از اجرا</span></div>
 <div class="form-grid">
+<div class="field"><label for="coordinationAt">تاریخ جلسه هماهنگی پیش از مأموریت</label><input id="coordinationAt" type="datetime-local"></div>
+<div class="field"><label for="plannedStart">تاریخ شروع برنامه‌ای</label><input id="plannedStart" type="date"></div>
+<div class="field"><label for="actualStart">تاریخ شروع واقعی کار</label><input id="actualStart" type="date"></div>
+<div class="field"><label for="plannedEnd">تاریخ پایان برنامه‌ای / مهلت اتمام <span class="req">*</span></label><input id="plannedEnd" type="date" required></div>
+<div class="field"><label for="actualEnd">تاریخ اتمام واقعی کار</label><input id="actualEnd" type="date"></div>
+<div class="field"><label for="locationScope">محدوده جغرافیایی مأموریت</label><select id="locationScope"><option value="">انتخاب کنید</option><option value="inside-province">داخل استان</option><option value="outside-province">خارج از استان</option></select></div>
+<div class="field"><label for="workSchedule">الگوی زمانی و شیفت کاری</label><select id="workSchedule"><option value="">انتخاب کنید</option><option value="daytime">روزانه</option><option value="continuous-24h">شبانه‌روزی</option></select></div>
+<div class="field"><label for="continuityType">نحوه تداوم انجام کار</label><select id="continuityType"><option value="">انتخاب کنید</option><option value="continuous">پیوسته و مستمر</option><option value="intermittent">ناپیوسته / مقطعی</option></select></div>
 <div class="field"><label for="teamLead">مسئول / مدیر مأموریت</label><input id="teamLead" placeholder="کد پرسنلی یا نام"></div>
 <div class="field"><label for="supervisor">ناظر و مقام پاسخ‌خواه</label><input id="supervisor"></div>
 <div class="field full"><label for="teamMembers">اعضای تیم (هر سطر: کد پرسنلی | نقش | مسئولیت)</label><textarea id="teamMembers" placeholder="۱۰۰۰ | کارشناس | تهیه گزارش تخصصی"></textarea></div>
@@ -308,7 +316,7 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 <div class="section-head"><div><h2>چک‌لیست ارزیابی</h2><p>سنجش کیفیت، تحقق هدف و رعایت زمان‌بندی</p></div></div>
 <div class="form-grid">
 <div class="field"><label for="progress">درصد پیشرفت واقعی</label><input id="progress" type="number" min="0" max="100" value="0"></div>
-<div class="field"><label for="executionStatus">وضعیت اجرا</label><select id="executionStatus"><option value="draft">پیش‌نویس</option><option value="registered">ثبت‌شده</option><option value="referred">ارجاع‌شده</option><option value="in-progress">در حال اجرا</option><option value="blocked">متوقف / دارای مانع</option><option value="review">در انتظار بررسی نتیجه</option><option value="completed">تکمیل‌شده</option><option value="closed">مختومه</option><option value="cancelled">لغوشده</option></select></div>
+<div class="field"><label for="executionStatus">وضعیت مأموریت</label><select id="executionStatus"><option value="draft">پیش‌نویس</option><option value="registered">🗓️ برنامه‌ریزی قبل از اجرا</option><option value="referred">📨 ارجاع‌شده / در انتظار شروع</option><option value="in-progress">🔄 در حال اجرا</option><option value="blocked">⛔ متوقف / دارای مانع</option><option value="review">🔎 در انتظار بررسی نتیجه</option><option value="completed">✅ اتمام و پایان کار</option><option value="closed">☑️ مختومه</option><option value="cancelled">لغوشده</option></select></div>
 <div class="field"><label for="qualityScore">امتیاز کیفیت (از ۱۰۰)</label><input id="qualityScore" type="number" min="0" max="100"></div>
 <div class="field"><label for="goalAchievement">میزان تحقق هدف (درصد)</label><input id="goalAchievement" type="number" min="0" max="100"></div>
 <div class="field"><label for="scheduleStatus">وضعیت زمان‌بندی</label><select id="scheduleStatus"><option>مطابق برنامه</option><option>جلوتر از برنامه</option><option>دارای تأخیر</option><option>متوقف به علت مانع</option><option>تمدید مهلت</option></select></div>
@@ -425,7 +433,7 @@ if(location.protocol==="file:"){
 <script src="../assets/js/main.js?v=mission-suite-20261114-14"></script>
 <script src="../assets/js/organization-modules.js?v=dept8-20261107"></script>
 <script src="../assets/js/mobile-nav.js?v=internal-routing-20261110" defer></script>
-<script type="module" src="../assets/js/mission-create.js?v=mission-workflow-v20-20261115"></script>
+<script type="module" src="../assets/js/mission-create.js?v=mission-workflow-v21-20261115"></script>
 <script>if("serviceWorker" in navigator)navigator.serviceWorker.register("../sw.js").catch(()=>{});</script>
 </body></html>
 
