@@ -22,6 +22,18 @@ body.ops-page{background:#f5f8fa;color:var(--rv-ink)}
 .section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;background:#f1f7fa;border-bottom:1px solid var(--rv-line)}
 .section-head h2{font-size:14px;margin:0;color:#426e84}.section-head p{font-size:10px;color:#7c909b;margin:4px 0 0}
 .section-head button{padding:6px 9px;white-space:nowrap}
+.section-head input{border:1px solid #dce6eb;border-radius:6px;padding:6px;background:#fff;color:#426e84;font:inherit;font-size:13px;font-weight:700;min-width:220px}
+.section-head .desc-edit{display:block;margin-top:5px;min-width:260px;width:min(500px,55vw);font-size:10px;font-weight:400;color:#7c909b}
+.section-tools,.row-tools{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+.row-tools{white-space:nowrap}.row-tools button{border:1px solid #dce6eb;background:#f7fafb;border-radius:5px;padding:5px 7px;color:#597789;cursor:pointer;font:inherit;font-size:10px}
+.row-tools .remove,.section-tools .remove{color:#a45e5e}
+.settings-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.settings-grid label{display:block;font-size:11px;color:#718692}
+.settings-grid input{display:block;width:100%;margin-top:5px;border:1px solid #dce6eb;border-radius:7px;padding:8px;font:inherit;font-size:12px;color:#40566a}
+.menu-preview{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.menu-preview a{font-size:10px;text-decoration:none;color:#4e758b;background:#f1f7fa;border:1px solid #dce8ee;padding:5px 8px;border-radius:6px}
+@media(max-width:700px){.settings-grid{grid-template-columns:1fr}}
+
 .table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:1050px;font-size:11px}
 th,td{padding:8px;border-bottom:1px solid #edf1f3;text-align:right;vertical-align:top}
 th{background:#fafcfd;color:#627987;font-weight:700;white-space:nowrap}
@@ -132,17 +144,23 @@ const groups=[
 ]}
 ];
 const typeLabels={text:"متن کوتاه",textarea:"متن چندخطی",number:"عدد",date:"تاریخ",datetime:"تاریخ و ساعت",select:"فهرست انتخابی",radio:"گزینه بله/خیر یا تک‌انتخابی",repeater:"فهرست چندردیفی",file:"فایل پیوست",system:"سیستمی / خودکار"};
-const host=document.getElementById("sections");
+const host=document.getElementById("sections");\nconst removedIds=new Set();
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function makeRow(f,idx){
  const [id,label,type,required,options]=f;
- return '<tr data-id="'+esc(id)+'"><td><div class="field-id">'+esc(id)+'</div><span class="badge">'+(idx+1)+'</span></td><td><input class="field-label" data-k="label" value="'+esc(label)+'"></td><td><select data-k="type">'+Object.entries(typeLabels).map(([v,l])=>'<option value="'+v+'" '+(v===type?'selected':'')+'>'+l+'</option>').join("")+'</select></td><td style="text-align:center"><input class="required" type="checkbox" data-k="required" '+(required?'checked':'')+'></td><td><textarea class="options" data-k="options" placeholder="گزینه‌ها؛ هر گزینه با ؛ جدا شود">'+esc(options)+'</textarea></td><td><textarea class="change" data-k="change" placeholder="مثلاً عنوان دقیق‌تر شود، حذف شود، با فیلد دیگر ادغام شود..."></textarea></td></tr>';
+ return '<tr data-id="'+esc(id)+'"><td><div class="field-id">'+esc(id)+'</div><span class="badge">'+(idx+1)+'</span></td><td><input class="field-label" data-k="label" value="'+esc(label)+'"></td><td><select data-k="type">'+Object.entries(typeLabels).map(([v,l])=>'<option value="'+v+'" '+(v===type?'selected':'')+'>'+l+'</option>').join("")+'</select></td><td style="text-align:center"><input class="required" type="checkbox" data-k="required" '+(required?'checked':'')+'></td><td><textarea class="options" data-k="options" placeholder="گزینه‌ها؛ هر گزینه با ؛ جدا شود">'+esc(options)+'</textarea></td><td><textarea class="change" data-k="change" placeholder="مثلاً عنوان دقیق‌تر شود، حذف شود، با فیلد دیگر ادغام شود..."></textarea></td><td><div class="row-tools"><button type="button" data-row-up>↑</button><button type="button" data-row-down>↓</button><button type="button" class="remove" data-row-remove>حذف</button></div></td></tr>';
 }
 function render(){
- host.innerHTML=groups.map(g=>'<section class="review-section" data-group="'+g.key+'"><div class="section-head"><div><h2>'+g.title+'</h2><p>'+g.desc+'</p></div><button type="button" data-add="'+g.key+'">＋ افزودن ردیف جدید</button></div><div class="table-wrap"><table><thead><tr><th>شناسه / ردیف</th><th>عنوان فعلی / عنوان پیشنهادی</th><th>نوع فیلد</th><th>اجباری</th><th>گزینه‌ها / توضیح نوع</th><th>اصلاح موردنظر شما</th></tr></thead><tbody>'+g.fields.map(makeRow).join("")+'</tbody></table></div></section>').join("");
+ host.innerHTML=groups.map(g=>'<section class="review-section" data-group="'+g.key+'"><div class="section-head"><div><input data-section-title value="'+esc(g.title)+'"><input class="desc-edit" data-section-desc value="'+esc(g.desc)+'"></div><div class="section-tools"><button type="button" data-sec-up>↑ بخش</button><button type="button" data-sec-down>↓ بخش</button><button type="button" data-add="'+g.key+'">＋ افزودن ردیف</button><button type="button" class="remove" data-sec-remove>حذف بخش</button></div></div><div class="table-wrap"><table><thead><tr><th>شناسه / ردیف</th><th>عنوان فعلی / عنوان پیشنهادی</th><th>نوع فیلد</th><th>اجباری</th><th>گزینه‌ها / توضیح نوع</th><th>اصلاح موردنظر شما</th><th>مدیریت</th></tr></thead><tbody>'+g.fields.map(makeRow).join("")+'</tbody></table></div></section>').join("");
  document.querySelectorAll("[data-add]").forEach(b=>b.addEventListener("click",()=>addRow(b.dataset.add)));
- document.querySelectorAll("#sections input,#sections textarea,#sections select,#globalNotes").forEach(el=>el.addEventListener("input",saveLocal));
- updateCounts();
+ document.querySelectorAll("[data-row-up]").forEach(b=>b.onclick=()=>{const tr=b.closest("tr");if(tr.previousElementSibling)tr.parentNode.insertBefore(tr,tr.previousElementSibling);saveLocal();});
+ document.querySelectorAll("[data-row-down]").forEach(b=>b.onclick=()=>{const tr=b.closest("tr");if(tr.nextElementSibling)tr.parentNode.insertBefore(tr.nextElementSibling,tr);saveLocal();});
+ document.querySelectorAll("[data-row-remove]").forEach(b=>b.onclick=()=>{const tr=b.closest("tr");if(confirm("این فیلد از پیشنهاد نهایی حذف شود؟")){removedIds.add(tr.dataset.id);tr.remove();saveLocal();}});
+ document.querySelectorAll("[data-sec-up]").forEach(b=>b.onclick=()=>{const el=b.closest(".review-section");if(el.previousElementSibling)host.insertBefore(el,el.previousElementSibling);applyPageLabels();saveLocal();});
+ document.querySelectorAll("[data-sec-down]").forEach(b=>b.onclick=()=>{const el=b.closest(".review-section");if(el.nextElementSibling)host.insertBefore(el.nextElementSibling,el);applyPageLabels();saveLocal();});
+ document.querySelectorAll("[data-sec-remove]").forEach(b=>b.onclick=()=>{const el=b.closest(".review-section");if(confirm("کل بخش و فیلدهای آن حذف شوند؟")){el.querySelectorAll("tbody tr").forEach(tr=>removedIds.add(tr.dataset.id));el.remove();applyPageLabels();saveLocal();}});
+ document.querySelectorAll("#sections input,#sections textarea,#sections select,#globalNotes,#brandTitle,#brandSubtitle,#pageEyebrow,#pageHeading,#pageDescription").forEach(el=>el.addEventListener("input",()=>{applyPageLabels();saveLocal();}));
+ applyPageLabels();updateCounts();
 }
 function addRow(key){
  const g=groups.find(x=>x.key===key),tbody=document.querySelector('[data-group="'+key+'"] tbody'),tr=document.createElement("tr");tr.className="new-row";tr.dataset.id="NEW-"+key+"-"+(tbody.children.length+1);
@@ -150,15 +168,22 @@ function addRow(key){
  tbody.append(tr);tr.querySelectorAll("input,textarea,select").forEach(el=>el.addEventListener("input",saveLocal));saveLocal();tr.scrollIntoView({behavior:"smooth",block:"center"});
 }
 function collect(){
- return {format:"H7-MISSION-FORM-REVIEW",version:1,createdAt:new Date().toISOString(),scope:"deputy-07 mission creation form",globalNotes:document.getElementById("globalNotes").value,sections:[...document.querySelectorAll(".review-section")].map(sec=>({key:sec.dataset.group,title:sec.querySelector("h2").textContent,items:[...sec.querySelectorAll("tbody tr")].map(tr=>({id:tr.dataset.id,label:tr.querySelector('[data-k="label"]')?.value||"",type:tr.querySelector('[data-k="type"]')?.value||"",required:!!tr.querySelector('[data-k="required"]')?.checked,options:tr.querySelector('[data-k="options"]')?.value||"",change:tr.querySelector('[data-k="change"]')?.value||""}))}))};
+ return {format:"H7-MISSION-FORM-REVIEW",version:2,createdAt:new Date().toISOString(),scope:"deputy-07 mission creation form",pageSettings:Object.fromEntries(["brandTitle","brandSubtitle","pageEyebrow","pageHeading","pageDescription"].map(id=>[id,document.getElementById(id).value])),removedIds:[...removedIds],globalNotes:document.getElementById("globalNotes").value,sections:[...document.querySelectorAll(".review-section")].map(sec=>({key:sec.dataset.group,title:sec.querySelector("[data-section-title]").value,description:sec.querySelector("[data-section-desc]").value,items:[...sec.querySelectorAll("tbody tr")].map(tr=>({id:tr.dataset.id,label:tr.querySelector('[data-k="label"]')?.value||"",type:tr.querySelector('[data-k="type"]')?.value||"",required:!!tr.querySelector('[data-k="required"]')?.checked,options:tr.querySelector('[data-k="options"]')?.value||"",change:tr.querySelector('[data-k="change"]')?.value||""}))}))};
 }
-function saveLocal(){try{localStorage.setItem("h7-mission-form-review-v1",JSON.stringify(collect()));}catch(e){}updateCounts();}
-function updateCounts(){const data=collect(),items=data.sections.flatMap(x=>x.items);document.getElementById("fieldCount").textContent=items.length.toLocaleString("fa-IR")+" ردیف قابل بررسی";const n=items.filter(x=>x.change.trim()||x.id.startsWith("NEW-")&&x.label.trim()).length+(data.globalNotes.trim()?1:0);document.getElementById("changeCount").textContent=n.toLocaleString("fa-IR")+" پیشنهاد تغییر";}
+function applyPageLabels(){
+ const val=id=>document.getElementById(id).value;
+ document.querySelector(".ops-brand b").textContent=val("brandTitle");document.querySelector(".ops-brand small").textContent=val("brandSubtitle");
+ document.querySelector(".ops-intro .eyebrow").textContent=val("pageEyebrow");document.querySelector(".ops-intro h1").textContent=val("pageHeading");document.querySelector(".ops-intro p").textContent=val("pageDescription");document.title=val("pageHeading")+" | معاونت ۷";
+ document.getElementById("sectionMenuPreview").innerHTML=[...document.querySelectorAll(".review-section")].map(sec=>'<a href="#'+sec.dataset.group+'">'+esc(sec.querySelector("[data-section-title]").value)+'</a>').join("");
+ document.querySelectorAll(".review-section").forEach(sec=>sec.id=sec.dataset.group);
+}
+function saveLocal(){try{localStorage.setItem("h7-mission-form-review-v2",JSON.stringify(collect()));}catch(e){}updateCounts();}
+function updateCounts(){const data=collect(),items=data.sections.flatMap(x=>x.items);document.getElementById("fieldCount").textContent=items.length.toLocaleString("fa-IR")+" ردیف قابل بررسی";const n=items.filter(x=>x.change.trim()||x.id.startsWith("NEW-")&&x.label.trim()).length+(data.globalNotes.trim()?1:0)+data.removedIds.length;document.getElementById("changeCount").textContent=n.toLocaleString("fa-IR")+" پیشنهاد تغییر";}
 function download(){const blob=new Blob([JSON.stringify(collect(),null,2)],{type:"application/json;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="mission-form-review-deputy-07.json";a.click();URL.revokeObjectURL(url);}
 function load(data){if(data?.format!=="H7-MISSION-FORM-REVIEW"||!Array.isArray(data.sections))throw new Error("ساختار فایل بازبینی معتبر نیست.");data.sections.forEach(s=>{const sec=document.querySelector('[data-group="'+s.key+'"]');if(!sec)return;s.items?.forEach(item=>{let tr=[...sec.querySelectorAll("tbody tr")].find(x=>x.dataset.id===item.id);if(!tr&&String(item.id).startsWith("NEW-")){const btn=sec.querySelector("[data-add]");addRow(s.key);tr=sec.querySelector("tbody tr:last-child");tr.dataset.id=item.id;tr.querySelector(".field-id").textContent=item.id;}if(!tr)return;for(const k of ["label","type","options","change"]){const el=tr.querySelector('[data-k="'+k+'"]');if(el)el.value=item[k]??"";}const req=tr.querySelector('[data-k="required"]');if(req)req.checked=!!item.required;});});document.getElementById("globalNotes").value=data.globalNotes||"";saveLocal();}
 function clearAll(){if(!confirm("همه پیشنهادهای واردشده در این کاربرگ پاک شود؟"))return;document.querySelectorAll('#sections [data-k="change"],#sections .new-row').forEach(el=>{if(el.matches("tr"))el.remove();else el.value="";});document.querySelectorAll('#sections [data-k="label"]').forEach(el=>{if(el.closest("tr")?.classList.contains("new-row"))el.value="";});document.getElementById("globalNotes").value="";saveLocal();}
 render();
-try{const saved=localStorage.getItem("h7-mission-form-review-v1");if(saved)load(JSON.parse(saved));}catch(e){}
+try{const saved=localStorage.getItem("h7-mission-form-review-v2")||localStorage.getItem("h7-mission-form-review-v1");if(saved)load(JSON.parse(saved));}catch(e){}
 document.getElementById("exportReview").onclick=download;document.getElementById("exportReviewBottom").onclick=download;
 document.getElementById("importReview").onclick=()=>document.getElementById("importFile").click();
 document.getElementById("importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{load(JSON.parse(await f.text()));alert("فایل بازبینی بارگذاری شد.");}catch(err){alert("خطا در خواندن فایل: "+err.message);}e.target.value="";};
