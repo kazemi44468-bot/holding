@@ -116,6 +116,7 @@ function chartRange(period){
 function chartRows(rows,id){
  const r=chartRange($("chartPeriod-"+id)?.value||"all");
  if(!r.from)return rows;
+ if(id==="gantt")return rows.filter(m=>{const a=date(m.plannedStart)||date(m.createdAt),b=date(m.plannedEnd)||date(m.actualEnd)||a;return a&&b&&a<r.to&&b>=r.from});
  return rows.filter(m=>{const d=date(m.createdAt)||date(m.actualStart)||date(m.plannedStart)||date(m.updatedAt);return d&&d>=r.from&&d<r.to});
 }
 function renderIndependentTimeline(rows){
