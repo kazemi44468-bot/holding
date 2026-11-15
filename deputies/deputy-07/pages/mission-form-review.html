@@ -144,7 +144,7 @@ const groups=[
 ]}
 ];
 const typeLabels={text:"متن کوتاه",textarea:"متن چندخطی",number:"عدد",date:"تاریخ",datetime:"تاریخ و ساعت",select:"فهرست انتخابی",radio:"گزینه بله/خیر یا تک‌انتخابی",repeater:"فهرست چندردیفی",file:"فایل پیوست",system:"سیستمی / خودکار"};
-const host=document.getElementById("sections");\nconst removedIds=new Set();
+const host=document.getElementById("sections");\nconst removedIds=new Set();\nconst removedSections=new Set();
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function makeRow(f,idx){
  const [id,label,type,required,options]=f;
@@ -165,10 +165,17 @@ function render(){
 function addRow(key){
  const g=groups.find(x=>x.key===key),tbody=document.querySelector('[data-group="'+key+'"] tbody'),tr=document.createElement("tr");tr.className="new-row";tr.dataset.id="NEW-"+key+"-"+(tbody.children.length+1);
  tr.innerHTML='<td><div class="field-id">'+tr.dataset.id+'</div><span class="badge">جدید</span></td><td><input class="field-label" data-k="label" placeholder="عنوان فیلد جدید"></td><td><select data-k="type">'+Object.entries(typeLabels).map(([v,l])=>'<option value="'+v+'">'+l+'</option>').join("")+'</select></td><td style="text-align:center"><input class="required" type="checkbox" data-k="required"></td><td><textarea class="options" data-k="options" placeholder="گزینه‌ها یا واحد اندازه‌گیری"></textarea></td><td><textarea class="change" data-k="change" placeholder="هدف و منطق افزودن این فیلد"></textarea></td>';
- tbody.append(tr);tr.querySelectorAll("input,textarea,select").forEach(el=>el.addEventListener("input",saveLocal));saveLocal();tr.scrollIntoView({behavior:"smooth",block:"center"});
+ tr.lastElementChild?.remove();
+ tr.insertAdjacentHTML("beforeend",'<td><div class="row-tools"><button type="button" data-row-up>↑</button><button type="button" data-row-down>↓</button><button type="button" class="remove" data-row-remove>حذف</button></div></td>');
+ tbody.append(tr);
+ tr.querySelectorAll("input,textarea,select").forEach(el=>el.addEventListener("input",saveLocal));
+ tr.querySelector("[data-row-up]").onclick=()=>{if(tr.previousElementSibling)tr.parentNode.insertBefore(tr,tr.previousElementSibling);saveLocal();};
+ tr.querySelector("[data-row-down]").onclick=()=>{if(tr.nextElementSibling)tr.parentNode.insertBefore(tr.nextElementSibling,tr);saveLocal();};
+ tr.querySelector("[data-row-remove]").onclick=()=>{if(confirm("این فیلد حذف شود؟")){removedIds.add(tr.dataset.id);tr.remove();saveLocal();}};
+ saveLocal();tr.scrollIntoView({behavior:"smooth",block:"center"});
 }
 function collect(){
- return {format:"H7-MISSION-FORM-REVIEW",version:2,createdAt:new Date().toISOString(),scope:"deputy-07 mission creation form",pageSettings:Object.fromEntries(["brandTitle","brandSubtitle","pageEyebrow","pageHeading","pageDescription"].map(id=>[id,document.getElementById(id).value])),removedIds:[...removedIds],globalNotes:document.getElementById("globalNotes").value,sections:[...document.querySelectorAll(".review-section")].map(sec=>({key:sec.dataset.group,title:sec.querySelector("[data-section-title]").value,description:sec.querySelector("[data-section-desc]").value,items:[...sec.querySelectorAll("tbody tr")].map(tr=>({id:tr.dataset.id,label:tr.querySelector('[data-k="label"]')?.value||"",type:tr.querySelector('[data-k="type"]')?.value||"",required:!!tr.querySelector('[data-k="required"]')?.checked,options:tr.querySelector('[data-k="options"]')?.value||"",change:tr.querySelector('[data-k="change"]')?.value||""}))}))};
+ return {format:"H7-MISSION-FORM-REVIEW",version:2,createdAt:new Date().toISOString(),scope:"deputy-07 mission creation form",pageSettings:Object.fromEntries(["brandTitle","brandSubtitle","pageEyebrow","pageHeading","pageDescription"].map(id=>[id,document.getElementById(id).value])),removedIds:[...removedIds],removedSections:[...removedSections],globalNotes:document.getElementById("globalNotes").value,sections:[...document.querySelectorAll(".review-section")].map(sec=>({key:sec.dataset.group,title:sec.querySelector("[data-section-title]").value,description:sec.querySelector("[data-section-desc]").value,items:[...sec.querySelectorAll("tbody tr")].map(tr=>({id:tr.dataset.id,label:tr.querySelector('[data-k="label"]')?.value||"",type:tr.querySelector('[data-k="type"]')?.value||"",required:!!tr.querySelector('[data-k="required"]')?.checked,options:tr.querySelector('[data-k="options"]')?.value||"",change:tr.querySelector('[data-k="change"]')?.value||""}))}))};
 }
 function applyPageLabels(){
  const val=id=>document.getElementById(id).value;
@@ -178,9 +185,34 @@ function applyPageLabels(){
  document.querySelectorAll(".review-section").forEach(sec=>sec.id=sec.dataset.group);
 }
 function saveLocal(){try{localStorage.setItem("h7-mission-form-review-v2",JSON.stringify(collect()));}catch(e){}updateCounts();}
-function updateCounts(){const data=collect(),items=data.sections.flatMap(x=>x.items);document.getElementById("fieldCount").textContent=items.length.toLocaleString("fa-IR")+" ردیف قابل بررسی";const n=items.filter(x=>x.change.trim()||x.id.startsWith("NEW-")&&x.label.trim()).length+(data.globalNotes.trim()?1:0)+data.removedIds.length;document.getElementById("changeCount").textContent=n.toLocaleString("fa-IR")+" پیشنهاد تغییر";}
+function updateCounts(){const data=collect(),items=data.sections.flatMap(x=>x.items);document.getElementById("fieldCount").textContent=items.length.toLocaleString("fa-IR")+" ردیف قابل بررسی";const n=items.filter(x=>x.change.trim()||x.id.startsWith("NEW-")&&x.label.trim()).length+(data.globalNotes.trim()?1:0)+data.removedIds.length+data.removedSections.length;document.getElementById("changeCount").textContent=n.toLocaleString("fa-IR")+" پیشنهاد تغییر";}
 function download(){const blob=new Blob([JSON.stringify(collect(),null,2)],{type:"application/json;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="mission-form-review-deputy-07.json";a.click();URL.revokeObjectURL(url);}
-function load(data){if(data?.format!=="H7-MISSION-FORM-REVIEW"||!Array.isArray(data.sections))throw new Error("ساختار فایل بازبینی معتبر نیست.");data.sections.forEach(s=>{const sec=document.querySelector('[data-group="'+s.key+'"]');if(!sec)return;s.items?.forEach(item=>{let tr=[...sec.querySelectorAll("tbody tr")].find(x=>x.dataset.id===item.id);if(!tr&&String(item.id).startsWith("NEW-")){const btn=sec.querySelector("[data-add]");addRow(s.key);tr=sec.querySelector("tbody tr:last-child");tr.dataset.id=item.id;tr.querySelector(".field-id").textContent=item.id;}if(!tr)return;for(const k of ["label","type","options","change"]){const el=tr.querySelector('[data-k="'+k+'"]');if(el)el.value=item[k]??"";}const req=tr.querySelector('[data-k="required"]');if(req)req.checked=!!item.required;});});document.getElementById("globalNotes").value=data.globalNotes||"";saveLocal();}
+function load(data){
+ if(data?.format!=="H7-MISSION-FORM-REVIEW"||!Array.isArray(data.sections))throw new Error("ساختار فایل بازبینی معتبر نیست.");
+ removedIds.clear();removedSections.clear();
+ (data.removedIds||[]).forEach(x=>removedIds.add(x));(data.removedSections||[]).forEach(x=>removedSections.add(x));
+ if(data.pageSettings)Object.entries(data.pageSettings).forEach(([id,val])=>{const el=document.getElementById(id);if(el)el.value=val;});
+ data.sections.forEach(itemSection=>{
+  const sec=document.querySelector('[data-group="'+itemSection.key+'"]');if(!sec)return;
+  sec.querySelector("[data-section-title]").value=itemSection.title||"";
+  sec.querySelector("[data-section-desc]").value=itemSection.description||"";
+  itemSection.items?.forEach(item=>{
+   let tr=[...sec.querySelectorAll("tbody tr")].find(x=>x.dataset.id===item.id);
+   if(!tr&&String(item.id).startsWith("NEW-")){
+    addRow(itemSection.key);tr=sec.querySelector("tbody tr:last-child");tr.dataset.id=item.id;tr.querySelector(".field-id").textContent=item.id;
+   }
+   if(!tr)return;
+   for(const k of ["label","type","options","change"]){const el=tr.querySelector('[data-k="'+k+'"]');if(el)el.value=item[k]??"";}
+   const req=tr.querySelector('[data-k="required"]');if(req)req.checked=!!item.required;
+  });
+ });
+ const ordered=data.sections.map(x=>document.querySelector('[data-group="'+x.key+'"]')).filter(Boolean);
+ ordered.forEach(sec=>host.append(sec));
+ document.querySelectorAll(".review-section tbody tr").forEach(tr=>{if(removedIds.has(tr.dataset.id))tr.remove();});
+ document.querySelectorAll(".review-section").forEach(sec=>{if(removedSections.has(sec.dataset.group))sec.remove();});
+ document.getElementById("globalNotes").value=data.globalNotes||"";
+ applyPageLabels();saveLocal();
+}
 function clearAll(){if(!confirm("همه پیشنهادهای واردشده در این کاربرگ پاک شود؟"))return;document.querySelectorAll('#sections [data-k="change"],#sections .new-row').forEach(el=>{if(el.matches("tr"))el.remove();else el.value="";});document.querySelectorAll('#sections [data-k="label"]').forEach(el=>{if(el.closest("tr")?.classList.contains("new-row"))el.value="";});document.getElementById("globalNotes").value="";saveLocal();}
 render();
 try{const saved=localStorage.getItem("h7-mission-form-review-v2")||localStorage.getItem("h7-mission-form-review-v1");if(saved)load(JSON.parse(saved));}catch(e){}
