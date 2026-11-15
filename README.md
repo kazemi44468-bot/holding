@@ -36,6 +36,7 @@
 ## مستندات توسعه
 
 - [گزارش وضعیت، سوابق پیاده‌سازی و نقشه راه](docs/DEVELOPMENT-STATUS.md)
+- [یادداشت تحویل ادامه کار و وضعیت آخرین تغییرات](docs/SESSION-HANDOFF.md)
 - [معماری زیرساخت ذخیره‌سازی محلی و پشتیبان‌گیری](docs/LOCAL-STORAGE-ARCHITECTURE.md)
 - [مستند فنی و قابلیت‌های نسخه اولیه مرکز پروژه‌ها](docs/PROJECT-CENTER-IMPLEMENTATION.md)
 - [مستند اجرایی مرکز ارزیابی و کانون ارزیابی](docs/EVALUATION-CENTER-IMPLEMENTATION.md)
