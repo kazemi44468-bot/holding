@@ -1,4 +1,4 @@
-import {Vault} from "./engine.js";
+import {Vault} from "./engine.js?v=personnel-vault-20261121-1";
 const ENTITY="personnel",MIN_CODE=1000,SLOT_COUNT=250,REF_KEYS=new Set(["personnelCode","staffCode","employeeCode","personnelId","personId","employeeId","staffId","supervisorCode","managerPersonnelCode","ownerCode","assigneeCode","assignedToCode","assignedByCode","recipientCode","reviewerCode","operatorCode","authorCode","targetPersonCode","createdByPersonnelCode","replacedBy"]);
 const DEPARTMENTS=[["1","اداری و پشتیبانی"],["2","تحقیق و توسعه"],["3","پارک‌بان و معبربانان"],["4","تأسیسات فنی و امور نگهداری"],["6","فاوا و خدمات فنی"],["7","جمع‌آوری، نگهداری و بازیافت پسماند"],["8","بازرسی و تحقیقات محلی"]];
 const normalizeCode=v=>String(v??"").trim().replace(/[۰-۹]/g,d=>String("۰۱۲۳۴۵۶۷۸۹".indexOf(d))).replace(/[٠-٩]/g,d=>String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));
