@@ -19,8 +19,9 @@ if(meta?.salt&&meta?.check){
  try{key=await derive(pass,unb64(meta.salt));proof=await unseal(key,meta.check);}catch{throw Error("گذرواژه مخزن صحیح نیست یا اطلاعات رمزگذاری‌شده قابل خواندن نیست.");}
  if(proof.check!=="COMPANY-SEVEN-LOCAL-VAULT")throw Error("گذرواژه مخزن تأیید نشد.");
  activeKey=key;unlocked=true;
- for(const row of await all("changes"))if(row.box)await unseal(key,row.box);
- for(const file of await all("attachments")){if(file.box)await unseal(key,file.box);if(file.metaBox)await unseal(key,file.metaBox);}
+ try{for(const row of await all("changes"))if(row.box)await unseal(key,row.box);
+  for(const file of await all("attachments")){if(file.box)await unseal(key,file.box);if(file.metaBox)await unseal(key,file.metaBox);}
+ }catch(e){activeKey=null;unlocked=false;throw Error("اعتبارسنجی داده‌های مخزن ناموفق بود؛ گذرواژه یا سلامت داده‌ها را بررسی کنید.");}
 }else{
  if(meta){
   const rows=await all("changes"),files=await all("attachments");
