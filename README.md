@@ -27,6 +27,7 @@
 - [نمای اصلی معاونت ۷](https://kazemi44468-bot.github.io/holding/deputies/deputy-07/dashboard.html)
 - [مرکز داده و پشتیبان‌گیری معاونت ۷](https://kazemi44468-bot.github.io/holding/deputies/deputy-07/local-data/)
 - [مرکز مدیریت دانش](https://kazemi44468-bot.github.io/holding/centers/knowledge/)
+- [مرکز آموزش هلدینگ](https://kazemi44468-bot.github.io/holding/centers/training/)
 
 - [مرکز پروژه‌ها](https://kazemi44468-bot.github.io/holding/centers/projects/)
 - [مرکز ارزیابی و کانون ارزیابی](https://kazemi44468-bot.github.io/holding/centers/evaluation/)
