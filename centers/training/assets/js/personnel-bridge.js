@@ -4,7 +4,7 @@ async function connect(){
  if(busy)throw new Error("اتصال به بانک پرسنل در حال انجام است.");
  busy=true;
  try{
-  api=api||await import("../../../deputies/deputy-07/local-data/assets/personnel-registry.js?v=personnel-registry-20261114-7");
+  api=api||await import("../../../deputies/deputy-07/local-data/assets/personnel-registry.js?v=personnel-registry-20261121-1");
   const registry=window.PersonnelRegistry||api.PersonnelRegistry;
   if(!registry)throw new Error("ماژول بانک مرکزی پرسنل بارگذاری نشد.");
   if(!await registry.ensureUnlocked())return false;
