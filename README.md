@@ -35,6 +35,8 @@
 
 ## مستندات توسعه
 
+- [رویکرد جدید و معماری اختصاصی ادارات معاونت ۷](docs/DEPUTY-07-NEW-APPROACH.md)
+
 - [گزارش وضعیت، سوابق پیاده‌سازی و نقشه راه](docs/DEVELOPMENT-STATUS.md)
 - [یادداشت تحویل ادامه کار و وضعیت آخرین تغییرات](docs/SESSION-HANDOFF.md)
 - [معماری زیرساخت ذخیره‌سازی محلی و پشتیبان‌گیری](docs/LOCAL-STORAGE-ARCHITECTURE.md)
