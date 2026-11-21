@@ -1,0 +1,55 @@
+/* پوسته اختصاصی اداره تحقیق و توسعه */
+.dept2-layout{display:grid;grid-template-columns:258px minmax(0,1fr);gap:22px;max-width:1500px;margin:24px auto;padding:0 22px;align-items:start}
+.dept2-sidebar{position:sticky;top:18px;background:#fff;border:1px solid #dce8ee;border-radius:18px;padding:16px;box-shadow:0 8px 24px rgba(38,76,94,.06);max-height:calc(100vh - 36px);overflow:auto}
+.dept2-side-brand{padding:8px 10px 16px;border-bottom:1px solid #e7eef2;margin-bottom:12px}
+.dept2-side-brand small{display:block;color:#668397;font-size:11px}
+.dept2-side-brand b{display:block;color:#24485d;font-size:16px}
+.dept2-side-home,.dept2-side-link,.dept2-side-action{display:flex;align-items:center;gap:9px;padding:10px 11px;border-radius:10px;color:#36586b;font-size:13px;margin:3px 0}
+.dept2-side-home:hover,.dept2-side-link:hover,.dept2-side-action:hover,.dept2-side-link.active{background:#edf7fb;color:#176b91}
+.dept2-side-group{border:0;border-radius:11px;margin:4px 0;background:#f8fbfc;overflow:hidden}
+.dept2-side-group summary{list-style:none;cursor:pointer;padding:10px 11px;color:#31556a;font-size:13px;font-weight:700}
+.dept2-side-group summary::-webkit-details-marker{display:none}
+.dept2-side-group summary:after{content:"＋";float:left;color:#7c9cac}
+.dept2-side-group[open] summary:after{content:"−"}
+.dept2-side-sub{padding:0 10px 9px 9px}
+.dept2-side-sub a{display:block;padding:7px 10px;margin:2px 0;border-right:2px solid #d8e8ef;color:#5c7482;font-size:12px;border-radius:0 7px 7px 0}
+.dept2-side-sub a:hover,.dept2-side-sub a.active{background:#eaf5fa;color:#176b91;border-right-color:#57a8c9}
+.dept2-main{min-width:0}
+.dept2-page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin:0 0 20px}
+.dept2-page-head h1{margin:3px 0;color:#23465b;font-size:clamp(21px,2.4vw,29px)}
+.dept2-page-head p{margin:4px 0;color:#718795;font-size:13px}
+.dept2-kicker{font-size:11px;color:#3686a8;font-weight:700}
+.dept2-stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0 22px}
+.dept2-stat{background:#fff;border:1px solid #deeaef;border-radius:14px;padding:15px;min-width:0}
+.dept2-stat small{display:block;color:#718795;font-size:11px}
+.dept2-stat b{display:block;color:#27556c;font-size:25px;line-height:1.6}
+.dept2-stat span{font-size:11px;color:#8295a0}
+.dept2-module-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:18px 0}
+.dept2-module-card{display:block;background:#fff;border:1px solid #dce8ee;border-radius:15px;padding:16px;color:#2e5266;transition:.18s}
+.dept2-module-card:hover{border-color:#8fc4d8;transform:translateY(-2px);box-shadow:0 8px 20px rgba(38,76,94,.07)}
+.dept2-module-card small{display:block;color:#6990a3;font-size:11px}
+.dept2-module-card b{display:block;margin:4px 0;font-size:15px}
+.dept2-module-card span{display:block;color:#778b97;font-size:12px}
+.dept2-module-card em{display:inline-block;margin-top:10px;color:#287da0;font-size:12px;font-style:normal}
+.dept2-toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:16px 0}
+.dept2-toolbar input,.dept2-form input,.dept2-form select,.dept2-form textarea{font:inherit;border:1px solid #d7e3e9;border-radius:9px;padding:10px 12px;background:#fff;color:#29495b;min-width:0}
+.dept2-toolbar input{flex:1;min-width:190px}
+.dept2-btn{border:1px solid #c9dfe9;border-radius:9px;padding:9px 14px;background:#eaf5fa;color:#216987;font:inherit;cursor:pointer}
+.dept2-btn.primary{background:#287fa2;color:white;border-color:#287fa2}
+.dept2-btn.danger{background:#fff;color:#a45b5b;border-color:#ecdada}
+.dept2-table-wrap{overflow:auto;background:white;border:1px solid #e0e9ed;border-radius:13px}
+.dept2-table{width:100%;border-collapse:collapse;min-width:650px}
+.dept2-table th,.dept2-table td{padding:11px 12px;border-bottom:1px solid #edf1f3;text-align:right;font-size:12px;vertical-align:middle}
+.dept2-table th{background:#f5f9fb;color:#597384;font-weight:700}
+.dept2-table td{color:#405c6b}
+.dept2-form-card,.dept2-panel{background:#fff;border:1px solid #dfe9ee;border-radius:15px;padding:18px;margin:15px 0}
+.dept2-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.dept2-form label{display:flex;flex-direction:column;gap:6px;color:#5d7684;font-size:12px}
+.dept2-form textarea{min-height:90px;resize:vertical}
+.dept2-form .wide{grid-column:1/-1}
+.dept2-empty{padding:26px;text-align:center;color:#82939d;font-size:13px}
+.dept2-badge{display:inline-block;border-radius:20px;padding:3px 9px;background:#edf6fa;color:#39738e;font-size:11px}
+.dept2-module-actions{display:flex;gap:6px;flex-wrap:wrap}
+.dept2-note{padding:11px 13px;border-radius:10px;background:#f5f9fb;color:#6b8491;font-size:12px;margin:12px 0}
+@media(max-width:980px){.dept2-layout{grid-template-columns:220px minmax(0,1fr);gap:14px;padding:0 14px}.dept2-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.dept2-layout{display:block;margin:12px auto;padding:0 10px}.dept2-sidebar{position:relative;top:auto;max-height:none;margin-bottom:14px}.dept2-stat-grid{gap:8px}.dept2-stat{padding:11px}.dept2-stat b{font-size:21px}.dept2-module-grid{grid-template-columns:1fr}.dept2-form{grid-template-columns:1fr}.dept2-form .wide{grid-column:auto}.dept2-page-head{display:block}}
