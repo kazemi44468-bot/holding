@@ -91,3 +91,17 @@
 .dept2-legacy-content{padding:14px;max-height:850px;overflow:auto}
 @media(max-width:1050px){.dept2-layout{grid-template-columns:245px minmax(0,1fr);gap:15px;width:calc(100% - 28px)}.dept2-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:720px){.dept2-layout{display:flex;flex-direction:column;width:calc(100% - 20px);margin:14px auto 28px;gap:13px}.dept2-sidebar{position:relative;top:auto;width:100%;max-height:none;padding:11px}.dept2-side-brand{padding-bottom:10px}.dept2-side-group summary{padding:9px 11px}.dept2-main{width:100%}.dept2-page-head{align-items:flex-start;flex-direction:column;gap:8px}.dept2-module-grid{grid-template-columns:1fr}.dept2-stat-grid{gap:8px}.dept2-stat{padding:11px}.dept2-stat b{font-size:22px}.dept2-recent-row{grid-template-columns:minmax(0,1fr) auto;gap:7px}.dept2-recent-row time{grid-column:2;grid-row:1}.dept2-recent-row .dept2-status{grid-column:2;grid-row:2}.dept2-recent-row>div{grid-row:1/3}.dept2-form{grid-template-columns:1fr}.dept2-form .wide{grid-column:auto}.dept2-toolbar{align-items:stretch}.dept2-toolbar input{max-width:none;min-width:100%}.dept2-section-head{align-items:flex-start;flex-direction:column}}
+
+/* هماهنگ‌سازی رنگ درگاه و کارت‌های ادارات با پوسته جدید */
+.ops-page{--navy:#263f50;--green:#286f8d;--green-dark:#244f66;--gold:#4b9fbd;--paper:#f3f7f9;--line:#dce7ed;--muted:#718895;--soft:#edf5f8}
+.ops-intro .eyebrow{color:#3988a5}
+.intro-stamp{border-color:#dce7ed;background:#f5fafc;color:#286f8d}
+.intro-stamp b{color:#286f8d}
+.ops-summary>div,.ops-card,.report-box{background:#fff;border-color:#dce7ed;box-shadow:0 3px 12px rgba(35,72,90,.035)}
+.summary-icon,.ops-number{color:#3988a5}
+.ops-badge{color:#52798b;background:#eef5f8;border-color:#dce7ed}
+.ops-badge i,.department-state i{background:#55a7c1}
+.ops-icon{background:#eaf5f9;color:#287f9f}
+.ops-kpis>div{background:#f4f8fa;border-color:#e6eef2}
+.ops-kpis b,.ops-card-bottom b{color:#286f8d}
+.ops-card:hover{border-color:#8dc2d5;box-shadow:0 8px 20px rgba(35,91,115,.07)}
