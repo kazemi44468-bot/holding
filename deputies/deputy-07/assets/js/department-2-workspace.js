@@ -40,7 +40,7 @@ worksheets:[
 };
 const $=(s,r=document)=>r.querySelector(s),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const url=new URL(location.href),isModule=url.pathname.endsWith("department-2-module.html"),moduleId=url.searchParams.get("module")||"guides",view=url.searchParams.get("view")||"bank",mod=modules.find(x=>x.id===moduleId)||modules[0];
-const root=$(".ops-main");if(!root)return;
+const root=$(".ops-main");if(!root)return;\nconst legacyNav=[...document.querySelectorAll(".ops-nav details")].find(x=>x.querySelector("summary")?.textContent.includes("بخش‌های این اداره"));if(legacyNav)legacyNav.remove();
 const key=id=>"deputy7.dept2.module."+id;
 function read(id){try{const v=localStorage.getItem(key(id));if(v===null){localStorage.setItem(key(id),JSON.stringify(samples[id]));return samples[id].map(x=>({...x}));}const a=JSON.parse(v);return Array.isArray(a)?a:[]}catch(e){return (samples[id]||[]).map(x=>({...x}));}}
 function write(id,rows){try{localStorage.setItem(key(id),JSON.stringify(rows));return true}catch(e){alert("ذخیره‌سازی در این مرورگر در دسترس نیست.");return false}}
