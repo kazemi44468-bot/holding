@@ -105,3 +105,12 @@
 .ops-kpis>div{background:#f4f8fa;border-color:#e6eef2}
 .ops-kpis b,.ops-card-bottom b{color:#286f8d}
 .ops-card:hover{border-color:#8dc2d5;box-shadow:0 8px 20px rgba(35,91,115,.07)}
+
+
+/* تثبیت لایه تعاملی منوی اختصاصی اداره ۲ */
+.dept2-layout>.dept2-sidebar{position:sticky;z-index:12;isolation:isolate;pointer-events:auto;}
+.dept2-sidebar a,.dept2-sidebar summary{position:relative;z-index:1;pointer-events:auto;cursor:pointer;}
+.dept2-sidebar .dept2-side-group>summary{display:block;user-select:none;-webkit-user-select:none;}
+.dept2-sidebar .dept2-side-sub{position:relative;z-index:2;}
+.dept2-sidebar .dept2-side-sub a{position:relative;display:block;}
+@media(max-width:720px){.dept2-layout>.dept2-sidebar{position:relative;z-index:12;}}
