@@ -1,5 +1,5 @@
 "use strict";
-const CACHE_NAME="deputy-07-missions-v91";
+const CACHE_NAME="deputy-07-training-v92";
 const CORE_FILES=[
  "./pages/mission-bank.html",
  "./pages/mission-create.html",
@@ -7,6 +7,7 @@ const CORE_FILES=[
  "./pages/mission-sync.html",
  "./pages/department-2.html",
  "./pages/department-2-module.html",
+ "./pages/department-2-training.html",
  "./assets/css/style.css",
  "./assets/js/main.js",
  "./assets/js/access-control.js",
@@ -20,9 +21,13 @@ const CORE_FILES=[
  "./local-data/assets/engine.js",
  "./assets/css/mission-visual.css",
  "./assets/css/department-2-workspace.css",
+ "./assets/css/department-2-training.css",
  "./assets/js/jalali-picker.js",
  "./assets/js/mission-calendar.js",
  "./assets/js/department-2-workspace.js",
+ "./assets/js/department-2-training.js",
+ "./assets/js/department-2-training-bridge.js",
+ "./local-data/assets/personnel-registry.js",
  "./assets/images/iran-flag.svg"
 ];
 const STATIC_RE=/\.(?:css|js|mjs|woff2?|ttf|svg|png|jpe?g|webp|ico)$/i;
