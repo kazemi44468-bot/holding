@@ -1,49 +1,83 @@
 (()=>{"use strict";
 const modules=[
-{id:"guides",title:"بانک شیوه‌نامه‌ها",desc:"ثبت، طبقه‌بندی، جست‌وجو و نگهداری نسخه‌های شیوه‌نامه",subs:[["bank","مشاهده بانک"],["new","ثبت شیوه‌نامه جدید"]]},
-{id:"processes",title:"بانک فرایندهای کاری",desc:"مستندسازی فرایندها، مراحل اجرا و مسئولیت‌ها",subs:[["bank","مشاهده فرایندها"],["new","ثبت فرایند جدید"]]},
-{id:"training",title:"مرکز آموزش",desc:"برنامه دوره‌ها، کارگاه‌ها و سوابق آموزشی",subs:[["bank","برنامه‌ها و دوره‌ها"],["new","ثبت دوره یا کارگاه"]]},
-{id:"actions",title:"اقدامات جاری و پیگیری دستورات",desc:"ثبت اقدام، تعیین مسئول، مهلت و پایش وضعیت اجرا",subs:[["bank","فهرست اقدامات"],["new","ثبت اقدام جدید"]]},
-{id:"calendar",title:"تقویم",desc:"جلسات، رویدادها و برنامه‌های زمان‌بندی‌شده اداره",subs:[["bank","مشاهده رویدادها"],["new","ثبت رویداد"]]},
-{id:"knowledge",title:"ثبت دانش و تجربه‌نگاری‌ها",desc:"ثبت تجربه‌ها، درس‌آموخته‌ها و دانش سازمانی",subs:[["bank","بانک دانش و تجربه‌ها"],["new","ثبت تجربه جدید"]]},
-{id:"worksheets",title:"کاربرگ‌ها",desc:"بانک فرم‌ها و کاربرگ‌های تخصصی و سوابق تکمیل",subs:[["bank","بانک کاربرگ‌ها"],["new","ثبت کاربرگ"]]}
+{id:"guides",title:"بانک شیوه‌نامه‌ها",short:"شیوه‌نامه‌ها",desc:"ثبت، طبقه‌بندی و مدیریت نسخه‌های شیوه‌نامه",subs:[["bank","مشاهده بانک"],["new","ثبت شیوه‌نامه جدید"]]},
+{id:"processes",title:"بانک فرایندهای کاری",short:"فرایندها",desc:"مستندسازی مراحل، مسئولیت‌ها و گردش کار",subs:[["bank","مشاهده فرایندها"],["new","ثبت فرایند جدید"]]},
+{id:"training",title:"مرکز آموزش",short:"آموزش",desc:"برنامه دوره‌ها، کارگاه‌ها و سوابق آموزشی",subs:[["bank","برنامه‌ها و دوره‌ها"],["new","ثبت دوره یا کارگاه"]]},
+{id:"actions",title:"اقدامات جاری و پیگیری دستورات",short:"اقدامات و دستورات",desc:"ثبت اقدام، تعیین مسئول، مهلت و پایش اجرا",subs:[["bank","فهرست اقدامات"],["new","ثبت اقدام جدید"]]},
+{id:"calendar",title:"تقویم",short:"تقویم",desc:"جلسات، رویدادها و برنامه‌های زمان‌بندی‌شده",subs:[["bank","مشاهده رویدادها"],["new","ثبت رویداد"]]},
+{id:"knowledge",title:"ثبت دانش و تجربه‌نگاری‌ها",short:"دانش و تجربه",desc:"ثبت تجربه‌ها، درس‌آموخته‌ها و دانش سازمانی",subs:[["bank","بانک دانش و تجربه‌ها"],["new","ثبت تجربه جدید"]]},
+{id:"worksheets",title:"کاربرگ‌ها",short:"کاربرگ‌ها",desc:"بانک فرم‌ها و کاربرگ‌های تخصصی",subs:[["bank","بانک کاربرگ‌ها"],["new","ثبت کاربرگ"]]}
 ];
-const $=(s,r=document)=>r.querySelector(s), esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const path=(file)=>new URL(file,document.baseURI).href;
-const current=new URL(location.href),isModule=current.pathname.endsWith("department-2-module.html");
-const moduleId=current.searchParams.get("module")||"guides",view=current.searchParams.get("view")||"bank",mod=modules.find(m=>m.id===moduleId)||modules[0];
-const root=document.querySelector(".ops-main")||document.querySelector("main");
-if(!root)return;
-const nav=()=>'<aside class="dept2-sidebar"><div class="dept2-side-brand"><small>معاونت ۷ · اداره ۰۲</small><b>تحقیق و توسعه</b></div><a class="dept2-side-home" href="department-2.html">⌂　نمای کلی اداره</a>'+modules.map(m=>'<details class="dept2-side-group" '+(m.id===moduleId?'open':'')+'><summary>'+m.title+'</summary><div class="dept2-side-sub">'+m.subs.map(([v,t])=>'<a class="'+(m.id===moduleId&&view===v&&isModule?'active':'')+'" href="department-2-module.html?module='+m.id+'&view='+v+'">'+t+'</a>').join('')+'</div></details>').join('')+'<a class="dept2-side-link" href="../dashboard.html">بازگشت به ورود معاونت ۷</a></aside>';
-let layout=document.querySelector(".dept2-layout");
-if(!layout){layout=document.createElement("div");layout.className="dept2-layout";root.parentNode.insertBefore(layout,root);layout.append(nav());layout.append(root);root.classList.add("dept2-main");}
-if(isModule)renderModule();else renderDashboard();
-function read(id){try{return JSON.parse(localStorage.getItem("deputy7.dept2.module."+id)||"[]")}catch{return[]}}
-function write(id,rows){localStorage.setItem("deputy7.dept2.module."+id,JSON.stringify(rows))}
-function renderDashboard(){
- const old=document.getElementById("dept2-overview");if(old)old.remove();
- const box=document.createElement("section");box.id="dept2-overview";box.innerHTML='<div class="dept2-page-head"><div><span class="dept2-kicker">محیط تخصصی اداره · کد ۰۲</span><h1>نمای کلی تحقیق و توسعه</h1><p>وضعیت بانک‌ها، برنامه‌ها، اقدامات و دانش ثبت‌شده اداره</p></div><a class="dept2-btn" href="../dashboard.html">ورود به معاونت ۷</a></div><div class="dept2-stat-grid">'+[
-["شیوه‌نامه‌ها","guides"],["فرایندهای کاری","processes"],["دوره‌های آموزشی","training"],["اقدامات جاری","actions"],["رویدادهای تقویم","calendar"],["دانش و تجربه‌ها","knowledge"],["کاربرگ‌ها","worksheets"]].map(([t,id])=>'<div class="dept2-stat"><small>'+t+'</small><b data-count="'+id+'">'+read(id).length.toLocaleString("fa-IR")+'</b><span>رکورد ذخیره‌شده در این مرورگر</span></div>').join("")+'</div><div class="dept2-page-head"><div><span class="dept2-kicker">دسترسی به بخش‌ها</span><h2>ماژول‌های اداره</h2></div></div><div class="dept2-module-grid">'+modules.map(m=>'<a class="dept2-module-card" href="department-2-module.html?module='+m.id+'&view=bank"><small>بخش تخصصی</small><b>'+m.title+'</b><span>'+m.desc+'</span><em>'+read(m.id).length.toLocaleString("fa-IR")+' رکورد · مشاهده بانک ←</em></a>').join("")+'</div><div class="dept2-note">آمار ماژول‌های بالای صفحه از داده‌های ذخیره‌شده در همین مرورگر محاسبه می‌شود. شاخص‌ها و سوابق ثابت بخش‌های قدیمی‌تر صفحه، محتوای نمونه اولیه‌اند و هنوز به بانک‌های جدید متصل نشده‌اند.</div>';
- root.insertBefore(box,root.firstChild);
+const samples={
+guides:[
+{title:"شیوه‌نامه تدوین و بازنگری دستورالعمل‌ها",category:"مدیریت مستندات",owner:"کارشناس برنامه‌ریزی",status:"فعال",date:"۱۴۰۵/۰۸/۲۸",due:"۱۴۰۵/۰۹/۱۵",description:"الگوی تهیه، بررسی، تصویب و بازنگری شیوه‌نامه‌های داخلی اداره.",sample:true},
+{title:"شیوه‌نامه ارزیابی و اولویت‌بندی پیشنهادهای نوآورانه",category:"نوآوری",owner:"مسئول تحقیق و توسعه",status:"در حال اجرا",date:"۱۴۰۵/۰۸/۲۵",due:"۱۴۰۵/۰۹/۲۰",description:"معیارهای ارزیابی فنی، اقتصادی و اجرایی پیشنهادهای نوآورانه.",sample:true},
+{title:"دستورالعمل ثبت و نگهداری دانش سازمانی",category:"مدیریت دانش",owner:"کارشناس مدیریت دانش",status:"در انتظار",date:"۱۴۰۵/۰۸/۲۰",due:"۱۴۰۵/۰۹/۱۰",description:"روش ثبت تجربه‌ها و تعیین سطح دسترسی و مالکیت مستندات.",sample:true}],
+processes:[
+{title:"فرایند دریافت و ارزیابی پیشنهادهای بهبود",category:"بهبود سازمانی",owner:"کارشناس برنامه‌ریزی",status:"فعال",date:"۱۴۰۵/۰۸/۲۸",due:"۱۴۰۵/۰۹/۱۲",description:"دریافت پیشنهاد، بررسی اولیه، ارزیابی کارشناسی، تصویب و ابلاغ.",sample:true},
+{title:"فرایند تدوین و تصویب شیوه‌نامه",category:"مدیریت مستندات",owner:"رئیس اداره",status:"در حال اجرا",date:"۱۴۰۵/۰۸/۲۴",due:"۱۴۰۵/۰۹/۱۸",description:"تعریف نیاز، تهیه پیش‌نویس، اخذ نظر واحدها و تصویب نهایی.",sample:true},
+{title:"فرایند نیازسنجی آموزشی کارکنان",category:"آموزش",owner:"کارشناس آموزش",status:"تکمیل‌شده",date:"۱۴۰۵/۰۸/۱۸",due:"۱۴۰۵/۰۸/۲۷",description:"جمع‌آوری نیازها و اولویت‌بندی دوره‌های آموزشی.",sample:true}],
+training:[
+{title:"کارگاه آشنایی با مدیریت فرایندهای سازمانی",category:"کارگاه تخصصی",owner:"واحد آموزش",status:"برنامه‌ریزی‌شده",date:"۱۴۰۵/۰۹/۱۲",due:"۱۴۰۵/۰۹/۱۲",description:"مدت: ۶ ساعت؛ ظرفیت: ۲۵ نفر؛ محل اجرا: سالن آموزش.",sample:true},
+{title:"دوره کاربردی تحلیل داده و گزارش‌سازی",category:"دوره آموزشی",owner:"کارشناس آموزش",status:"در حال اجرا",date:"۱۴۰۵/۰۸/۲۲",due:"۱۴۰۵/۰۹/۰۵",description:"آموزش مبانی تحلیل داده، شاخص‌سازی و تهیه گزارش مدیریتی.",sample:true},
+{title:"نشست انتقال تجربه پروژه‌های بهبود",category:"نشست تخصصی",owner:"رئیس اداره",status:"تکمیل‌شده",date:"۱۴۰۵/۰۸/۱۵",due:"۱۴۰۵/۰۸/۱۵",description:"ارائه تجربه‌های اجرایی و ثبت نکات قابل تعمیم.",sample:true}],
+actions:[
+{title:"بازنگری فرایندهای پرتکرار واحدهای اجرایی",category:"دستور مدیریتی",owner:"کارشناس فرایندها",status:"در حال اجرا",date:"۱۴۰۵/۰۸/۲۷",due:"۱۴۰۵/۰۹/۱۰",description:"تهیه فهرست فرایندها و ارائه نسخه اصلاحی برای بررسی رئیس اداره.",sample:true},
+{title:"تهیه گزارش وضعیت پیشنهادهای نوآورانه",category:"اقدام جاری",owner:"مسئول تحقیق و توسعه",status:"در انتظار",date:"۱۴۰۵/۰۸/۲۶",due:"۱۴۰۵/۰۹/۰۲",description:"تجمیع پیشنهادها، تعیین وضعیت بررسی و اعلام موارد نیازمند تصمیم.",sample:true},
+{title:"جمع‌بندی نتایج نشست انتقال تجربه",category:"پیگیری مصوبه",owner:"کارشناس مدیریت دانش",status:"تکمیل‌شده",date:"۱۴۰۵/۰۸/۱۸",due:"۱۴۰۵/۰۸/۲۵",description:"تنظیم صورت‌جلسه و استخراج اقدامات قابل پیگیری.",sample:true}],
+calendar:[
+{title:"جلسه بررسی برنامه پژوهشی فصل زمستان",category:"جلسه تخصصی",owner:"رئیس اداره",status:"برنامه‌ریزی‌شده",date:"۱۴۰۵/۰۹/۰۵",due:"۱۴۰۵/۰۹/۰۵",description:"ساعت ۱۰؛ محل: اتاق جلسات اداره؛ موضوع: اولویت‌بندی برنامه پژوهشی.",sample:true},
+{title:"کارگاه تحلیل و بهبود فرایند",category:"کارگاه",owner:"واحد آموزش",status:"برنامه‌ریزی‌شده",date:"۱۴۰۵/۰۹/۱۲",due:"۱۴۰۵/۰۹/۱۲",description:"ساعت ۹ تا ۱۵؛ ظرفیت ۲۵ نفر.",sample:true},
+{title:"نشست ارائه گزارش اقدامات جاری",category:"نشست پیگیری",owner:"مسئول پیگیری",status:"تکمیل‌شده",date:"۱۴۰۵/۰۸/۲۶",due:"۱۴۰۵/۰۸/۲۶",description:"مرور پیشرفت اقدامات و تعیین مسئول و مهلت موارد باز.",sample:true}],
+knowledge:[
+{title:"درس‌آموخته‌های اجرای طرح بهبود فرایند",category:"درس‌آموخته",owner:"کارشناس فرایندها",status:"تأییدشده",date:"۱۴۰۵/۰۸/۲۸",due:"۱۴۰۵/۰۸/۲۸",description:"ضرورت تعیین مالک فرایند و شاخص سنجش پیش از آغاز اجرای طرح.",sample:true},
+{title:"تجربه استقرار نظام ثبت پیشنهادها",category:"تجربه اجرایی",owner:"مسئول نوآوری",status:"در حال بررسی",date:"۱۴۰۵/۰۸/۲۳",due:"۱۴۰۵/۰۹/۰۸",description:"نکات اجرایی، موانع مشارکت و پیشنهادهای بهبود نظام دریافت ایده.",sample:true},
+{title:"الگوی مستندسازی دانش ضمنی کارکنان",category:"الگوی دانشی",owner:"کارشناس مدیریت دانش",status:"فعال",date:"۱۴۰۵/۰۸/۱۹",due:"۱۴۰۵/۰۹/۱۵",description:"ساختار پیشنهادی برای ثبت تجربه‌های کلیدی و انتقال دانش.",sample:true}],
+worksheets:[
+{title:"کاربرگ ارزیابی پیشنهادهای بهبود",category:"ارزیابی",owner:"کارشناس برنامه‌ریزی",status:"فعال",date:"۱۴۰۵/۰۸/۲۸",due:"۱۴۰۵/۰۸/۲۸",description:"شامل مسئله، راهکار، هزینه، منفعت، ریسک و امتیاز کارشناسی.",sample:true},
+{title:"کاربرگ شناسایی و تحلیل فرایند",category:"فرایندنگاری",owner:"کارشناس فرایندها",status:"فعال",date:"۱۴۰۵/۰۸/۲۴",due:"۱۴۰۵/۰۸/۲۴",description:"ثبت ورودی، خروجی، مسئول، مراحل، زمان و نقاط کنترل.",sample:true},
+{title:"فرم ثبت تجربه و درس‌آموخته",category:"مدیریت دانش",owner:"کارشناس مدیریت دانش",status:"در حال تکمیل",date:"۱۴۰۵/۰۸/۲۰",due:"۱۴۰۵/۰۹/۰۵",description:"ثبت موقعیت، اقدام انجام‌شده، نتیجه، چالش و توصیه اجرایی.",sample:true}]
+};
+const $=(s,r=document)=>r.querySelector(s),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const url=new URL(location.href),isModule=url.pathname.endsWith("department-2-module.html"),moduleId=url.searchParams.get("module")||"guides",view=url.searchParams.get("view")||"bank",mod=modules.find(x=>x.id===moduleId)||modules[0];
+const root=$(".ops-main");if(!root)return;
+const key=id=>"deputy7.dept2.module."+id;
+function read(id){try{const v=localStorage.getItem(key(id));if(v===null){localStorage.setItem(key(id),JSON.stringify(samples[id]));return samples[id].map(x=>({...x}));}const a=JSON.parse(v);return Array.isArray(a)?a:[]}catch(e){return (samples[id]||[]).map(x=>({...x}));}}
+function write(id,rows){try{localStorage.setItem(key(id),JSON.stringify(rows));return true}catch(e){alert("ذخیره‌سازی در این مرورگر در دسترس نیست.");return false}}
+modules.forEach(m=>read(m.id));
+function href(id,v){return "department-2-module.html?module="+encodeURIComponent(id)+"&view="+v}
+function side(){return '<aside class="dept2-sidebar"><div class="dept2-side-brand"><span class="dept2-brand-mark">۰۲</span><div><small>معاونت ۷</small><b>تحقیق و توسعه</b></div></div><a class="dept2-side-home '+(!isModule?'active':'')+'" href="department-2.html"><span>⌂</span> نمای کلی اداره</a><div class="dept2-nav-caption">مدیریت حوزه‌ها</div>'+modules.map(m=>'<details class="dept2-side-group" '+(m.id===moduleId&&isModule?'open':'')+'><summary><span class="dept2-nav-dot"></span>'+m.title+'</summary><div class="dept2-side-sub">'+m.subs.map(([v,t])=>'<a class="'+(m.id===moduleId&&view===v&&isModule?'active':'')+'" href="'+href(m.id,v)+'">'+t+'</a>').join("")+'</div></details>').join("")+'<div class="dept2-side-foot"><a href="../dashboard.html">← بازگشت به درگاه معاونت ۷</a></div></aside>'}
+const legacy=document.createElement("details");legacy.className="dept2-legacy";legacy.innerHTML="<summary>مشاهده اطلاعات و امکانات قبلی اداره</summary><div class=\"dept2-legacy-content\"></div>";
+const old=[...root.children];old.forEach(n=>legacy.querySelector(".dept2-legacy-content").append(n));
+root.className="dept2-layout";
+root.innerHTML="";
+root.append(Object.assign(document.createElement("div"),{innerHTML:side()}).firstElementChild);
+const main=document.createElement("section");main.className="dept2-main";root.append(main);
+if(isModule)renderModule(main);else renderHome(main);
+if(!isModule&&legacy.querySelector(".dept2-legacy-content").children.length){main.append(legacy);}
+function renderHome(main){
+main.innerHTML='<div class="dept2-page-head"><div><span class="dept2-kicker">محیط تخصصی اداره · کد ۰۲</span><h1>تحقیق و توسعه</h1><p>نمای کلی بانک‌ها، برنامه‌ها، اقدامات و دانش سازمانی</p></div><span class="dept2-demo-state">اطلاعات نمونه برای آزمایش سامانه</span></div><div class="dept2-stat-grid" id="dept2-stats"></div><div class="dept2-section-head"><div><span class="dept2-kicker">دسترسی سریع</span><h2>حوزه‌های کاری اداره</h2></div><span class="dept2-subtle">۷ بخش تخصصی</span></div><div class="dept2-module-grid" id="dept2-cards"></div><div class="dept2-panel"><div class="dept2-section-head"><div><h2>آخرین فعالیت‌های ثبت‌شده</h2><p>نمونه اطلاعات اولیه برای بررسی نمایش و عملکرد فهرست‌ها</p></div></div><div class="dept2-recent" id="dept2-recent"></div></div>';
+const stats=$("#dept2-stats",main),cards=$("#dept2-cards",main);
+const total=modules.reduce((n,m)=>n+read(m.id).length,0),active=modules.reduce((n,m)=>n+read(m.id).filter(x=>!["تکمیل‌شده","مختومه","غیرفعال","تأییدشده"].includes(x.status)).length,0),done=modules.reduce((n,m)=>n+read(m.id).filter(x=>["تکمیل‌شده","مختومه","تأییدشده"].includes(x.status)).length,0),demo=modules.reduce((n,m)=>n+read(m.id).filter(x=>x.sample).length,0);
+stats.innerHTML=[["مجموع رکوردها",total,"در هفت حوزه"],["در جریان / نیازمند پیگیری",active,"بر اساس وضعیت ثبت‌شده"],["تکمیل‌شده / تأییدشده",done,"رکوردهای خاتمه‌یافته"],["داده‌های آزمایشی",demo,"قابل ویرایش یا حذف"]].map(([t,n,d])=>'<div class="dept2-stat"><small>'+t+'</small><b>'+n.toLocaleString("fa-IR")+'</b><span>'+d+'</span></div>').join("");
+cards.innerHTML=modules.map(m=>{const a=read(m.id);return '<a class="dept2-module-card" href="'+href(m.id,"bank")+'"><div class="dept2-card-top"><span class="dept2-card-index">'+String(modules.indexOf(m)+1).padStart(2,"0")+'</span><span class="dept2-card-count">'+a.length.toLocaleString("fa-IR")+' رکورد</span></div><b>'+m.title+'</b><p>'+m.desc+'</p><div class="dept2-card-bottom"><span>'+a.filter(x=>!["تکمیل‌شده","مختومه","تأییدشده"].includes(x.status)).length.toLocaleString("fa-IR")+' مورد باز</span><span>ورود به بخش ←</span></div></a>'}).join("");
+const recent=modules.flatMap(m=>read(m.id).map(x=>({...x,module:m.title}))).slice(0,8);
+$("#dept2-recent",main).innerHTML=recent.map(x=>'<div class="dept2-recent-row"><div><b>'+esc(x.title)+'</b><small>'+esc(x.module)+' · '+esc(x.owner)+'</small></div><span class="dept2-status">'+esc(x.status)+'</span><time>'+esc(x.date)+'</time></div>').join("");
 }
-function renderModule(){
- const legacy=[...root.children];legacy.forEach(n=>n.remove());
- root.innerHTML='<section class="dept2-page-head"><div><span class="dept2-kicker">تحقیق و توسعه · ماژول تخصصی</span><h1>'+mod.title+'</h1><p>'+mod.desc+'</p></div><a class="dept2-btn" href="department-2.html">نمای کلی اداره</a></section><div class="dept2-stat-grid"><div class="dept2-stat"><small>کل رکوردها</small><b id="m-total">۰</b><span>ذخیره‌شده در این مرورگر</span></div><div class="dept2-stat"><small>در حال اجرا / فعال</small><b id="m-active">۰</b><span>بر اساس وضعیت رکوردها</span></div><div class="dept2-stat"><small>تکمیل‌شده</small><b id="m-done">۰</b><span>رکوردهای خاتمه‌یافته</span></div><div class="dept2-stat"><small>آخرین ثبت</small><b id="m-last">—</b><span>تاریخ ثبت محلی</span></div></div><div class="dept2-toolbar"><div class="dept2-module-actions"><a class="dept2-btn '+(view==="bank"?"primary":"")+'" href="?module='+mod.id+'&view=bank">مشاهده بانک</a><a class="dept2-btn '+(view==="new"?"primary":"")+'" href="?module='+mod.id+'&view=new">ثبت جدید</a></div><input id="m-search" type="search" placeholder="جست‌وجو در عنوان، مسئول یا شرح..."></div><div id="m-content"></div>';
- const rows=read(mod.id),content=$("#m-content");
- if(view==="new")form();else list();
- stats();
- $("#m-search").addEventListener("input",()=>list($("#m-search").value));
- function stats(){const all=read(mod.id);$("#m-total").textContent=all.length.toLocaleString("fa-IR");$("#m-active").textContent=all.filter(x=>!["تکمیل‌شده","مختومه","غیرفعال"].includes(x.status)).length.toLocaleString("fa-IR");$("#m-done").textContent=all.filter(x=>["تکمیل‌شده","مختومه"].includes(x.status)).length.toLocaleString("fa-IR");$("#m-last").textContent=all[0]?.date||"—";}
- function form(edit){
- const old=edit||{};
- content.innerHTML='<div class="dept2-form-card"><h2>'+ (edit?"ویرایش رکورد":"ثبت مورد جدید")+'</h2><form class="dept2-form" id="module-form"><label>عنوان<input name="title" required maxlength="140" value="'+esc(old.title)+'" placeholder="عنوان را وارد کنید"></label><label>دسته‌بندی / نوع<input name="category" maxlength="80" value="'+esc(old.category)+'" placeholder="نوع یا دسته‌بندی"></label><label>مسئول پیگیری<input name="owner" maxlength="80" value="'+esc(old.owner)+'" placeholder="نام مسئول"></label><label>وضعیت<select name="status">'+["در انتظار","در حال اجرا","تکمیل‌شده","مختومه","غیرفعال"].map(s=>'<option '+(old.status===s?'selected':'')+'>'+s+'</option>').join("")+'</select></label><label>تاریخ شمسی<input name="date" value="'+esc(old.date||"")+'" placeholder="۱۴۰۵/۰۹/۰۱"></label><label>مهلت / تاریخ اجرا<input name="due" value="'+esc(old.due||"")+'" placeholder="۱۴۰۵/۰۹/۱۵"></label><label class="wide">شرح و توضیحات<textarea name="description" maxlength="3000" placeholder="شرح، مراحل، نتیجه یا نکات مرتبط">'+esc(old.description)+'</textarea></label><div class="wide dept2-module-actions"><button class="dept2-btn primary" type="submit">'+(edit?"ذخیره تغییرات":"ثبت در بانک")+'</button><a class="dept2-btn" href="?module='+mod.id+'&view=bank">انصراف</a></div></form></div>';
- $("#module-form").addEventListener("submit",e=>{e.preventDefault();const data=Object.fromEntries(new FormData(e.currentTarget));const all=read(mod.id);if(edit){const i=all.findIndex(x=>x.id===edit.id);if(i>=0)all[i]={...all[i],...data,updated:new Date().toLocaleDateString("fa-IR")};}else all.unshift({...data,id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),date:data.date||new Date().toLocaleDateString("fa-IR"),created:new Date().toLocaleDateString("fa-IR")});write(mod.id,all);location.href="?module="+mod.id+"&view=bank";});
- }
- function list(q=""){
- const all=read(mod.id).filter(x=>!q||[x.title,x.category,x.owner,x.description].join(" ").toLocaleLowerCase("fa").includes(q.toLocaleLowerCase("fa")));
- content.innerHTML=all.length?'<div class="dept2-table-wrap"><table class="dept2-table"><thead><tr><th>عنوان</th><th>دسته‌بندی</th><th>مسئول</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>'+all.map(x=>'<tr><td><b>'+esc(x.title)+'</b>'+(x.description?'<div>'+esc(x.description.slice(0,100))+'</div>':'')+'</td><td>'+esc(x.category||"—")+'</td><td>'+esc(x.owner||"—")+'</td><td><span class="dept2-badge">'+esc(x.status)+'</span></td><td>'+esc(x.date||"—")+'</td><td><div class="dept2-module-actions"><button class="dept2-btn" data-edit="'+x.id+'">ویرایش</button><button class="dept2-btn danger" data-delete="'+x.id+'">حذف</button></div></td></tr>').join("")+'</tbody></table></div>':'<div class="dept2-empty">موردی در این بانک ثبت نشده است. برای شروع از گزینه «ثبت جدید» استفاده کنید.</div>';
- content.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>form(read(mod.id).find(x=>x.id===b.dataset.edit))));
- content.querySelectorAll("[data-delete]").forEach(b=>b.addEventListener("click",()=>{if(!confirm("این رکورد حذف شود؟"))return;write(mod.id,read(mod.id).filter(x=>x.id!==b.dataset.delete));stats();list($("#m-search").value)}));
- }
+function renderModule(main){
+main.innerHTML='<div class="dept2-page-head"><div><span class="dept2-kicker">تحقیق و توسعه · بانک اطلاعاتی</span><h1>'+mod.title+'</h1><p>'+mod.desc+'</p></div><span class="dept2-demo-state">دارای داده نمونه آزمایشی</span></div><div class="dept2-stat-grid" id="module-stats"></div><div class="dept2-toolbar"><div class="dept2-tabs"><a class="'+(view==="bank"?"active":"")+'" href="'+href(mod.id,"bank")+'">مشاهده بانک</a><a class="'+(view==="new"?"active":"")+'" href="'+href(mod.id,"new")+'">ثبت جدید</a></div><input id="m-search" type="search" placeholder="جست‌وجو در عنوان، دسته‌بندی، مسئول..."></div><div id="m-content"></div>';
+const content=$("#m-content",main);if(view==="new")form();else list();stats();
+$("#m-search").addEventListener("input",()=>list($("#m-search").value));
+function stats(){const a=read(mod.id);const vals=[["کل رکوردها",a.length],["در جریان / باز",a.filter(x=>!["تکمیل‌شده","مختومه","تأییدشده","غیرفعال"].includes(x.status)).length],["تکمیل‌شده / تأییدشده",a.filter(x=>["تکمیل‌شده","مختومه","تأییدشده"].includes(x.status)).length],["نمونه آزمایشی",a.filter(x=>x.sample).length]];$("#module-stats").innerHTML=vals.map(([t,n])=>'<div class="dept2-stat"><small>'+t+'</small><b>'+n.toLocaleString("fa-IR")+'</b><span>بر اساس بانک همین بخش</span></div>').join("")}
+function form(edit){
+const f=edit||{};content.innerHTML='<div class="dept2-form-card"><div class="dept2-section-head"><div><h2>'+(edit?"ویرایش رکورد":"ثبت مورد جدید")+'</h2><p>اطلاعات را وارد و ذخیره کنید.</p></div>'+(edit&&edit.sample?'<span class="dept2-demo-state">رکورد نمونه</span>':"")+'</div><form class="dept2-form" id="module-form"><label>عنوان <input name="title" required maxlength="140" value="'+esc(f.title)+'" placeholder="عنوان مورد"></label><label>دسته‌بندی / نوع <input name="category" maxlength="80" value="'+esc(f.category)+'" placeholder="دسته‌بندی"></label><label>مسئول پیگیری <input name="owner" maxlength="80" value="'+esc(f.owner)+'" placeholder="نام مسئول"></label><label>وضعیت <select name="status">'+["در انتظار","در حال اجرا","فعال","برنامه‌ریزی‌شده","تکمیل‌شده","تأییدشده","در حال بررسی","مختومه","غیرفعال"].map(s=>'<option '+(f.status===s?'selected':'')+'>'+s+'</option>').join("")+'</select></label><label>تاریخ ثبت <input name="date" value="'+esc(f.date||"۱۴۰۵/۰۹/۰۱")+'" placeholder="۱۴۰۵/۰۹/۰۱"></label><label>مهلت / تاریخ اجرا <input name="due" value="'+esc(f.due)+'" placeholder="۱۴۰۵/۰۹/۱۵"></label><label class="wide">شرح و توضیحات <textarea name="description" maxlength="3000" rows="4" placeholder="شرح، نتیجه یا نکات مرتبط">'+esc(f.description)+'</textarea></label><div class="wide dept2-form-actions"><button class="dept2-btn primary" type="submit">'+(edit?"ذخیره تغییرات":"ثبت در بانک")+'</button><a class="dept2-btn" href="'+href(mod.id,"bank")+'">انصراف</a></div></form></div>';
+$("#module-form").addEventListener("submit",e=>{e.preventDefault();const data=Object.fromEntries(new FormData(e.currentTarget));const all=read(mod.id);if(edit){const i=all.findIndex(x=>x.id===edit.id);if(i>=0)all[i]={...all[i],...data,sample:!!edit.sample,updated:"۱۴۰۵/۰۸/۳۰"};}else all.unshift({...data,id:"r"+Date.now().toString(36),created:"۱۴۰۵/۰۸/۳۰",sample:false});if(write(mod.id,all))location.href=href(mod.id,"bank");});
+}
+function list(q=""){
+const all=read(mod.id).filter(x=>!q||[x.title,x.category,x.owner,x.description].join(" ").toLocaleLowerCase("fa").includes(q.toLocaleLowerCase("fa")));
+content.innerHTML=all.length?'<div class="dept2-table-wrap"><table class="dept2-table"><thead><tr><th>عنوان / شرح</th><th>دسته‌بندی</th><th>مسئول</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>'+all.map(x=>'<tr><td><b>'+esc(x.title)+'</b>'+(x.sample?'<span class="dept2-sample-tag">نمونه</span>':"")+'<small>'+esc(x.description||"")+'</small></td><td>'+esc(x.category||"—")+'</td><td>'+esc(x.owner||"—")+'</td><td><span class="dept2-status">'+esc(x.status)+'</span></td><td>'+esc(x.date||"—")+'</td><td><div class="dept2-row-actions"><button class="dept2-btn small" data-edit="'+esc(x.id)+'">ویرایش</button><button class="dept2-btn small danger" data-delete="'+esc(x.id)+'">حذف</button></div></td></tr>').join("")+'</tbody></table></div>':'<div class="dept2-empty">رکوردی با این مشخصات پیدا نشد.</div>';
+content.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>form(read(mod.id).find(x=>x.id===b.dataset.edit))));
+content.querySelectorAll("[data-delete]").forEach(b=>b.addEventListener("click",()=>{if(!confirm("این رکورد حذف شود؟"))return;write(mod.id,read(mod.id).filter(x=>x.id!==b.dataset.delete));stats();list($("#m-search").value)}));
+}
 }
 })();
