@@ -198,3 +198,52 @@ body.dept2-workspace-page .mobile-dock,body.dept2-workspace-page .mobile-dock-pa
  body.dept2-workspace-page header.ops-header .ops-header-inner nav.ops-nav{display:none!important}
  body.dept2-workspace-page .d2-mobile-menu{display:grid!important}
 }
+
+
+/* بانک تخصصی شیوه‌نامه‌ها: فرم، گردش تصویب، نسخه‌بندی و پیش‌نمایش */
+.g-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:15px 0 12px}
+.g-tabs{display:flex;gap:5px;padding:4px;background:#eaf1f4;border-radius:9px}
+.g-tabs button{border:0;border-radius:7px;padding:8px 13px;background:transparent;color:#617987;font:inherit;font-size:11px;cursor:pointer}
+.g-tabs button.active{background:#fff;color:#176e90;box-shadow:0 1px 4px rgba(30,70,90,.08)}
+.g-filters{display:grid;grid-template-columns:minmax(220px,1fr) minmax(150px,210px) minmax(150px,210px);gap:9px;margin:12px 0 16px}
+.g-filters input,.g-filters select{height:39px;min-width:0;border:1px solid #d7e3e9;border-radius:8px;padding:0 11px;background:#fff;color:#29495b;font:inherit;font-size:11px;outline:none}
+.g-filters input:focus,.g-filters select:focus{border-color:#75b4ca;box-shadow:0 0 0 3px #e8f4f8}
+.g-table{min-width:980px}
+.g-table td:first-child{min-width:245px}
+.g-status{display:inline-flex;padding:5px 8px;border-radius:6px;font-size:10px;white-space:nowrap;background:#eef4f7;color:#557486}
+.g-s0{background:#f1f5f7;color:#607784}.g-s1{background:#edf5f8;color:#367b96}.g-s2{background:#f8f3e8;color:#8a7443}.g-s3{background:#fbf0eb;color:#986d52}.g-s4{background:#eaf3f5;color:#326b7e}.g-s5{background:#f1f2f3;color:#77838a}
+.g-form-card{padding:20px}
+.g-form{gap:14px}
+.g-form label small{color:#8799a2;font-size:10px;line-height:1.8}
+.g-form input[type=file]{padding:8px;background:#f8fbfc}
+.g-form textarea# g-body{min-height:300px}
+.g-form #g-body{min-height:300px;line-height:2}
+.g-version-chip{padding:6px 10px;border-radius:7px;background:#eef5f8;color:#47778b;font-size:10px;white-space:nowrap}
+.g-approval-fields{padding:15px;border:1px solid #e1ebef;border-radius:10px;background:#f8fbfc}
+.g-approval-fields h3{margin:0 0 12px;color:#365d70;font-size:13px}
+.g-form-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.g-attachment,.g-preview-file{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 10px;border:1px solid #e2ebef;border-radius:8px;background:#fbfdfe;margin:5px 0}
+.g-attachment span,.g-preview-file b{color:#476878;font-size:11px}
+.g-attachment small{color:#8a9ba4;font-size:10px;margin-left:auto}
+.g-workflow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.g-stage{display:flex;align-items:center;gap:11px;padding:15px;background:#fff;border:1px solid #dce7ed;border-radius:10px}
+.g-stage-no{width:31px;height:31px;display:grid;place-items:center;border-radius:9px;background:#edf5f8;color:#327c98;font-weight:800;font-size:12px}
+.g-stage b,.g-stage small{display:block}.g-stage b{font-size:12px;color:#3d6072}.g-stage small{margin-top:4px;color:#8497a1;font-size:10px}
+.g-note{margin-top:13px;padding:12px 14px;border-right:3px solid #78afc2;border-radius:7px;background:#f4f9fb;color:#67818e;font-size:11px;line-height:2}
+.g-modal-backdrop{position:fixed;z-index:2147483000;inset:0;display:grid;place-items:center;padding:18px;background:rgba(22,43,55,.42)}
+.g-modal{width:min(920px,100%);max-height:92vh;display:flex;flex-direction:column;background:#fff;border:1px solid #d5e2e8;border-radius:14px;box-shadow:0 18px 60px rgba(20,48,62,.2);overflow:hidden}
+.g-modal>header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 17px;border-bottom:1px solid #e5edf0;background:#f8fbfc}
+.g-modal>header b,.g-modal>header small{display:block}.g-modal>header b{color:#2d5367;font-size:13px}.g-modal>header small{margin-top:4px;color:#7a909c;font-size:10px}
+.g-modal-body{padding:17px;overflow:auto}
+.g-detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.g-detail-grid>div{padding:10px;border:1px solid #e4edf1;border-radius:8px;background:#fbfdfe;min-width:0}
+.g-detail-grid small,.g-detail-grid b{display:block}.g-detail-grid small{color:#8799a2;font-size:10px}.g-detail-grid b{margin-top:5px;color:#426678;font-size:11px;overflow-wrap:anywhere}
+.g-modal-actions{display:flex;gap:8px;margin:14px 0 20px;flex-wrap:wrap}
+.g-modal-body h3{margin:18px 0 9px;color:#365c70;font-size:13px}
+.g-document-preview{padding:20px 22px;min-height:160px;border:1px solid #d8e3e8;outline:3px double #e8eef1;outline-offset:-7px;border-radius:4px;background:#fff;color:#354f5d;font-size:12px;line-height:2.2;text-align:justify;white-space:normal;overflow-wrap:anywhere}
+.g-version-list{display:grid;gap:7px}
+.g-version-list>div{padding:9px 11px;border-right:2px solid #8bb9c9;background:#f7fafb;border-radius:5px}
+.g-version-list b,.g-version-list small{display:block}.g-version-list b{color:#42697c;font-size:11px}.g-version-list small{margin-top:3px;color:#82949e;font-size:10px}
+.g-muted{color:#899ba4;font-size:11px}
+@media(max-width:760px){.g-filters{grid-template-columns:1fr}.g-workflow{grid-template-columns:1fr 1fr}.g-detail-grid{grid-template-columns:1fr 1fr}.g-toolbar{align-items:stretch;flex-wrap:wrap}.g-toolbar>.dept2-btn{flex:1}.g-modal-backdrop{padding:6px}.g-modal{max-height:96vh}.g-form-card{padding:13px}}
+@media(max-width:460px){.g-workflow,.g-detail-grid{grid-template-columns:1fr}.g-tabs{width:100%}.g-tabs button{flex:1}}
