@@ -10,7 +10,33 @@ async function restoreNative(){if(!isDesktop)return false;const content=await in
 
 export const Vault={
 async status(){const m=await get("meta","vault"),storedMode=(await get("meta","mode"))?.value,mode=storedMode||(m?"encrypted":"plain");return {exists:!!m||storedMode==="plain",mode,needsMigration:!!m&&storedMode!=="encrypted",device:(await get("meta","device"))?.value||null,passwordHint:(await get("meta","passwordHint"))?.value||""};},
-async unlock(){let meta=await get("meta","vault");if(!meta&&isDesktop){await restoreNative();meta=await get("meta","vault");}if(meta){const rows=await all("changes"),files=await all("attachments");const encryptedRows=rows.some(row=>row.box&&!row.body),encryptedFiles=files.some(file=>file.box||file.metaBox);if(encryptedRows||encryptedFiles)throw Error("مخزن قدیمی شامل داده رمزگذاری‌شده است و بدون کلید قبلی قابل خواندن نیست؛ داده‌ها دست‌نخورده باقی مانده‌اند.");await dbp.then(db=>new Promise((resolve,reject)=>{const tx=db.transaction("meta","readwrite"),s=tx.objectStore("meta");s.delete("vault");s.delete("passwordHint");s.put({key:"mode",value:"plain",updatedAt:new Date().toISOString()});tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error||new Error("آماده‌سازی مخزن بدون رمز ناموفق بود."));tx.onabort=()=>reject(tx.error||new Error("آماده‌سازی مخزن لغو شد."));}));}else{await put("meta",{key:"mode",value:"plain",updatedAt:new Date().toISOString()});await put("meta",{key:"passwordHint",value:""});}activeKey=null;let d=await get("meta","device");if(!d){d={key:"device",value:"PC-"+randomId().slice(0,12).toUpperCase(),createdAt:new Date().toISOString()};await put("meta",d);}device=d.value;unlocked=true;await persistNative();return device;},lock(){activeKey=null;unlocked=false;},ensure(){if(!unlocked)throw Error("ابتدا مخزن را بازگشایی کنید.");},async healthCheck(){this.ensure();const key="__write_test__"+randomId(),probe={key,value:"indexeddb-write-ok",updatedAt:new Date().toISOString()};await put("meta",probe);const saved=await get("meta",key);await req("meta","readwrite",store=>store.delete(key));if(!saved||saved.value!==probe.value)throw Error("آزمون نوشتن و خواندن پایگاه داده محلی ناموفق بود. فضای ذخیره‌سازی مرورگر یا دسترسی IndexedDB را بررسی کنید.");let persistent=false;try{if(navigator.storage?.persisted&&navigator.storage?.persist){persistent=await navigator.storage.persist();}}catch{}return {writable:true,persistent};},
+async unlock(pass=""){
+let meta=await get("meta","vault");
+if(!meta&&isDesktop){await restoreNative();meta=await get("meta","vault");}
+if(meta?.salt&&meta?.check){
+ if(typeof pass!=="string"||!pass)throw Error("برای بازگشایی مخزن، گذرواژه اصلی را وارد کنید.");
+ let key,proof;
+ try{key=await derive(pass,unb64(meta.salt));proof=await unseal(key,meta.check);}catch{throw Error("گذرواژه مخزن صحیح نیست یا اطلاعات رمزگذاری‌شده قابل خواندن نیست.");}
+ if(proof.check!=="COMPANY-SEVEN-LOCAL-VAULT")throw Error("گذرواژه مخزن تأیید نشد.");
+ activeKey=key;unlocked=true;
+ for(const row of await all("changes"))if(row.box)await unseal(key,row.box);
+ for(const file of await all("attachments")){if(file.box)await unseal(key,file.box);if(file.metaBox)await unseal(key,file.metaBox);}
+}else{
+ if(meta){
+  const rows=await all("changes"),files=await all("attachments");
+  if(rows.some(row=>row.box&&!row.body)||files.some(file=>file.box||file.metaBox))throw Error("مخزن قدیمی رمزگذاری‌شده فاقد اطلاعات لازم برای بازگشایی است؛ داده‌ها دست‌نخورده باقی مانده‌اند.");
+  await dbp.then(db=>new Promise((resolve,reject)=>{const tx=db.transaction("meta","readwrite"),s=tx.objectStore("meta");s.delete("vault");s.delete("passwordHint");s.put({key:"mode",value:"plain",updatedAt:new Date().toISOString()});tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error||new Error("آماده‌سازی مخزن محلی ناموفق بود."));tx.onabort=()=>reject(tx.error||new Error("آماده‌سازی مخزن لغو شد."));}));
+ }else{
+  await put("meta",{key:"mode",value:"plain",updatedAt:new Date().toISOString()});
+  await put("meta",{key:"passwordHint",value:""});
+ }
+ activeKey=null;unlocked=true;
+ if(pass){if(pass.length<12){this.lock();throw Error("گذرواژه اصلی باید حداقل ۱۲ نویسه داشته باشد.");}await this.enableEncryption(pass);}
+}
+let d=await get("meta","device");
+if(!d){d={key:"device",value:"PC-"+randomId().slice(0,12).toUpperCase(),createdAt:new Date().toISOString()};await put("meta",d);}
+device=d.value;unlocked=true;await persistNative();return device;
+},lock(){activeKey=null;unlocked=false;},ensure(){if(!unlocked)throw Error("ابتدا مخزن را بازگشایی کنید.");},async healthCheck(){this.ensure();const key="__write_test__"+randomId(),probe={key,value:"indexeddb-write-ok",updatedAt:new Date().toISOString()};await put("meta",probe);const saved=await get("meta",key);await req("meta","readwrite",store=>store.delete(key));if(!saved||saved.value!==probe.value)throw Error("آزمون نوشتن و خواندن پایگاه داده محلی ناموفق بود. فضای ذخیره‌سازی مرورگر یا دسترسی IndexedDB را بررسی کنید.");let persistent=false;try{if(navigator.storage?.persisted&&navigator.storage?.persist){persistent=await navigator.storage.persist();}}catch{}return {writable:true,persistent};},
 async add(entity,recordId,operation,data,baseVersion=null){this.ensure();recordId=String(recordId||randomId());if(baseVersion===null){const prior=(await this.changes()).filter(c=>c.body?.recordId===recordId&&!c.corrupt),refs=new Set();for(const c of prior){const b=c.body.baseVersion;if(Array.isArray(b))b.forEach(x=>refs.add(x));else if(b)refs.add(b);}const tips=prior.filter(c=>!refs.has(c.changeId));if(tips.length>1)throw Error("این رکورد تعارض حل‌نشده دارد؛ ابتدا از بخش تعارض‌ها آن را تعیین تکلیف کنید.");if(tips.length===1)baseVersion=tips[0].changeId;}const changeId=randomId(),meta={changeId,deviceId:device,createdAt:new Date().toISOString()};const body={entity:String(entity||"general"),recordId,operation:operation||"upsert",baseVersion,data};await put("changes",{...meta,body});await persistNative();return changeId;},
 async changes(){this.ensure();const rows=await all("changes"),out=[];for(const r of rows){try{out.push({...r,body:r.body??await unseal(activeKey,r.box)});}catch{out.push({...r,body:null,corrupt:true});}}return out;},
 async addAttachment(file,entity="documents",recordId=null){this.ensure();if(!file||!file.name)throw Error("فایل معتبری انتخاب نشده است.");if(file.size>20*1024*1024)throw Error("حداکثر حجم هر فایل در این نسخه ۲۰ مگابایت است.");const bytes=new Uint8Array(await file.arrayBuffer());let binary="";for(let i=0;i<bytes.length;i+=0x8000)binary+=String.fromCharCode(...bytes.subarray(i,i+0x8000));const id=randomId(),meta={name:file.name,type:file.type||"application/octet-stream",size:file.size,lastModified:file.lastModified||0,createdAt:new Date().toISOString(),deviceId:device,entity:String(entity||"documents"),recordId:recordId?String(recordId):null};await put("attachments",{attachmentId:id,content:{content:btoa(binary)},meta});await persistNative();return id;},
