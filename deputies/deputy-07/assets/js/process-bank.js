@@ -34,7 +34,11 @@ const routeByTitle={
 "فرایند نظافت و آماده‌سازی محل کار":{2:[5,3],7:[9,8]},
 "فرایند درخواست تعمیرات و خدمات پشتیبانی محل کار":{2:[4,3],4:[5,6],7:[8,9],10:[13,11]}
 };
-function connectSamples(record){const route=routeByTitle[record.title];(record.steps||[]).forEach((s,i)=>{if(s.type==="decision"){const pair=route&&route[i];s.yesNextId=pair?"s"+pair[0]:(i<record.steps.length-1?"s"+(i+1):"");s.noNextId=pair?"s"+pair[1]:"s"+(record.steps.length-1)}else if(s.type!=="end"){s.nextId=i<record.steps.length-1?"s"+(i+1):""}});return record}
+const nextByTitle={
+"فرایند سرویس، تعمیر و نگهداری خودرو":{3:4,6:10,7:8,9:10},
+"فرایند درخواست تعمیرات و خدمات پشتیبانی محل کار":{5:7,6:7,8:9,9:10,11:12,12:13}
+};
+function connectSamples(record){const route=routeByTitle[record.title],next=nextByTitle[record.title];(record.steps||[]).forEach((s,i)=>{if(s.type==="decision"){const pair=route&&route[i];s.yesNextId=pair?"s"+pair[0]:(i<record.steps.length-1?"s"+(i+1):"");s.noNextId=pair?"s"+pair[1]:"s"+(record.steps.length-1)}else if(s.type!=="end"){const target=next&&next[i]!==undefined?next[i]:i+1;s.nextId=target<record.steps.length?"s"+target:""}});return record}
 initial.forEach(connectSamples);
 let rows=[];try{const saved=localStorage.getItem(KEY);rows=saved?JSON.parse(saved):null}catch(e){rows=null}
 if(!Array.isArray(rows)){rows=initial.slice();try{const legacy=JSON.parse(localStorage.getItem("deputy7.dept2.module.processes")||"[]");legacy.forEach(old=>{if(old&&old.title&&!rows.some(x=>x.title===old.title)){const migrated=make(old.title,old.category||"مدیریت و برنامه‌ریزی","اداره تحقیق و توسعه",old.owner||"مسئول فرایند",old.description||"فرایند منتقل‌شده از بانک قبلی.",[["شروع و ثبت درخواست","start"],["بررسی و انجام اقدام","action",old.owner||"مسئول فرایند","",old.description||""],["ثبت نتیجه و پایان","end"]],old.status==="فعال"?"در حال اجرا":"در حال تدوین");migrated.sample=!!old.sample;rows.push(migrated)}})}catch(e){}save()}else{initial.forEach(sample=>{if(sample.sample&&!rows.some(x=>x.title===sample.title))rows.push(sample)})}
