@@ -5,9 +5,11 @@ async function connect(){
  busy=true;
  try{
   api=api||await import("../../deputies/deputy-07/local-data/assets/personnel-registry.js?v=personnel-registry-20261114-7");
-  if(!await api.ensurePersonnelUnlocked())return false;
-  await api.initialize();
-  const rows=await api.list();
+  const registry=window.PersonnelRegistry||api.PersonnelRegistry;
+  if(!registry)throw new Error("ماژول بانک مرکزی پرسنل بارگذاری نشد.");
+  if(!await registry.ensureUnlocked())return false;
+  await registry.initialize();
+  const rows=await registry.list();
   const people=rows.filter(r=>r.status==="active").map(r=>{
    const p=r.profile||{};
    return {id:String(r.code),personnelCode:String(r.code),name:[p.firstName,p.lastName].filter(Boolean).join(" ").trim(),unit:p.unit||"",departmentId:p.departmentId||"",position:p.jobTitle||"",specialty:p.specialty||"",phone:p.mobile||"",status:r.status,source:"registry"};
