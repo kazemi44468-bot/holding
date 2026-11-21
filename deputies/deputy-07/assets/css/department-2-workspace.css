@@ -194,10 +194,10 @@ body.dept2-workspace-page header.ops-header .ops-header-inner nav.ops-nav>.nav-d
 body.dept2-workspace-page header.ops-header .ops-header-inner nav.ops-nav .nav-menu{z-index:2147481003!important;pointer-events:auto}
 body.dept2-workspace-page header.ops-header .ops-header-inner nav.ops-nav .nav-menu a{pointer-events:auto;position:relative}
 body.dept2-workspace-page .mobile-dock,body.dept2-workspace-page .mobile-dock-panel{display:none!important}
-@media(max-width:900px){
- body.dept2-workspace-page header.ops-header .ops-header-inner nav.ops-nav{display:none!important}
- body.dept2-workspace-page .d2-mobile-menu{display:grid!important}
-}
+body.dept2-workspace-page header.ops-header .ops-header-inner nav.ops-nav{display:none!important}
+body.dept2-workspace-page header.ops-header .ops-header-inner{justify-content:space-between}
+body.dept2-workspace-page .mobile-dock,body.dept2-workspace-page .mobile-dock-panel{display:none!important}
+@media(max-width:900px){body.dept2-workspace-page .d2-mobile-menu{display:grid!important}}
 
 
 /* بانک تخصصی شیوه‌نامه‌ها: فرم، گردش تصویب، نسخه‌بندی و پیش‌نمایش */
