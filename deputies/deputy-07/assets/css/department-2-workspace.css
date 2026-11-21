@@ -114,3 +114,14 @@
 .dept2-sidebar .dept2-side-sub{position:relative;z-index:2;}
 .dept2-sidebar .dept2-side-sub a{position:relative;display:block;}
 @media(max-width:720px){.dept2-layout>.dept2-sidebar{position:relative;z-index:12;}}
+
+
+/* Sidebar interaction hardening: native disclosure + visible click target */
+.dept2-layout{position:relative;isolation:isolate;}
+.dept2-layout>.dept2-sidebar{position:sticky;top:16px;align-self:start;z-index:30;isolation:isolate;pointer-events:auto;}
+.dept2-sidebar .dept2-side-group{display:block;position:relative;pointer-events:auto;}
+.dept2-sidebar .dept2-side-group>summary{display:flex;align-items:center;min-height:42px;position:relative;z-index:2;cursor:pointer;pointer-events:auto;list-style:none;}
+.dept2-sidebar .dept2-side-group>summary::-webkit-details-marker{display:none;}
+.dept2-sidebar .dept2-side-group>.dept2-side-sub{position:relative;z-index:3;pointer-events:auto;}
+.dept2-sidebar a{position:relative;z-index:3;display:flex;pointer-events:auto;cursor:pointer;}
+.dept2-sidebar a[href]{text-decoration:none;}
