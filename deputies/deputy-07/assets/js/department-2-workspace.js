@@ -43,7 +43,7 @@ const url=new URL(location.href),isModule=url.searchParams.has("module")||url.pa
 const root=$(".ops-main");if(!root)return;
 const legacyNav=[...document.querySelectorAll(".ops-nav details")].find(x=>x.querySelector("summary")?.textContent.includes("بخش‌های این اداره"));if(legacyNav)legacyNav.remove();
 const key=id=>"deputy7.dept2.module."+id;
-function read(id){try{const v=localStorage.getItem(key(id));if(v===null){localStorage.setItem(key(id),JSON.stringify(samples[id]));return samples[id].map(x=>({...x}));}const a=JSON.parse(v);return Array.isArray(a)?a:[]}catch(e){return (samples[id]||[]).map(x=>({...x}));}}
+function read(id){if(id==="training"){try{const data=JSON.parse(localStorage.getItem("deputy7_dept2_training_v1")||"{}");return (Array.isArray(data.courses)?data.courses:[]).map(c=>({id:c.id,title:c.title,category:c.category,owner:c.coordinator||c.organizer||"—",status:c.status,date:c.startDateFa||c.startDate||"—",due:c.endDateFa||c.endDate||"—",description:c.description||c.outcomes||""}));}catch(e){return []}}try{const v=localStorage.getItem(key(id));if(v===null){localStorage.setItem(key(id),JSON.stringify(samples[id]));return samples[id].map(x=>({...x}));}const a=JSON.parse(v);return Array.isArray(a)?a:[]}catch(e){return (samples[id]||[]).map(x=>({...x}));}}
 function write(id,rows){try{localStorage.setItem(key(id),JSON.stringify(rows));return true}catch(e){alert("ذخیره‌سازی در این مرورگر در دسترس نیست.");return false}}
 modules.forEach(m=>read(m.id));
 function pageUrl(file){return new URL(file,location.href).href}function href(id,v){const u=new URL("department-2.html",location.href);u.searchParams.set("module",id);u.searchParams.set("view",v);return u.href}
