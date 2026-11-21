@@ -129,7 +129,7 @@
 
 /* منوی جدید اداره ۲؛ الگوی نوار کناری شناور، جمع‌شونده و چندسطحی */
 .dept2-layout{display:block;width:min(1500px,calc(100% - 40px));margin:24px auto 40px;direction:rtl}
-.dept2-sidebar{position:fixed;z-index:2147482000;right:14px;top:14px;bottom:14px;width:54px;min-height:0;height:auto;max-height:none;overflow:hidden;display:flex;flex-direction:column;align-items:stretch;padding:8px 6px;background:rgba(255,255,255,.97);border:1px solid #dce7ed;border-radius:21px;box-shadow:0 14px 38px rgba(31,65,82,.13);backdrop-filter:blur(14px);transition:width .25s ease,padding .25s ease}
+.dept2-sidebar{position:fixed;z-index:2147482000;right:14px;top:94px;bottom:14px;width:54px;min-height:0;height:auto;max-height:none;overflow:hidden;display:flex;flex-direction:column;align-items:stretch;padding:8px 6px;background:rgba(255,255,255,.97);border:1px solid #dce7ed;border-radius:21px;box-shadow:0 14px 38px rgba(31,65,82,.13);backdrop-filter:blur(14px);transition:width .25s ease,padding .25s ease}
 .dept2-sidebar.menu-expanded{width:244px;padding:9px 9px}
 .d2-menu-toggle{flex:0 0 36px;width:36px;height:36px;margin:0 auto 7px;padding:0;border:0;border-radius:50%;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer}
 .d2-menu-toggle span{width:17px;height:1.5px;border-radius:2px;background:#425e6d;transition:.2s}
@@ -178,7 +178,7 @@ body:not(.d2-menu-body-expanded) .dept2-layout{width:min(1420px,calc(100% - 110p
  .dept2-sidebar .d2-nav-sub-link{width:calc(100% - 14px);height:auto;margin-left:14px}
  .dept2-sidebar .d2-nav-group:hover>.d2-nav-sub:not(.is-open),.dept2-sidebar .d2-nav-group:focus-within>.d2-nav-sub:not(.is-open){display:none}
  .dept2-layout,body.d2-menu-body-expanded .dept2-layout,body:not(.d2-menu-body-expanded) .dept2-layout{display:block;width:calc(100% - 20px);margin:14px auto 28px}
- .d2-mobile-menu{display:grid;place-items:center;position:fixed;z-index:2147482002;right:13px;top:13px;width:43px;height:43px;border:1px solid #dce7ed;border-radius:13px;background:#fff;color:#315b70;box-shadow:0 7px 20px rgba(31,65,82,.12);font-size:19px;cursor:pointer}
+ .d2-menu-toggle{display:none}\n .d2-mobile-menu{display:grid;place-items:center;position:fixed;z-index:2147482002;right:13px;top:86px;width:43px;height:43px;border:1px solid #dce7ed;border-radius:13px;background:#fff;color:#315b70;box-shadow:0 7px 20px rgba(31,65,82,.12);font-size:19px;cursor:pointer}
  .d2-menu-overlay{display:block;position:fixed;z-index:2147481999;inset:0;background:rgba(26,48,60,.25);opacity:0;visibility:hidden;transition:.2s}
  .d2-menu-overlay.is-open{opacity:1;visibility:visible}
  .dept2-page-head{padding-top:46px}
