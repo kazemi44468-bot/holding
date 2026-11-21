@@ -9,9 +9,10 @@ const esc=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const fa=n=>Number(n||0).toLocaleString("fa-IR");
 async function ensureUnlocked(){
  try{Vault.ensure();return true;}catch{}
- const s=await Vault.status();
- let pass=prompt(s.exists?"برای دسترسی به بانک رمزگذاری‌شده پرسنل، گذرواژه اصلی مخزن را وارد کنید:":"برای ایجاد بانک رمزگذاری‌شده پرسنل، یک گذرواژه اصلی حداقل ۱۲ نویسه‌ای تعیین کنید:");
+ const s=await Vault.status(),encrypted=s.mode==="encrypted";
+ let pass=prompt(encrypted?"برای بازگشایی بانک مرکزی پرسنل، گذرواژه اصلی را وارد کنید:":"برای ایجاد یا فعال‌سازی رمزگذاری بانک مرکزی پرسنل، یک گذرواژه اصلی حداقل ۱۲ نویسه‌ای تعیین کنید:");
  if(!pass)return false;
+ if(pass.length<12){alert("گذرواژه اصلی باید حداقل ۱۲ نویسه داشته باشد.");return false;}
  try{await Vault.unlock(pass);return true;}catch(e){alert(e.message);return false;}
 }
 async function list(){
