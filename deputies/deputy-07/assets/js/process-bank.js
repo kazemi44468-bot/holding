@@ -19,7 +19,7 @@ make("فرایند ثبت و رسیدگی به گزارش‌های میدانی 
 make("فرایند جمع‌آوری و ثبت گزارش عملکرد دوره‌ای ادارات","مدیریت و برنامه‌ریزی","اداره تحقیق و توسعه","کارشناس گزارش‌گیری","دریافت داده‌های واحدها، کنترل کیفیت، تجمیع و ارائه گزارش مدیریتی.",[["اعلام دوره گزارش‌دهی و شاخص‌ها","start"],["دریافت اطلاعات از ادارات","action"],["اطلاعات کامل و مستند است؟","decision","کارشناس گزارش‌گیری","", "", "تجمیع و تحلیل داده‌ها","بازگشت برای تکمیل یا اصلاح"],["کنترل مغایرت‌ها و محاسبه شاخص‌ها","action"],["بررسی و تأیید گزارش","decision","رئیس اداره","", "", "ارائه به مقام مافوق","اصلاح تحلیل و گزارش"],["ثبت نسخه نهایی و بایگانی","action"],["پایان","end"]])
 ];
 let rows=[];try{const saved=localStorage.getItem(KEY);rows=saved?JSON.parse(saved):null}catch(e){rows=null}
-if(!Array.isArray(rows)){rows=initial;save()}
+if(!Array.isArray(rows)){rows=initial;try{const legacy=JSON.parse(localStorage.getItem("deputy7.dept2.module.processes")||"[]");legacy.forEach((old,i)=>{if(old&&old.title&&!rows.some(x=>x.title===old.title)){const migrated=make(old.title,old.category||"مدیریت و برنامه‌ریزی","اداره تحقیق و توسعه",old.owner||"مسئول فرایند",old.description||"فرایند منتقل‌شده از بانک قبلی.",[["شروع و ثبت درخواست","start"],["بررسی و انجام اقدام","action",old.owner||"مسئول فرایند","",old.description||""],["ثبت نتیجه و پایان","end"]],old.status==="فعال"?"در حال اجرا":"در حال تدوین");migrated.sample=!!old.sample;rows.push(migrated)}})}catch(e){}save()}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(rows));return true}catch(e){alert("ذخیره‌سازی محلی انجام نشد؛ فضای مرورگر را بررسی کنید.");return false}}
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const fa=n=>Number(n||0).toLocaleString("fa-IR");
