@@ -257,3 +257,20 @@ body.dept2-workspace-page .mobile-dock,body.dept2-workspace-page .mobile-dock-pa
 .pf-arrow{max-width:100%;text-align:center;font-size:11px;line-height:1.8;padding:5px 8px;color:#537d8e;background:#edf5f8;border-radius:7px;margin:5px 0}
 .pf-branch b{font-weight:700}
 @media(max-width:760px){.pf-branches{grid-template-columns:1fr}}
+
+/* یکپارچگی ناوبری اداره ۲ در صفحه اصلی و تمام زیرصفحه‌ها */
+body.dept2-workspace-page header.ops-header .ops-header-inner nav.ops-nav{display:none!important}
+body.dept2-workspace-page .d2-nav-link,body.dept2-workspace-page .d2-nav-sub-link{transition:background .16s ease,color .16s ease}
+body.dept2-workspace-page .d2-nav-group.is-active>.d2-nav-row .d2-nav-link{background:#eaf5f9;color:#176d8d}
+body.dept2-workspace-page .d2-nav-sub-link.active{background:#e8f3f7;color:#176d8d;border-color:#72b3c8;font-weight:700}
+.pf-flow-disclosure{margin:10px 0 12px;border:1px solid #e1ebef;border-radius:10px;background:#f8fbfc;overflow:hidden}
+.pf-flow-disclosure>summary{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;list-style:none;padding:10px 12px;color:#3b687d;font-size:11px;font-weight:700}
+.pf-flow-disclosure>summary::-webkit-details-marker{display:none}
+.pf-flow-disclosure>summary:after{content:"＋";color:#6e98a8;font-size:16px;line-height:1}
+.pf-flow-disclosure[open]>summary:after{content:"−"}
+.pf-flow-disclosure>summary small{margin-right:auto;color:#8297a1;font-size:10px;font-weight:400}
+.pf-flow-disclosure[open]>.pf-flow{margin:0 10px 10px;padding:12px;border:0;border-top:1px solid #e5edf0;border-radius:0;background:transparent}
+.pf-flow-modal{margin:0}
+.pf-flow-modal>summary{background:#f6fafb}
+.pf-flow-modal[open]>.pf-flow{margin:0 12px 12px}
+@media(max-width:850px){.pf-flow-disclosure>summary{align-items:flex-start;flex-wrap:wrap}.pf-flow-disclosure>summary small{margin-right:0}}
