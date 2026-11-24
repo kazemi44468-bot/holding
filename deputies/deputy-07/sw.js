@@ -1,5 +1,5 @@
 "use strict";
-const CACHE_NAME="deputy-07-training-v116";
+const CACHE_NAME="deputy-07-training-v117";
 const CORE_FILES=[
  "./pages/mission-bank.html",
  "./pages/mission-create.html",
@@ -43,7 +43,7 @@ self.addEventListener("install",event=>{
 self.addEventListener("activate",event=>{
  event.waitUntil((async()=>{
   const keys=await caches.keys();
-  await Promise.all(keys.filter(key=>key.startsWith("deputy-07-missions-")&&key!==CACHE_NAME).map(key=>caches.delete(key)));
+  await Promise.all(keys.filter(key=>(key.startsWith("deputy-07-missions-")||key.startsWith("deputy-07-training-"))&&key!==CACHE_NAME).map(key=>caches.delete(key)));
   await self.clients.claim();
  })());
 });
