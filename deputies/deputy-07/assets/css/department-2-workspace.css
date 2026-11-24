@@ -396,3 +396,17 @@ body.dept2-workspace-page .d2-nav-sub-link.active{background:#e8f3f7;color:#176d
 .d2x-form input[type=file]{max-width:100%;font-size:11px}
 @media(max-width:900px){.wf-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.wf-detail-grid{grid-template-columns:1fr}.d2x-tab{font-size:10px;padding:7px 9px}}
+
+
+/* Polished standalone preview for idea-bank records */
+.dept2-main .d2x-idea-detail{margin:18px 0 28px;padding:18px;border:1px solid #cfe1e8;border-radius:14px;background:#fff;box-shadow:0 10px 30px rgba(39,83,101,.08);scroll-margin-top:18px}
+.dept2-main .d2x-idea-detail>.d2x-panel-head{padding-bottom:15px;margin-bottom:14px;border-bottom:1px solid #e8eff2;align-items:flex-start}
+.dept2-main .d2x-idea-detail>.d2x-panel-head h2{font-size:18px;line-height:1.9;margin:5px 0;color:#28576b}
+.dept2-main .d2x-idea-detail>.d2x-panel-head p{font-size:11px;color:#718691;margin:0;line-height:1.8}
+.dept2-main .d2x-idea-detail h3{margin:17px 0 7px;padding-right:9px;border-right:3px solid #83b8c8;font-size:12px;color:#376b80}
+.dept2-main .d2x-idea-detail>p{margin:0 0 9px;padding:9px 11px;border:1px solid #edf1f3;border-radius:8px;background:#fbfcfd;color:#536d79;font-size:11px;line-height:2;white-space:pre-wrap;overflow-wrap:anywhere}
+.dept2-main .d2x-idea-detail .d2x-meta{grid-template-columns:repeat(5,minmax(0,1fr));margin:12px 0 17px}
+.dept2-main .d2x-idea-detail .d2x-meta>div{background:#f5f9fa;border-color:#e3edf0}
+.dept2-main .d2x-idea-detail .d2x-quote{background:#f2f8fa;border-color:#dcebf0;border-right:3px solid #79afc0}
+.dept2-main .d2x-idea-detail .d2x-proposal{margin-top:14px;padding:13px;border-color:#dce9ed;background:#f6fafb}
+@media(max-width:760px){.dept2-main .d2x-idea-detail{padding:12px}.dept2-main .d2x-idea-detail>.d2x-panel-head{flex-direction:column}.dept2-main .d2x-idea-detail .d2x-meta{grid-template-columns:repeat(2,minmax(0,1fr))}}
