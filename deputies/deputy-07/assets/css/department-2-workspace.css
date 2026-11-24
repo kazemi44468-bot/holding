@@ -375,3 +375,11 @@ body.dept2-workspace-page .d2-nav-sub-link.active{background:#e8f3f7;color:#176d
 .dept2-main .d2x-tag-report{min-width:0}
 .dept2-main .d2x-tag-report .d2x-muted{font-size:10px;line-height:1.8}
 @media(max-width:760px){.dept2-main .d2x-idea-grid{grid-template-columns:1fr}.dept2-main .d2x-idea-guide{align-items:flex-start;flex-direction:column}.dept2-main .d2x-idea-guide>span{white-space:normal}}
+
+/* Deputy 7 bank taxonomy and experience-action checklist */
+.dept2-main .d2x-check-grid label{align-items:center;justify-content:space-between;flex-wrap:wrap}
+.dept2-main .d2x-check-grid label select{width:100%;min-width:0;max-width:100%;padding:6px 8px;border:1px solid #dce7eb;border-radius:6px;background:#fff;color:#456575;font:inherit;font-size:10px}
+.dept2-main .d2x-check-grid label span{font-size:10px;font-weight:700}
+.dept2-main .d2x-form>label select{min-width:0}
+.dept2-main .d2x-tag-report .d2x-column-chart{align-items:flex-end}
+@media(max-width:760px){.dept2-main .d2x-check-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
