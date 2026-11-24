@@ -1,0 +1,23 @@
+(()=>{"use strict";
+if(document.body.classList.contains("d1-workspace-page"))return;
+const main=document.querySelector(".ops-main");if(!main)return;
+const base=new URL("department-1.html",location.href);
+const href=(module,view="bank")=>{const u=new URL(base);u.searchParams.set("module",module);u.searchParams.set("view",view);return u.href};
+const groups=[
+["hr","مدیریت منابع انسانی","♙",[["personnel","بانک پرسنل"],["attendance","حضور و غیاب"],["leave","مدیریت مرخصی"],["overtime","مدیریت اضافه‌کار"],["bonus","مدیریت کارانه"],["orders","مدیریت احکام"],["evaluation","ارزیابی عملکرد"],["training","آموزش و توانمندسازی"]]],
+["finance","مدیریت مالی و اعتبارات","▤",[["finance","داشبورد مالی"],["expenses","هزینه‌ها و اسناد مالی"],["budget","بودجه و اعتبارات"],["settlements","پرداخت‌ها و تسویه‌حساب‌ها"]]],
+["fleet","مدیریت ناوگان و خودرو","▣",[["vehicles","بانک خودروها"],["vehicle-costs","هزینه‌ها، سوخت و تعمیرات"],["vehicle-requests","درخواست و تخصیص خودرو"]]],
+["assets","مدیریت اموال و تجهیزات","▦",[["assets","بانک اموال"],["asset-transfer","تحویل و تحول اموال"],["asset-repair","تعمیرات و اموال‌گردانی"]]],
+["missions","مدیریت مأموریت‌ها و اعزام","➤",[["missions","بانک مأموریت‌ها"],["mission-new","ثبت و تأیید مأموریت"],["mission-reports","گزارش و تسویه مأموریت"]]],
+["support","خدمات و پشتیبانی اداری","◇",[["support","درخواست‌های پشتیبانی"],["procurement","خرید و تدارکات"],["contracts","قراردادهای خدماتی"]]],
+["correspondence","دبیرخانه و مکاتبات","✉",[["correspondence","بانک مکاتبات"],["referrals","ارجاعات و پیگیری"]]],
+["reports","گزارش‌ها و نظارت","▥",[["reports","گزارش‌ها و نظارت"]]]
+];
+const path=location.pathname.split("/").pop(),active=path==="personnel-profile.html"?"personnel":path==="finance-management.html"?"finance":path==="mission-bank.html"?"missions":path==="mission-create.html"?"mission-new":path==="mission-reports.html"?"mission-reports":"";
+const groupsHtml=groups.map(([id,label,icon,items])=>{const open=items.some(x=>x[0]===active);return '<div class="d2-nav-group '+(open?"is-active has-open":"")+'"><div class="d2-nav-row"><a class="d2-nav-link" href="'+href(items[0][0])+'" data-branch="true" aria-expanded="'+open+'"><span class="d2-nav-icon">'+icon+'</span><span class="d2-nav-label">'+label+'</span></a></div><div class="d2-nav-sub '+(open?"is-open":"")+'">'+items.map(([key,name])=>'<a class="d2-nav-sub-link '+(key===active?"active":"")+'" href="'+href(key)+'">'+name+'</a>').join("")+'</div></div>'}).join("");
+const html='<aside class="dept2-sidebar d1-sidebar menu-expanded" aria-label="منوی اداره اداری و پشتیبانی"><button class="d2-menu-toggle" type="button" aria-label="جمع یا باز کردن منو" aria-expanded="true"><span></span><span></span><span></span></button><div class="d2-side-brand"><span class="d2-brand-mark">۰۱</span><div class="d2-brand-text"><b>اداری و پشتیبانی</b><small>معاونت ۷ · اداره تخصصی</small></div></div><nav class="d2-side-nav"><div class="d2-nav-group"><div class="d2-nav-row"><a class="d2-nav-link" href="'+href("overview")+'"><span class="d2-nav-icon">⌂</span><span class="d2-nav-label">نمای کلی اداره</span></a></div></div>'+groupsHtml+'</nav></aside>';
+const host=document.createElement("div");host.innerHTML=html;const side=host.firstElementChild;document.body.append(side);document.body.classList.add("d1-workspace-page","d2-menu-body-expanded");main.classList.add("dept2-layout");
+const toggle=side.querySelector(".d2-menu-toggle");toggle.onclick=()=>{const open=!side.classList.contains("menu-expanded");side.classList.toggle("menu-expanded",open);side.classList.toggle("menu-collapsed",!open);document.body.classList.toggle("d2-menu-body-expanded",open);toggle.setAttribute("aria-expanded",String(open))};
+side.querySelectorAll("[data-branch]").forEach(a=>a.onclick=e=>{e.preventDefault();const g=a.closest(".d2-nav-group"),sub=g.querySelector(".d2-nav-sub"),open=sub.classList.toggle("is-open");g.classList.toggle("has-open",open);a.setAttribute("aria-expanded",String(open))});
+if(matchMedia("(max-width:850px)").matches){side.classList.remove("menu-expanded");side.classList.add("menu-collapsed");document.body.classList.remove("d2-menu-body-expanded");const b=document.createElement("button");b.className="d2-mobile-menu";b.textContent="☰";b.type="button";const overlay=document.createElement("div");overlay.className="d2-menu-overlay";document.body.append(b,overlay);const close=()=>{side.classList.remove("is-open");overlay.classList.remove("is-open")};b.onclick=()=>{side.classList.add("is-open");overlay.classList.add("is-open")};overlay.onclick=close;side.querySelectorAll(".d2-nav-sub-link,.d2-nav-group:not(:has([data-branch])) .d2-nav-link").forEach(a=>a.onclick=close)}
+})();
