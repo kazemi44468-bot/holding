@@ -1,5 +1,5 @@
 "use strict";
-const CACHE_NAME="deputy-07-training-v107";
+const CACHE_NAME="deputy-07-training-v108";
 const CORE_FILES=[
  "./pages/mission-bank.html",
  "./pages/mission-create.html",
@@ -24,6 +24,9 @@ const CORE_FILES=[
  "./assets/css/department-2-training.css",
  "./assets/js/jalali-picker.js",
  "./assets/js/mission-calendar.js",
+ "./assets/js/deputy7-registry.js",
+ "./assets/js/workflow-bank.js",
+ "./assets/js/process-bank.js",
  "./assets/js/department-2-workspace.js",
  "./assets/js/department-2-training.js",
  "./local-data/assets/personnel-registry.js",
