@@ -18,7 +18,7 @@ const uid=()=> "P-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice
 const api={
 key:KEY,
 departments:()=>db.departments.filter(x=>x.active!==false).map(x=>({...x})),
-departmentOptions:(selected)=>db.departments.filter(x=>x.active!==false).map(x=>'<option value="'+String(x.id).replace(/"/g,"&quot;")+'" '+(String(selected||"2")===String(x.id)||norm(selected)===norm(x.name)?"selected":"")+'>'+x.name+'</option>').join(""),
+departmentOptions:(selected)=>db.departments.filter(x=>x.active!==false).map(x=>'<option value="'+String(x.name).replace(/"/g,"&quot;")+'" '+(String(selected||"اداره تحقیق و توسعه")===String(x.id)||norm(selected)===norm(x.name)||norm(api.departmentName(selected))===norm(x.name)?"selected":"")+'>'+x.name+'</option>').join(""),
 departmentName:value=>{const v=String(value??"");const alias=db.aliases[v];if(alias)return alias;const d=db.departments.find(x=>String(x.id)===v||norm(x.name)===norm(v));return d?d.name:(v||"تعیین نشده")},
 departmentId:value=>{const d=db.departments.find(x=>String(x.id)===String(value)||norm(x.name)===norm(value));return d?String(d.id):""},
 normalizeDepartment:value=>{const alias=db.aliases[String(value??"")];if(alias)return alias;return api.departmentName(value)},
