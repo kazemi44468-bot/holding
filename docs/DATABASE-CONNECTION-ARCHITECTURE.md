@@ -16,7 +16,7 @@ GitHub Pages و JavaScript مرورگر نباید مستقیماً به MySQL/P
 5. برای اتصال‌ها health check و timeout داشته باشد و جزئیات رمز/خطاهای حساس را در پاسخ به مرورگر برنگرداند.
 
 ## قرارداد API پیشنهادی
-- `POST /api/database/test`: آزمایش اتصال با اعتبارنامه موقت؛ پاسخ فقط وضعیت و پیام غیرحساس.
+- `POST /api/database/test`: آزمایش اتصال با اعتبارنامه موقت؛ پاسخ فقط وضعیت و پیام غیرحساس.\n- `POST /api/database/connections/{id}/rotate-secret`: ثبت یا تعویض رمز در مخزن امن سرور؛ پاسخ موفق باید `secretStored: true` داشته باشد. رمز خام نباید در پایگاه داده تنظیمات یا لاگ ذخیره شود؛ Secret Manager یا رمزنگاری کلید-محور سمت سرور لازم است.
 - `GET /api/database/connections`: فهرست پروفایل‌های ثبت‌شده سمت سرور، بدون رمز.
 - `POST /api/database/connections`: ایجاد پروفایل امن در سرور.
 - `PUT /api/database/connections/{id}`: ویرایش پروفایل و جایگزینی رمز در Secret Manager.
