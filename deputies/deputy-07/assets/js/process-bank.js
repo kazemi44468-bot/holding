@@ -2,7 +2,7 @@
 window.renderProcessBank=function(main,ctx){
 const KEY="deputy7.dept2.processes.v2";
 const today=ctx.today;
-const departments=["اداره تحقیق و توسعه","اداره اداری و پشتیبانی","اداره پارک‌بان و معبربانان","اداره تأسیسات فنی و امور نگهداری","اداره فاوا و خدمات فنی","اداره جمع‌آوری، نگهداری و بازیافت پسماند","سایر ادارات"];
+const departments=["اداره اداری و پشتیبانی","اداره تحقیق و توسعه","اداره پارک‌بان و معبربانان","اداره تأسیسات فنی و امور نگهداری","اداره فاوا و خدمات فنی","اداره جمع‌آوری، نگهداری و بازیافت پسماند"];
 const categories=["امور اداری","مدیریت و برنامه‌ریزی","منابع انسانی","مالی و پشتیبانی","فناوری اطلاعات","پژوهش و توسعه","عملیات اجرایی","نظارت و ارزیابی"];
 const statuses=["پیش‌نویس","در حال تدوین","در بررسی","ارسال برای تصویب","مصوب و ابلاغ‌شده","در حال اجرا","نیازمند بازنگری","منسوخ"];
 const make=(title,category,department,owner,description,steps,status="در حال تدوین")=>({id:"proc-"+Math.random().toString(36).slice(2,8),code:"PR-"+String(Math.floor(Math.random()*800)+100),title,category,department,owner,collaborators:"کارشناس مرتبط · مسئول واحد",purpose:description,trigger:"دریافت درخواست یا اعلام نیاز از واحد متقاضی",inputs:"درخواست مکتوب، مستندات پشتیبان و اطلاعات موردنیاز",outputs:"نتیجه اقدام، ثبت در سوابق و اعلام نتیجه به متقاضی",standardTime:"۳ تا ۵ روز کاری",controls:"کنترل کامل بودن مدارک، ثبت تاریخ و مسئول، تأیید نتیجه",status,date:"۱۴۰۵/۰۹/۰۱",version:1,steps:steps.map((s,i)=>({id:"s"+i,title:s[0],type:s[1]||"action",owner:s[2]||owner,duration:s[3]||"۱ روز کاری",description:s[4]||"",yes:s[5]||"",no:s[6]||""})),sample:true,history:[{date:"۱۴۰۵/۰۹/۰۱",note:"ثبت نمونه اولیه برای تکمیل و بررسی"}]});
