@@ -383,3 +383,16 @@ body.dept2-workspace-page .d2-nav-sub-link.active{background:#e8f3f7;color:#176d
 .dept2-main .d2x-form>label select{min-width:0}
 .dept2-main .d2x-tag-report .d2x-column-chart{align-items:flex-end}
 @media(max-width:760px){.dept2-main .d2x-check-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Workflow bank and shared reference registries */
+.d2x-tab{display:inline-flex;align-items:center;padding:8px 13px;border:1px solid #dce8ed;border-radius:8px;color:#476675;text-decoration:none;background:#fff;font-size:12px}
+.d2x-tab.active{background:#e8f5f8;border-color:#b8dce5;color:#245d70;font-weight:700}
+.wf-detail-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}
+.wf-detail-grid>div{padding:12px;border:1px solid #e3ebee;border-radius:9px;background:#fbfdfe;min-width:0}
+.wf-detail-grid small,.wf-detail-grid b{display:block}.wf-detail-grid small{color:#7a909b;font-size:10px;margin-bottom:5px}.wf-detail-grid b{font-size:12px;color:#355363;overflow-wrap:anywhere}
+.wf-text-block{border-top:1px solid #e8eef0;padding:13px 0}.wf-text-block h3{font-size:13px;color:#365a6a;margin:0 0 7px}.wf-text-block p{white-space:pre-wrap;line-height:1.9;color:#536c78;font-size:12px;margin:0}
+.wf-files{display:flex;flex-wrap:wrap;gap:8px}.wf-files a{padding:7px 10px;border:1px solid #dce8ed;border-radius:7px;color:#28758b;text-decoration:none;font-size:11px}
+.wf-existing-files{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.wf-existing-files label{display:flex;align-items:center;gap:5px;font-size:10px;color:#627986}
+.d2x-form input[type=file]{max-width:100%;font-size:11px}
+@media(max-width:900px){.wf-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.wf-detail-grid{grid-template-columns:1fr}.d2x-tab{font-size:10px;padding:7px 9px}}
