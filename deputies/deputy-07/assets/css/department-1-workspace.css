@@ -24,3 +24,81 @@
 .d1-main .dept2-table td:first-child{min-width:190px}
 @media(max-width:850px){.d1-sidebar,.d1-sidebar.menu-expanded{right:0;top:0;bottom:0;width:276px;height:100vh;min-height:100vh;max-height:100vh;border-radius:0 18px 18px 0;transform:translateX(110%);padding:12px 10px;transition:transform .25s ease}.d1-sidebar.is-open{transform:translateX(0)}.d1-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:480px){.d1-detail-grid{grid-template-columns:1fr}}
+
+
+/* اداره ۱ ـ همسان‌سازی کامل پوسته با منوی اداره ۲ و بهبود خوانایی */
+body.d1-workspace-page{background:#f2f7fa;color:#294657}
+body.d1-workspace-page .ops-header{background:#fff;border-bottom-color:#dce9ef}
+body.d1-workspace-page .dept2-layout{display:block;width:min(1420px,calc(100% - 110px));margin:24px auto 40px;direction:rtl}
+body.d1-workspace-page.d2-menu-body-expanded .dept2-layout{width:min(1320px,calc(100% - 290px));margin-right:270px;margin-left:auto}
+body.d1-workspace-page:not(.d2-menu-body-expanded) .dept2-layout{width:min(1420px,calc(100% - 110px));margin-right:82px;margin-left:auto}
+body.d1-workspace-page .d1-sidebar{position:fixed;z-index:2147482000;right:14px;top:94px;bottom:14px;width:54px;height:auto;min-height:0;max-height:none;overflow:hidden;display:flex;flex-direction:column;padding:8px 6px;background:rgba(255,255,255,.98);border:1px solid #dce8ee;border-radius:21px;box-shadow:0 14px 38px rgba(31,65,82,.12);backdrop-filter:blur(14px);transition:width .25s ease,padding .25s ease}
+body.d1-workspace-page .d1-sidebar.menu-expanded{width:244px;padding:9px}
+body.d1-workspace-page .d1-sidebar .d2-nav-group{position:relative;width:100%;flex:0 0 auto}
+body.d1-workspace-page .d1-sidebar .d2-nav-link{position:relative;width:42px;min-height:39px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 8px;border-radius:13px;color:#435f6e;font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden}
+body.d1-workspace-page .d1-sidebar.menu-expanded .d2-nav-link{width:100%;margin:0;justify-content:flex-start;padding:0 9px}
+body.d1-workspace-page .d1-sidebar .d2-nav-icon{flex:0 0 24px;width:24px;height:24px;display:grid;place-items:center;border-radius:8px;background:#edf6fa;color:#3489a8;font-size:11px}
+body.d1-workspace-page .d1-sidebar .d2-nav-label{display:none;min-width:0;overflow:hidden;text-overflow:ellipsis}
+body.d1-workspace-page .d1-sidebar.menu-expanded .d2-nav-label{display:block;flex:1;text-align:right}
+body.d1-workspace-page .d1-sidebar .d2-nav-group.is-active>.d2-nav-row .d2-nav-link,
+body.d1-workspace-page .d1-sidebar .d2-nav-link:hover,
+body.d1-workspace-page .d1-sidebar .d2-nav-group.has-open>.d2-nav-row .d2-nav-link{background:#eaf5fa;color:#176f91}
+body.d1-workspace-page .d1-sidebar .d2-nav-sub{display:none;max-height:0;overflow:hidden;opacity:0;visibility:hidden}
+body.d1-workspace-page .d1-sidebar .d2-nav-sub.is-open{display:block;max-height:500px;overflow-y:auto;opacity:1;visibility:visible;padding:3px 0 5px}
+body.d1-workspace-page .d1-sidebar .d2-nav-sub-link{display:block;width:calc(100% - 14px);margin:2px 0 2px 14px;padding:7px 12px;border-right:2px solid #d7e7ed;border-radius:0 8px 8px 0;color:#607d8c;font-size:10.5px;line-height:1.7}
+body.d1-workspace-page .d1-sidebar .d2-nav-sub-link:hover,
+body.d1-workspace-page .d1-sidebar .d2-nav-sub-link.active{background:#eaf5fa;color:#176f91;border-right-color:#3b9cbd}
+body.d1-workspace-page .d1-sidebar:not(.menu-expanded) .d2-nav-group>.d2-nav-sub.is-open{position:absolute;right:49px;top:0;width:205px;max-height:65vh;padding:7px;background:#fff;border:1px solid #dce8ee;border-radius:14px;box-shadow:0 12px 30px rgba(31,65,82,.13);overflow-y:auto;z-index:4}
+body.d1-workspace-page .d1-sidebar .d2-side-brand{width:100%;min-height:44px;display:flex;align-items:center;justify-content:center;gap:9px;padding:5px 0 11px;margin-bottom:8px;border-bottom:1px solid #e7eef1;overflow:hidden}
+body.d1-workspace-page .d1-sidebar.menu-expanded .d2-side-brand{justify-content:flex-start;padding:4px 5px 11px}
+body.d1-workspace-page .d1-sidebar .d2-brand-text{display:none}
+body.d1-workspace-page .d1-sidebar.menu-expanded .d2-brand-text{display:block}
+body.d1-workspace-page .d1-sidebar .dept2-side-foot{display:none}
+body.d1-workspace-page .d1-sidebar .d2-nav-row{display:flex;width:100%;align-items:center}
+body.d1-workspace-page .d1-sidebar .d2-nav-group.has-open>.d2-nav-row .d2-nav-link[data-branch]::after{content:"";position:absolute;left:13px;top:15px;width:6px;height:6px;border-left:1.5px solid #347f9b;border-bottom:1.5px solid #347f9b;transform:rotate(-45deg)}
+body.d1-workspace-page .d1-main{color:#294657}
+body.d1-workspace-page .dept2-page-head h1{color:#244e63}
+body.d1-workspace-page .dept2-kicker{color:#2786a7}
+body.d1-workspace-page .dept2-stat b{color:#177b9d}
+body.d1-workspace-page .dept2-stat,
+body.d1-workspace-page .dept2-panel,
+body.d1-workspace-page .dept2-module-card,
+body.d1-workspace-page .dept2-form-card{border-color:#d9e8ef;box-shadow:0 4px 14px rgba(40,91,112,.045)}
+body.d1-workspace-page .dept2-module-card>b,
+body.d1-workspace-page .dept2-section-head h2{color:#294f63}
+body.d1-workspace-page .dept2-module-card p,
+body.d1-workspace-page .dept2-section-head p{color:#687f8d}
+body.d1-workspace-page .dept2-table th{background:#eaf4f8;color:#3f697d}
+body.d1-workspace-page .dept2-table td{color:#38596b}
+body.d1-workspace-page .dept2-status{background:#e8f4f8;color:#286f8b}
+body.d1-workspace-page .dept2-btn.primary{background:#2785a5;border-color:#2785a5;color:#fff}
+body.d1-workspace-page .dept2-btn.primary:hover{background:#1d718f}
+body.d1-workspace-page .dept2-tabs{background:#eaf2f6}
+body.d1-workspace-page .dept2-tabs a.active{color:#176f91}
+body.d1-workspace-page .dept2-toolbar input:focus,
+body.d1-workspace-page .dept2-form input:focus,
+body.d1-workspace-page .dept2-form select:focus,
+body.d1-workspace-page .dept2-form textarea:focus{border-color:#67b5ce;box-shadow:0 0 0 3px #e5f4f8}
+.d1-column-chart{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:12px;align-items:end;min-height:205px;padding:14px 10px 4px;border-radius:12px;background:linear-gradient(180deg,#f7fbfd,#f0f7fa)}
+.d1-column{min-width:0;display:flex;flex-direction:column;align-items:center;gap:7px}
+.d1-column>b{font-size:12px;color:#286f8b;font-weight:800}
+.d1-column-track{height:130px;width:min(100%,44px);display:flex;align-items:flex-end;justify-content:center;border-radius:9px 9px 4px 4px;background:#e2edf2;overflow:hidden}
+.d1-column-track i{display:block;width:100%;min-height:0;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,#55b7c8,#368fb1);box-shadow:0 2px 6px rgba(45,137,166,.12)}
+.d1-column:nth-child(3n+2) .d1-column-track i{background:linear-gradient(180deg,#8fc9d4,#5aa8be)}
+.d1-column:nth-child(3n+3) .d1-column-track i{background:linear-gradient(180deg,#a9c8dc,#719fbd)}
+.d1-column>span{max-width:100%;color:#587687;font-size:10px;text-align:center;line-height:1.7;overflow-wrap:anywhere}
+@media(max-width:850px){
+ body.d1-workspace-page .d1-sidebar,body.d1-workspace-page .d1-sidebar.menu-expanded{right:0;top:0;bottom:0;width:276px;height:100vh;min-height:100vh;max-height:100vh;border-radius:0 18px 18px 0;transform:translateX(110%);padding:12px 10px;transition:transform .25s ease}
+ body.d1-workspace-page .d1-sidebar.is-open{transform:translateX(0)}
+ body.d1-workspace-page .d1-sidebar .d2-side-brand{justify-content:flex-start;padding:4px 5px 12px}
+ body.d1-workspace-page .d1-sidebar .d2-brand-text{display:block}
+ body.d1-workspace-page .d1-sidebar .d2-nav-link{width:100%;margin:0;justify-content:flex-start;padding:0 10px}
+ body.d1-workspace-page .d1-sidebar .d2-nav-label{display:block;flex:1;text-align:right}
+ body.d1-workspace-page .d1-sidebar .d2-nav-sub.is-open{position:static;width:auto;max-height:500px;padding:3px 0 5px;background:transparent;border:0;border-radius:0;box-shadow:none;overflow:visible}
+ body.d1-workspace-page .d1-sidebar .d2-nav-sub-link{width:calc(100% - 14px);height:auto;margin-left:14px}
+ body.d1-workspace-page .dept2-layout,body.d1-workspace-page.d2-menu-body-expanded .dept2-layout,body.d1-workspace-page:not(.d2-menu-body-expanded) .dept2-layout{display:block;width:calc(100% - 20px);margin:14px auto 28px}
+ body.d1-workspace-page .d2-menu-toggle{display:none}
+ .d1-column-chart{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+ .d1-column-track{height:105px}
+}
+@media(max-width:480px){.d1-column-chart{grid-template-columns:repeat(2,minmax(0,1fr))}.d1-column-track{height:90px}}
