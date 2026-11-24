@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مرکز یکپارچه مدیریت دیتابیس | هلدینگ</title>
+<link rel="stylesheet" href="../assets/css/sidebar.css?v=20261124-db1">
+<link rel="stylesheet" href="../assets/css/page-nav.css?v=20261124-db1">
+<link rel="stylesheet" href="../assets/css/holding-shell.css?v=20261124-db1">
+<link rel="stylesheet" href="../assets/css/holding-database-center.css?v=20261124-1">
+</head>
+<body data-sidebar-page="holding-database-center" class="sp-main">
+<main class="hdb-wrap">
+<header class="hdb-hero">
+<div><span class="hdb-eyebrow">زیرساخت مشترک هلدینگ</span><h1>مرکز یکپارچه مدیریت دیتابیس</h1>
+<p>مدیریت مخزن محلی، تعریف اتصال‌های سروری، کنترل وضعیت ارتباط و آماده‌سازی انتقال داده‌ها بین محیط‌ها.</p></div>
+<div class="hdb-hero-mark"><span>DB</span><small>DATA PLATFORM</small></div>
+</header>
+<section class="hdb-status-grid">
+<article class="hdb-status-card"><span class="hdb-icon">▣</span><div><small>ذخیره‌سازی محلی</small><b id="localState">در حال بررسی…</b><em id="localDetail">مخزن مرورگر</em></div></article>
+<article class="hdb-status-card"><span class="hdb-icon">⇄</span><div><small>اتصال هاستینگ</small><b id="remoteState">تعریف نشده</b><em id="remoteDetail">هیچ اتصال فعالی انتخاب نشده است</em></div></article>
+<article class="hdb-status-card"><span class="hdb-icon">▤</span><div><small>پروفایل‌های اتصال</small><b id="profileCount">۰</b><em>مشخصات غیرمحرمانه ذخیره‌شده</em></div></article>
+</section>
+<section class="hdb-panel">
+<div class="hdb-panel-head"><div><h2>۱. مخزن محلی و آفلاین</h2><p>داده‌های عملیاتی از طریق موتور ذخیره‌سازی مشترک در مرورگر نگهداری می‌شوند؛ در نسخه دسکتاپ معاونت ۷، snapshot رمزگذاری‌شده نیز در پوشه داده برنامه ذخیره می‌شود.</p></div><span class="hdb-tag local">محلی</span></div>
+<div class="hdb-local-grid">
+<div class="hdb-local-item"><b>مخزن عمومی هلدینگ</b><span>IndexedDB مرورگر · فضای داده مستقل برای هر مرکز</span><small id="localStats">در حال خواندن آمار…</small></div>
+<div class="hdb-local-item"><b>مرکز دسکتاپ معاونت ۷</b><span>اجرای محلی با سرویس loopback یا برنامه دسکتاپ Tauri</span><a href="../deputies/deputy-07/start-control-center-local.bat">فایل اجرای مرکز محلی (ویندوز)</a></div>
+</div>
+<div class="hdb-actions"><button class="hdb-button primary" id="refreshLocal">بررسی مجدد مخزن</button><button class="hdb-button" id="exportProfiles">خروجی پروفایل‌های اتصال</button><label class="hdb-button file" for="importProfiles">ورود پروفایل‌ها</label><input id="importProfiles" type="file" accept="application/json,.json" hidden></div>
+<p class="hdb-note">نکته: داده‌های مرورگر به همان مرورگر و دستگاه وابسته‌اند. برای انتقال به دستگاه دیگر، از پشتیبان‌گیری خود مرکز استفاده کنید. GitHub Pages امکان نوشتن مستقیم در پوشه پروژه یا فایل SQLite روی رایانه را نمی‌دهد.</p>
+</section>
+<section class="hdb-panel">
+<div class="hdb-panel-head"><div><h2>۲. تعریف اتصال دیتابیس هاستینگ</h2><p>اطلاعات سرور را به‌صورت پروفایل ذخیره کنید. رمز عبور فقط برای آزمایش اتصال در همان نشست استفاده می‌شود و در مرورگر، مخزن محلی یا GitHub ذخیره نخواهد شد.</p></div><span class="hdb-tag remote">سروری</span></div>
+<form id="connectionForm" class="hdb-form">
+<input type="hidden" id="profileId">
+<label>عنوان اتصال<input id="profileName" required placeholder="مثلاً دیتابیس اصلی هلدینگ"></label>
+<label>نوع دیتابیس<select id="driver"><option value="mysql">MySQL / MariaDB</option><option value="postgresql">PostgreSQL</option><option value="sqlite">SQLite (سمت سرور)</option></select></label>
+<label>نشانی سرویس واسط API<input id="apiBase" type="url" required placeholder="https://api.example.com"></label>
+<label>آدرس میزبان دیتابیس<input id="dbHost" placeholder="127.0.0.1 یا نام میزبان"></label>
+<label>درگاه<input id="dbPort" inputmode="numeric" placeholder="3306"></label>
+<label>نام دیتابیس<input id="dbName" required placeholder="database_name"></label>
+<label>نام کاربری دیتابیس<input id="dbUser" required autocomplete="off"></label>
+<label>رمز عبور (فقط آزمایش اتصال)<input id="dbPassword" type="password" autocomplete="new-password" placeholder="برای آزمایش وارد کنید"></label>
+<label class="hdb-check"><input id="requireTls" type="checkbox" checked> ارتباط امن HTTPS/TLS الزامی باشد</label>
+<div class="hdb-form-actions"><button class="hdb-button primary" type="submit">ذخیره مشخصات اتصال</button><button class="hdb-button" type="button" id="testConnection">آزمایش اتصال با رمز واردشده</button><button class="hdb-button subtle" type="button" id="resetForm">پاک‌کردن فرم</button></div>
+</form>
+<div id="connectionMessage" class="hdb-message" role="status">برای اتصال واقعی، سرویس واسط سمت سرور باید پیاده‌سازی و روی هاست نصب شده باشد.</div>
+</section>
+<section class="hdb-panel">
+<div class="hdb-panel-head"><div><h2>۳. اتصال‌های تعریف‌شده</h2><p>رمز عبور در فهرست پروفایل‌ها وجود ندارد. برای تغییر رمز دیتابیس، رمز جدید را فقط هنگام آزمایش اتصال وارد کنید.</p></div><button class="hdb-button" id="reloadProfiles">به‌روزرسانی</button></div>
+<div id="profileList" class="hdb-profile-list"><div class="hdb-empty">هنوز پروفایل اتصالی ثبت نشده است.</div></div>
+</section>
+<section class="hdb-panel">
+<div class="hdb-panel-head"><div><h2>۴. وضعیت اتصال و سیاست همگام‌سازی</h2><p>اتصال آنلاین، مرجع داده و انتقال تغییرات باید از طریق API امن و کنترل‌شده مدیریت شود.</p></div></div>
+<div class="hdb-policy-grid">
+<div><b>مرجع داده</b><span>محلی یا سروری باید برای هر مرکز مشخص شود؛ تغییر مرجع بدون برنامه مهاجرت انجام نمی‌شود.</span></div>
+<div><b>تعارض‌ها</b><span>ویرایش‌های هم‌زمان باید با شناسه نسخه و زمان تغییر بررسی شوند؛ هیچ داده‌ای خودکار بازنویسی نمی‌شود.</span></div>
+<div><b>تعویض رمز</b><span>پس از تغییر رمز در پنل هاست، پروفایل را انتخاب و رمز جدید را وارد و اتصال را آزمایش کنید.</span></div>
+<div><b>امنیت سرور</b><span>اعتبارنامه دیتابیس فقط در سرور نگهداری می‌شود؛ مرورگر صرفاً با API احراز هویت‌شده ارتباط می‌گیرد.</span></div>
+</div>
+<div class="hdb-note warning">وضعیت فعلی: این صفحه مدیریت پروفایل و نگهداری محلی را فراهم می‌کند. اتصال واقعی MySQL/PostgreSQL تا زمان نصب API سمت سرور فعال نمی‌شود؛ وارد کردن مشخصات در این صفحه به‌تنهایی به معنی اتصال به دیتابیس نیست.</div>
+</section>
+</main>
+<script src="../assets/js/local-data-vault.js?v=20261124-db1"></script>
+<script src="../assets/js/sidebar.js?v=20261124-db1"></script>
+<script src="../assets/js/holding-shell.js?v=20261124-db1"></script>
+<script src="../assets/js/holding-database-center.js?v=20261124-1"></script>
+</body></html>
