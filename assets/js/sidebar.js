@@ -3,7 +3,8 @@
 const d=document,b=d.body;
 const nav=[
 {id:'portal',label:'درگاه هلدینگ',href:'index.html',icon:'۰۱'},
-{id:'knowledge',label:'مرکز مدیریت دانش و درس‌آموخته‌ها',href:'centers/knowledge/',icon:'۰۲'}
+{id:'knowledge',label:'مرکز مدیریت دانش و درس‌آموخته‌ها',href:'centers/knowledge/',icon:'۰۲'},
+{id:'holding-database-center',label:'مرکز مدیریت دیتابیس',href:'pages/holding-database-center.html',icon:'۰۳'}
 ];
 const defaultOpen=new Set(); // فقط شاخه مرتبط با صفحه جاری باز می‌ماند؛ از اشغال فضای منو توسط شاخه‌های نامرتبط جلوگیری می‌شود.
 const current=b.dataset.sidebarPage||'home';
