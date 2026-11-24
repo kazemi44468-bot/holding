@@ -333,3 +333,22 @@ body.dept2-workspace-page .d2-nav-sub-link.active{background:#e8f3f7;color:#176d
 .dept2-main .d2x-agenda-item>div:nth-child(2)>b{font-size:10px;color:#315d73}
 .dept2-main .d2x-agenda-item p{font-size:9px;color:#657985;margin:4px 0 0;line-height:1.8}
 @media(max-width:620px){.dept2-main .d2x-agenda-item{grid-template-columns:90px minmax(0,1fr)}.dept2-main .d2x-agenda-item>.d2x-pill{grid-column:2;justify-self:start}}
+
+.dept2-main .d2x-column-chart{display:flex;align-items:stretch;gap:9px;min-height:178px;padding:12px 5px 3px;overflow-x:auto;border-bottom:1px solid #dfe8ec}
+.dept2-main .d2x-column{flex:1 0 58px;max-width:110px;min-width:48px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;min-height:160px;text-align:center}
+.dept2-main .d2x-column>b{font-size:10px;color:#416d80}
+.dept2-main .d2x-column>i{height:112px;width:min(34px,72%);display:flex;align-items:flex-end;justify-content:center;background:#f0f5f7;border-radius:6px 6px 2px 2px;overflow:hidden}
+.dept2-main .d2x-column>i>em{display:block;width:100%;min-height:0;background:#78afc0;border-radius:5px 5px 0 0}
+.dept2-main .d2x-column>span{font-size:9px;line-height:1.5;color:#657b87;max-width:100%;overflow-wrap:anywhere}
+.dept2-main .d2x-form-panel{border-color:#d5e5eb;box-shadow:0 7px 24px rgba(35,65,80,.07)}
+.dept2-main .d2x-form-panel .d2x-panel-head{padding-bottom:12px;border-bottom:1px solid #e8eff2}
+.dept2-main .d2x-form-panel .d2x-panel-head h2{font-size:16px}
+.dept2-main .d2x-form-panel .d2x-form{gap:13px}
+.dept2-main .d2x-checklist{border:1px solid #dce8ed;border-radius:9px;padding:12px;margin:0;min-width:0}
+.dept2-main .d2x-checklist legend{padding:0 7px;color:#3e7185;font-size:11px;font-weight:700}
+.dept2-main .d2x-check-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.dept2-main .d2x-check-grid label{display:flex;flex-direction:row;align-items:center;gap:7px;padding:8px;border:1px solid #e4ecef;border-radius:7px;background:#f9fbfc;color:#526d7a;cursor:pointer}
+.dept2-main .d2x-check-grid input{width:15px;height:15px;accent-color:#5795a9}
+.dept2-main .d2x-check-grid span{font-size:10px}
+.dept2-main [hidden]{display:none!important}
+@media(max-width:760px){.dept2-main .d2x-check-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.dept2-main .d2x-column-chart{justify-content:flex-start}}
