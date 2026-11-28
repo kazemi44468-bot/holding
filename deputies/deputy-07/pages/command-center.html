@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f4f7f8">
+<title>مرکز اشراف و بهبود عملکرد | معاونت ۷</title>
+<link rel="preload" href="../assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/css/style.css?v=deputy7-dept2-v2">
+<link rel="stylesheet" href="../assets/css/department-1-workspace.css?v=dept1-missions-integrated-20261128-1">
+<link rel="stylesheet" href="../assets/css/command-center.css?v=command-center-20261128-1">
+</head>
+<body class="ops-page d1-workspace-page command-center-page">
+<header class="ops-header"><div class="ops-header-inner">
+<a class="ops-brand" href="../dashboard.html"><img class="ops-logo" src="../assets/images/iran-flag.svg" alt="پرچم ایران"><span><b>شرکت هفت</b><small>معاونت ۷ · مرکز اشراف و بهبود عملکرد</small></span></a>
+<nav class="ops-nav" aria-label="ناوبری اصلی"><a href="../dashboard.html">معاونت</a><a class="active" href="command-center.html">مرکز اشراف و بهبود عملکرد</a><details class="nav-dropdown"><summary>ادارات</summary><div class="nav-menu"><a href="department-1.html">۰۱ · اداری و پشتیبانی</a><a href="department-2.html">۰۲ · تحقیق و توسعه</a><a href="department-3.html">۰۳ · پارکبان و معبربانان</a><a href="department-4.html">۰۴ · تأسیسات فنی و نگهداری</a><a href="department-6.html">۰۶ · فاوا و خدمات فنی</a><a href="department-7.html">۰۷ · جمع‌آوری و بازیافت پسماند</a></div></details></nav>
+<div class="ops-clock"><span>مرکز راهبری</span><b>ذیل معاونت</b><small id="cc-today">—</small></div>
+</div></header>
+<main class="ops-main cc-layout">
+<aside class="cc-sidebar"><div class="cc-side-brand"><span>م</span><div><b>مرکز اشراف</b><small>مغز تحلیلی معاونت ۷</small></div></div>
+<a class="cc-side-link active" href="#overview" data-tab-link="overview">نمای راهبردی</a>
+<a class="cc-side-link" href="#departments" data-tab-link="departments">پایش ادارات</a>
+<a class="cc-side-link" href="#directives" data-tab-link="directives">برنامه‌ها و اقدامات بین‌اداره‌ای</a>
+<a class="cc-side-link" href="#issues" data-tab-link="issues">مسائل و گلوگاه‌ها</a>
+<a class="cc-side-link" href="#analysis" data-tab-link="analysis">تحلیل و تصمیم‌سازی</a>
+<a class="cc-side-link" href="#requests" data-tab-link="requests">درخواست اطلاعات و گزارش</a>
+<div class="cc-side-foot"><b>جایگاه سازمانی</b><span>مستقیم زیر نظر معاون</span><span>هماهنگ‌کننده عملکرد تمام ادارات</span></div>
+</aside>
+<section class="cc-main">
+<div class="cc-page-head"><div><span class="cc-kicker">معاونت ۷ · مرکز راهبری، تحلیل و بهبود</span><h1>مرکز اشراف و بهبود عملکرد</h1><p>مرجع یکپارچه رصد، تحلیل، برنامه‌ریزی، هماهنگی بین‌اداره‌ای و پیگیری تحقق تصمیم‌های معاونت</p></div><div class="cc-head-actions"><span class="cc-authority">مرجع هماهنگی بین‌اداره‌ای</span><button class="cc-btn" id="cc-refresh">به‌روزرسانی داده‌ها</button></div></div>
+<div class="cc-principle"><b>مأموریت مرکز</b><span>تبدیل داده‌های پراکنده ادارات به تصویر واحد مدیریتی؛ شناسایی انحراف و گلوگاه؛ پیشنهاد اقدام اصلاحی؛ و پیگیری اجرای تصمیم‌ها تا حصول نتیجه.</span></div>
+<section class="cc-tab-panel active" id="tab-overview" data-tab="overview">
+<div class="cc-kpi-grid" id="cc-kpis"></div>
+<div class="cc-grid-2">
+<article class="cc-panel"><div class="cc-panel-head"><div><small>نمای مقایسه‌ای</small><h2>وضعیت داده و عملکرد ادارات</h2></div><span>پایش زنده از داده‌های محلی</span></div><div id="cc-dept-summary" class="cc-dept-summary"></div></article>
+<article class="cc-panel"><div class="cc-panel-head"><div><small>کنترل مدیریتی</small><h2>موارد نیازمند توجه</h2></div><span>اولویت اقدام</span></div><div id="cc-alerts" class="cc-alert-list"></div></article>
+</div>
+<article class="cc-panel"><div class="cc-panel-head"><div><small>چرخه راهبری</small><h2>مدل عملیاتی مرکز</h2></div></div><div class="cc-cycle">
+<div><b>۱ · اشراف</b><p>جمع‌آوری داده، پایش شاخص‌ها و دریافت گزارش ادارات</p></div><i>←</i><div><b>۲ · تحلیل</b><p>تحلیل روند، مقایسه عملکرد و کشف ریشه مسئله</p></div><i>←</i><div><b>۳ · تصمیم‌سازی</b><p>تدوین سناریو، پیشنهاد اقدام و تعیین اولویت</p></div><i>←</i><div><b>۴ · راهبری اجرا</b><p>ابلاغ اقدام، هماهنگی بین‌اداره‌ای و کنترل نتیجه</p></div>
+</div></article>
+</section>
+<section class="cc-tab-panel" id="tab-departments" data-tab="departments">
+<div class="cc-section-intro"><div><h2>پایش عملکرد ادارات</h2><p>اطلاعات بر اساس بانک‌های محلی قابل شناسایی در همین مرورگر جمع‌آوری می‌شود. برای ادارات فاقد اتصال، وضعیت «اتصال داده نشده» نمایش داده می‌شود.</p></div></div>
+<div id="cc-departments" class="cc-dept-cards"></div>
+</section>
+<section class="cc-tab-panel" id="tab-directives" data-tab="directives">
+<div class="cc-section-intro"><div><h2>برنامه‌ها و اقدامات بین‌اداره‌ای</h2><p>تعریف اقدام مشترک، تعیین اداره راهبر و همکار، مسئول، مهلت و خروجی مورد انتظار؛ پیگیری تا تأیید نتیجه.</p></div><button class="cc-btn primary" data-open-form="directive">تعریف اقدام جدید</button></div>
+<div id="cc-directives" class="cc-record-list"></div>
+</section>
+<section class="cc-tab-panel" id="tab-issues" data-tab="issues">
+<div class="cc-section-intro"><div><h2>مسائل، ریسک‌ها و گلوگاه‌ها</h2><p>ثبت مسئله‌های اثرگذار بر عملکرد، تعیین سطح اهمیت، مالک پیگیری و اقدام اصلاحی.</p></div><button class="cc-btn primary" data-open-form="issue">ثبت مسئله جدید</button></div>
+<div id="cc-issues" class="cc-record-list"></div>
+</section>
+<section class="cc-tab-panel" id="tab-analysis" data-tab="analysis">
+<div class="cc-section-intro"><div><h2>تحلیل و تصمیم‌سازی</h2><p>ثبت یادداشت تحلیلی، سناریوهای پیشنهادی، آثار مورد انتظار و پیشنهاد قابل طرح در جلسه معاون.</p></div><button class="cc-btn primary" data-open-form="analysis">ثبت تحلیل جدید</button></div>
+<div id="cc-analysis" class="cc-record-list"></div>
+</section>
+<section class="cc-tab-panel" id="tab-requests" data-tab="requests">
+<div class="cc-section-intro"><div><h2>درخواست اطلاعات و گزارش</h2><p>درخواست رسمی داده از اداره‌ها، تعیین مهلت پاسخ، ثبت پاسخ و کنترل کامل بودن اطلاعات.</p></div><button class="cc-btn primary" data-open-form="request">ثبت درخواست اطلاعات</button></div>
+<div id="cc-requests" class="cc-record-list"></div>
+</section>
+</section>
+</main>
+<div class="cc-modal" id="cc-modal" hidden><div class="cc-modal-card"><div class="cc-modal-head"><b id="cc-modal-title">ثبت مورد جدید</b><button type="button" class="cc-btn" id="cc-close">بستن</button></div><form id="cc-form"><div id="cc-form-fields" class="cc-form-grid"></div><div class="cc-form-actions"><button class="cc-btn primary" type="submit">ذخیره</button><button class="cc-btn" type="button" id="cc-cancel">انصراف</button></div></form></div></div>
+<footer class="ops-footer"><span>معاونت ۷ · مرکز اشراف و بهبود عملکرد</span><a href="../dashboard.html">بازگشت به معاونت ↑</a></footer>
+<script src="../assets/js/main.js?v=page-studio-20261114-6"></script><script src="../assets/js/command-center.js?v=command-center-20261128-1"></script>
+</body></html>
