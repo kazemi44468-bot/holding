@@ -118,3 +118,6 @@ body.d1-workspace-page .d1-fleet-recent small{grid-column:1;color:#80929b;font-s
 body.d1-workspace-page .d1-fleet-recent time{grid-column:2;grid-row:1/3;color:#7b929e;font-size:10px}
 @media(max-width:900px){body.d1-workspace-page .d1-fleet-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){body.d1-workspace-page .d1-fleet-shortcuts,body.d1-workspace-page .d1-fleet-timeline{grid-template-columns:1fr}}
+
+body.d1-workspace-page .d1-fleet-actions{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap}
+@media(max-width:560px){body.d1-workspace-page .d1-fleet-actions{justify-content:flex-start}}
