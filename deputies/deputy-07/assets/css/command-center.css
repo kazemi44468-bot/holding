@@ -80,3 +80,5 @@ body.command-center-page{background:#f3f7f8;color:#294657}
 .cc-inbox-item>div:first-child{min-width:0}.cc-inbox-item span{display:block;color:#2b829e;font-size:8px}.cc-inbox-item b{display:block;margin:3px 0;color:#3b5e6e;font-size:10px}.cc-inbox-item small{display:block;color:#899aa2;font-size:8px}.cc-inbox-item p{margin:4px 0 0;color:#6e8490;font-size:9px;line-height:1.8}
 .cc-inbox-actions{display:flex;gap:5px;flex-wrap:wrap;flex:0 0 auto}.cc-inbox-actions button{padding:6px 8px;border:1px solid #dce8ed;border-radius:6px;background:#f8fbfc;color:#3b7188;font:inherit;font-size:8px;cursor:pointer}
 @media(max-width:620px){.cc-inbox-item{display:block}.cc-inbox-actions{margin-top:8px}}
+
+.cc-goal-summary{margin-top:9px;padding:8px 10px;border-radius:8px;background:#f5f9fa;color:#587584;font-size:9px;line-height:1.9}
