@@ -462,7 +462,7 @@ if(location.protocol==="file:"){
 window.addEventListener("unhandledrejection",event=>{const node=document.getElementById("authState");if(node)node.textContent="خطای راه‌اندازی فرم: "+(event.reason?.message||String(event.reason||"خطای نامشخص"));});
 window.addEventListener("error",event=>{if(event.target?.tagName==="SCRIPT"&&/mission-create\.js/.test(event.target.src)){const node=document.getElementById("authState");if(node)node.textContent="فایل برنامه ثبت مأموریت بارگذاری نشد؛ اتصال فایل‌ها یا نسخه ذخیره‌شده مرورگر را بررسی کنید.";}} ,true);
 </script>
-<script type="module" src="../assets/js/mission-create.js?v=mission-suite-20261115-08"></script>
+<script type="module" src="../assets/js/mission-create.js?v=mission-travel-fields-20261128-1"></script>
 <script>if("serviceWorker" in navigator)navigator.serviceWorker.register("../sw.js").catch(()=>{});</script>
 <script src="../assets/js/deputy7-registry.js?v=shared-registry-20261124-4" defer></script><script src="../assets/js/department-1-shared-sidebar.js?v=20261124-1"></script></body></html>
 
