@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#173b62"><title>مدیریت جامع ناوگان | معاونت ۷</title>
+<style>
+@font-face{font-family:NetKhodroFa;src:url('../assets/fonts/Vazirmatn-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:NetKhodroFa;src:url('../assets/fonts/Vazirmatn-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:NetKhodroFa;src:url('../assets/fonts/Vazirmatn-Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+*{box-sizing:border-box}body{margin:0;background:#f3f6fa;color:#233449;font-family:NetKhodroFa;font-size:14px}button,input,select,textarea{font:inherit}button{cursor:pointer}.shell{display:flex;min-height:100vh}.side{width:260px;background:#173b62;color:#eaf2fb;position:fixed;right:0;top:0;bottom:0;padding:22px 15px;overflow:auto;z-index:5}.brand{display:flex;align-items:center;gap:12px;padding:5px 8px 22px;border-bottom:1px solid #ffffff25}.brandmark{width:43px;height:43px;border-radius:13px;background:#e8f0f8;color:#173b62;display:grid;place-items:center;font-size:22px;font-weight:bold}.brand strong{display:block;font-size:17px}.brand small{color:#b9cce0}.navlabel{font-size:11px;color:#9fb5cc;padding:20px 12px 8px}.nav button{border:0;background:transparent;color:#d7e4f2;width:100%;text-align:right;padding:11px 13px;border-radius:9px;margin:2px 0;display:flex;align-items:center;gap:11px}.nav button:hover,.nav button.active{background:#ffffff19;color:white}.nav .ico{width:22px;text-align:center;font-size:16px}.sidefoot{margin-top:25px;padding:14px 10px;border-top:1px solid #ffffff25;color:#a9bfd4;font-size:11px;line-height:2}.main{margin-right:260px;width:calc(100% - 260px);min-width:0}.top{height:76px;background:#fff;border-bottom:1px solid #e4eaf1;display:flex;align-items:center;justify-content:space-between;padding:0 30px;position:sticky;top:0;z-index:4}.crumb{color:#718198;font-size:12px}.topright{display:flex;align-items:center;gap:14px}.user{display:flex;align-items:center;gap:9px}.avatar{width:35px;height:35px;border-radius:50%;background:#e8eef5;color:#23486d;display:grid;place-items:center;font-weight:bold}.content{padding:27px 30px;max-width:1500px;margin:auto}.pagehead{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:22px}.pagehead h1{font-size:23px;margin:0 0 7px;color:#1c3551}.pagehead p{margin:0;color:#78889b;font-size:13px}.btn{border:0;border-radius:8px;padding:10px 15px;background:#1d527f;color:white;font-weight:600}.btn:hover{background:#153d61}.btn.light{background:#edf2f7;color:#29445f}.btn.outline{background:white;border:1px solid #d8e1eb;color:#29445f}.btn.danger{background:#fff0ef;color:#a13c37}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:20px}.stat{background:white;border:1px solid #e5ebf2;border-radius:12px;padding:17px;min-height:112px}.stathead{display:flex;justify-content:space-between;color:#74869a;font-size:12px}.staticon{width:32px;height:32px;border-radius:9px;background:#edf3f8;display:grid;place-items:center;color:#315b80;font-size:17px}.stat strong{display:block;font-size:25px;margin-top:9px;color:#1e3c5b}.stat small{color:#8b99a8;font-size:11px}.panel{background:#fff;border:1px solid #e5ebf2;border-radius:12px;padding:19px;margin-bottom:17px}.panelhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:10px}.panelhead h3{margin:0;font-size:15px;color:#27435f}.muted{color:#8493a4;font-size:12px}.grid2{display:grid;grid-template-columns:1.35fr 1fr;gap:16px}.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.quick button{background:#f7f9fc;border:1px solid #e7edf3;border-radius:9px;padding:14px;text-align:right;color:#35516e}.quick b{display:block;margin-bottom:5px}.quick span{font-size:11px;color:#8795a5}.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;white-space:nowrap}th{background:#f7f9fc;color:#72849a;font-weight:600;font-size:11px;text-align:right;padding:12px}td{padding:13px 12px;border-bottom:1px solid #edf1f5;font-size:12px}tr:last-child td{border-bottom:0}.tag{display:inline-block;border-radius:20px;padding:4px 9px;font-size:10px;background:#edf3f8;color:#365a7a}.tag.ok{background:#eaf5ef;color:#32724c}.tag.warn{background:#fff4e4;color:#96651d}.tag.bad{background:#fff0ef;color:#a13d37}.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:13px;min-width:0}.field label{font-size:12px;color:#65778b}.field input,.field select,.field textarea,.search{width:100%;border:1px solid #dce4ed;border-radius:8px;padding:10px 11px;background:#fff;color:#243b53;outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:#6c94b6;box-shadow:0 0 0 3px #eaf1f7}.formgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 13px}.field.full{grid-column:1/-1}.actions{display:flex;gap:8px;justify-content:flex-start;margin-top:8px}.empty{text-align:center;padding:35px;color:#8292a4}.hidden{display:none!important}.chart{height:220px;display:flex;align-items:end;gap:12px;padding:15px 8px 4px;border-bottom:1px solid #e9eef3}.barcol{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:end;height:100%;gap:7px}.bar{width:min(38px,75%);background:#7e9fbd;border-radius:6px 6px 0 0;min-height:4px}.barcol small{font-size:10px;color:#7b8b9c}.barcol em{font-style:normal;font-size:10px;color:#48617b}.notice{background:#f1f6fa;border-right:3px solid #6486a5;border-radius:7px;padding:12px;color:#597087;font-size:12px;line-height:1.9}.modalback{position:fixed;inset:0;background:#14283d80;z-index:10;display:none;align-items:center;justify-content:center;padding:18px}.modalback.show{display:flex}.modal{width:min(760px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:14px;padding:22px;box-shadow:0 18px 60px #132b4533}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.modalhead h2{margin:0;font-size:17px}.close{border:0;background:#eff3f7;border-radius:7px;padding:6px 10px}.toast{position:fixed;bottom:22px;left:22px;background:#173b62;color:white;padding:12px 18px;border-radius:9px;z-index:20;box-shadow:0 8px 25px #102b4730}.mobiletop{display:none}.subnav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}.subnav button{border:1px solid #e1e8ef;background:#fff;color:#587087;border-radius:7px;padding:8px 12px;font-size:12px}.subnav button.active{background:#eaf1f7;color:#1e4b73;border-color:#cbd9e6}.kpirow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.kpi{background:#f7f9fb;border-radius:9px;padding:13px}.kpi strong{font-size:18px;display:block;margin-top:5px}.progress{height:7px;background:#edf1f5;border-radius:10px;overflow:hidden}.progress i{display:block;height:100%;background:#668eae;border-radius:10px}
+@media(max-width:1000px){.side{width:220px}.main{margin-right:220px;width:calc(100% - 220px)}.stats{grid-template-columns:repeat(2,1fr)}.content{padding:22px 18px}.top{padding:0 18px}}@media(max-width:700px){.side{width:100%;height:62px;top:auto;bottom:0;right:0;padding:5px 8px;overflow-x:auto;overflow-y:hidden;display:flex;align-items:center}.brand,.navlabel,.sidefoot{display:none}.nav{display:flex;min-width:max-content;gap:4px}.nav button{width:auto;min-width:62px;display:flex;flex-direction:column;gap:2px;padding:6px 9px;font-size:10px;margin:0}.nav .ico{font-size:17px}.main{margin:0 0 62px;width:100%}.top{height:60px;padding:0 14px}.content{padding:19px 13px}.pagehead{align-items:center}.pagehead h1{font-size:19px}.pagehead p{font-size:11px}.topright .crumb{display:none}.stats{gap:9px}.stat{padding:12px;min-height:100px}.stat strong{font-size:21px}.grid2{grid-template-columns:1fr}.quick{grid-template-columns:repeat(2,1fr)}.formgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.panel{padding:14px}.pagehead .btn{padding:9px;font-size:11px}}@media(max-width:420px){.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.stats{grid-template-columns:repeat(2,1fr)}.kpirow{grid-template-columns:1fr}}
+
+/* بهسازی بصری و واکنش‌گرایی */
+body{background:#f4f7fb;background-image:linear-gradient(rgba(27,66,103,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(27,66,103,.025) 1px,transparent 1px);background-size:24px 24px}
+.side{box-shadow:8px 0 30px #102b4710;background:linear-gradient(165deg,#173b62 0%,#214f78 100%)}
+.brandmark{border-radius:14px;background:linear-gradient(145deg,#fff,#dce8f3)}
+.nav button{transition:background .2s,transform .2s}.nav button:hover{transform:translateX(-2px)}
+.top{box-shadow:0 4px 18px #183b5d08}
+.content{padding-top:28px}
+.hero-banner{position:relative;overflow:hidden;min-height:210px;border-radius:18px;margin-bottom:20px;padding:28px 30px;color:white;background:linear-gradient(90deg,rgba(15,43,70,.94),rgba(24,67,103,.78) 52%,rgba(24,67,103,.18)),url('../assets/images/netkhodro-fleet-hero.svg') center 54%/cover,url('../assets/images/netkhodro-fleet-pattern.svg') center/cover;box-shadow:0 14px 35px #193c5b20}
+.hero-banner:after{content:"";position:absolute;left:-70px;bottom:-140px;width:330px;height:330px;border:1px solid #ffffff28;border-radius:50%;box-shadow:0 0 0 35px #ffffff08,0 0 0 70px #ffffff06}
+.hero-copy{position:relative;z-index:1;max-width:620px}.hero-copy .eyebrow{font-size:11px;color:#d4e3f0;letter-spacing:.2px}.hero-copy h2{font-size:26px;margin:12px 0 8px}.hero-copy p{color:#e0eaf3;line-height:2;margin:0;font-size:13px}.hero-actions{display:flex;gap:9px;margin-top:18px;flex-wrap:wrap}.hero-actions .btn{background:#fff;color:#1b456a}.hero-actions .btn.light{background:#ffffff1c;color:#fff;border:1px solid #ffffff45}
+.feature-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.feature-tile{min-height:112px;border-radius:13px;padding:16px;background:#fff;border:1px solid #e3eaf1;position:relative;overflow:hidden}
+.feature-tile:after{content:"";position:absolute;left:-25px;bottom:-45px;width:120px;height:120px;border-radius:50%;background:#eaf1f7}
+.feature-tile b,.feature-tile span{position:relative;z-index:1}.feature-tile b{display:block;color:#274a6a;margin:5px 0}.feature-tile span{font-size:11px;color:#8493a4}
+.stat,.panel{box-shadow:0 5px 20px #173b6208;transition:transform .2s,box-shadow .2s}.stat:hover{transform:translateY(-2px);box-shadow:0 10px 24px #173b6212}
+.panel{border-radius:14px}.stat{border-radius:14px}
+.photo-panel{display:grid;grid-template-columns:1.05fr 1fr;gap:16px;align-items:stretch}.visual-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}.visual-card{min-height:145px;border-radius:13px;overflow:hidden;position:relative;background-size:cover;background-position:center;display:flex;align-items:end;padding:15px;color:#fff}.visual-card:before{content:'';position:absolute;inset:0;background:linear-gradient(0deg,#102d4de8,transparent 80%)}.visual-card b,.visual-card small{position:relative;z-index:1}.visual-card small{display:block;font-size:10px;color:#e1ebf4;margin-top:4px}.visual-card.workshop{background-image:url('../assets/images/netkhodro-workshop-scene.svg'),url('../assets/images/netkhodro-workshop-scene.svg')}.visual-card.bikes{background-image:url('../assets/images/netkhodro-motorcycle-scene.svg'),url('../assets/images/netkhodro-motorcycle-scene.svg')}.photo-card{min-height:175px;border-radius:12px;background:linear-gradient(90deg,#173b62b8,#173b6233),url('../assets/images/netkhodro-workshop-scene.svg') center/cover;display:flex;align-items:end;padding:17px;color:#fff}.photo-card b{font-size:15px}.photo-card small{display:block;color:#e5edf5;margin-top:5px}
+.backtop{position:fixed;left:22px;bottom:25px;width:46px;height:46px;border:0;border-radius:15px;background:#173f65;color:white;box-shadow:0 8px 22px #163b5c35;z-index:8;display:grid;place-items:center;font-size:21px;opacity:0;pointer-events:none;transform:translateY(10px);transition:.25s}.backtop.visible{opacity:1;pointer-events:auto;transform:translateY(0)}.backtop:hover{background:#285c85;transform:translateY(-3px)}
+.mobile-dock{display:none}
+@media(max-width:700px){
+ .side{display:none}.main{margin:0 0 78px;width:100%}.top{height:58px}.content{padding:14px 12px 22px}
+ .mobile-dock{position:fixed;z-index:9;bottom:9px;left:10px;right:10px;display:flex;justify-content:space-around;align-items:center;gap:2px;padding:7px 5px calc(7px + env(safe-area-inset-bottom));background:#173b62f5;backdrop-filter:blur(12px);border:1px solid #ffffff20;border-radius:17px;box-shadow:0 10px 30px #102b4740}
+ .mobile-dock button{border:0;background:transparent;color:#c9d8e6;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;flex:1;padding:5px 2px;border-radius:11px;font-size:9px;white-space:nowrap}
+ .mobile-dock button .ico{font-size:17px;line-height:1.2}.mobile-dock button.active{background:#ffffff1c;color:#fff}
+ .hero-banner{min-height:205px;padding:21px 18px;border-radius:15px;background-position:57% center}.hero-copy h2{font-size:21px}.hero-copy p{font-size:11px;max-width:95%}
+ .feature-strip{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.feature-tile{padding:11px;min-height:105px}.feature-tile b{font-size:11px}.feature-tile span{font-size:9px}
+ .photo-panel{grid-template-columns:1fr}.photo-card{min-height:145px}.visual-cards{gap:8px}.visual-card{min-height:125px;padding:11px}.visual-card b{font-size:11px}.visual-card small{font-size:9px}
+ .backtop{left:14px;bottom:96px;width:42px;height:42px;border-radius:14px}
+}
+@media(max-width:390px){.hero-banner{padding:18px 14px}.hero-copy h2{font-size:19px}.feature-strip{grid-template-columns:1fr 1fr}.feature-tile:last-child{grid-column:1/-1;min-height:80px}}
+@media print{.side,.top,.mobile-dock,.backtop,.hero-actions{display:none!important}.main{margin:0;width:100%}.content{max-width:none;padding:0}.hero-banner{print-color-adjust:exact}}
+
+.check-state{display:inline-flex;align-items:center;gap:6px;border-radius:20px;padding:5px 9px;font-size:10px;white-space:nowrap}
+.check-state:before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.check-state.ok{background:#eaf4ef;color:#32734e}.check-state.soon{background:#fff4e4;color:#95631b}.check-state.late{background:#fff0ef;color:#a13e38}.check-state.action{background:#fce9e7;color:#9d3834}.check-state.unknown{background:#edf1f5;color:#65788c}
+.check-hero{border-radius:15px;padding:18px;background:linear-gradient(115deg,#173b62,#356a91);color:white;margin-bottom:16px}.check-hero p{color:#d7e5f1;margin:5px 0 0;font-size:12px;line-height:1.9}
+.vehicle-cover{min-height:145px;border-radius:13px;padding:18px;display:flex;align-items:end;color:#fff;background-position:center;background-size:cover;margin-bottom:14px}.vehicle-cover h3{margin:0 0 5px}.vehicle-cover small{color:#e0eaf3}
+.dossier-section{margin-top:14px}.dossier-section h4{margin:0 0 10px;color:#27435f;font-size:13px}.dossier-actions{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
+.check-filter{display:flex;gap:8px;flex-wrap:wrap}.check-filter>*{max-width:220px;flex:1}
+@media(max-width:700px){.check-hero{padding:15px}.dossier-actions .btn{flex:1}.vehicle-cover{min-height:125px}.check-filter>*{max-width:none;min-width:130px}}
+
+/* بازطراحی رسمی، تایپوگرافی فارسی محلی و کاهش عناصر تزئینی */
+body{font-family:NetKhodroFa;background-color:#f2f5f9;background-image:linear-gradient(rgba(24,54,82,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(24,54,82,.025) 1px,transparent 1px);background-size:28px 28px}
+button,input,select,textarea{font-family:inherit}
+.side{background:#183b5c;box-shadow:5px 0 24px #102b4712}
+.brandmark{background:#f0f4f8;color:#183b5c;border-radius:10px}
+.nav button{font-weight:500;border-radius:8px;padding:12px 14px}
+.nav button:hover,.nav button.active{background:#ffffff14;transform:none}
+.nav .ico,.mobile-dock .ico,.staticon{display:none!important}
+.nav button{gap:0}
+.hero-banner{background:linear-gradient(105deg,#173b5e,#285a7d 72%,#376d8c),url('../assets/images/netkhodro-fleet-hero.svg') center/cover;box-shadow:0 12px 30px #173b6015;border-radius:14px}
+.hero-banner:after{display:none}
+.hero-copy h2{font-weight:700;letter-spacing:-.4px}
+.hero-copy p{max-width:650px}
+.feature-tile:after{display:none}
+.feature-tile{border-radius:10px;border-top:3px solid #527b9c;box-shadow:0 4px 16px #183b5c08}
+.stat,.panel{border-radius:11px;box-shadow:0 4px 18px #183b5c08}
+.stat:hover{transform:none;box-shadow:0 4px 18px #183b5c08}
+.panelhead h3{font-weight:700}
+.btn{border-radius:7px;background:#244f73}
+.btn:hover{background:#183b5c}
+.btn.light{background:#edf2f6;color:#294b68}
+.btn.outline{border-radius:7px}
+.quick{grid-template-columns:repeat(2,minmax(0,1fr))}
+.quick button{border-radius:8px;border-right:3px solid #7694ad;background:#f8fafc}
+.quick button b{font-weight:600}
+.visual-card.workshop{background-image:linear-gradient(0deg,#173b62a8,#173b6230),url('../assets/images/netkhodro-workshop-scene.svg')}
+.visual-card.bikes{background-image:linear-gradient(0deg,#173b62a8,#173b6230),url('../assets/images/netkhodro-motorcycle-scene.svg')}
+.visual-card:before{background:linear-gradient(0deg,#102d4de8,transparent 90%)}
+.tablewrap{border:1px solid #e8edf2;border-radius:8px}
+th{background:#edf2f6;color:#405b73;font-weight:700}
+td{line-height:1.8}
+.tag{border-radius:5px}
+.modal{border-radius:12px}
+.modalhead h2{font-weight:700}
+.vehicle-cover{border-radius:10px;background-color:#234e70!important}
+.dossier-section{padding-top:8px;border-top:1px solid #edf1f5}
+.dossier-section h4{font-size:14px;font-weight:700}
+.report-filters{border-top:3px solid #527b9c}
+.report-filters .formgrid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.chart{height:210px}
+.bar{background:#557d9e;border-radius:4px 4px 0 0}
+.barcol small{white-space:normal;text-align:center;line-height:1.6}
+.mobile-dock{background:#183b5cf7;border-radius:12px}
+.mobile-dock button{font-size:11px;font-weight:500}
+.backtop{border-radius:9px;background:#244f73}
+@media(max-width:700px){.report-filters .formgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.quick{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-banner{background-position:center;padding:20px 17px}.hero-copy h2{font-size:20px}.feature-tile{border-top-width:2px}.mobile-dock{left:9px;right:9px;bottom:8px}}
+@media(max-width:420px){.report-filters .formgrid{grid-template-columns:1fr}}
+
+#entryform .formgrid{grid-template-columns:repeat(2,minmax(0,1fr))}#entryform .field.full{grid-column:1/-1}#entryform textarea{min-height:66px}#entryform .field label{font-weight:600}@media(max-width:700px){#entryform .formgrid{grid-template-columns:1fr}}
+.side{width:278px;padding:20px 13px;background:#183b5c;box-shadow:7px 0 26px #102b4718}.main{margin-right:278px;width:calc(100% - 278px)}.brand{padding:5px 9px 18px}.brandmark{width:40px;height:40px}.nav{display:flex;flex-direction:column;gap:9px;padding:0 2px}.navgroup{padding:2px 0 7px;border-bottom:1px solid #ffffff16}.navgroup:last-child{border:0}.navlabel{padding:10px 12px 7px;color:#9eb6ca;font-size:10px;font-weight:700}.nav button{position:relative;padding:10px 12px;margin:2px 0;border-radius:8px;color:#d5e2ee;font-size:12px;min-height:39px;gap:10px}.nav button .ico{display:inline-grid!important;width:20px;flex:0 0 20px;font-size:14px;color:#a9c0d4}.nav button .navtext{display:block;flex:1}.nav button.active{background:#f3f7fb;color:#1b4669;font-weight:700;box-shadow:0 3px 10px #0b27401f}.nav button.active .ico{color:#285b82}.nav button.active:after{content:"";position:absolute;right:-13px;top:8px;bottom:8px;width:3px;border-radius:3px;background:#9fc0dc}.nav button:hover:not(.active){background:#ffffff12;color:#fff}@media(max-width:1000px){.side{width:235px}.main{margin-right:235px;width:calc(100% - 235px)}}@media(max-width:700px){.side{display:none}.main{margin:0 0 78px;width:100%}}
+
+.hbars{display:flex;flex-direction:column;gap:13px;padding:6px 2px}.hbar-row{display:grid;grid-template-columns:95px minmax(50px,1fr) minmax(95px,auto);gap:10px;align-items:center;font-size:11px;color:#5e7388}.hbar-row b{font-size:11px;color:#294b69;text-align:left;white-space:nowrap}.hbar-track{height:10px;border-radius:12px;background:#edf2f6;overflow:hidden}.hbar-track i{display:block;height:100%;border-radius:12px;background:linear-gradient(90deg,#8eacc4,#426f94)}#expenseTable .tablewrap{max-height:560px;overflow:auto}@media(max-width:700px){.hbar-row{grid-template-columns:76px minmax(35px,1fr) minmax(82px,auto);gap:7px}.hbar-row b{font-size:10px}}
+
+.trend-panel{margin-bottom:16px}.trend-chart{height:190px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;align-items:end;padding:12px 8px 0;border-bottom:1px solid #e8edf2}.trend-col{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:end;gap:7px;min-width:0}.trend-col>b{font-size:10px;color:#58718a;white-space:nowrap}.trend-barbox{height:125px;width:min(36px,75%);display:flex;align-items:end;background:#f1f4f7;border-radius:7px 7px 3px 3px;overflow:hidden}.trend-barbox i{display:block;width:100%;background:linear-gradient(180deg,#8eacc4,#426f94);border-radius:7px 7px 0 0}.trend-col small{font-size:10px;color:#71849a;direction:ltr}@media(max-width:700px){.trend-chart{gap:5px;height:165px;padding-inline:2px}.trend-barbox{height:105px;width:65%}.trend-col>b{font-size:8px}.trend-col small{font-size:9px}}
+
+/* پرداخت نهایی نمودارهای گزارش */
+.chart{position:relative;gap:clamp(6px,1.4vw,16px);padding:18px 10px 5px;border:1px solid #edf1f5;border-radius:10px;background:repeating-linear-gradient(to top,transparent 0,transparent 48px,#edf1f5 49px,#edf1f5 50px)}.barcol{gap:8px}.bar{width:min(34px,70%);background:linear-gradient(180deg,#91aec5 0%,#416f94 100%);box-shadow:0 3px 8px #244f731c;transition:height .25s ease}.barcol em{font-size:9px;font-weight:600;color:#385a78}.barcol small{font-size:10px;color:#61778d;max-width:100%;overflow-wrap:anywhere}.panel .chart{margin-top:4px}@media(max-width:700px){.chart{gap:5px;padding-inline:4px}.bar{width:65%}.barcol em{font-size:8px}.barcol small{font-size:9px}}
+
+/* Deputy 7 integration: light organizational skin */
+body{background:#f7f8f5;color:#34423b}
+.side{background:#fff;color:#405047;border-left:1px solid #e3e8e1;box-shadow:none}
+.brand{border-bottom-color:#e6ebe4}
+.brandmark{background:#edf1e9;color:#50634f}
+.brand small,.sidefoot{color:#829084}
+.navlabel{color:#879386}
+.nav button{color:#5e6c61}
+.nav button:hover,.nav button.active{background:#eef2eb;color:#40563f}
+.nav .ico{color:#71836c}
+.main{background:#f7f8f5}
+.top{background:#fff;border-bottom-color:#e5e9e2}
+.crumb{color:#7b887d}
+.avatar{background:#eef2eb;color:#53664f}
+.pagehead h1{color:#405444}
+.btn{background:#647b5c;color:#fff}
+.btn:hover{background:#52694b}
+.btn.light{background:#edf1e9;color:#52634d}
+.btn.outline{background:#fff;border-color:#dce4d8;color:#52634d}
+.stat strong{color:#4e6249}
+.staticon{background:#eef2eb;color:#667c5d}
+.panel,.stat{border-color:#e4e9e1;box-shadow:0 2px 9px #40504008}
+.tag{background:#edf1e9;color:#61745a}
+.tag.ok{background:#edf3ed;color:#557458}
+.tag.warn{background:#f7f1e5;color:#92713b}
+.tag.bad{background:#f8eeee;color:#9a5d57}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#9cac91;box-shadow:0 0 0 3px #eef2eb}
+.bar{background:#91a68a}
+.notice{background:#f0f3ed;border-right-color:#91a486;color:#637260}
+.modal{box-shadow:0 18px 60px #33403322}
+.toast{background:#53694d}
+@media(max-width:900px){.side{background:#fff}.mobiletop{background:#fff}}
+</style></head>
+<body>
+<div class="shell">
+<aside class="side"><div class="brand"><div class="brandmark">ن</div><div><strong>نت‌خودرو</strong><small>مدیریت هوشمند ناوگان</small></div></div>
+<nav class="nav" id="nav">
+<div class="navgroup"><div class="navlabel">نمای مدیریتی</div><button class="active" data-page="dashboard"><span class="ico">▦</span><span class="navtext">نمای کلی</span></button><button data-page="reports"><span class="ico">▥</span><span class="navtext">گزارش‌ها و تحلیل</span></button></div>
+<div class="navgroup"><div class="navlabel">مدیریت ناوگان</div><button data-page="vehicles"><span class="ico">▣</span><span class="navtext">بانک خودرو و موتورسیکلت</span></button><button data-page="assignments"><span class="ico">⇄</span><span class="navtext">تحویل و تخصیص</span></button><button data-page="requests"><span class="ico">↗</span><span class="navtext">درخواست خودرو و اعزام</span></button><button data-page="checklist"><span class="ico">☑</span><span class="navtext">کنترل و چک‌لیست</span></button><button data-page="documents"><span class="ico">▧</span><span class="navtext">مدارک و مستندات</span></button><button data-page="incidents"><span class="ico">!</span><span class="navtext">حوادث و خسارات</span></button></div>
+<div class="navgroup"><div class="navlabel">عملیات و هزینه‌ها</div><button data-page="maintenance"><span class="ico">⚙</span><span class="navtext">سرویس و تعمیرات</span></button><button data-page="expenses"><span class="ico">▤</span><span class="navtext">دفتر هزینه‌ها</span></button><button data-page="fuel"><span class="ico">⛽</span><span class="navtext">سوخت و مصرف</span></button><button data-page="usage"><span class="ico">◷</span><span class="navtext">کارکرد و مأموریت</span></button></div>
+<div class="navgroup"><div class="navlabel">تحلیل اقتصادی</div><button data-page="depreciation"><span class="ico">⌁</span><span class="navtext">استهلاک و ارزش‌گذاری</span></button><button data-page="gold"><span class="ico">◆</span><span class="navtext">تعدیل هزینه با طلا</span></button></div>
+<div class="navgroup"><div class="navlabel">اطلاعات و تنظیمات</div><button data-page="people"><span class="ico">♙</span><span class="navtext">ادارات و اشخاص</span></button><button data-page="settings"><span class="ico">⚑</span><span class="navtext">تنظیمات و پشتیبان</span></button></div></nav><div class="sidefoot">نسخه نمایشی نت‌خودرو<br>اطلاعات این نسخه روی همین مرورگر ذخیره می‌شود.</div></aside>
+<main class="main"><header class="top"><div><div class="crumb">سامانه مدیریت، نگهداری و بهره‌برداری ناوگان</div></div><div class="topright"><a class="btn light" href="department-1.html">بازگشت به اداره یک</a><span class="crumb" id="today"></span><div class="user"><div class="avatar">م</div><div><b style="font-size:12px">مدیر سامانه</b><div class="muted">دسترسی مدیریتی</div></div></div></div></header>
+<div class="content" id="view"></div></main></div><nav class="mobile-dock" id="mobileDock"><button data-page="dashboard" class="active"><span class="ico">⌂</span>خانه</button><button data-page="vehicles"><span class="ico">▣</span>ناوگان</button><button data-page="assignments"><span class="ico">⇄</span>تحویل</button><button data-page="checklist"><span class="ico">☑</span>چک‌لیست</button><button data-page="reports"><span class="ico">▥</span>گزارش‌ها</button></nav><button class="backtop" id="backtop" title="بازگشت به بالای صفحه" aria-label="بازگشت به بالای صفحه">↑</button>
+<div class="modalback" id="modalback"><div class="modal"><div class="modalhead"><h2 id="modaltitle"></h2><button class="close" onclick="closeModal()">✕</button></div><div id="modalbody"></div></div></div><div id="toast" class="toast hidden"></div>
+<script>
+const $=s=>document.querySelector(s), fa=n=>Number(n||0).toLocaleString('fa-IR'), money=n=>fa(n)+' تومان', today=new Date().toISOString().slice(0,10);
+function jalaliDate(value){if(!value)return '';const p=String(value).slice(0,10).split('-').map(Number);if(p.length!==3||!p[0]||!p[1]||!p[2])return String(value);const parts=new Intl.DateTimeFormat('en-US-u-ca-persian-nu-latn',{year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date(p[0],p[1]-1,p[2]));const get=t=>parts.find(x=>x.type===t)?.value||'';return get('year')+'/'+get('month')+'/'+get('day')}
+function jalaliToISO(value){
+ const raw=String(value||'').trim().replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[.\-]/g,'/');
+ const m=raw.match(/^(\d{3,4})\/(\d{1,2})\/(\d{1,2})$/);if(!m)return '';
+ const jy=+m[1],jm=+m[2],jd=+m[3];if(jm<1||jm>12||jd<1)return '';
+ const targetYear=String(jy).padStart(4,'0')+'/01/01',base=Date.UTC(jy+621,2,19);
+ let yearStart=null,nextYearStart=null;
+ for(let i=0;i<16;i++){const d=new Date(base+i*86400000),iso=[d.getUTCFullYear(),String(d.getUTCMonth()+1).padStart(2,'0'),String(d.getUTCDate()).padStart(2,'0')].join('-');if(jalaliDate(iso)===targetYear){yearStart=base+i*86400000;break}}
+ if(yearStart===null)return '';
+ const nextTarget=String(jy+1).padStart(4,'0')+'/01/01';
+ for(let i=350;i<=380;i++){const d=new Date(yearStart+i*86400000),iso=[d.getUTCFullYear(),String(d.getUTCMonth()+1).padStart(2,'0'),String(d.getUTCDate()).padStart(2,'0')].join('-');if(jalaliDate(iso)===nextTarget){nextYearStart=yearStart+i*86400000;break}}
+ if(nextYearStart===null)return '';
+ const yearLength=(nextYearStart-yearStart)/86400000,monthLength=jm<=6?31:jm<=11?30:(yearLength===366?30:29);
+ if(jd>monthLength)return '';
+ const offset=(jm<=6?(jm-1)*31:186+(jm-7)*30)+jd-1;
+ if(offset>=yearLength)return '';
+ const d=new Date(yearStart+offset*86400000);
+ return [d.getUTCFullYear(),String(d.getUTCMonth()+1).padStart(2,'0'),String(d.getUTCDate()).padStart(2,'0')].join('-');
+}
+document.addEventListener('submit',e=>{let invalid=null;e.target.querySelectorAll('[data-jalali-date]').forEach(input=>{if(!input.value.trim()){if(input.required){invalid=input;input.setCustomValidity('تکمیل تاریخ شمسی الزامی است')}return}const iso=jalaliToISO(input.value);if(iso)input.value=iso;else{input.setCustomValidity('تاریخ شمسی معتبر وارد کنید؛ نمونه: ۱۴۰۵/۰۱/۰۱');invalid=input}});if(invalid){e.preventDefault();invalid.reportValidity()}},true);
+document.addEventListener('input',e=>{if(e.target.matches('[data-jalali-date]'))e.target.setCustomValidity('')});
+$('#today').textContent=new Date().toLocaleDateString('fa-IR',{year:'numeric',month:'long',day:'numeric'});
+const seed={vehicles:[],assignments:[],maintenance:[],expenses:[],usage:[],checklist:[],fuel:[],documents:[],incidents:[],people:[{id:1,type:'اداره',name:'اداره اداری و پشتیبانی',phone:''},{id:2,type:'اداره',name:'اداره عملیات',phone:''},{id:3,type:'اداره',name:'اداره فنی و نگهداری',phone:''},{id:4,type:'اداره',name:'اداره خدمات و پشتیبانی',phone:''},{id:5,type:'شخص',name:'علی رضایی',phone:'۰۹۱۲۱۱۱۱۱۱۱',code:'P-001'},{id:6,type:'شخص',name:'محمد کریمی',phone:'۰۹۱۲۲۲۲۲۲۲۲',code:'P-002'},{id:7,type:'شخص',name:'رضا احمدی',phone:'۰۹۱۲۳۳۳۳۳۳۳',code:'P-003'},{id:8,type:'شخص',name:'مهدی حسینی',phone:'۰۹۱۲۴۴۴۴۴۴۴',code:'P-004'}],gold:[],settings:{life:10,rate:10,manual:1}};
+let db;try{db=JSON.parse(localStorage.getItem('netkhodro_db'))||seed}catch(e){db=seed}
+['incidents','assignments','maintenance','expenses','usage','checklist','fuel','documents','people','vehicles','gold','requests'].forEach(k=>{if(!Array.isArray(db[k]))db[k]=[]});
+if(!db.people.some(x=>x.type==='شخص')){const first=nextId(db.people);db.people.push(...seed.people.filter(x=>x.type==='شخص').map((x,i)=>({...x,id:first+i})))}
+if(!db.people.some(x=>x.type==='اداره')){const first=nextId(db.people);db.people.push(...seed.people.filter(x=>x.type==='اداره').map((x,i)=>({...x,id:first+i})))}
+
+if(!localStorage.getItem('deputy7_dept1_fleet_migration_v1')){
+ const oldRead=id=>{try{return JSON.parse(localStorage.getItem('deputy7.dept1.'+id+'.v1')||'[]')}catch(_){return[]}};
+ const oldVehicles=oldRead('vehicles');
+ oldVehicles.forEach(o=>{
+  const plate=o.plate||'';
+  if(db.vehicles.some(v=>(plate&&v.plate===plate)||v.code===o.code))return;
+  const type=String(o.vehicleType||'').includes('موتورسیکلت')?'موتورسیکلت':'خودرو';
+  const id=nextId(db.vehicles);
+  db.vehicles.push({id,code:code(type,id),type,brand:o.vehicle||'وسیله ثبت‌شده',model:'',year:+o.year||0,plate,chassis:o.vin||'',engine:o.engineNo||'',km:+o.odometer||0,value:+o.value||0,status:['خارج از سرویس','واگذار‌شده','اسقاط‌شده'].includes(o.status)?'خارج از ناوگان':o.status==='در تعمیر'?'در تعمیر':'فعال',entryDate:o.date||today,notes:o.description||'',sample:false,currentDept:o.unit||'',currentPerson:o.driverCode||'',factor:1});
+ });
+ const vehicleFor=value=>db.vehicles.find(v=>v.plate===value||v.code===value)||db.vehicles.find(v=>v.plate===value);
+ const add=(arr,obj)=>arr.push({...obj,id:nextId(arr),sample:false});
+ oldRead('vehicle-costs').forEach(o=>{const v=vehicleFor(o.plate);if(!v)return;add(db.expenses,{date:o.date||today,vehicleCode:v.code,title:o.description||o.costType||'هزینه ناوگان',category:o.costType==='سوخت'?'سوخت':o.costType==='تعمیرات'||o.costType==='سرویس دوره‌ای'?'تعمیرات':o.costType||'سایر',amount:+o.amount||0,payee:o.provider||'',factor:1,department:v.currentDept||'',person:v.currentPerson||''})});
+ oldRead('vehicle-handover').forEach(o=>{const v=vehicleFor(o.plate);if(!v)return;const id=nextId(db.assignments);db.assignments.push({id,code:o.documentNo||'HVL-'+String(id).padStart(5,'0'),date:o.date||today,vehicleCode:v.code,action:o.operation||'تحویل اولیه',fromDepartment:o.fromUnit||'',toDepartment:o.toUnit||'',fromPerson:o.fromPerson||'',toPerson:o.toPerson||'',handedBy:o.fromPerson||'',receivedBy:o.toPerson||'',approver:o.approver||'',km:+o.odometer||0,fuel:o.fuelLevel||'',bodyStatus:o.bodyCondition||'',accessories:o.equipment||'',documentsList:o.documents||'',damageNotes:o.defects||'',reference:o.letterNo||'',expectedReturnDate:o.returnDate||'',notes:o.description||'',sample:false})});
+ oldRead('vehicle-checklist').forEach(o=>{const v=vehicleFor(o.plate);if(!v)return;add(db.checklist,{vehicleCode:v.code,title:o.checkType||'مورد کنترلی',group:'سایر',lastDate:o.lastCheck||'',checkedAt:o.lastCheck||'',dueDate:o.dueDate||'',dueKm:+o.dueOdometer||0,intervalDays:0,intervalKm:0,result:o.result||'بررسی نشده',notes:o.action||o.description||''})});
+ oldRead('vehicle-maintenance').forEach(o=>{const v=vehicleFor(o.plate);if(!v)return;add(db.maintenance,{date:o.date||today,vehicleCode:v.code,title:o.problem||o.workType||'اقدام فنی',kind:o.workType||'سرویس دوره‌ای',km:+o.odometer||0,nextDate:o.nextDate||'',provider:o.workshop||'',amount:+o.cost||0,status:o.status||'در انتظار',notes:o.parts||'',department:v.currentDept||'',person:o.responsible||''})});
+ oldRead('vehicle-fuel').forEach(o=>{const v=vehicleFor(o.plate);if(!v)return;const f={id:nextId(db.fuel),date:o.date||today,vehicleCode:v.code,liters:+o.quantity||0,amount:+o.amount||0,odometer:+o.odometer||0,fuelType:o.fuelType||'',station:o.station||'',receipt:o.receiptNo||'',sample:false};db.fuel.push(f);db.expenses.push({id:nextId(db.expenses),date:f.date,vehicleCode:v.code,title:'سوخت‌گیری',category:'سوخت',amount:f.amount,payee:f.station,factor:1,department:v.currentDept||'',person:o.driverCode||''})});
+ oldRead('vehicle-usage').forEach(o=>{const v=vehicleFor(o.plate);if(!v)return;add(db.usage,{date:o.date||today,vehicleCode:v.code,person:o.driverCode||'',department:v.currentDept||'',start:+o.startKm||0,end:+o.endKm||0,mission:o.purpose||'',sample:false})});
+ oldRead('vehicle-incidents').forEach(o=>{const v=vehicleFor(o.plate);if(!v)return;add(db.incidents,{date:o.date||today,vehicleCode:v.code,kind:o.incidentType||'سایر',title:o.title||o.description||'رخداد ثبت‌شده',severity:o.severity||'متوسط',department:v.currentDept||'',person:o.responsible||'',status:o.status||'در انتظار رسیدگی',amount:+o.amount||0,notes:o.description||'',sample:false})});
+ oldRead('vehicle-requests').forEach(o=>add(db.requests,{requestNo:'REQ-'+String(nextId(db.requests)).padStart(5,'0'),date:o.date||today,requester:o.requesterCode||'',department:'',from:o.from||'',to:o.to||'',purpose:o.purpose||'',vehicleCode:o.plate||'',driver:o.driverCode||'',status:o.status||'درخواست جدید',notes:o.description||'',sample:false}));
+ localStorage.setItem('deputy7_dept1_fleet_migration_v1','1');
+ if(db.vehicles.length)save();
+}
+
+
+const sampleCars=[
+['ایران‌خودرو','دنا پلاس',1402,'سدان'],['ایران‌خودرو','تارا اتوماتیک',1403,'سدان'],['ایران‌خودرو','سمند سورن پلاس',1401,'سدان'],['ایران‌خودرو','پژو ۲۰۷',1402,'هاچ‌بک'],['ایران‌خودرو','پژو پارس',1400,'سدان'],['ایران‌خودرو','رانا پلاس',1401,'سدان'],['سایپا','شاهین G',1403,'سدان'],['سایپا','کوییک S',1402,'هاچ‌بک'],['سایپا','ساینا S',1401,'سدان'],['سایپا','اطلس',1403,'هاچ‌بک'],['سایپا','وانت ۱۵۱',1400,'وانت'],['سایپا','آریا',1404,'کراس‌اوور'],['تویوتا','کرولا',2021,'سدان'],['تویوتا','کمری',2020,'سدان'],['تویوتا','رافور',2022,'شاسی‌بلند'],['هیوندای','النترا',2021,'سدان'],['هیوندای','توسان',2022,'شاسی‌بلند'],['کیا','سراتو',2020,'سدان'],['کیا','اسپورتیج',2021,'شاسی‌بلند'],['نیسان','جونیور',1398,'وانت'],['نیسان','پیکاپ',1397,'وانت'],['مزدا','۳',2019,'سدان'],['میتسوبیشی','اوتلندر',2020,'شاسی‌بلند'],['رنو','تندر ۹۰',1398,'سدان'],['رنو','ساندرو',1397,'هاچ‌بک'],['پژو','۴۰۵',1396,'سدان'],['فوتون','تونلند',1401,'وانت'],['جک','S5',1400,'شاسی‌بلند'],['چری','آریزو ۵',1401,'سدان'],['ام‌وی‌ام','X22',1400,'کراس‌اوور'],['مرسدس بنز','E200',2018,'سدان'],['ب‌ام‌و','سری ۳',2019,'سدان'],['ولوو','S60',2018,'سدان'],['فولکس‌واگن','جتا',2022,'سدان'],['اشکودا','اوکتاویا',2021,'سدان'],['سوزوکی','ویتارا',2018,'شاسی‌بلند'],['هوندا','سیویک',2020,'سدان'],['ایسوزو','D-Max',2021,'وانت'],['فورد','ترانزیت',2020,'ون'],['بنز','اسپرینتر',2019,'ون']
+];
+const sampleBikes=[
+['هوندا','CG 125',1402,'شهری'],['هوندا','پالس ۱۸۰',1401,'شهری'],['هوندا','CB 150',1403,'شهری'],['یاماها','YBR 125',1400,'شهری'],['یاماها','FZ 150',1402,'شهری'],['یاماها','MT-15',2022,'اسپرت'],['سوزوکی','GSX 150',2021,'اسپرت'],['سوزوکی','Gixxer 155',2020,'شهری'],['باجاج','پالس ۱۸۰',1402,'شهری'],['باجاج','پالس NS200',2021,'اسپرت'],['باجاج','باکسر ۱۵۰',1401,'کاری'],['TVS','Apache 160',2022,'اسپرت'],['TVS','HLX 150',1400,'کاری'],['کویر موتور','S2 150',1402,'شهری'],['کویر موتور','T2 200',1401,'شهری'],['کویر موتور','موتور برقی',1403,'برقی'],['نیرو موتور','رادیسون ۱۲۵',1400,'شهری'],['نیرو موتور','آپاچی ۱۸۰',1401,'اسپرت'],['بنلی','TNT 150',2020,'شهری'],['بنلی','TNT 249',2021,'اسپرت'],['بنلی','۲۵۰ دو سیلندر',2022,'اسپرت'],['کاوازاکی','Ninja 250',2019,'اسپرت'],['کاوازاکی','Versys 300',2020,'سفر'],['KTM','Duke 200',2021,'اسپرت'],['KTM','Duke 250',2022,'اسپرت'],['وسپا','Primavera 150',2021,'اسکوتر'],['SYM','Jet 14',1402,'اسکوتر'],['SYM','فیدل ۳',1401,'اسکوتر'],['آپریلیا','SR GT 200',2022,'اسکوتر'],['هارلی دیویدسون','Street 750',2018,'سنگین']
+];
+if(!db.vehicles.length&&!localStorage.getItem('netkhodro_sample_loaded')){
+ const mk=(a,type,i,globalId)=>({id:globalId??i+1,code:code(type,i+1),type,brand:a[0],model:a[1],year:a[2],category:a[3],plate:(type==='خودرو'?'ایران ۶۷ | ۴۵۸':'ایران ۲۱ | ۷۶۳')+' '+String(i+11).padStart(2,'0'),chassis:'SAMPLE-CH-'+String(i+1).padStart(5,'0'),engine:'SAMPLE-EN-'+String(i+1).padStart(5,'0'),km:18000+(i*2371)%112000,value:type==='خودرو'?850000000+(i*137000000)%1700000000:85000000+(i*17000000)%330000000,status:i%13===0?'در تعمیر':i%17===0?'خارج از ناوگان':'فعال',entryDate:today,notes:'داده نمونه جهت نمایش امکانات سامانه',sample:true,currentDept:i%3===0?'اداره اداری و پشتیبانی':i%3===1?'اداره عملیات':'اداره فنی و نگهداری',currentPerson:'راننده نمونه '+fa(i+1),factor:1+(i%4)*0.05});
+ db.vehicles=[...sampleCars.map((a,i)=>mk(a,'خودرو',i,i+1)),...sampleBikes.map((a,i)=>mk(a,'موتورسیکلت',i,sampleCars.length+i+1))];
+ localStorage.setItem('netkhodro_sample_loaded','1');save();
+}
+
+function shiftDate(days){let d=new Date();d.setDate(d.getDate()+days);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function dayGap(date){if(!date)return null;return Math.ceil((new Date(date+'T00:00:00')-new Date(today+'T00:00:00'))/86400000)}
+['checklist','fuel','documents','incidents'].forEach(k=>{if(!Array.isArray(db[k]))db[k]=[]});db.checklist.forEach(c=>{if(c.lastDate&&!c.checkedAt)c.checkedAt=c.lastDate});
+if(!localStorage.getItem('netkhodro_fleet_ops_v2')&&db.vehicles.length){
+ const templates=[
+  {title:'بیمه شخص ثالث',group:'مدارک قانونی',days:365,km:0},
+  {title:'معاینه فنی',group:'مدارک قانونی',days:365,km:0},
+  {title:'سرویس دوره‌ای کامل',group:'نگهداری',days:180,km:10000},
+  {title:'تعویض روغن و فیلترها',group:'نگهداری',days:90,km:5000},
+  {title:'بازدید و وضعیت لاستیک‌ها',group:'ایمنی',days:180,km:12000},
+  {title:'کپسول آتش‌نشانی و تجهیزات ایمنی',group:'ایمنی',days:365,km:0}
+ ];
+ db.vehicles.forEach((v,i)=>{
+  templates.forEach((t,j)=>{
+   const offset=((i*7+j*13)%116)-28,dueDate=shiftDate(offset),lastDate=shiftDate(offset-t.days),dueKm=t.km?v.km+(((i*571+j*811)%7500)-900):0;
+   db.checklist.push({id:nextId(db.checklist),vehicleCode:v.code,title:t.title,group:t.group,lastDate,checkedAt:lastDate,dueDate,dueKm,intervalDays:t.days,intervalKm:t.km,result:'سالم',notes:'برنامه نمونه؛ تاریخ‌ها و کیلومترها باید با مدارک واقعی تطبیق داده شوند.',sample:true});
+  });
+  const serviceDate=shiftDate(-35-(i%100)),liters=32+(i%24),fuelAmount=liters*(26000+(i%4)*1500);
+  db.maintenance.push({id:nextId(db.maintenance),vehicleCode:v.code,date:serviceDate,title:'سرویس دوره‌ای نمونه',kind:'سرویس دوره‌ای',km:Math.max(0,v.km-700),nextDate:shiftDate(55+(i%75)),status:'انجام شد',provider:'تعمیرگاه نمونه',amount:1250000+(i%8)*275000,notes:'سابقه نمایشی برای ارزیابی گزارش‌ها',sample:true});
+  db.fuel.push({id:nextId(db.fuel),vehicleCode:v.code,date:shiftDate(-12+(i%10)),liters,amount:fuelAmount,odometer:Math.max(0,v.km-150+(i%100)),station:'جایگاه نمونه',fuelType:'بنزین',sample:true});
+  db.usage.push({id:nextId(db.usage),vehicleCode:v.code,date:shiftDate(-9+(i%8)),person:v.currentPerson||'راننده نمونه',start:Math.max(0,v.km-480-(i%70)),end:Math.max(0,v.km-180-(i%30)),mission:'مأموریت نمونه شهری',sample:true});
+  if(i%3===0)db.expenses.push({id:nextId(db.expenses),date:serviceDate,vehicleCode:v.code,title:'هزینه سرویس دوره‌ای نمونه',category:'تعمیرات',amount:1250000+(i%8)*275000,payee:'تعمیرگاه نمونه',factor:1,sample:true});
+  if(i%4===0)db.expenses.push({id:nextId(db.expenses),date:shiftDate(-12+(i%10)),vehicleCode:v.code,title:'سوخت‌گیری نمونه',category:'سوخت',amount:fuelAmount,payee:'جایگاه نمونه',factor:1,sample:true});
+ });
+ localStorage.setItem('netkhodro_fleet_ops_v2','1');save();
+}
+
+
+if(!localStorage.getItem('netkhodro_history_seed_v1')&&db.vehicles.length){
+ const depts=db.people.filter(x=>x.type==='اداره').map(x=>x.name);
+ const staff=db.people.filter(x=>x.type==='شخص').map(x=>x.name);
+ const transferSamples=[
+  [0,115,'تحویل اولیه',depts[0],depts[1],staff[0],'تحویل خودرو پس از کنترل مدارک و بدنه'],
+  [0,62,'انتقال بین ادارات',depts[1],depts[2],staff[1],'انتقال برای انجام مأموریت فنی'],
+  [1,98,'تحویل اولیه',depts[0],depts[1],staff[2],'تحویل به واحد عملیات'],
+  [1,28,'انتقال بین اشخاص',staff[2],staff[3],staff[3],'تغییر راننده مسئول'],
+  [2,145,'تحویل اولیه',depts[0],depts[2],staff[1],'تحویل برای پشتیبانی فنی'],
+  [2,43,'انتقال بین ادارات',depts[2],depts[3],staff[0],'انتقال به واحد خدمات'],
+  [3,82,'تحویل اولیه',depts[0],depts[1],staff[2],'تحویل به راننده مأموریت'],
+  [4,160,'تحویل اولیه',depts[0],depts[3],staff[3],'تحویل جهت خدمات پشتیبانی'],
+  [40,120,'تحویل اولیه',depts[0],depts[1],staff[0],'تحویل موتورسیکلت برای مأموریت شهری'],
+  [40,35,'انتقال بین اشخاص',staff[0],staff[1],staff[1],'تغییر تحویل‌گیرنده و ثبت وضعیت ظاهری'],
+  [41,75,'تحویل اولیه',depts[0],depts[2],staff[2],'تحویل موتورسیکلت به واحد فنی']
+ ];
+ transferSamples.forEach((r,i)=>{
+  const v=db.vehicles[r[0]];if(!v)return;
+  db.assignments.push({id:nextId(db.assignments),code:'HVL-S'+String(i+1).padStart(3,'0'),vehicleCode:v.code,date:shiftDate(-r[1]),action:r[2],from:r[3],to:r[4],person:r[5],department:r[4].startsWith('اداره')?r[4]:v.currentDept,km:Math.max(0,v.km-(r[1]*12)),fuel:'سه‌چهارم',notes:r[6],sample:true});
+  if(i===1||i===3||i===5||i===9){v.currentDept=r[4].startsWith('اداره')?r[4]:v.currentDept;v.currentPerson=r[5]}
+ });
+ const incidentSamples=[
+  [0,88,'خرابی باتری','خرابی فنی','متوسط','باتری در زمان استارت دچار افت ولتاژ شد؛ باتری تعویض شد',1850000],
+  [1,51,'برخورد جزئی سپر جلو','تصادف','کم','خراش و فرورفتگی جزئی سپر؛ بدون خسارت جانی',4200000],
+  [2,32,'نشتی روغن موتور','خرابی فنی','متوسط','واشر درپوش سوپاپ تعویض و نشتی رفع شد',2600000],
+  [40,24,'پنچری لاستیک عقب','حادثه عملیاتی','کم','لاستیک در مسیر مأموریت پنچر شد و تعویض گردید',950000],
+  [41,14,'آسیب آینه جانبی','خسارت ظاهری','کم','آینه در پارکینگ آسیب دید و تعویض شد',780000]
+ ];
+ incidentSamples.forEach((r,i)=>{const v=db.vehicles[r[0]];if(v)db.incidents.push({id:nextId(db.incidents),vehicleCode:v.code,date:shiftDate(-r[1]),title:r[2],kind:r[3],severity:r[4],notes:r[5],amount:r[6],status:'رسیدگی و رفع شد',department:v.currentDept||depts[0],person:v.currentPerson||staff[0],sample:true})});
+ localStorage.setItem('netkhodro_history_seed_v1','1');save();
+}
+
+function save(){localStorage.setItem('netkhodro_db',JSON.stringify(db))}function nextId(a){return a.length?Math.max(...a.map(x=>+x.id||0))+1:1}function code(type,id){return (type==='موتورسیکلت'?'MOT':'CAR')+'-'+String(id).padStart(4,'0')}function vehicleName(v){return (v.brand||'')+' '+(v.model||'')}function toast(t){$('#toast').textContent=t;$('#toast').classList.remove('hidden');setTimeout(()=>$('#toast').classList.add('hidden'),2600)}function fmtDate(d){return d?jalaliDate(d):'—'}
+
+function checklistState(item,v){
+ if(!item.checkedAt||item.result==='بررسی نشده')return {key:'unknown',label:'بررسی نشده'};
+ if(item.result==='نیازمند اقدام'||item.result==='معیوب')return {key:'action',label:'نیازمند اقدام'};
+ const days=dayGap(item.dueDate),kmLeft=item.dueKm?Number(item.dueKm)-Number(v?.km||0):null;
+ if((days!==null&&days<0)||(kmLeft!==null&&kmLeft<=0))return {key:'late',label:'سررسید گذشته'};
+ if((days!==null&&days<=30)||(kmLeft!==null&&kmLeft<=1000))return {key:'soon',label:'نزدیک سررسید'};
+ if(!item.dueDate&&!item.dueKm)return {key:'unknown',label:'بدون سررسید'};
+ return {key:'ok',label:'معتبر'};
+}
+function checkBadge(item,v){let st=checklistState(item,v);return '<span class="check-state '+st.key+'">'+st.label+'</span>'}
+function vehicleChecks(v){return db.checklist.filter(c=>c.vehicleCode===v.code)}
+function checklistCounts(){let a=db.checklist.map(c=>({c,v:db.vehicles.find(v=>v.code===c.vehicleCode)}));return {late:a.filter(x=>checklistState(x.c,x.v).key==='late').length,soon:a.filter(x=>checklistState(x.c,x.v).key==='soon').length,action:a.filter(x=>checklistState(x.c,x.v).key==='action').length,ok:a.filter(x=>checklistState(x.c,x.v).key==='ok').length,unchecked:a.filter(x=>checklistState(x.c,x.v).key==='unknown').length}}
+
+
+function createVehicleChecklist(v){
+ const items=[['بیمه شخص ثالث','مدارک قانونی',365,0],['معاینه فنی','مدارک قانونی',365,0],['سرویس دوره‌ای کامل','نگهداری',180,10000],['تعویض روغن و فیلترها','نگهداری',90,5000],['بازدید و وضعیت لاستیک‌ها','ایمنی',180,12000],['کپسول آتش‌نشانی و تجهیزات ایمنی','ایمنی',365,0]];
+ items.forEach(a=>db.checklist.push({id:nextId(db.checklist),vehicleCode:v.code,title:a[0],group:a[1],lastDate:'',checkedAt:'',dueDate:'',dueKm:0,intervalDays:a[2],intervalKm:a[3],result:'بررسی نشده',notes:'برای آغاز پایش، بررسی اولیه و تاریخ/کیلومتر سررسید را ثبت کنید.'}));
+}
+function nextVehicleCode(type){let max=0;db.vehicles.filter(v=>v.type===type).forEach(v=>{let n=parseInt((v.code||'').split('-').pop(),10)||0;max=Math.max(max,n)});return code(type,max+1)}
+
+function pageHead(title,desc,button=''){return '<div class="pagehead"><div><h1>'+title+'</h1><p>'+desc+'</p></div>'+button+'</div>'}
+function stat(label,val,ico,sub=''){return '<div class="stat"><div class="stathead"><span>'+label+'</span><span class="staticon">'+ico+'</span></div><strong>'+val+'</strong><small>'+sub+'</small></div>'}
+function table(headers,rows){return '<div class="tablewrap"><table><thead><tr>'+headers.map(h=>'<th>'+h+'</th>').join('')+'</tr></thead><tbody>'+(rows.length?rows.join(''):'<tr><td colspan="'+headers.length+'" class="empty">هنوز اطلاعاتی ثبت نشده است.</td></tr>')+'</tbody></table></div>'}
+function showModal(title,body){$('#modaltitle').textContent=title;$('#modalbody').innerHTML=body;$('#modalback').classList.add('show')}function closeModal(){$('#modalback').classList.remove('show')}
+function field(label,name,placeholder='',type='text',value='',required=false){
+ if(type==='date')return '<div class="field"><label>'+label+' <small class="muted">(شمسی)</small></label><input name="'+name+'" type="text" inputmode="numeric" data-jalali-date placeholder="۱۴۰۵/۰۱/۰۱" value="'+(value?jalaliDate(value):'')+'" '+(required?'required':'')+' autocomplete="off"></div>';
+ return '<div class="field"><label>'+label+'</label><input name="'+name+'" type="'+type+'" placeholder="'+placeholder+'" value="'+String(value??'').replace(/"/g,'&quot;')+'" '+(required?'required':'')+'></div>';
+}
+function selectField(label,name,opts,selected=''){
+ const editablePeople={department:'اداره',fromDepartment:'اداره',toDepartment:'اداره',person:'شخص',fromPerson:'شخص',toPerson:'شخص',handedBy:'شخص',receivedBy:'شخص',approver:'شخص'};
+ if(editablePeople[name]){
+  const type=editablePeople[name],items=db.people.filter(x=>x.type===type).map(x=>x.name),listId='people-list-'+name;
+  return '<div class="field"><label>'+label+'</label><input name="'+name+'" list="'+listId+'" value="'+String(selected||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')+'" placeholder="انتخاب یا واردکردن نام جدید" autocomplete="off"><datalist id="'+listId+'">'+[...new Set([...opts,...items])].map(o=>'<option value="'+String(o).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')+'"></option>').join('')+'</datalist><small class="muted">از فهرست انتخاب کنید یا نام جدید را تایپ کنید؛ مورد جدید پس از ثبت فرم به بانک '+(type==='اداره'?'ادارات':'اشخاص')+' افزوده می‌شود.</small></div>';
+ }
+ return '<div class="field"><label>'+label+'</label><select name="'+name+'">'+opts.map(o=>'<option '+(o===selected?'selected':'')+'>'+o+'</option>').join('')+'</select></div>';
+}
+function capturePeople(data,fields){
+ let changed=false;
+ fields.forEach(([key,type])=>{
+  const name=String(data[key]||'').trim();
+  if(!name||name==='—')return;
+  const exists=db.people.some(x=>x.type===type&&String(x.name||'').trim().toLocaleLowerCase('fa')===name.toLocaleLowerCase('fa'));
+  if(!exists){db.people.push({id:nextId(db.people),type,name,phone:'',code:''});changed=true}
+ });
+ return changed;
+}
+function formWrap(inner,submit='ثبت اطلاعات'){return '<form id="entryform"><div class="formgrid">'+inner+'</div><div class="actions"><button class="btn" type="submit">'+submit+'</button><button class="btn light" type="button" onclick="closeModal()">انصراف</button></div></form>'}
+function activePage(p){document.querySelectorAll('.nav button,.mobile-dock button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));render(p)}
+function render(p='dashboard'){window.currentPage=p;const v=$('#view');if(p==='dashboard')v.innerHTML=dashboard();if(p==='vehicles')v.innerHTML=vehiclesPage();if(p==='assignments')v.innerHTML=assignmentsPage();if(p==='requests')v.innerHTML=requestsPage();if(p==='incidents')v.innerHTML=incidentsPage();if(p==='documents')v.innerHTML=documentsPage();if(p==='fuel')v.innerHTML=fuelPage();if(p==='maintenance')v.innerHTML=maintenancePage();if(p==='checklist')v.innerHTML=checklistPage();if(p==='expenses')v.innerHTML=expensesPage();if(p==='usage')v.innerHTML=usagePage();if(p==='depreciation')v.innerHTML=depreciationPage();if(p==='gold')v.innerHTML=goldPage();if(p==='reports')v.innerHTML=reportsPage();if(p==='people')v.innerHTML=peoplePage();if(p==='settings')v.innerHTML=settingsPage();bindPage()}
+function monthlyExpenseTrend(){
+ const now=new Date(),months=[];
+ for(let i=5;i>=0;i--){const d=new Date(now.getFullYear(),now.getMonth()-i,1),key=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'),amount=db.expenses.filter(x=>String(x.date||'').startsWith(key)).reduce((a,x)=>a+(+x.amount||0),0);months.push({key,label:jalaliDate(key+'-01').slice(0,7),amount})}
+ const max=Math.max(1,...months.map(x=>x.amount));
+ return '<section class="panel trend-panel"><div class="panelhead"><div><h3>روند هزینه‌های شش ماه اخیر</h3><span class="muted">مجموع ثبت‌های مالی هر ماه</span></div><button class="btn light" onclick="activePage(\'expenses\')">دفتر هزینه‌ها</button></div><div class="trend-chart">'+months.map(x=>'<div class="trend-col"><b>'+fa(x.amount)+'</b><div class="trend-barbox"><i style="height:'+Math.max(3,x.amount/max*100)+'%"></i></div><small>'+x.label+'</small></div>').join('')+'</div></section>';
+}
+function dashboard(){
+ const checks=checklistCounts(),active=db.vehicles.filter(x=>x.status!=='خارج از ناوگان').length,assigned=db.vehicles.filter(x=>x.currentPerson||x.currentDept).length,cost=db.expenses.reduce((a,x)=>a+(+x.amount||0),0),due=db.maintenance.filter(x=>x.status!=='انجام شد').length,fuel=db.expenses.filter(x=>x.category==='سوخت').reduce((a,x)=>a+(+x.amount||0),0);
+ const recent=db.expenses.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,6).map(x=>'<tr><td>'+fmtDate(x.date)+'</td><td>'+x.vehicleCode+'</td><td>'+x.title+'</td><td>'+money(x.amount)+'</td><td><span class="tag">'+x.category+'</span></td></tr>');
+ return pageHead('نمای کلی ناوگان','خلاصه وضعیت دارایی‌ها، عملیات جاری و هزینه‌های ثبت‌شده','<button class="btn" onclick="openVehicle()">＋ ثبت وسیله جدید</button>')+
+ '<div class="stats">'+stat('وسایل فعال',fa(active),'','از '+fa(db.vehicles.length)+' وسیله ثبت‌شده')+stat('دارای تخصیص',fa(assigned),'','اداره یا مسئول مشخص')+stat('هزینه ثبت‌شده',money(cost),'','مجموع اسناد مالی')+stat('هزینه سوخت',money(fuel),'','در دفتر یکپارچه هزینه‌ها')+'</div>'+
+ monthlyExpenseTrend()+
+ '<div class="grid2"><section class="panel"><div class="panelhead"><h3>دسترسی سریع</h3><span class="muted">عملیات پرکاربرد</span></div><div class="quick"><button onclick="openVehicle()"><b>ثبت وسیله نقلیه</b><span>ایجاد شناسنامه جدید</span></button><button onclick="openAssignment()"><b>تحویل و تخصیص</b><span>ثبت صورت‌جلسه</span></button><button onclick="openMaintenance()"><b>ثبت سرویس</b><span>تعمیر و نگهداری</span></button><button onclick="openExpense()"><b>ثبت هزینه یا سوخت</b><span>یک فرم برای همه پرداخت‌ها</span></button><button onclick="openUsage()"><b>ثبت کارکرد</b><span>کیلومتر و مأموریت</span></button><button onclick="activePage(\'reports\')"><b>گزارش‌های مدیریتی</b><span>تحلیل و مقایسه</span></button></div></section>'+
+ '<section class="panel"><div class="panelhead"><h3>وضعیت نگهداری و کنترل</h3><button class="btn light" onclick="activePage(\'checklist\')">مشاهده چک‌لیست</button></div><div class="kpirow"><div class="kpi"><span class="muted">اقدامات فنی باز</span><strong>'+fa(due)+'</strong></div><div class="kpi"><span class="muted">موارد عقب‌افتاده</span><strong>'+fa(checks.late)+'</strong></div><div class="kpi"><span class="muted">نزدیک سررسید</span><strong>'+fa(checks.soon)+'</strong></div></div><div class="notice" style="margin-top:14px">موارد بررسی‌نشده: '+fa(checks.unchecked)+' مورد؛ موارد نیازمند اقدام: '+fa(checks.action)+' مورد.</div></section></div>'+
+ '<section class="panel"><div class="panelhead"><h3>آخرین هزینه‌های ثبت‌شده</h3><button class="btn light" onclick="activePage(\'expenses\')">مشاهده دفتر هزینه‌ها</button></div>'+table(['تاریخ','کد وسیله','شرح','مبلغ','سرفصل'],recent)+'</section>';
+}
+function vehiclesPage(){let rows=db.vehicles.map(x=>'<tr><td><b>'+x.code+'</b> '+(x.sample?'<span class="tag">نمونه</span>':'')+'</td><td>'+x.type+'</td><td>'+vehicleName(x)+'</td><td>'+fa(x.year||'—')+'</td><td>'+fa(x.km||0)+'</td><td>'+(x.currentPerson||x.currentDept||'—')+'</td><td><span class="tag '+(x.status==='فعال'?'ok':x.status==='در تعمیر'?'warn':'')+'">'+x.status+'</span></td><td><button class="btn light" onclick="vehicleDetail('+x.id+')">پرونده</button></td></tr>');return pageHead('بانک خودرو و موتورسیکلت','شناسنامه دیجیتال و وضعیت دارایی‌های نقلیه','<button class="btn" onclick="openVehicle()">＋ ثبت وسیله</button>')+'<div class="panel"><div class="filters"><input class="search" id="vehicleSearch" placeholder="جست‌وجو بر اساس کد، مدل، پلاک یا اداره..." style="max-width:430px"><select id="vehicleType" class="search" style="max-width:170px"><option value="">همه انواع</option><option>خودرو</option><option>موتورسیکلت</option></select><select id="vehicleStatus" class="search" style="max-width:170px"><option value="">همه وضعیت‌ها</option><option>فعال</option><option>در تعمیر</option><option>خارج از ناوگان</option></select></div><div id="vehicleTable">'+table(['کد اختصاصی','نوع','برند و مدل','سال ساخت','کیلومتر','محل تخصیص','وضعیت','عملیات'],rows)+'</div></div>'}
+
+function checklistRows(a){return a.map(c=>{let v=db.vehicles.find(x=>x.code===c.vehicleCode);if(!v)return '';let km=c.dueKm?Number(c.dueKm)-Number(v.km||0):null;return '<tr><td><b>'+c.vehicleCode+'</b><br><small>'+vehicleName(v)+'</small></td><td>'+c.title+'<br><small>'+c.group+'</small></td><td>'+fmtDate(c.lastDate)+'</td><td>'+fmtDate(c.dueDate)+'</td><td>'+(km===null?'—':fa(Math.max(0,km))+' کیلومتر')+'</td><td>'+checkBadge(c,v)+'</td><td><button class="btn light" onclick="updateChecklist('+c.id+')">ثبت بررسی</button></td></tr>'})}
+function checklistPage(){
+ const n=checklistCounts();
+ return '<section class="check-hero"><b>چک‌لیست جامع وضعیت ناوگان</b><p>وضعیت بیمه، معاینه فنی، سرویس‌های دوره‌ای، روغن، لاستیک و تجهیزات ایمنی تمام خودروها و موتورسیکلت‌ها را یکجا کنترل کنید. سررسیدها بر اساس تاریخ و کیلومتر محاسبه می‌شوند.</p></section>'
+ +pageHead('کنترل سررسید و اقدامات مهم','فهرست متمرکز موارد معتبر، نزدیک سررسید و عقب‌افتاده','<button class="btn" onclick="addChecklistItem()">＋ تعریف مورد جدید</button>')
+ +'<div class="stats">'
+ +stat('کل موارد کنترلی',fa(db.checklist.length),'☑','برای تمام ناوگان')
+ +stat('سررسید گذشته',fa(n.late),'!','نیازمند اقدام فوری')
+ +stat('نزدیک سررسید',fa(n.soon),'◷','۳۰ روز یا ۱۰۰۰ کیلومتر')
+ +stat('بررسی‌نشده',fa(n.unchecked),'◷','هنوز کنترل اولیه ثبت نشده')
+ +'</div><div class="notice" style="margin-bottom:15px">موارد دارای نتیجه «نیازمند اقدام»: '+fa(n.action)+' مورد</div>'
+ +'<section class="panel"><div class="filters check-filter"><input class="search" id="checkSearch" placeholder="جست‌وجوی کد، خودرو یا اقدام"><select class="search" id="checkState"><option value="">همه وضعیت‌ها</option><option value="late">سررسید گذشته</option><option value="soon">نزدیک سررسید</option><option value="ok">معتبر</option><option value="action">نیازمند اقدام</option><option value="unknown">بررسی‌نشده</option></select><select class="search" id="checkGroup"><option value="">همه گروه‌ها</option><option>مدارک قانونی</option><option>نگهداری</option><option>ایمنی</option><option>سایر</option></select></div><div id="checkTable">'
+ +table(['کد و وسیله','اقدام کنترلی','آخرین بررسی','موعد بعدی','مانده تا کیلومتر','وضعیت','عملیات'],checklistRows(db.checklist))
+ +'</div></section><div class="notice">موعد گذشته با عبور از تاریخ یا کیلومتر تعیین‌شده مشخص می‌شود؛ نزدیک سررسید یعنی حداکثر ۳۰ روز یا ۱۰۰۰ کیلومتر باقی‌مانده. تاریخ‌ها و کیلومترهای اولیه داده نمونه‌اند و باید با اسناد واقعی تطبیق داده شوند.</div>';
+}
+function fuelPage(){
+ let liters=db.fuel.reduce((s,x)=>s+(+x.liters||0),0),cost=db.fuel.reduce((s,x)=>s+(+x.amount||0),0);
+ let rows=db.fuel.slice().reverse().map(x=>'<tr><td>'+fmtDate(x.date)+'</td><td>'+x.vehicleCode+'</td><td>'+fa(x.liters)+' لیتر</td><td>'+money(x.amount)+'</td><td>'+fa(x.odometer)+'</td><td>'+x.station+'</td><td>'+(x.sample?'<span class="tag">نمونه</span>':'')+'</td></tr>');
+ return pageHead('سوخت و مصرف ناوگان','ثبت سوخت‌گیری، مبلغ، پیمایش و تحلیل مصرف هر وسیله','<button class="btn" onclick="openFuel()">＋ ثبت سوخت‌گیری</button>')+'<div class="stats">'+stat('تعداد سوخت‌گیری',fa(db.fuel.length),'⛽')+stat('مجموع سوخت',fa(liters)+' لیتر','◉')+stat('هزینه سوخت',money(cost),'▤')+stat('میانگین هر ثبت',db.fuel.length?fa(Math.round(liters/db.fuel.length))+' لیتر':'—','↗')+'</div><section class="panel"><div class="panelhead"><h3>دفتر سوخت‌گیری</h3></div>'+table(['تاریخ','کد وسیله','مقدار','مبلغ','کیلومتر ثبت','جایگاه','نوع داده'],rows)+'</section><div class="notice">برای محاسبه دقیق مصرف در هر ۱۰۰ کیلومتر، ثبت پیوسته کیلومتر و سوخت‌گیری‌ها باید با روش ثابت انجام شود.</div>';
+}
+
+
+function requestsPage(){
+ const rows=db.requests.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).map(x=>'<tr><td><b>'+x.requestNo+'</b></td><td>'+fmtDate(x.date)+'</td><td>'+x.requester+'</td><td>'+x.from+' ← '+x.to+'</td><td>'+x.purpose+'</td><td>'+(x.vehicleCode||'—')+'</td><td><span class="tag">'+x.status+'</span></td><td><button class="btn light" onclick="updateRequestStatus('+x.id+')">پیگیری</button></td></tr>');
+ return pageHead('درخواست خودرو و اعزام','ثبت درخواست، بررسی، تصویب، تخصیص وسیله و کنترل نتیجه اعزام','<button class="btn" onclick="openRequest()">＋ ثبت درخواست</button>')+'<div class="stats">'+stat('کل درخواست‌ها',fa(db.requests.length))+stat('در انتظار بررسی',fa(db.requests.filter(x=>['درخواست جدید','در انتظار بررسی'].includes(x.status)).length))+stat('تأیید و تخصیص',fa(db.requests.filter(x=>['تأییدشده','وسیله تخصیص یافت','در حال انجام'].includes(x.status)).length))+stat('مختومه / ردشده',fa(db.requests.filter(x=>['انجام‌شده','ردشده','لغوشده'].includes(x.status)).length))+'</div><section class="panel"><div class="panelhead"><h3>دفتر درخواست‌ها و اعزام</h3></div>'+table(['شماره درخواست','تاریخ','درخواست‌کننده','مسیر','هدف','وسیله','وضعیت','عملیات'],rows)+'</section>';
+}
+function updateRequestStatus(id){
+ const r=db.requests.find(x=>x.id===id);if(!r)return;
+ const vehicles=db.vehicles.filter(v=>v.status==='فعال').map(v=>v.code+' | '+vehicleName(v));
+ const inner=selectField('وضعیت درخواست','status',['درخواست جدید','در انتظار بررسی','تأییدشده','وسیله تخصیص یافت','در حال انجام','انجام‌شده','ردشده','لغوشده'],r.status)+selectField('وسیله تخصیصی','vehicle', ['—',...vehicles],r.vehicleCode||'—')+field('راننده / تحویل‌گیرنده','driver','کد یا نام راننده','text',r.driver||'')+field('شماره مأموریت / مجوز','missionNo','شماره ارجاع')+'<div class="field full"><label>نتیجه پیگیری</label><textarea name="notes" rows="3">'+(r.notes||'')+'</textarea></div>';
+ showModal('پیگیری درخواست '+r.requestNo,formWrap(inner,'ذخیره وضعیت'));
+ $('#entryform').onsubmit=e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target));r.status=d.status;r.vehicleCode=d.vehicle==='—'?'':d.vehicle.split(' | ')[0];r.driver=d.driver;r.missionNo=d.missionNo;r.notes=d.notes;r.updatedAt=new Date().toISOString();if(r.status==='وسیله تخصیص یافت'&&r.vehicleCode){const v=db.vehicles.find(x=>x.code===r.vehicleCode);if(v){v.currentDept=r.department||v.currentDept;v.currentPerson=r.driver||v.currentPerson}}save();closeModal();render('requests');toast('وضعیت درخواست به‌روزرسانی شد')};
+}
+function openRequest(){
+ const depts=db.people.filter(x=>x.type==='اداره').map(x=>x.name),staff=db.people.filter(x=>x.type==='شخص').map(x=>x.name);
+ const inner=field('تاریخ درخواست','date','','date',today,true)+selectField('درخواست‌کننده','requester',staff)+selectField('اداره درخواست‌کننده','department',depts)+field('مبدأ','from','محل شروع')+field('مقصد','to','مقصد اعزام')+field('تاریخ و ساعت موردنیاز','neededAt','','datetime-local')+selectField('اولویت','priority',['عادی','فوری','اضطراری'])+'<div class="field full"><label>هدف و شرح مأموریت</label><textarea name="purpose" rows="3" required></textarea></div>';
+ showModal('ثبت درخواست خودرو و اعزام',formWrap(inner,'ثبت درخواست'));
+ $('#entryform').onsubmit=e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target)),id=nextId(db.requests);db.requests.push({id,requestNo:'REQ-'+String(id).padStart(5,'0'),...d,status:'درخواست جدید',vehicleCode:'',driver:'',notes:'',createdAt:new Date().toISOString(),sample:false});save();closeModal();render('requests');toast('درخواست با شماره پیگیری ثبت شد')};
+}
+function incidentsPage(){
+ const rows=db.incidents.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).map(x=>'<tr><td>'+fmtDate(x.date)+'</td><td>'+x.vehicleCode+'</td><td>'+x.kind+'</td><td>'+x.title+'</td><td>'+x.severity+'</td><td>'+x.department+'</td><td>'+x.person+'</td><td><span class="tag">'+x.status+'</span></td><td>'+money(x.amount)+'</td></tr>');
+ return pageHead('حوادث، خسارات و خرابی‌ها','ثبت و پیگیری تصادف، خرابی فنی، خسارت ظاهری و رخدادهای عملیاتی','<button class="btn" onclick="openIncidentFromPage()">＋ ثبت رخداد</button>')+'<div class="stats">'+stat('کل رخدادها',fa(db.incidents.length))+stat('در انتظار رسیدگی',fa(db.incidents.filter(x=>!['رسیدگی و رفع شد','مختومه'].includes(x.status)).length))+stat('رخدادهای بحرانی',fa(db.incidents.filter(x=>x.severity==='بحرانی').length))+stat('خسارت ثبت‌شده',money(db.incidents.reduce((s,x)=>s+(+x.amount||0),0)))+'</div><section class="panel"><div class="panelhead"><h3>دفتر رخدادها و خسارات</h3></div>'+table(['تاریخ','کد وسیله','نوع','عنوان رخداد','شدت','اداره','مسئول','وضعیت','خسارت'],rows)+'</section>';
+}
+function openIncidentFromPage(){
+ const vehicles=db.vehicles.map(v=>v.code+' | '+vehicleName(v)),depts=db.people.filter(x=>x.type==='اداره').map(x=>x.name),staff=db.people.filter(x=>x.type==='شخص').map(x=>x.name);
+ if(!vehicles.length){toast('ابتدا وسیله نقلیه ثبت کنید');return}
+ const inner=selectField('وسیله نقلیه','vehicle',vehicles)+field('تاریخ رخداد','date','','date',today,true)+selectField('نوع رخداد','kind',['تصادف','خرابی فنی','خسارت ظاهری','حادثه عملیاتی','سرقت یا مفقودی','سایر'])+field('عنوان رخداد','title','شرح کوتاه اتفاق','text','',true)+selectField('شدت','severity',['کم','متوسط','زیاد','بحرانی'])+selectField('اداره مرتبط','department',depts)+selectField('شخص مسئول','person',staff)+selectField('وضعیت رسیدگی','status',['در انتظار رسیدگی','در حال رسیدگی','رسیدگی و رفع شد','ارجاع به بیمه'])+field('هزینه یا خسارت برآوردی (تومان)','amount','','number','0')+'<div class="field full"><label>شرح کامل، علت و اقدام اصلاحی</label><textarea name="notes" rows="3"></textarea></div>';
+ showModal('ثبت رخداد ناوگان',formWrap(inner,'ثبت رخداد'));
+ $('#entryform').onsubmit=e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target)),v=db.vehicles.find(x=>x.code===d.vehicle.split(' | ')[0]);if(!v)return;db.incidents.push({...d,id:nextId(db.incidents),vehicleCode:v.code,amount:+d.amount||0,createdAt:new Date().toISOString(),sample:false});save();closeModal();render('incidents');toast('رخداد در پرونده وسیله ثبت شد')};
+}
+function documentsPage(){
+ const rows=db.documents.slice().sort((a,b)=>(b.issueDate||'').localeCompare(a.issueDate||'')).map(x=>'<tr><td>'+x.vehicleCode+'</td><td>'+x.type+'</td><td>'+x.number+'</td><td>'+fmtDate(x.issueDate)+'</td><td>'+fmtDate(x.expiryDate)+'</td><td>'+x.issuer+'</td><td>'+(x.url?'<a href="'+x.url+'" target="_blank" rel="noopener">مشاهده مدرک</a>':'—')+'</td></tr>');
+ return pageHead('مدارک و مستندات ناوگان','ثبت بیمه‌نامه، کارت خودرو، سند مالکیت، معاینه فنی و مجوزهای تردد','<button class="btn" onclick="openDocumentFromPage()">＋ ثبت مدرک</button>')+'<div class="stats">'+stat('کل مدارک',fa(db.documents.length))+stat('دارای تاریخ انقضا',fa(db.documents.filter(x=>x.expiryDate).length))+stat('منقضی‌شده',fa(db.documents.filter(x=>x.expiryDate&&x.expiryDate<today).length))+stat('وسایل دارای مدرک',fa(new Set(db.documents.map(x=>x.vehicleCode)).size))+'</div><section class="panel"><div class="panelhead"><h3>دفتر مدارک و مستندات</h3></div>'+table(['کد وسیله','نوع مدرک','شماره','تاریخ صدور','تاریخ انقضا','صادرکننده','پیوند'],rows)+'</section>';
+}
+function openDocumentFromPage(){
+ const vehicles=db.vehicles.map(v=>v.code+' | '+vehicleName(v));if(!vehicles.length){toast('ابتدا وسیله نقلیه ثبت کنید');return}
+ const inner=selectField('وسیله نقلیه','vehicle',vehicles)+selectField('نوع مدرک','type',['بیمه‌نامه شخص ثالث','بیمه بدنه','معاینه فنی','کارت خودرو','سند مالکیت','مجوز تردد','سایر'])+field('شماره مدرک','number')+field('تاریخ صدور','issueDate','','date')+field('تاریخ انقضا','expiryDate','','date')+field('صادرکننده','issuer')+field('پیوند فایل یا محل نگهداری','url','نشانی فایل/سامانه','url');
+ showModal('ثبت مدرک وسیله',formWrap(inner,'ذخیره مدرک'));
+ $('#entryform').onsubmit=e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target)),v=db.vehicles.find(x=>x.code===d.vehicle.split(' | ')[0]);if(!v)return;db.documents.push({...d,id:nextId(db.documents),vehicleCode:v.code});const c=db.checklist.find(x=>x.vehicleCode===v.code&&((d.type.includes('بیمه')&&x.title==='بیمه شخص ثالث')||(d.type==='معاینه فنی'&&x.title==='معاینه فنی')));if(c&&d.expiryDate)c.dueDate=d.expiryDate;save();closeModal();render('documents');toast('مدرک به پرونده وسیله افزوده شد')};
+}
+
+function assignmentsPage(){
+ let rows=db.assignments.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).map(x=>'<tr><td><b>'+x.code+'</b></td><td>'+fmtDate(x.date)+'</td><td>'+x.vehicleCode+'</td><td>'+(x.fromDepartment||x.from||'—')+'<small class="muted">'+(x.fromPerson||'')+'</small></td><td>'+(x.toDepartment||x.to||'—')+'<small class="muted">'+(x.toPerson||'')+'</small></td><td>'+fa(x.km)+'</td><td><span class="tag">'+x.action+'</span></td><td><button class="btn light" onclick="printAssignment('+x.id+')">چاپ سند</button></td></tr>');
+ return pageHead('تحویل و تخصیص','صورت‌جلسه رسمی تحویل، تحول، جابه‌جایی و بازگشت وسیله نقلیه','<button class="btn" onclick="openAssignment()">تنظیم صورت‌جلسه جدید</button>')+
+ '<div class="stats">'+stat('کل صورت‌جلسه‌ها',fa(db.assignments.length),'')+stat('وسایل تخصیص‌یافته',fa(db.vehicles.filter(x=>x.currentPerson||x.currentDept).length),'')+stat('اشخاص ثبت‌شده',fa(db.people.filter(x=>x.type==='شخص').length),'')+stat('ادارات ثبت‌شده',fa(db.people.filter(x=>x.type==='اداره').length),'')+'</div>'+
+ '<section class="panel"><div class="panelhead"><h3>دفتر ثبت و گردش اسناد تحویل</h3><span class="muted">هر جابه‌جایی یک شماره سند مستقل دارد و سابقه قبلی حفظ می‌شود.</span></div>'+table(['شماره سند','تاریخ','کد وسیله','اداره / مبدأ','اداره / مقصد','کیلومتر','نوع عملیات','نسخه چاپی'],rows)+'</section>';
+}
+function maintenancePage(){let rows=db.maintenance.slice().reverse().map(x=>'<tr><td>'+x.date+'</td><td>'+x.vehicleCode+'</td><td>'+x.title+'</td><td>'+x.kind+'</td><td>'+fa(x.km)+'</td><td>'+x.nextDate+'</td><td><span class="tag '+(x.status==='انجام شد'?'ok':'warn')+'">'+x.status+'</span></td><td>'+x.provider+'</td></tr>');return pageHead('نگهداری و تعمیرات','برنامه‌ریزی سرویس‌های دوره‌ای و ثبت اقدامات فنی','<button class="btn" onclick="openMaintenance()">＋ ثبت اقدام فنی</button>')+'<div class="stats">'+stat('کل سوابق',fa(db.maintenance.length),'⚙')+stat('انجام‌شده',fa(db.maintenance.filter(x=>x.status==='انجام شد').length),'✓')+stat('در انتظار',fa(db.maintenance.filter(x=>x.status!=='انجام شد').length),'◷')+stat('هزینه تعمیرات',money(db.expenses.filter(x=>x.category==='تعمیرات').reduce((s,x)=>s+(+x.amount||0),0)),'▤')+'</div><section class="panel"><div class="panelhead"><h3>سوابق سرویس و تعمیرات</h3></div>'+table(['تاریخ','کد وسیله','شرح اقدام','نوع','کیلومتر','سررسید بعدی','وضعیت','تعمیرگاه / مجری'],rows)+'</section>'}
+function expenseCategoryChart(){
+ const cats=['سوخت','تعمیرات','بیمه','قطعات','عوارض و جرایم','سایر'];
+ const max=Math.max(1,...cats.map(c=>db.expenses.filter(x=>x.category===c).reduce((a,x)=>a+(+x.amount||0),0)));
+ return '<div class="hbars">'+cats.map(c=>{const n=db.expenses.filter(x=>x.category===c).reduce((a,x)=>a+(+x.amount||0),0);return '<div class="hbar-row"><span>'+c+'</span><div class="hbar-track"><i style="width:'+Math.max(0,n/max*100)+'%"></i></div><b>'+money(n)+'</b></div>'}).join('')+'</div>';
+}
+function expensesPage(){
+ let rows=db.expenses.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).map(x=>'<tr><td>'+fmtDate(x.date)+'</td><td>'+x.vehicleCode+'</td><td>'+x.title+'</td><td><span class="tag">'+x.category+'</span></td><td><b>'+money(x.amount)+'</b></td><td>'+(x.payee||'—')+'</td><td>'+fa(x.factor||1)+'</td></tr>');
+ const total=db.expenses.reduce((a,x)=>a+(+x.amount||0),0),fuel=db.expenses.filter(x=>x.category==='سوخت').reduce((a,x)=>a+(+x.amount||0),0),repair=db.expenses.filter(x=>x.category==='تعمیرات').reduce((a,x)=>a+(+x.amount||0),0);
+ return pageHead('هزینه‌ها و سوخت ناوگان','ثبت یکپارچه فاکتورها، سوخت‌گیری و سایر پرداخت‌های مرتبط با هر وسیله','<button class="btn" onclick="openExpense()">＋ ثبت هزینه یا سوخت</button>')+
+ '<div class="stats">'+stat('کل هزینه‌ها',money(total),'','تمام اسناد ثبت‌شده')+stat('هزینه سوخت',money(fuel),'','از فرم واحد هزینه')+stat('تعمیرات و سرویس',money(repair),'','هزینه‌های فنی')+stat('تعداد اسناد',fa(db.expenses.length),'','ثبت‌های مالی')+'</div>'+
+ '<div class="grid2"><section class="panel"><div class="panelhead"><h3>ترکیب هزینه‌ها</h3><span class="muted">بر اساس سرفصل</span></div>'+expenseCategoryChart()+'</section><section class="panel"><div class="panelhead"><h3>ثبت یکپارچه</h3></div><div class="notice">سوخت‌گیری هم یک نوع هزینه است. با انتخاب سرفصل «سوخت»، مقدار لیتر، کیلومتر، نوع سوخت و جایگاه در همین فرم ثبت می‌شود؛ مبلغ فقط یک‌بار در دفتر هزینه قرار می‌گیرد.</div><div class="actions"><button class="btn" onclick="openExpense(\'سوخت\')">＋ ثبت سوخت‌گیری</button></div></section></div>'+
+ '<section class="panel"><div class="panelhead"><h3>دفتر یکپارچه هزینه‌ها</h3><span class="muted">مبنای پولی: تومان</span></div><div class="filters"><input id="expenseSearch" class="search" placeholder="جست‌وجوی وسیله، شرح یا تأمین‌کننده"><select id="expenseCategory" class="search" style="max-width:190px"><option value="">همه سرفصل‌ها</option>'+['سوخت','تعمیرات','بیمه','قطعات','عوارض و جرایم','سایر'].map(c=>'<option>'+c+'</option>').join('')+'</select></div><div id="expenseTable">'+table(['تاریخ','کد وسیله','شرح','سرفصل','مبلغ','تأمین‌کننده','ضریب تعدیل'],rows)+'</div></section>';
+}
+
+function usagePage(){let rows=db.usage.slice().reverse().map(x=>'<tr><td>'+x.date+'</td><td>'+x.vehicleCode+'</td><td>'+x.person+'</td><td>'+fa(x.start)+'</td><td>'+fa(x.end)+'</td><td>'+fa(x.end-x.start)+'</td><td>'+x.mission+'</td></tr>');return pageHead('کارکرد و مأموریت‌ها','ثبت کیلومترشمار، راننده، مأموریت و پیمایش دوره‌ای','<button class="btn" onclick="openUsage()">＋ ثبت کارکرد</button>')+'<div class="stats">'+stat('ثبت‌های کارکرد',fa(db.usage.length),'◷')+stat('مجموع پیمایش',fa(db.usage.reduce((s,x)=>s+Math.max(0,x.end-x.start),0))+' km','↗')+stat('رانندگان ثبت‌شده',fa(new Set(db.usage.map(x=>x.person)).size),'♙')+stat('وسایل دارای سابقه',fa(new Set(db.usage.map(x=>x.vehicleCode)).size),'▣')+'</div><section class="panel"><div class="panelhead"><h3>دفتر کارکرد و مأموریت</h3></div>'+table(['تاریخ','کد وسیله','راننده / مسئول','کیلومتر ابتدا','کیلومتر انتها','پیمایش','شرح مأموریت'],rows)+'</section>'}
+function depreciationPage(){let rows=db.vehicles.map(x=>{let age=Math.max(0,new Date().getFullYear()-(+x.year||new Date().getFullYear())),base=+x.value||0,life=+db.settings.life||10,rate=Math.min(1,age/life),factor=+x.factor||+db.settings.manual||1,dep=base*rate*factor;return '<tr><td>'+x.code+'</td><td>'+vehicleName(x)+'</td><td>'+fa(age)+' سال</td><td>'+money(base)+'</td><td>'+fa((rate*100).toFixed(1))+'٪</td><td>'+fa(factor)+'</td><td>'+money(Math.max(0,base-dep))+'</td></tr>'});return pageHead('مهندسی استهلاک و ارزش‌گذاری','مدل پایه استهلاک خط مستقیم با قابلیت اعمال ضریب کارشناسی','<button class="btn light" onclick="activePage(\'settings\')">تنظیم پارامترها</button>')+'<div class="notice">محاسبه فعلی یک برآورد مدیریتی بر اساس عمر مفید و ضریب است. برای ارزش‌گذاری حسابداری یا کارشناسی رسمی، روش و مفروضات باید توسط واحد مالی تأیید شوند. ضریب اختصاصی هر دارایی بر ضریب عمومی اولویت دارد.</div><section class="panel" style="margin-top:16px"><div class="panelhead"><h3>برآورد ارزش دفتری و استهلاک</h3><span class="muted">عمر مفید پیش‌فرض: '+fa(db.settings.life)+' سال</span></div>'+table(['کد','وسیله','سن','ارزش اولیه','درصد استهلاک','ضریب','ارزش پس از استهلاک'],rows)+'</section>'}
+function goldPage(){let rows=db.expenses.slice().reverse().map(x=>{let g=db.gold.find(z=>z.date===x.date&&z.type==='۱۸ عیار'),current=latestGold(),old=+(x.goldRate||g?.rate||0),factor=old>0&&current>0?current/old:0;return '<tr><td>'+x.date+'</td><td>'+x.vehicleCode+'</td><td>'+x.title+'</td><td>'+money(x.amount)+'</td><td>'+fa(old)+'</td><td>'+fa(current)+'</td><td>'+(factor?money(x.amount*factor):'ثبت نرخ لازم')+'</td></tr>'});return pageHead('مرکز تعدیل هزینه با طلا','مقایسه قدرت خرید هزینه‌های تاریخی بر مبنای نرخ ثبت‌شده طلا','<button class="btn" onclick="openGold()">＋ ثبت نرخ طلا</button>')+'<div class="notice">برای هر هزینه، نرخ طلای تاریخ وقوع باید ثبت یا به آن متصل شود. نرخ روز به‌صورت دستی در این نمونه وارد می‌شود؛ اتصال خودکار به منبع بازار در مرحله توسعه Backend اضافه خواهد شد.</div><div class="stats" style="margin-top:15px">'+stat('آخرین نرخ ۱۸ عیار',latestGold()?money(latestGold()):'ثبت نشده','◆')+stat('نرخ‌های ذخیره‌شده',fa(db.gold.length),'▤')+stat('هزینه‌های قابل تعدیل',fa(db.expenses.filter(x=>+(x.goldRate||db.gold.find(z=>z.date===x.date)?.rate||0)>0).length),'↗')+'</div><section class="panel"><div class="panelhead"><h3>تعدیل هزینه‌های تاریخی</h3></div>'+table(['تاریخ هزینه','کد وسیله','شرح','هزینه تاریخی','نرخ مبنا (تومان/گرم)','نرخ روز','معادل به نرخ روز'],rows)+'</section>'}
+function latestGold(){let a=db.gold.filter(x=>x.type==='۱۸ عیار').sort((a,b)=>b.date.localeCompare(a.date));return a.length?+a[0].rate:0}
+
+let reportFilters={department:'',person:'',from:'',to:''};
+function reportsPage(){
+ const depts=db.people.filter(x=>x.type==='اداره').map(x=>x.name),staff=db.people.filter(x=>x.type==='شخص').map(x=>x.name);
+ const sel=(label,id,items,value)=>'<div class="field"><label>'+label+'</label><select id="'+id+'"><option value="">همه</option>'+items.map(x=>'<option '+(x===value?'selected':'')+'>'+x+'</option>').join('')+'</select></div>';
+ const inDate=(d)=>{if(reportFilters.from&&d<reportFilters.from)return false;if(reportFilters.to&&d>reportFilters.to)return false;return true};
+ const deptOf=(r)=>r.department||(db.vehicles.find(v=>v.code===r.vehicleCode)||{}).currentDept||'نامشخص';
+ const personOf=(r)=>r.person||(db.vehicles.find(v=>v.code===r.vehicleCode)||{}).currentPerson||'نامشخص';
+ const match=(r)=>inDate(r.date||'')&&(!reportFilters.department||deptOf(r)===reportFilters.department)&&(!reportFilters.person||personOf(r)===reportFilters.person);
+ const expenses=db.expenses.filter(match),usage=db.usage.filter(match),assignments=db.assignments.filter(a=>inDate(a.date||'')&&(!reportFilters.department||[a.from,a.to,a.department].includes(reportFilters.department))&&(!reportFilters.person||[a.person,a.from,a.to].includes(reportFilters.person))),maintenance=db.maintenance.filter(match),incidents=db.incidents.filter(match);
+ const total=expenses.reduce((a,x)=>a+(+x.amount||0),0),distance=usage.reduce((a,x)=>a+Math.max(0,(+x.end||0)-(+x.start||0)),0);
+ const groups=depts.map(name=>{const ex=expenses.filter(x=>deptOf(x)===name),us=usage.filter(x=>deptOf(x)===name),as=assignments.filter(x=>x.to===name||x.from===name||x.department===name);return {name,cost:ex.reduce((a,x)=>a+(+x.amount||0),0),km:us.reduce((a,x)=>a+Math.max(0,(+x.end||0)-(+x.start||0)),0),fleet:db.vehicles.filter(v=>v.currentDept===name&&v.status!=='خارج از ناوگان').length,events:as.length+maintenance.filter(x=>deptOf(x)===name).length+incidents.filter(x=>deptOf(x)===name).length}});
+ const maxCost=Math.max(1,...groups.map(x=>x.cost)),deptRows=groups.map(x=>'<tr><td>'+x.name+'</td><td>'+fa(x.fleet)+'</td><td>'+money(x.cost)+'</td><td>'+fa(x.km)+' کیلومتر</td><td>'+fa(x.events)+'</td></tr>');
+ const persons=staff.map(name=>{const ex=expenses.filter(x=>personOf(x)===name),us=usage.filter(x=>personOf(x)===name),as=assignments.filter(x=>x.person===name);return {name,cost:ex.reduce((a,x)=>a+(+x.amount||0),0),km:us.reduce((a,x)=>a+Math.max(0,(+x.end||0)-(+x.start||0)),0),missions:us.length,transfers:as.length}});
+ const personRows=persons.map(x=>'<tr><td>'+x.name+'</td><td>'+money(x.cost)+'</td><td>'+fa(x.km)+' کیلومتر</td><td>'+fa(x.missions)+'</td><td>'+fa(x.transfers)+'</td></tr>');
+ const cats=['تعمیرات','سوخت','بیمه','قطعات','حوادث و خسارات','سایر'],maxCat=Math.max(1,...cats.map(c=>expenses.filter(x=>x.category===c).reduce((a,x)=>a+(+x.amount||0),0)));
+ const chart=cats.map(c=>{const n=expenses.filter(x=>x.category===c).reduce((a,x)=>a+(+x.amount||0),0);return '<div class="barcol"><em>'+fa(n)+'</em><div class="bar" style="height:'+Math.max(3,n/maxCat*70)+'%"></div><small>'+c+'</small></div>'}).join('');
+ const deptChart=groups.map(x=>'<div class="barcol"><em>'+fa(x.cost)+'</em><div class="bar" style="height:'+Math.max(3,x.cost/maxCost*70)+'%"></div><small>'+x.name.replace('اداره ','')+'</small></div>').join('');
+ return pageHead('گزارش‌ها و تحلیل عملکرد','تحلیل فیلترپذیر ناوگان به تفکیک اداره، همکار، هزینه و کارکرد','<button class="btn light" onclick="window.print()">چاپ گزارش</button>')+
+ '<section class="panel report-filters"><div class="panelhead"><h3>محدوده تحلیل</h3><span class="muted">فیلترها روی تمام شاخص‌ها اعمال می‌شوند</span></div><div class="formgrid">'+sel('اداره','reportDepartment',depts,reportFilters.department)+sel('همکار / مسئول','reportPerson',staff,reportFilters.person)+'<div class="field"><label>از تاریخ <small class="muted">(شمسی)</small></label><input id="reportFrom" data-jalali-date type="text" inputmode="numeric" placeholder="۱۴۰۵/۰۱/۰۱" value="'+(reportFilters.from?jalaliDate(reportFilters.from):'')+'"></div><div class="field"><label>تا تاریخ <small class="muted">(شمسی)</small></label><input id="reportTo" data-jalali-date type="text" inputmode="numeric" placeholder="۱۴۰۵/۰۱/۰۱" value="'+(reportFilters.to?jalaliDate(reportFilters.to):'')+'"></div></div><div class="actions"><button class="btn" onclick="applyReportFilters()">اعمال فیلتر</button><button class="btn light" onclick="clearReportFilters()">پاک‌کردن فیلترها</button></div></section>'+
+ '<div class="stats">'+stat('جمع هزینه‌های محدوده',money(total),'')+stat('مجموع پیمایش',fa(distance)+' کیلومتر','')+stat('اسناد جابه‌جایی',fa(assignments.length),'')+stat('رخدادهای خسارت',fa(incidents.length),'')+'</div>'+
+ '<div class="grid2"><section class="panel"><div class="panelhead"><h3>ترکیب هزینه بر اساس سرفصل</h3></div><div class="chart">'+chart+'</div></section><section class="panel"><div class="panelhead"><h3>مقایسه هزینه اداره‌ها</h3></div><div class="chart">'+deptChart+'</div></section></div>'+
+ '<section class="panel"><div class="panelhead"><h3>عملکرد به تفکیک اداره</h3></div>'+table(['اداره','ناوگان فعال','هزینه ثبت‌شده','پیمایش','تعداد رویداد و سند'],deptRows)+'</section>'+
+ '<section class="panel"><div class="panelhead"><h3>عملکرد به تفکیک همکار</h3></div>'+table(['نام همکار','هزینه منتسب','پیمایش ثبت‌شده','تعداد مأموریت','تعداد جابه‌جایی'],personRows)+'</section>'+
+ '<section class="panel"><div class="panelhead"><h3>سوابق خسارت و اتفاقات ناوگان</h3></div>'+table(['تاریخ','کد وسیله','شرح رخداد','نوع','شدت','وضعیت','هزینه'],incidents.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).map(x=>'<tr><td>'+fmtDate(x.date)+'</td><td>'+x.vehicleCode+'</td><td>'+x.title+'</td><td>'+x.kind+'</td><td>'+x.severity+'</td><td>'+x.status+'</td><td>'+money(x.amount)+'</td></tr>'))+'</section>';
+}
+function applyReportFilters(){const from=jalaliToISO($('#reportFrom')?.value||''),to=jalaliToISO($('#reportTo')?.value||'');if($('#reportFrom')?.value&&!from){toast('تاریخ شروع شمسی معتبر نیست');return}if($('#reportTo')?.value&&!to){toast('تاریخ پایان شمسی معتبر نیست');return}reportFilters={department:$('#reportDepartment')?.value||'',person:$('#reportPerson')?.value||'',from,to};render('reports')}
+function clearReportFilters(){reportFilters={department:'',person:'',from:'',to:''};render('reports')}
+function peoplePage(){let rows=db.people.map(x=>'<tr><td>'+x.type+'</td><td>'+x.name+'</td><td>'+x.phone+'</td><td><button class="btn light" onclick="deletePerson('+x.id+')">حذف</button></td></tr>');return pageHead('ادارات و اشخاص','تعریف واحدهای سازمانی، رانندگان و تحویل‌گیرندگان','<button class="btn" onclick="openPerson()">＋ افزودن مورد</button>')+'<section class="panel"><div class="panelhead"><h3>دفتر اطلاعات سازمانی و اشخاص</h3></div>'+table(['نوع','نام و عنوان','تلفن','عملیات'],rows)+'</section>'}
+function settingsPage(){return pageHead('تنظیمات و پشتیبان','پارامترهای محاسباتی و مدیریت داده‌های نسخه نمایشی')+'<section class="panel"><div class="panelhead"><h3>پارامترهای استهلاک</h3></div><form id="settingsform"><div class="formgrid">'+field('عمر مفید پیش‌فرض (سال)','life','','number',db.settings.life,true)+field('نرخ استهلاک سالانه پیش‌فرض (%)','rate','','number',db.settings.rate,true)+field('ضریب عمومی کارشناسی','manual','','number',db.settings.manual,true)+'</div><button class="btn">ذخیره تنظیمات</button></form></section><section class="panel"><div class="panelhead"><h3>پشتیبان‌گیری و بازیابی</h3></div><p class="muted">اطلاعات در حافظه مرورگر فعلی ذخیره می‌شوند. برای انتقال یا نگهداری امن، فایل پشتیبان JSON دریافت کنید.</p><div class="actions"><button class="btn" onclick="backup()">دریافت نسخه پشتیبان</button><label class="btn light" for="restorefile">بازیابی فایل پشتیبان</label><input id="restorefile" type="file" accept="application/json" class="hidden"></div></section><section class="panel"><div class="panelhead"><h3>اطلاعات محیط اجرا</h3></div><div class="kpirow"><div class="kpi"><span class="muted">نسخه</span><strong>0.1.0</strong></div><div class="kpi"><span class="muted">ذخیره‌سازی</span><strong>LocalStorage</strong></div><div class="kpi"><span class="muted">واحد پول</span><strong>تومان</strong></div></div><div class="notice" style="margin-top:15px">این نسخه برای نمونه‌سازی و ارزیابی گردش‌کار است. داده‌ها بین مرورگرها و کاربران همگام نمی‌شوند و سطح دسترسی فعلاً نمایشی است؛ راه‌اندازی عملیاتی نیازمند Backend، پایگاه داده مرکزی و احراز هویت واقعی است.</div></section>'}
+function openVehicle(){let inner=selectField('نوع وسیله','type',['خودرو','موتورسیکلت'])+field('برند','brand','مثلاً ایران‌خودرو','text','',true)+field('مدل','model','مدل وسیله','text','',true)+field('سال ساخت','year','','number')+field('شماره پلاک','plate')+field('شماره شاسی','chassis')+field('شماره موتور','engine')+field('کیلومتر فعلی','km','','number','0')+field('ارزش اولیه (تومان)','value','','number','0')+selectField('وضعیت','status',['فعال','در تعمیر','خارج از ناوگان'])+field('ضریب کارشناسی اختصاصی','factor','','number','')+field('نشانی تصویر وسیله','photo','پیوند تصویر (اختیاری)','url')+field('تاریخ ورود','entryDate','','date',today)+ '<div class="field full"><label>توضیحات</label><textarea name="notes" rows="2"></textarea></div>';showModal('ایجاد شناسنامه وسیله نقلیه',formWrap(inner));$('#entryform').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));let id=nextId(db.vehicles);let v={...d,id,code:nextVehicleCode(d.type),km:+d.km||0,year:+d.year||'',value:+d.value||0,factor:+d.factor||0};db.vehicles.push(v);createVehicleChecklist(v);save();closeModal();render();toast('شناسنامه '+v.code+' ثبت شد')}}
+
+function vehicleDetail(id){
+ let x=db.vehicles.find(v=>v.id===id);if(!x)return;
+ let as=db.assignments.filter(a=>a.vehicleCode===x.code).slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')),ex=db.expenses.filter(a=>a.vehicleCode===x.code),mt=db.maintenance.filter(a=>a.vehicleCode===x.code).slice().reverse(),fu=db.fuel.filter(a=>a.vehicleCode===x.code).slice().reverse(),docs=db.documents.filter(a=>a.vehicleCode===x.code),checks=vehicleChecks(x),inc=db.incidents.filter(a=>a.vehicleCode===x.code);
+ let due=checks.filter(c=>['late','soon','action'].includes(checklistState(c,x).key)).length;
+ let timeline=[
+  ...as.map(a=>({date:a.date,type:'تحویل و جابه‌جایی',title:a.action||'تخصیص',detail:(a.from||'—')+' ← '+(a.to||'—')+' · مسئول: '+(a.person||'—'),sample:a.sample})),
+  ...mt.map(a=>({date:a.date,type:'نگهداری و تعمیرات',title:a.title,detail:(a.kind||'')+' · '+(a.status||'')+' · '+money(a.amount),sample:a.sample})),
+  ...inc.map(a=>({date:a.date,type:'رخداد و خسارت',title:a.title,detail:(a.kind||'')+' · '+(a.severity||'')+' · '+(a.status||'')+' · '+money(a.amount),sample:a.sample})),
+  ...fu.map(a=>({date:a.date,type:'سوخت‌گیری',title:fa(a.liters)+' لیتر سوخت',detail:money(a.amount)+' · کیلومتر '+fa(a.odometer),sample:a.sample})),
+  ...ex.map(a=>({date:a.date,type:'هزینه',title:a.title,detail:(a.category||'')+' · '+money(a.amount),sample:a.sample})),
+  ...db.usage.filter(a=>a.vehicleCode===x.code).map(a=>({date:a.date,type:'مأموریت و پیمایش',title:a.mission||'ثبت کارکرد',detail:(a.person||'')+' · '+fa((+a.end||0)-(+a.start||0))+' کیلومتر',sample:a.sample}))
+ ].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+ let timelineRows=timeline.map(a=>'<tr><td>'+fmtDate(a.date)+'</td><td>'+a.type+'</td><td>'+a.title+(a.sample?' <span class="tag">نمونه</span>':'')+'</td><td>'+a.detail+'</td></tr>');
+ let img=x.photo||'../assets/images/netkhodro-fleet-pattern.svg';
+ let checkRows=checks.map(c=>'<tr><td>'+c.title+'</td><td>'+fmtDate(c.lastDate)+'</td><td>'+fmtDate(c.dueDate)+'</td><td>'+(c.dueKm?fa(c.dueKm)+' km':'—')+'</td><td>'+checkBadge(c,x)+'</td><td><button class="btn light" onclick="updateChecklist('+c.id+')">بررسی</button></td></tr>');
+ let docRows=docs.map(d=>'<tr><td>'+d.type+'</td><td>'+d.number+'</td><td>'+fmtDate(d.expiryDate)+'</td><td>'+(d.url?'<a href="'+d.url+'" target="_blank" rel="noopener">مشاهده سند</a>':'—')+'</td></tr>');
+ let serviceRows=mt.map(a=>'<tr><td>'+fmtDate(a.date)+'</td><td>'+a.title+'</td><td>'+a.kind+'</td><td>'+fa(a.km)+'</td><td>'+a.status+'</td><td>'+money(a.amount)+'</td></tr>');
+ let fuelRows=fu.map(a=>'<tr><td>'+fmtDate(a.date)+'</td><td>'+fa(a.liters)+' لیتر</td><td>'+money(a.amount)+'</td><td>'+fa(a.odometer)+'</td></tr>');
+ let expenseRows=ex.map(a=>'<tr><td>'+fmtDate(a.date)+'</td><td>'+a.title+'</td><td>'+a.category+'</td><td>'+money(a.amount)+'</td></tr>');
+ let usageRows=db.usage.filter(a=>a.vehicleCode===x.code).slice().reverse().map(a=>'<tr><td>'+fmtDate(a.date)+'</td><td>'+fa(a.start)+' تا '+fa(a.end)+'</td><td>'+fa(a.end-a.start)+' km</td><td>'+a.person+'</td><td>'+a.mission+'</td></tr>');
+ showModal('پرونده جامع '+x.code,'<div class="vehicle-cover" style="background-image:linear-gradient(0deg,#102c4de8,transparent 90%),url('+img+')"><div><h3>'+vehicleName(x)+'</h3><small>'+x.type+' · '+x.code+' · '+(x.plate||'بدون پلاک')+'</small></div></div><div class="kpirow"><div class="kpi"><span class="muted">کیلومتر فعلی</span><strong>'+fa(x.km)+'</strong></div><div class="kpi"><span class="muted">موارد نیازمند پیگیری</span><strong>'+fa(due)+'</strong></div><div class="kpi"><span class="muted">هزینه ثبت‌شده</span><strong>'+money(ex.reduce((s,a)=>s+(+a.amount||0),0))+'</strong></div></div><div class="dossier-actions"><button class="btn" onclick="updateVehiclePhoto('+x.id+')">ثبت تصویر وسیله</button><button class="btn light" onclick="openVehicleDocument('+x.id+')">＋ ثبت مدرک</button><button class="btn light" onclick="addChecklistItem('+x.id+')">＋ مورد چک‌لیست</button><button class="btn light" onclick="openFuel('+x.id+')">ثبت سوخت‌گیری</button><button class="btn light" onclick="openIncident('+x.id+')">ثبت رخداد / خسارت</button></div><div class="dossier-section"><h4>شناسنامه فنی و تخصیص</h4><div class="kpirow"><div class="kpi">سال ساخت<strong>'+fa(x.year||'—')+'</strong></div><div class="kpi">شماره شاسی<strong>'+(x.chassis||'—')+'</strong></div><div class="kpi">شماره موتور<strong>'+(x.engine||'—')+'</strong></div></div><p class="muted">محل تخصیص: '+(x.currentDept||'—')+' · تحویل‌گیرنده: '+(x.currentPerson||'—')+' · وضعیت: '+x.status+'</p></div><div class="dossier-section"><h4>چک‌لیست و سررسیدها</h4>'+table(['مورد کنترلی','آخرین بررسی','موعد بعدی','موعد کیلومتری','وضعیت','عملیات'],checkRows)+'</div><div class="dossier-section"><h4>مدارک و مستندات</h4>'+table(['نوع مدرک','شماره سند','تاریخ انقضا','پیوند'],docRows)+'</div><div class="dossier-section"><h4>سوابق سرویس و تعمیرات</h4>'+table(['تاریخ','شرح','نوع','کیلومتر','وضعیت','هزینه'],serviceRows)+'</div><div class="dossier-section"><h4>سوخت‌گیری‌ها</h4>'+table(['تاریخ','مقدار','مبلغ','کیلومتر'],fuelRows)+'</div><div class="dossier-section"><h4>هزینه‌ها</h4>'+table(['تاریخ','شرح','سرفصل','مبلغ'],expenseRows)+'</div><div class="dossier-section"><h4>کارکرد و مأموریت</h4>'+table(['تاریخ','کیلومتر ابتدا و انتها','پیمایش','راننده','شرح مأموریت'],usageRows)+'</div><div class="dossier-section"><h4>تاریخچه کامل رویدادهای وسیله</h4>'+table(['تاریخ','نوع رویداد','شرح','جزئیات'],timelineRows)+'</div><div class="dossier-section"><h4>سوابق تحویل و تخصیص</h4>'+table(['تاریخ','مبدأ','مقصد','مسئول'],as.map(a=>'<tr><td>'+fmtDate(a.date)+'</td><td>'+a.from+'</td><td>'+a.to+'</td><td>'+a.person+'</td></tr>'))+'</div><div class="actions"><button class="btn light" onclick="editVehicleFactor('+x.id+')">ضریب کارشناسی</button><button class="btn danger" onclick="removeVehicle('+x.id+')">حذف وسیله</button></div>');
+}
+
+
+
+function openIncident(vehicleId){
+ let v=db.vehicles.find(x=>x.id===vehicleId);if(!v)return;
+ let depts=db.people.filter(x=>x.type==='اداره').map(x=>x.name),staff=db.people.filter(x=>x.type==='شخص').map(x=>x.name);
+ let inner=field('تاریخ رخداد','date','','date',today,true)+selectField('نوع رخداد','kind',['تصادف','خرابی فنی','خسارت ظاهری','حادثه عملیاتی','سرقت یا مفقودی','سایر'])+field('عنوان رخداد','title','شرح کوتاه اتفاق','text','',true)+selectField('شدت','severity',['کم','متوسط','زیاد','بحرانی'])+selectField('اداره مرتبط','department',depts,v.currentDept||depts[0])+selectField('شخص مسئول','person',staff,v.currentPerson||staff[0])+selectField('وضعیت رسیدگی','status',['در انتظار رسیدگی','در حال رسیدگی','رسیدگی و رفع شد','ارجاع به بیمه'])+field('هزینه یا خسارت برآوردی (تومان)','amount','','number','0')+'<div class="field full"><label>شرح کامل، علت و اقدام اصلاحی</label><textarea name="notes" rows="3"></textarea></div>';
+ showModal('ثبت رخداد و خسارت برای '+v.code,formWrap(inner,'ثبت رخداد در پرونده'));
+ $('#entryform').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target)),id=nextId(db.incidents),amount=+d.amount||0;capturePeople(d,[['department','اداره'],['person','شخص']]);db.incidents.push({...d,id,vehicleCode:v.code,amount,sample:false});if(amount)db.expenses.push({id:nextId(db.expenses),date:d.date,vehicleCode:v.code,title:'خسارت: '+d.title,category:'حوادث و خسارات',amount,department:d.department,person:d.person,factor:1,incidentId:id});save();closeModal();vehicleDetail(v.id);toast('رخداد در پرونده وسیله ثبت شد')};
+}
+
+function updateChecklist(id){
+ let c=db.checklist.find(x=>x.id===id);if(!c)return;let v=db.vehicles.find(x=>x.code===c.vehicleCode);
+ showModal('ثبت بررسی: '+c.title,'<form id="checkform"><div class="formgrid">'+field('تاریخ بررسی','lastDate','','date',today,true)+selectField('نتیجه بررسی','result',['سالم','نیازمند اقدام','معیوب'],c.result||'سالم')+field('موعد بعدی بر اساس تاریخ','dueDate','','date',shiftDate(c.intervalDays||180))+field('موعد بعدی بر اساس کیلومتر','dueKm','','number',c.intervalKm?Number(v?.km||0)+c.intervalKm:'')+'<div class="field full"><label>شرح بررسی و اقدام لازم</label><textarea name="notes" rows="3">'+(c.notes||'')+'</textarea></div></div><button class="btn">ثبت نتیجه و سررسید بعدی</button></form>');
+ $('#checkform').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));c.lastDate=d.lastDate;c.checkedAt=d.lastDate||today;c.result=d.result;c.dueDate=d.dueDate;c.dueKm=+d.dueKm||0;c.notes=d.notes;c.sample=false;save();closeModal();render(window.currentPage||'checklist');toast('بررسی و موعد بعدی ذخیره شد')};
+}
+function addChecklistItem(vehicleId){
+ let v=vehicleId?db.vehicles.find(x=>x.id===vehicleId):db.vehicles[0];if(!v){toast('ابتدا وسیله نقلیه ثبت کنید');return}
+ let opts=db.vehicles.map(x=>x.code+' | '+vehicleName(x));
+ showModal('تعریف مورد جدید چک‌لیست','<form id="newcheckform"><div class="formgrid">'+selectField('وسیله نقلیه','vehicle',opts,v.code+' | '+vehicleName(v))+field('عنوان اقدام','title','مثلاً بازدید ترمزها','text','',true)+selectField('گروه','group',['مدارک قانونی','نگهداری','ایمنی','سایر'])+field('آخرین تاریخ بررسی','lastDate','','date','')+field('موعد بعدی','dueDate','','date')+field('موعد بعدی کیلومتری','dueKm','','number')+field('فاصله زمانی تکرار (روز)','intervalDays','','number','')+field('فاصله کارکرد تکرار (کیلومتر)','intervalKm','','number','')+'</div><button class="btn">افزودن به چک‌لیست</button></form>');
+ $('#newcheckform').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));db.checklist.push({...d,id:nextId(db.checklist),vehicleCode:d.vehicle.split(' | ')[0],dueKm:+d.dueKm||0,intervalDays:+d.intervalDays||0,intervalKm:+d.intervalKm||0,result:'بررسی نشده',checkedAt:''});save();closeModal();render(window.currentPage||'checklist');toast('مورد کنترلی افزوده شد')};
+}
+function updateVehiclePhoto(id){let v=db.vehicles.find(x=>x.id===id);showModal('ثبت تصویر وسیله نقلیه','<form id="photoform">'+field('نشانی تصویر','photo','پیوند تصویر','url',v.photo||'')+'<button class="btn">ذخیره تصویر</button></form>');$('#photoform').onsubmit=e=>{e.preventDefault();v.photo=new FormData(e.target).get('photo');save();closeModal();vehicleDetail(id);toast('تصویر پرونده به‌روزرسانی شد')}}
+function openVehicleDocument(id){
+ let v=db.vehicles.find(x=>x.id===id);showModal('ثبت مدرک وسیله','<form id="docform"><div class="formgrid">'+selectField('نوع مدرک','type',['بیمه‌نامه شخص ثالث','بیمه بدنه','معاینه فنی','کارت خودرو','سند مالکیت','مجوز تردد','سایر'])+field('شماره مدرک','number')+field('تاریخ صدور','issueDate','','date')+field('تاریخ انقضا','expiryDate','','date')+field('صادرکننده','issuer')+field('پیوند فایل یا محل نگهداری','url','نشانی فایل/سامانه','url')+'</div><button class="btn">ذخیره مدرک</button></form>');
+ $('#docform').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));db.documents.push({...d,id:nextId(db.documents),vehicleCode:v.code});let c=db.checklist.find(x=>x.vehicleCode===v.code&&((d.type.includes('بیمه')&&x.title==='بیمه شخص ثالث')||(d.type==='معاینه فنی'&&x.title==='معاینه فنی')));if(c&&d.expiryDate)c.dueDate=d.expiryDate;save();closeModal();vehicleDetail(id);toast('مدرک در پرونده ثبت شد')};
+}
+function openFuel(vehicleId){
+ let v=vehicleId?db.vehicles.find(x=>x.id===vehicleId):db.vehicles[0];if(!v){toast('ابتدا وسیله نقلیه ثبت کنید');return}
+ let opts=db.vehicles.map(x=>x.code+' | '+vehicleName(x));
+ showModal('ثبت سوخت‌گیری','<form id="fuelform"><div class="formgrid">'+selectField('وسیله نقلیه','vehicle',opts,v.code+' | '+vehicleName(v))+field('تاریخ سوخت‌گیری','date','','date',today,true)+field('مقدار (لیتر)','liters','','number','',true)+field('مبلغ (تومان)','amount','','number','',true)+field('کیلومتر هنگام سوخت‌گیری','odometer','','number',v.km,true)+selectField('نوع سوخت','fuelType',['بنزین','گازوئیل','گاز','برق'])+field('جایگاه / تأمین‌کننده','station')+field('شماره رسید','receipt')+'</div><button class="btn">ثبت سوخت‌گیری</button></form>');
+ $('#fuelform').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target)),veh=db.vehicles.find(x=>x.code===d.vehicle.split(' | ')[0]),fuelId=nextId(db.fuel);db.fuel.push({...d,id:fuelId,vehicleCode:veh.code,liters:+d.liters,amount:+d.amount,odometer:+d.odometer});if(+d.odometer>veh.km)veh.km=+d.odometer;db.expenses.push({id:nextId(db.expenses),date:d.date,vehicleCode:veh.code,title:'سوخت‌گیری: '+fa(d.liters)+' لیتر',category:'سوخت',amount:+d.amount,payee:d.station||'جایگاه ثبت‌نشده',factor:1,fuelId});save();closeModal();render(window.currentPage||'fuel');toast('سوخت‌گیری ثبت شد')};
+}
+
+function editVehicleFactor(id){let x=db.vehicles.find(v=>v.id===id);showModal('تغییر ضریب کارشناسی','<form id="factorform">'+field('ضریب اختصاصی','factor','','number',x.factor||1,true)+'<div class="field"><label>علت تغییر</label><textarea name="reason" required></textarea></div><button class="btn">ثبت تغییر</button></form>');$('#factorform').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));x.factor=+d.factor;x.factorReason=d.reason;x.factorDate=today;save();closeModal();render();toast('ضریب اختصاصی ذخیره شد')}}
+function removeVehicle(id){let v=db.vehicles.find(x=>x.id===id);if(!v||!confirm('خروج این وسیله از ناوگان ثبت شود؟ سوابق، هزینه‌ها و چک‌لیست آن حفظ خواهند شد.'))return;v.status='خارج از ناوگان';v.archivedAt=today;save();closeModal();render();toast('خروج وسیله ثبت شد؛ سوابق آن حفظ شده است')}
+function openAssignment(){
+ let opts=db.vehicles.filter(x=>x.status!=='خارج از ناوگان').map(x=>x.code+' | '+vehicleName(x));
+ if(!opts.length){toast('ابتدا وسیله نقلیه فعال ثبت کنید');return}
+ let depts=db.people.filter(x=>x.type==='اداره').map(x=>x.name),staff=db.people.filter(x=>x.type==='شخص').map(x=>x.name);
+ let inner=selectField('وسیله نقلیه','vehicle',opts)+
+ selectField('نوع سند','action',['تحویل اولیه','تحویل موقت','تحویل‌گیری','انتقال بین ادارات','انتقال بین اشخاص','تحویل به تعمیرگاه','بازگشت از تعمیرگاه'])+
+ field('تاریخ و ساعت تحویل','date','','date',today,true)+
+ selectField('اداره مبدأ','fromDepartment',['—',...depts],'—')+
+ selectField('تحویل‌دهنده','fromPerson',['—',...staff],'—')+
+ selectField('اداره مقصد','toDepartment',['—',...depts],'—')+
+ selectField('تحویل‌گیرنده','toPerson',['—',...staff],'—')+
+ selectField('نماینده / مسئول تحویل','handedBy',staff,'')+
+ selectField('نماینده / مسئول تحویل‌گیری','receivedBy',staff,'')+
+ selectField('تأییدکننده / مقام مجاز','approver',staff,'')+
+ field('شماره نامه / مجوز','reference','شماره نامه، دستور یا مجوز')+
+ field('کیلومترشمار هنگام تحویل','km','','number','0',true)+
+ selectField('میزان سوخت','fuel',['خالی','یک‌چهارم','نصف','سه‌چهارم','پر'])+
+ selectField('وضعیت بدنه','bodyStatus',['سالم','دارای خط و خش جزئی','دارای آسیب قابل توجه','نیازمند بررسی'])+
+ selectField('وضعیت کابین و تجهیزات','cabinStatus',['سالم','نقص جزئی','ناقص / آسیب‌دیده','نیازمند بررسی'])+
+ selectField('وضعیت فنی','technicalStatus',['سالم و آماده بهره‌برداری','قابل استفاده با ایراد جزئی','نیازمند تعمیر','غیرقابل استفاده'])+
+ selectField('وضعیت لاستیک‌ها','tiresStatus',['سالم','متوسط','نیازمند تعویض','ناهمسان / آسیب‌دیده'])+
+ field('تاریخ بازگشت مورد انتظار','expectedReturnDate','','date')+
+ '<div class="field full"><label>لوازم و متعلقات تحویلی</label><textarea name="accessories" rows="2" placeholder="کارت سوخت، زاپاس، جک، آچار چرخ، کپسول، GPS و ..."></textarea></div>'+
+ '<div class="field full"><label>مدارک تحویلی</label><textarea name="documentsList" rows="2" placeholder="کارت خودرو، بیمه‌نامه، معاینه فنی و ..."></textarea></div>'+
+ '<div class="field full"><label>ایرادات، خسارات و نواقص مشاهده‌شده</label><textarea name="damageNotes" rows="2"></textarea></div>'+
+ '<div class="field full"><label>علت تحویل / شرح مأموریت / توضیحات</label><textarea name="notes" rows="2"></textarea></div>';
+ showModal('فرم رسمی صورت‌جلسه تحویل و تحول وسیله نقلیه',formWrap(inner,'ثبت صورت‌جلسه و ایجاد سند قابل چاپ'));
+ $('#entryform').onsubmit=e=>{
+  e.preventDefault();let d=Object.fromEntries(new FormData(e.target)),v=db.vehicles.find(x=>x.code===d.vehicle.split(' | ')[0]);
+  if(!v){toast('وسیله انتخاب‌شده پیدا نشد');return}
+  capturePeople(d,[['fromDepartment','اداره'],['toDepartment','اداره'],['fromPerson','شخص'],['toPerson','شخص'],['handedBy','شخص'],['receivedBy','شخص'],['approver','شخص']]);
+  const id=nextId(db.assignments),code='HVL-'+String(id).padStart(5,'0');
+  const from=[d.fromDepartment,d.fromPerson].filter(x=>x&&x!=='—').join(' / ')||'—';
+  const to=[d.toDepartment,d.toPerson].filter(x=>x&&x!=='—').join(' / ')||'—';
+  const rec={...d,id,code,vehicleCode:v.code,from,to,person:d.receivedBy||d.toPerson||'',department:d.toDepartment&&d.toDepartment!=='—'?d.toDepartment:v.currentDept||'',km:+d.km||0,createdAt:new Date().toISOString(),sample:false};
+  db.assignments.push(rec);
+  if(d.action==='تحویل‌گیری'&&(!d.toDepartment||d.toDepartment==='—')&&(!d.toPerson||d.toPerson==='—')){v.currentPerson='';v.currentDept=''}
+  else{
+   if(d.toDepartment&&d.toDepartment!=='—')v.currentDept=d.toDepartment;
+   if(d.toPerson&&d.toPerson!=='—')v.currentPerson=d.toPerson;
+   else if(d.action==='تحویل به تعمیرگاه')v.currentPerson='تعمیرگاه';
+  }
+  if(d.km)v.km=Math.max(+v.km,+d.km);
+  save();closeModal();render('assignments');toast('صورت‌جلسه ثبت شد؛ از دفتر تحویل و تخصیص می‌توانید نسخه چاپی را دریافت کنید');
+ };
+}
+function assignmentDocument(id){
+ const a=db.assignments.find(x=>x.id===id);if(!a)return '';
+ const v=db.vehicles.find(x=>x.code===a.vehicleCode)||{};
+ const esc=x=>String(x??'—').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/\n/g,'<br>');
+ const row=(l,x)=>'<div class="item"><b>'+l+'</b><span>'+esc(x||'—')+'</span></div>';
+ const block=(l,x)=>'<div class="block"><b>'+l+'</b><div>'+esc(x||'—')+'</div></div>';
+ const pair=(l,x,r,y)=>row(l,x)+row(r,y),dt=x=>x?jalaliDate(x):'—';
+ return '<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><title>صورت‌جلسه '+esc(a.code)+'</title><style>@font-face{font-family:NetFa;src:url(../assets/fonts/Vazirmatn-Regular.woff2)}@font-face{font-family:NetFa;src:url(../assets/fonts/Vazirmatn-Bold.woff2);font-weight:700}*{box-sizing:border-box}body{font-family:NetFa,Tahoma,sans-serif;color:#23364a;margin:0 auto;padding:9mm;max-width:210mm;font-size:10px;line-height:1.6}.head{display:flex;justify-content:space-between;border-bottom:2px solid #244d70;padding-bottom:7px}.brand{color:#587086}.docno{border:1px solid #c6d2dc;border-radius:5px;padding:3px 9px;font-weight:bold;color:#244d70}.title{text-align:center;margin:9px 0 2px;font-size:16px;color:#193d5d}.subtitle{text-align:center;color:#718194;font-size:9px;margin-bottom:8px}.section{margin-top:8px;break-inside:avoid}.section h2{font-size:10px;color:#244d70;margin:0 0 4px;padding:4px 8px;background:#eef3f7;border-right:3px solid #527b9b}.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.item{display:flex;gap:6px;padding:2px 1px;border-bottom:1px dotted #d7e0e7;min-height:21px}.item b{color:#63778a;font-weight:400;min-width:92px}.item span{font-weight:700;overflow-wrap:anywhere}.block{padding:3px 1px;border-bottom:1px dotted #d7e0e7}.block b{display:block;color:#63778a;font-weight:400}.block div{min-height:16px;overflow-wrap:anywhere}.notes{border:1px solid #b9c8d5;border-radius:4px;margin-top:7px;padding:5px 8px;min-height:64px}.notes strong{color:#244d70}.blank{height:18px;border-bottom:1px dotted #d5dee6}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:9px;break-inside:avoid}.sign div{border:1px solid #bac8d4;border-radius:4px;height:58px;padding:5px;text-align:center;color:#52697e}.sign b{display:block;color:#244d70;margin-bottom:19px}.foot{text-align:center;font-size:8px;color:#7b8996;margin-top:6px}.toolbar{text-align:center;margin:10px}.toolbar button{font:inherit;border:0;border-radius:5px;background:#244d70;color:white;padding:6px 18px}@page{size:A4;margin:8mm}@media print{body{padding:0;max-width:none;font-size:9px}.toolbar{display:none}.section{margin-top:6px}.notes{min-height:56px}.blank{height:16px}}</style></head><body><div class="head"><div class="brand">سامانه مدیریت ناوگان و نگهداری خودرو</div><div class="docno">شماره سند: '+esc(a.code)+'</div></div><h1 class="title">صورت‌جلسه تحویل، تحول و جابه‌جایی خودرو</h1><div class="subtitle">ثبت وضعیت وسیله نقلیه، متعلقات و انتقال مسئولیت</div><section class="section"><h2>۱. مشخصات وسیله و عملیات</h2><div class="grid">'+pair('نوع عملیات',a.action,'تاریخ تنظیم',dt(a.date))+pair('شناسه ناوگان',a.vehicleCode,'مشخصات وسیله',vehicleName(v))+pair('شماره پلاک',v.plate,'کیلومترشمار',fa(a.km))+pair('اداره مبدأ',a.fromDepartment||a.from,'اداره مقصد',a.toDepartment||a.to)+pair('تحویل‌دهنده',a.fromPerson,'تحویل‌گیرنده',a.toPerson)+pair('مسئول تحویل',a.handedBy,'مسئول تحویل‌گیری',a.receivedBy)+pair('مقام تأییدکننده',a.approver,'شماره نامه / مجوز',a.reference)+pair('تاریخ بازگشت',dt(a.expectedReturnDate),'میزان سوخت',a.fuel)+'</div></section><section class="section"><h2>۲. وضعیت و اقلام تحویلی</h2><div class="grid">'+pair('وضعیت بدنه',a.bodyStatus,'وضعیت کابین',a.cabinStatus)+pair('وضعیت فنی',a.technicalStatus,'وضعیت لاستیک‌ها',a.tiresStatus)+'</div>'+block('لوازم و متعلقات تحویلی',a.accessories)+block('مدارک تحویلی',a.documentsList)+block('ایرادات، خسارات و نواقص',a.damageNotes)+'</section><section class="section"><h2>۳. توضیحات و یادداشت‌ها</h2>'+block('شرح و توضیحات ثبت‌شده',a.notes)+'<div class="notes"><strong>یادداشت تکمیلی هنگام تحویل / بازدید:</strong><div class="blank"></div><div class="blank"></div><div class="blank"></div></div></section><div class="sign"><div><b>تحویل‌دهنده</b>نام، امضا و تاریخ</div><div><b>تحویل‌گیرنده</b>نام، امضا و تاریخ</div><div><b>مقام تأییدکننده</b>نام، امضا و مهر</div></div><p class="foot">اعتبار نهایی صورت‌جلسه تابع امضاها و مجوزهای سازمانی مربوط است.</p><div class="toolbar"><button onclick="window.print()">چاپ / ذخیره PDF</button></div></body></html>';
+}
+function printAssignment(id){const html=assignmentDocument(id);if(!html)return;const w=window.open('','_blank');if(!w){toast('پنجره چاپ مسدود شد؛ اجازه بازشدن پنجره را فعال کنید');return}w.document.open();w.document.write(html);w.document.close();w.focus();}
+
+function openMaintenance(){let opts=db.vehicles.map(x=>x.code+' | '+vehicleName(x));if(!opts.length){toast('ابتدا وسیله نقلیه ثبت کنید');return}let inner=selectField('وسیله نقلیه','vehicle',opts)+field('تاریخ اقدام','date','','date',today,true)+field('شرح اقدام','title','مثلاً تعویض روغن', 'text','',true)+selectField('نوع اقدام','kind',['سرویس دوره‌ای','تعمیرات','بازدید فنی','تعویض قطعه','بیمه و معاینه'])+field('کیلومتر هنگام اقدام','km','','number','0')+field('سررسید بعدی','nextDate','','date')+selectField('وضعیت','status',['در انتظار','در حال انجام','انجام شد'])+field('تعمیرگاه / مجری','provider')+field('هزینه (تومان)','amount','','number','0')+'<div class="field full"><label>شرح فنی و قطعات مصرفی</label><textarea name="notes" rows="2"></textarea></div>';showModal('ثبت اقدام نگهداری و تعمیرات',formWrap(inner));$('#entryform').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target)),v=db.vehicles.find(x=>x.code===d.vehicle.split(' | ')[0]);db.maintenance.push({...d,id:nextId(db.maintenance),vehicleCode:v.code,km:+d.km||0,amount:+d.amount||0,department:v.currentDept||'',person:v.currentPerson||'',sample:false});if(+d.km>v.km)v.km=+d.km;if(+d.amount)db.expenses.push({id:nextId(db.expenses),date:d.date,vehicleCode:v.code,title:'هزینه: '+d.title,category:'تعمیرات',amount:+d.amount,payee:d.provider,factor:1});save();closeModal();render();toast('اقدام فنی ثبت شد')}}
+function openExpense(defaultCategory=''){
+ let opts=db.vehicles.filter(x=>x.status!=='خارج از ناوگان').map(x=>x.code+' | '+vehicleName(x));
+ if(!opts.length){toast('ابتدا وسیله نقلیه ثبت کنید');return}
+ let inner=selectField('وسیله نقلیه','vehicle',opts)+field('تاریخ هزینه','date','','date',today,true)+field('شرح هزینه','title','شرح فاکتور یا سوخت‌گیری','text',defaultCategory==='سوخت'?'سوخت‌گیری':'',true)+selectField('سرفصل هزینه','category',['تعمیرات','سوخت','بیمه','قطعات','عوارض و جرایم','سایر'],defaultCategory)+field('مبلغ (تومان)','amount','','number','0',true)+field('تأمین‌کننده / دریافت‌کننده','payee')+
+ '<div class="field full fuel-extra hidden"><label>جزئیات سوخت‌گیری</label><div class="formgrid">'+field('مقدار سوخت (لیتر)','liters','','number')+field('کیلومتر هنگام سوخت‌گیری','odometer','','number')+selectField('نوع سوخت','fuelType',['بنزین','گازوئیل','گاز','برق'])+field('جایگاه / تأمین‌کننده سوخت','station')+field('شماره رسید','receipt')+'</div></div>'+
+ field('نرخ طلای ۱۸ عیار در تاریخ هزینه (تومان/گرم)','goldRate','','number')+field('شماره فاکتور','invoice')+'<div class="field full"><label>توضیحات</label><textarea name="notes"></textarea></div>';
+ showModal('ثبت هزینه ناوگان',formWrap(inner));
+ const form=$('#entryform'),category=form.elements.category,extra=form.querySelector('.fuel-extra');
+ const sync=()=>{const on=category.value==='سوخت';extra.classList.toggle('hidden',!on);['liters','odometer'].forEach(n=>form.elements[n].required=on);if(on&&!form.elements.title.value)form.elements.title.value='سوخت‌گیری'};
+ category.addEventListener('change',sync);sync();
+ form.onsubmit=e=>{
+  e.preventDefault();let d=Object.fromEntries(new FormData(e.target)),v=db.vehicles.find(x=>x.code===d.vehicle.split(' | ')[0]);
+  if(!v){toast('وسیله انتخاب‌شده معتبر نیست');return}
+  const expense={...d,id:nextId(db.expenses),vehicleCode:v.code,amount:+d.amount||0,goldRate:+d.goldRate||0,department:v.currentDept||'',person:v.currentPerson||'',factor:1,sample:false};
+  db.expenses.push(expense);
+  if(d.category==='سوخت'){
+   const f={id:nextId(db.fuel),date:d.date,vehicleCode:v.code,liters:+d.liters||0,amount:+d.amount||0,odometer:+d.odometer||0,fuelType:d.fuelType||'',station:d.station||d.payee||'',receipt:d.receipt||'',sample:false,expenseId:expense.id};
+   db.fuel.push(f);if(f.odometer>v.km)v.km=f.odometer;
+  }
+  save();closeModal();render('expenses');toast(d.category==='سوخت'?'سوخت‌گیری و مبلغ آن یک‌بار ثبت شد':'هزینه با موفقیت ثبت شد');
+ };
+}
+
+function openUsage(){let opts=db.vehicles.map(x=>x.code+' | '+vehicleName(x));if(!opts.length){toast('ابتدا وسیله نقلیه ثبت کنید');return}let staffOptions=db.people.filter(x=>x.type==='شخص').map(x=>x.name),deptOptions=db.people.filter(x=>x.type==='اداره').map(x=>x.name);let inner=selectField('وسیله نقلیه','vehicle',opts)+field('تاریخ','date','','date',today,true)+selectField('راننده / مسئول','person',staffOptions)+selectField('اداره مأموریت','department',deptOptions)+field('کیلومتر ابتدا','start','','number','0',true)+field('کیلومتر انتها','end','','number','0',true)+field('شرح مأموریت','mission','مقصد و هدف مأموریت');showModal('ثبت کارکرد و مأموریت',formWrap(inner));$('#entryform').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target)),v=db.vehicles.find(x=>x.code===d.vehicle.split(' | ')[0]);if(+d.end<+d.start){toast('کیلومتر انتها نمی‌تواند کمتر از ابتدا باشد');return}if(+d.start<v.km){toast('کیلومتر ابتدا از آخرین کیلومتر ثبت‌شده کمتر است');return}capturePeople(d,[['person','شخص'],['department','اداره']]);db.usage.push({...d,id:nextId(db.usage),vehicleCode:v.code,start:+d.start,end:+d.end,department:d.department||v.currentDept||'',sample:false});v.km=+d.end;save();closeModal();render();toast('کارکرد ثبت شد')}}
+function openGold(){showModal('ثبت نرخ طلا','<form id="goldform"><div class="formgrid">'+field('تاریخ نرخ','date','','date',today,true)+selectField('نوع شاخص','type',['۱۸ عیار','۲۴ عیار'])+field('قیمت هر گرم (تومان)','rate','','number','',true)+field('منبع نرخ','source','نام منبع / ثبت دستی')+'</div><button class="btn">ذخیره نرخ</button></form>');$('#goldform').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));db.gold.push({...d,id:nextId(db.gold),rate:+d.rate});save();closeModal();render();toast('نرخ طلا ذخیره شد')}}
+function openPerson(){showModal('افزودن اداره یا شخص',formWrap(selectField('نوع','type',['اداره','شخص'])+field('نام و عنوان','name','نام اداره یا شخص','text','',true)+field('شماره تماس','phone')+field('کد پرسنلی / شناسه','code')));$('#entryform').onsubmit=e=>{e.preventDefault();db.people.push({...Object.fromEntries(new FormData(e.target)),id:nextId(db.people)});save();closeModal();render();toast('اطلاعات ثبت شد')}}
+function deletePerson(id){if(confirm('این مورد حذف شود؟')){db.people=db.people.filter(x=>x.id!==id);save();render()}}
+function backup(){let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='netkhodro-backup-'+today+'.json';a.click();URL.revokeObjectURL(a.href)}
+function bindPage(){if($('#expenseSearch')){const update=()=>{const q=$('#expenseSearch').value.toLowerCase(),c=$('#expenseCategory').value,a=db.expenses.filter(x=>(!c||x.category===c)&&[x.vehicleCode,x.title,x.payee].join(' ').toLowerCase().includes(q)).sort((x,y)=>(y.date||'').localeCompare(x.date||''));$('#expenseTable').innerHTML=table(['تاریخ','کد وسیله','شرح','سرفصل','مبلغ','تأمین‌کننده','ضریب تعدیل'],a.map(x=>'<tr><td>'+fmtDate(x.date)+'</td><td>'+x.vehicleCode+'</td><td>'+x.title+'</td><td><span class="tag">'+x.category+'</span></td><td><b>'+money(x.amount)+'</b></td><td>'+(x.payee||'—')+'</td><td>'+fa(x.factor||1)+'</td></tr>'))};$('#expenseSearch').oninput=update;$('#expenseCategory').onchange=update}if($('#checkSearch')){let update=()=>{let q=$('#checkSearch').value.toLowerCase(),st=$('#checkState').value,g=$('#checkGroup').value;let a=db.checklist.filter(c=>{let v=db.vehicles.find(x=>x.code===c.vehicleCode);return v&&(!st||checklistState(c,v).key===st)&&(!g||c.group===g)&&[c.vehicleCode,vehicleName(v),c.title].join(' ').toLowerCase().includes(q)});$('#checkTable').innerHTML=table(['کد و وسیله','اقدام کنترلی','آخرین بررسی','موعد بعدی','مانده تا کیلومتر','وضعیت','عملیات'],checklistRows(a))};$('#checkSearch').oninput=update;$('#checkState').onchange=update;$('#checkGroup').onchange=update}if($('#vehicleSearch')){let update=()=>{let q=$('#vehicleSearch').value.toLowerCase(),t=$('#vehicleType').value,s=$('#vehicleStatus').value;let a=db.vehicles.filter(x=>(!t||x.type===t)&&(!s||x.status===s)&&[x.code,x.brand,x.model,x.plate,x.currentDept,x.currentPerson].join(' ').toLowerCase().includes(q));$('#vehicleTable').innerHTML=table(['کد اختصاصی','نوع','برند و مدل','سال ساخت','کیلومتر','محل تخصیص','وضعیت','عملیات'],a.map(x=>'<tr><td><b>'+x.code+'</b> '+(x.sample?'<span class="tag">نمونه</span>':'')+'</td><td>'+x.type+'</td><td>'+vehicleName(x)+'</td><td>'+fa(x.year||'—')+'</td><td>'+fa(x.km||0)+'</td><td>'+(x.currentPerson||x.currentDept||'—')+'</td><td>'+x.status+'</td><td><button class="btn light" onclick="vehicleDetail('+x.id+')">پرونده</button></td></tr>'))};$('#vehicleSearch').oninput=update;$('#vehicleType').onchange=update;$('#vehicleStatus').onchange=update}if($('#settingsform'))$('#settingsform').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));db.settings={...db.settings,life:+d.life,rate:+d.rate,manual:+d.manual};save();toast('تنظیمات ذخیره شد');render()};if($('#restorefile'))$('#restorefile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(!d.vehicles||!d.expenses)throw 0;db=d;['checklist','fuel','documents'].forEach(k=>{if(!Array.isArray(db[k]))db[k]=[]});db.vehicles.forEach(v=>{if(!db.checklist.some(c=>c.vehicleCode===v.code))createVehicleChecklist(v)});save();render();toast('نسخه پشتیبان بازیابی شد')}catch(_){toast('فایل پشتیبان معتبر نیست')}};r.readAsText(f)}}
+$('#nav').addEventListener('click',e=>{let b=e.target.closest('button[data-page]');if(b)activePage(b.dataset.page)});$('#mobileDock').addEventListener('click',e=>{let b=e.target.closest('button[data-page]');if(b)activePage(b.dataset.page)});window.addEventListener('scroll',()=>$('#backtop').classList.toggle('visible',window.scrollY>280));$('#backtop').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));const requestedPage=new URLSearchParams(location.search).get('page')||'dashboard';render(requestedPage);
+</script></body></html>
