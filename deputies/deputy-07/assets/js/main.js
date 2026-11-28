@@ -80,14 +80,14 @@ document.querySelectorAll('.back-to-top').forEach(node=>node.remove());
 const inPages=location.pathname.includes('/pages/');
  const prefix=inPages?'':'pages/';
  const inLocalData=location.pathname.includes('/local-data/');
- const home=(inPages||inLocalData)?'../dashboard.html':((location.pathname.endsWith('/users.html')||location.pathname.endsWith('/control-center.html'))?'dashboard.html':'#overview');
+ const home=(inPages||inLocalData)?'../dashboard.html':(body.classList.contains('deputy-structure-page')?'dashboard.html':((location.pathname.endsWith('/users.html')||location.pathname.endsWith('/control-center.html'))?'dashboard.html':'#overview'));
  const localData=inPages?'../local-data/index.html':(inLocalData?'index.html':'local-data/index.html');
   const brand=document.querySelector('.ops-brand');
   if(brand)brand.href=home;
  const liveDepartments=(()=>{try{return JSON.parse(localStorage.getItem('deputy7.platform.config.v1'))?.departments||[]}catch{return[]}})();
  const deptMenu=liveDepartments.length?liveDepartments.filter(d=>d.status!=='inactive'):null;
  const urls={
-  departments:(deptMenu||[{id:'1'},{id:'2'},{id:'3'},{id:'4'},{id:'6'},{id:'7'},{id:'8'}]).map(d=>prefix+(['1','2','3','4','6','7','8'].includes(String(d.id))?'department-'+d.id+'.html':'department.html?dept='+encodeURIComponent(d.id))),
+  departments:(deptMenu||[{id:'1'},{id:'2'},{id:'3'},{id:'4'},{id:'5'},{id:'6'},{id:'7'},{id:'8'}]).map(d=>prefix+(['1','2','3','4','5','6','7','8'].includes(String(d.id))?'department-'+d.id+'.html':'department.html?dept='+encodeURIComponent(d.id))),
   finance:prefix+'finance-management.html',workforce:prefix+'workforce.html',profile:prefix+'personnel-profile.html',evaluation:prefix+'performance-evaluation.html',
   followups:prefix+'special-followups.html',notices:prefix+'notifications-center.html',calendar:prefix+'calendar.html',missions:prefix+'mission-bank.html',missionCreate:prefix+'mission-create.html',missionReports:prefix+'mission-reports.html',missionStorage:prefix+'mission-sync.html',
   catalog:prefix+'report-catalog.html',archive:prefix+'report-archive.html',reports:prefix+'department-reports.html',participation:prefix+'participation.html',
@@ -104,6 +104,7 @@ const inPages=location.pathname.includes('/pages/');
  const pageMeta=path=>{const raw=normalizePagePath(path),exact=pageCatalog.find(p=>p.kind==="static"&&normalizePagePath(p.path)===raw);if(exact)return exact;const base=raw.split("/").pop();return pageCatalog.find(p=>p.kind==="static"&&String(p.path||"").split("/").pop()===base&&(String(p.path||"").startsWith("pages/")||!inPages));};
  const registeredPageHref=p=>{const path=String(p.path||"");return inPages?(path.startsWith("pages/")?path.slice(6):"../"+path):inLocalData?"../"+path:path;};
  const nav=document.querySelector('.ops-nav');
+ const preserveStructureNav=body.classList.contains('deputy-structure-page')||body.classList.contains('dept-shell-page');
  /* داخل سامانه، نشان و پیوندهای خانه باید به نمای اصلی سامانه برگردند، نه درگاه معرفی. */
  document.querySelectorAll('a[href="../index.html"],a[href="index.html"]').forEach(link=>{link.href=home;});
  /* Enforce mobile header-menu removal in the primary navigation controller. */
@@ -124,9 +125,9 @@ const inPages=location.pathname.includes('/pages/');
   if(mobileNavQuery.addEventListener)mobileNavQuery.addEventListener('change',syncHeaderNav);
   else mobileNavQuery.addListener(syncHeaderNav);
  }
- if(nav){
+ if(nav&&!preserveStructureNav){
   nav.innerHTML='<details class="nav-dropdown"><summary>ادارات کل</summary><div class="nav-menu">'+
-   ['اداره اداری و پشتیبانی','اداره تحقیق و توسعه','اداره پارکبان و معبربانان','اداره تأسیسات فنی و امور نگهداری','اداره فاوا و خدمات فنی','اداره جمع‌آوری و بازیافت پسماند','اداره بازرسی و تحقیقات محلی'].map((n,i)=>'<a href="'+urls.departments[i]+'">'+n+'</a>').join('')+
+   ['اداره یکم · اداری و پشتیبانی','اداره دوم · تحقیق و توسعه','اداره سوم · پارکبان و معبربانان','اداره چهارم · تأسیسات فنی و امور نگهداری','اداره پنجم','اداره ششم · فاوا و خدمات فنی','اداره هفتم · جمع‌آوری و بازیافت پسماند','اداره هشتم · بازرسی و تحقیقات محلی'].map((n,i)=>'<a href="'+urls.departments[i]+'">'+n+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>مدیریت</summary><div class="nav-menu">'+
    [[urls.users,'کاربران و سطح دسترسی'],[urls.control,'مرکز کنترل و پیکربندی'],[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],...customMenuLinks("مدیریت")].map(x=>'<a href="'+x[0]+'">'+x[1]+'</a>').join('')+
    '</div></details><details class="nav-dropdown"><summary>اقدامات</summary><div class="nav-menu">'+
@@ -158,7 +159,7 @@ const inPages=location.pathname.includes('/pages/');
  }
  const current=location.pathname.split('/').pop();
  const groups=[
-  {id:'departments',label:'ادارات',icon:'▦',links:urls.departments.map((href,i)=>[href,['اداره اداری و پشتیبانی','اداره تحقیق و توسعه','اداره پارکبان و معبربانان','اداره تأسیسات فنی و امور نگهداری','اداره فاوا و خدمات فنی','اداره جمع‌آوری و بازیافت پسماند','اداره بازرسی و تحقیقات محلی'][i]])},
+  {id:'departments',label:'ادارات',icon:'▦',links:urls.departments.map((href,i)=>[href,['اداره یکم','اداره دوم','اداره سوم','اداره چهارم','اداره پنجم','اداره ششم','اداره هفتم','اداره هشتم'][i]])},
   {id:'management',label:'مدیریت',icon:'▤',links:[[urls.users,'کاربران و سطح دسترسی'],[urls.control,'مرکز کنترل و پیکربندی'],[urls.localData,'مرکز داده و پشتیبان‌گیری'],[urls.finance,'مدیریت مالی'],[urls.workforce,'سرمایه انسانی'],[urls.profile,'پرونده پرسنلی'],[urls.evaluation,'ارزیابی عملکرد'],...customMenuLinks("مدیریت")]},
   {id:'actions',label:'اقدامات',icon:'✓',links:[[urls.followups,'پیگیری دستورات ریاست'],[urls.notices,'مرکز اعلانات ریاست'],[urls.calendar,'تقویم و رویدادها'],...customMenuLinks("اقدامات")]},
   {id:'missions',label:'ماموریت‌ها',icon:'▣',links:[[urls.missions,'بانک مأموریت‌ها'],[urls.missionCreate,'ایجاد مأموریت'],[urls.missionReports,'گزارش مأموریت‌ها'],[urls.missionStorage,'مدیریت داده‌های محلی']]},
@@ -181,7 +182,7 @@ const inPages=location.pathname.includes('/pages/');
  dock.setAttribute('aria-label','منوی اصلی موبایل');
  const homeLink=document.createElement('a');
  homeLink.className='dock-home';homeLink.href=home;homeLink.innerHTML='<span class="dock-icon" aria-hidden="true">⌂</span><span>خانه</span>';
- if(current==='index.html'||current==='')homeLink.classList.add('active');
+ if(current==='index.html'||current==='dashboard.html'||current==='')homeLink.classList.add('active');
  dock.appendChild(homeLink);
  const panel=document.createElement('div');panel.className='mobile-dock-panel';panel.id='mobile-dock-panel';panel.hidden=true;
  const panelTitle=document.createElement('div');panelTitle.className='mobile-dock-panel-title';
