@@ -1,5 +1,5 @@
 import { MissionStore, MissionVault } from "./mission-store.js?v=local-first-20261115-01";
-import { ensureMissionSamples, removeMissionSamples } from "./mission-samples.js?v=local-first-20261115-01";
+import { ensureMissionSamples, removeMissionSamples } from "./mission-samples.js?v=mission-travel-samples-20261128-1";
 const $=id=>document.getElementById(id),fa=n=>Number(n||0).toLocaleString("fa-IR");
 const depts={"1":"اداری و پشتیبانی","2":"تحقیق و توسعه","3":"پارکبان و معبربانان","4":"تأسیسات فنی و نگهداری","6":"فاوا و خدمات فنی","7":"جمع‌آوری و بازیافت پسماند","8":"بازرسی و تحقیقات محلی","HQ":"ستاد معاونت ۷"};
 const statuses={draft:"پیش‌نویس",registered:"برنامه‌ریزی قبل از اجرا",referred:"ارجاع‌شده / در انتظار شروع","in-progress":"در حال اجرا",blocked:"دارای مانع",review:"در انتظار بررسی",revision:"نیازمند اصلاح",completed:"اتمام و پایان کار",closed:"مختومه",cancelled:"لغوشده"};
