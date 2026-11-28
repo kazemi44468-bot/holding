@@ -315,12 +315,11 @@ const inPages=location.pathname.includes('/pages/');
 /* هدر در اسکرول بدون تغییر اندازه و حالت باقی می‌ماند؛ تغییرات فقط برای دکمه بازگشت به بالا است. */
 
 
-/* فوتر کاملاً خالی؛ انتقال به بیرون از محتوای اصلی برای پوشش تمام عرض */
+/* حفظ محتوای فوتر اختصاصی هر صفحه و اعمال پوسته مشترک */
 (()=>{
  const footer=document.querySelector('.ops-footer,.site-footer');
  if(!footer)return;
- footer.className='ops-footer';
- footer.replaceChildren();
+ footer.classList.add('ops-footer');
  if(footer.parentElement!==document.body)document.body.appendChild(footer);
 })();
 
