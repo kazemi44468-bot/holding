@@ -5705,3 +5705,6 @@ body.ops-page main[data-org-calendar]>.calendar-overview article span{font-size:
  body.ops-page main[data-org-calendar]>.calendar-overview{grid-template-columns:repeat(2,minmax(0,1fr))}
  body.ops-page main[data-org-calendar]>.calendar-layout>.calendar-panel{padding:10px}
 }
+
+/* منوی موبایل متناسب با پورتال‌های دوگزینه‌ای */
+.mobile-dock.mobile-dock-compact{grid-template-columns:repeat(2,minmax(0,1fr))!important}
