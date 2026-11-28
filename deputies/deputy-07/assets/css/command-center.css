@@ -71,3 +71,12 @@ body.command-center-page{background:#f3f7f8;color:#294657}
 @media(max-width:1000px){.command-center-page .cc-layout{grid-template-columns:190px minmax(0,1fr)}.cc-cycle{grid-template-columns:1fr 1fr}.cc-cycle>i{display:none}}
 @media(max-width:760px){.command-center-page .cc-layout{display:block;width:calc(100% - 20px);margin:13px auto 25px}.cc-sidebar{position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-bottom:13px}.cc-side-brand,.cc-side-foot{grid-column:1/-1}.cc-side-link{padding:8px}.cc-page-head{display:block}.cc-head-actions{margin-top:10px}.cc-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cc-grid-2,.cc-dept-cards{grid-template-columns:1fr}}
 @media(max-width:480px){.cc-dept-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.cc-cycle{grid-template-columns:1fr}.cc-form-grid{grid-template-columns:1fr}.cc-form-grid label.wide{grid-column:auto}.cc-principle{display:block}.cc-principle b{display:block;margin-bottom:4px}}
+
+/* صندوق دریافت ابلاغ‌ها و درخواست‌های مرکز در صفحات ادارات */
+.cc-inbox-panel{margin:0 0 14px;padding:13px;border:1px solid #d9e8ed;border-right:3px solid #4b94ac;border-radius:10px;background:#fff;box-shadow:0 4px 14px rgba(40,91,112,.035)}
+.cc-inbox-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.cc-inbox-head small,.cc-inbox-head b{display:block}.cc-inbox-head small{color:#2a87a5;font-size:9px}.cc-inbox-head b{margin-top:3px;color:#31586b;font-size:11px}.cc-inbox-head a{color:#287f9d;font-size:9px;white-space:nowrap}
+.cc-inbox-item{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 1px;border-top:1px solid #edf2f4}
+.cc-inbox-item>div:first-child{min-width:0}.cc-inbox-item span{display:block;color:#2b829e;font-size:8px}.cc-inbox-item b{display:block;margin:3px 0;color:#3b5e6e;font-size:10px}.cc-inbox-item small{display:block;color:#899aa2;font-size:8px}.cc-inbox-item p{margin:4px 0 0;color:#6e8490;font-size:9px;line-height:1.8}
+.cc-inbox-actions{display:flex;gap:5px;flex-wrap:wrap;flex:0 0 auto}.cc-inbox-actions button{padding:6px 8px;border:1px solid #dce8ed;border-radius:6px;background:#f8fbfc;color:#3b7188;font:inherit;font-size:8px;cursor:pointer}
+@media(max-width:620px){.cc-inbox-item{display:block}.cc-inbox-actions{margin-top:8px}}
