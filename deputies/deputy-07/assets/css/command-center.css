@@ -82,3 +82,38 @@ body.command-center-page{background:#f3f7f8;color:#294657}
 @media(max-width:620px){.cc-inbox-item{display:block}.cc-inbox-actions{margin-top:8px}}
 
 .cc-goal-summary{margin-top:9px;padding:8px 10px;border-radius:8px;background:#f5f9fa;color:#587584;font-size:9px;line-height:1.9}
+
+
+/* معرفی مأموریت و جایگاه مرکز اشراف */
+.command-center-page a,.command-center-page a:visited,.command-center-page a:hover,.command-center-page a:focus{text-decoration:none!important}
+.cc-about{display:grid;gap:15px;margin:0 0 20px}
+.cc-about-hero{display:flex;justify-content:space-between;align-items:center;gap:22px;padding:24px 26px;border:1px solid #e0e7e3;border-radius:16px;background:linear-gradient(115deg,#fff 0%,#f8faf7 68%,#f2f5ef 100%);box-shadow:0 7px 22px rgba(43,70,61,.045);position:relative;overflow:hidden}
+.cc-about-hero:after{content:"";position:absolute;left:-35px;bottom:-90px;width:220px;height:220px;border:1px solid #dfe6db;border-radius:50%;box-shadow:0 0 0 24px #eef2eb,0 0 0 48px #f4f6f1;opacity:.7}
+.cc-about-copy{position:relative;z-index:1;max-width:850px}
+.cc-about-kicker,.cc-about-section-head small,.cc-about-operating small{font-size:9px;color:#a18450;font-weight:700}
+.cc-about-copy h2{font-size:23px;line-height:1.7;margin:5px 0;color:#344b56}
+.cc-about-copy>p{max-width:820px;margin:0;color:#657982;font-size:11px;line-height:2.2}
+.cc-about-promise{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid #e9eee8;font-size:10px}
+.cc-about-promise b{color:#9b7d48}.cc-about-promise span{color:#687c83}
+.cc-about-seal{position:relative;z-index:1;flex:0 0 116px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:116px;border:1px solid #e2e8df;border-radius:50%;background:#f5f7f1;color:#6d7d78}
+.cc-about-seal span{font-size:31px;font-weight:800;line-height:1.25;color:#a78c58}.cc-about-seal b{font-size:12px}.cc-about-seal small{font-size:8px;margin-top:3px}
+.cc-about-section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:3px 2px 0}
+.cc-about-section-head h3,.cc-about-operating h3{font-size:15px;color:#354f5a;margin:3px 0 0}
+.cc-about-section-head>p{margin:0;color:#829197;font-size:9px}
+.cc-mission-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.cc-mission-card{display:flex;align-items:flex-start;gap:11px;min-height:151px;padding:15px 14px;border:1px solid #e2e9e3;border-radius:12px;background:#fff;transition:transform .18s,border-color .18s,box-shadow .18s}
+.cc-mission-card:hover{transform:translateY(-2px);border-color:#c8b58e;box-shadow:0 8px 20px rgba(43,70,61,.055)}
+.cc-mission-number{flex:0 0 29px;width:29px;height:29px;display:grid;place-items:center;border-radius:8px;background:#f3f1e9;color:#9a8052;font-size:9px;font-weight:700}
+.cc-mission-card h4{margin:1px 0 6px;color:#3c5964;font-size:11px}
+.cc-mission-card p{margin:0;color:#788a90;font-size:9px;line-height:2.05}
+.cc-mission-featured{background:linear-gradient(145deg,#fff,#f8faf6);border-color:#d8e2d8}
+.cc-about-operating{display:grid;grid-template-columns:.9fr 1.1fr;align-items:center;gap:20px;padding:17px 19px;border:1px solid #e0e8e1;border-radius:13px;background:#f8faf7}
+.cc-about-operating h3{margin:4px 0}.cc-about-operating>div:first-child p{margin:6px 0 0;color:#71838a;font-size:9px;line-height:2}
+.cc-about-steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.cc-about-steps span{display:flex;align-items:center;gap:8px;padding:8px 9px;border:1px solid #e6ece5;border-radius:8px;background:#fff;color:#667b82;font-size:9px}
+.cc-about-steps b{width:22px;height:22px;display:grid;place-items:center;border-radius:6px;background:#f1eee4;color:#9b8050;font-size:9px}
+.cc-about-boundary{padding:13px 16px;border-right:3px solid #b99d68;border-radius:9px;background:#fff;border-top:1px solid #e8ece6;border-bottom:1px solid #e8ece6;border-left:1px solid #e8ece6}
+.cc-about-boundary b{font-size:10px;color:#506872}.cc-about-boundary p{margin:4px 0 0;color:#7b8c91;font-size:9px;line-height:2}
+@media(max-width:1000px){.cc-mission-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.cc-about-hero{padding:17px;gap:10px}.cc-about-copy h2{font-size:19px}.cc-about-seal{flex-basis:76px;min-height:76px}.cc-about-seal span{font-size:23px}.cc-about-seal small{font-size:7px;text-align:center}.cc-about-section-head{display:block}.cc-about-section-head>p{margin-top:5px}.cc-mission-grid{grid-template-columns:1fr;gap:8px}.cc-mission-card{min-height:0;padding:13px}.cc-about-operating{grid-template-columns:1fr;gap:12px}.cc-about-steps{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.cc-about-hero{align-items:flex-start}.cc-about-seal{margin-top:12px}.cc-about-steps{grid-template-columns:1fr}}
