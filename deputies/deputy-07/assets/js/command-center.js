@@ -9,7 +9,7 @@ const save=()=>{try{localStorage.setItem(STORE,JSON.stringify(db));return true}c
 const deptName=id=>DEPTS[String(id)]||("اداره "+id);
 function scan(){
  const result={};for(const id of Object.keys(DEPTS))result[id]={id,name:deptName(id),banks:0,records:0,open:0,done:0,sample:0,modules:[]};
- for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i)||"";let match=key.match(/^deputy7\.dept(\d+)\.(.+)$/);if(!match)match=key.match(/^deputy7\.dept(\d+)\.module\.(.+)$/);if(!match)continue;
+ for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i)||"";if(key==="deputy7_dept2_training_v1"){try{const training=JSON.parse(localStorage.getItem(key)||"{}"),rows=Array.isArray(training.courses)?training.courses:[];const d=result["2"];d.banks++;d.records+=rows.length;d.modules.push({key,module:"training-courses",count:rows.length});rows.forEach(r=>{const status=String(r.status||"").toLowerCase();if(/تکمیل|مختوم|بسته|completed|closed|done/.test(status))d.done++;else d.open++})}catch(e){}continue}let match=key.match(/^deputy7\.dept(\d+)\.(.+)$/);if(!match)match=key.match(/^deputy7\.dept(\d+)\.module\.(.+)$/);if(!match)continue;
  const id=match[1];if(!result[id])result[id]={id,name:deptName(id),banks:0,records:0,open:0,done:0,sample:0,modules:[]};
  try{const value=JSON.parse(localStorage.getItem(key));let rows=Array.isArray(value)?value:(value&&Array.isArray(value.records)?value.records:null);if(!rows)continue;
  const module=match[2].replace(/\.v1$/,"");const d=result[id];d.banks++;d.records+=rows.length;d.modules.push({key,module,count:rows.length});
@@ -20,8 +20,8 @@ function scan(){
 }
 const allTasks=()=>[...db.directives.map(x=>({...x,_type:"directive"})),...db.issues.map(x=>({...x,_type:"issue"})),...db.requests.map(x=>({...x,_type:"request"}))];
 function overdue(x){if(!x.deadline||["تکمیل‌شده","مختومه","پاسخ داده شد","بسته"].includes(x.status))return false;return new Date(x.deadline+"T23:59:59")<new Date()}
-function render(){
- const depts=scan(),tasks=allTasks(),active=tasks.filter(x=>!["تکمیل‌شده","مختومه","پاسخ داده شد","بسته"].includes(x.status)).length,late=tasks.filter(overdue).length;
+async function render(){
+ const depts=scan();try{const missionModule=await import("../assets/js/mission-store.js"),status=await missionModule.MissionStore.status();if(status.exists){if(!status.unlocked)await missionModule.MissionStore.unlock();const missions=await missionModule.MissionStore.list(),d=depts.find(x=>x.id==="1");if(d&&missions.length){d.banks++;d.records+=missions.length;d.modules.push({key:"mission-store",module:"mission-store",count:missions.length});missions.forEach(m=>{if(m.isSampleData||m.sampleBatch)d.sample++;if(/completed|closed|تکمیل|مختومه/.test(String(m.status||"")))d.done++;else d.open++})}}}catch(e){}const tasks=allTasks(),active=tasks.filter(x=>!["تکمیل‌شده","مختومه","پاسخ داده شد","بسته"].includes(x.status)).length,late=tasks.filter(overdue).length;
  const records=depts.reduce((n,d)=>n+d.records,0),connected=depts.filter(d=>d.banks).length;
  $("#cc-today").textContent=today();
  $("#cc-kpis").innerHTML=[["ادارات دارای داده",fa(connected)+" از "+fa(depts.length),"اتصال بانک‌های محلی"],["مجموع سوابق قابل مشاهده",fa(records),"در بانک‌های شناسایی‌شده"],["اقدامات و موضوعات باز",fa(active),"در مرکز راهبری"],["موارد دارای مهلت گذشته",fa(late),"نیازمند تعیین تکلیف"]].map(x=>'<article class="cc-kpi"><small>'+x[0]+'</small><b>'+x[1]+'</b><span>'+x[2]+'</span></article>').join("");
