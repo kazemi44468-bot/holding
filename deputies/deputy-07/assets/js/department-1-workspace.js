@@ -127,7 +127,7 @@ function renderOverview(){const records=allRecords(),open=records.filter(x=>!["�
 function fieldHtml(f,r){const [name,label,type]=f,v=esc(r[name]||"");if(type==="textarea")return '<label class="wide">'+label+'<textarea name="'+name+'" rows="3">'+v+'</textarea></label>';if(type.startsWith("select:"))return '<label>'+label+'<select name="'+name+'">'+type.slice(7).split("|").map(x=>'<option '+(v===x?"selected":"")+'>'+x+'</option>').join("")+'</select></label>';if(type==="status")return '<label>'+label+'<select name="'+name+'">'+["ثبت اولیه","در انتظار بررسی","در انتظار تأیید","در حال اجرا","تأییدشده","ابلاغ‌شده","پرداخت‌شده","تسویه‌شده","تکمیل‌شده","مختومه","متوقف"].map(x=>'<option '+(v===x?"selected":"")+'>'+x+'</option>').join("")+'</select></label>';return '<label>'+label+'<input name="'+name+'" type="'+(type==="number"?"number":"text")+'" value="'+v+'" '+(name==="personCode"?"inputmode=\"numeric\"":"")+'></label>'}
 let missionStorePromise=null;
 async function getMissionStore(){
- if(!missionStorePromise)missionStorePromise=import("../assets/js/mission-store.js").then(async m=>{await m.MissionStore.unlock();await m.MissionVault.healthCheck();const samples=await import("../assets/js/mission-samples.js?v=mission-travel-samples-20261128-1");await samples.ensureMissionSamples();return m.MissionStore});
+ if(!missionStorePromise)missionStorePromise=import("../assets/js/mission-store.js").then(async m=>{await m.MissionStore.unlock();await m.MissionVault.healthCheck();const samples=await import("../assets/js/mission-samples.js?v=mission-travel-samples-20261128-2");await samples.ensureMissionSamples();return m.MissionStore});
  return missionStorePromise;
 }
 function missionModal(url,title){
