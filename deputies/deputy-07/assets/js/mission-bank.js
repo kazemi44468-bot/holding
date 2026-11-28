@@ -1,5 +1,5 @@
 import { MissionStore, MissionVault } from "./mission-store.js?v=local-first-20261115-01";
-import { ensureMissionSamples } from "./mission-samples.js?v=local-first-20261115-01";
+import { ensureMissionSamples } from "./mission-samples.js?v=mission-travel-samples-20261128-1";
 const $=id=>document.getElementById(id);
 const fa=n=>Number(n||0).toLocaleString("fa-IR");
 const names={"1":"اداره ۱ · اداری و پشتیبانی","2":"اداره ۲ · تحقیق و توسعه","3":"اداره ۳ · پارکبان و معبربانان","4":"اداره ۴ · تأسیسات فنی و نگهداری","6":"اداره ۶ · فاوا و خدمات فنی","7":"اداره ۷ · جمع‌آوری و بازیافت پسماند","8":"اداره ۸ · بازرسی و تحقیقات محلی","HQ":"ستاد معاونت ۷"};
