@@ -297,6 +297,14 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 <div class="field"><label for="actualStart">تاریخ شروع واقعی کار</label><input id="actualStart" type="date"></div>
 <div class="field"><label for="plannedEnd">تاریخ پایان برنامه‌ای / مهلت اتمام <span class="req">*</span></label><input id="plannedEnd" type="date" required></div>
 <div class="field"><label for="actualEnd">تاریخ اتمام واقعی کار</label><input id="actualEnd" type="date"></div>
+<div class="field"><label for="destination">شهر / مقصد مأموریت</label><input id="destination" placeholder="نام شهر، منطقه یا محل اعزام"></div>
+<div class="field"><label for="destinationAddress">نشانی دقیق محل مأموریت</label><input id="destinationAddress"></div>
+<div class="field"><label for="travelMode">شیوه رفت‌وآمد</label><select id="travelMode"><option value="">انتخاب کنید</option><option>خودروی سازمانی</option><option>خودروی شخصی</option><option>موتورسیکلت سازمانی</option><option>قطار</option><option>هواپیما</option><option>اتوبوس</option><option>تاکسی / تاکسی اینترنتی</option><option>وسیله عمومی دیگر</option><option>پیاده / بدون وسیله</option></select></div>
+<div class="field"><label for="vehiclePlate">پلاک یا شناسه وسیله نقلیه</label><input id="vehiclePlate"></div>
+<div class="field"><label for="departureAt">تاریخ و ساعت حرکت</label><input id="departureAt" type="datetime-local"></div>
+<div class="field"><label for="returnAt">تاریخ و ساعت بازگشت</label><input id="returnAt" type="datetime-local"></div>
+<div class="field"><label for="participantCount">تعداد کل افراد اعزامی</label><input id="participantCount" type="number" min="1" step="1"></div>
+<div class="field full"><label for="transportDetails">جزئیات مسیر و نحوه رفت‌وآمد</label><textarea id="transportDetails" placeholder="مبدأ، مسیر، توقف‌ها، شماره بلیت یا توضیح وسیله"></textarea></div>
 <div class="field"><label for="locationScope">محدوده جغرافیایی مأموریت</label><select id="locationScope"><option value="">انتخاب کنید</option><option value="inside-province">داخل استان</option><option value="outside-province">خارج از استان</option></select></div>
 <div class="field"><label for="workSchedule">الگوی زمانی و شیفت کاری</label><select id="workSchedule"><option value="">انتخاب کنید</option><option value="daytime">روزانه</option><option value="continuous-24h">شبانه‌روزی</option></select></div>
 <div class="field"><label for="continuityType">نحوه تداوم انجام کار</label><select id="continuityType"><option value="">انتخاب کنید</option><option value="continuous">پیوسته و مستمر</option><option value="intermittent">ناپیوسته / مقطعی</option></select></div>
@@ -346,6 +354,17 @@ body.ops-page:has(#missionForm) .mission-section.active{display:block!important}
 <section class="mission-card mission-section" data-section="costs">
 <div class="section-head"><div><h2>هزینه‌ها و منابع</h2></div></div>
 <div class="form-grid">
+<div class="field"><label for="missionAllowanceRate">نرخ روزانه حق مأموریت (تومان)</label><input id="missionAllowanceRate" type="number" min="0"></div>
+<div class="field"><label for="missionAllowanceAmount">مبلغ حق مأموریت محاسبه‌شده (تومان)</label><input id="missionAllowanceAmount" type="number" min="0"></div>
+<div class="field"><label for="lodgingCost">هزینه اقامت (تومان)</label><input id="lodgingCost" type="number" min="0"></div>
+<div class="field"><label for="mealCost">هزینه غذا (تومان)</label><input id="mealCost" type="number" min="0"></div>
+<div class="field"><label for="fuelCost">هزینه سوخت (تومان)</label><input id="fuelCost" type="number" min="0"></div>
+<div class="field"><label for="tollCost">عوارض و هزینه مسیر (تومان)</label><input id="tollCost" type="number" min="0"></div>
+<div class="field"><label for="otherMissionCost">سایر هزینه‌های مأموریت (تومان)</label><input id="otherMissionCost" type="number" min="0"></div>
+<div class="field"><label for="totalPaid">جمع پرداخت انجام‌شده (تومان)</label><input id="totalPaid" type="number" min="0"></div>
+<div class="field"><label for="paymentStatus">وضعیت پرداخت و تسویه</label><select id="paymentStatus"><option value="">انتخاب کنید</option><option>ثبت نشده</option><option>در انتظار تأیید</option><option>تأییدشده</option><option>در انتظار پرداخت</option><option>پرداخت بخشی</option><option>پرداخت کامل</option><option>تسویه‌شده</option></select></div>
+<div class="field"><label for="paymentDate">تاریخ پرداخت</label><input id="paymentDate" type="date"></div>
+<div class="field"><label for="paymentReference">شماره سند / حواله پرداخت</label><input id="paymentReference"></div>
 <div class="field"><label for="costStatus">وضعیت نیاز مالی</label><select id="costStatus"><option>بدون هزینه مستقیم</option><option>نیازمند برآورد</option><option>در انتظار تأمین اعتبار</option><option>اعتبار تخصیص‌یافته</option><option>دارای هزینه قطعی</option></select></div>
 <div class="field"><label for="costCurrency">واحد پول</label><select id="costCurrency"><option>تومان</option><option>ریال</option></select></div>
 <div class="field"><label for="estimatedCost">هزینه برآوردی</label><input id="estimatedCost" type="number" min="0"></div>
