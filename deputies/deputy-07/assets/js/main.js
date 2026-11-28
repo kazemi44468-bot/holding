@@ -68,6 +68,10 @@ document.querySelectorAll('.back-to-top').forEach(node=>node.remove());
 (async()=>{
  const body=document.body;
  if(!body.classList.contains('ops-page'))return;
+ const shellStyle=document.createElement("link");
+ shellStyle.rel="stylesheet";
+ shellStyle.href=(location.pathname.includes("/pages/")||location.pathname.includes("/local-data/")?"../assets/css/":"assets/css/")+"deputy-shell.css?v=unified-shell-20261128-1";
+ document.head.appendChild(shellStyle);
  if(!window.Deputy7Pages){
   const nestedPath=location.pathname.includes("/pages/")||location.pathname.includes("/local-data/");
   await new Promise(resolve=>{
