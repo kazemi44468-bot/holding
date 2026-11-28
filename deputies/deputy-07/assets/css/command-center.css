@@ -142,3 +142,27 @@ body.command-center-page{background:#f3f7f8;color:#294657}
 @media(max-width:1050px){.cc-output-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cc-principle-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){.command-center-page .cc-mission-grid{grid-template-columns:1fr}.command-center-page .cc-about-hero{padding:19px;min-height:0}.command-center-page .cc-about-copy h2{font-size:21px}.cc-output-grid{grid-template-columns:1fr}.cc-principle-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:430px){.cc-principle-grid{grid-template-columns:1fr}}
+
+
+/* بازآرایی مرکز اشراف: ناوبری یکپارچه در سربرگ و حذف منوی کناری */
+.command-center-page .cc-layout{display:block;width:min(1440px,calc(100% - 36px));margin:22px auto 35px}
+.command-center-page .cc-main{width:100%;min-width:0}
+.command-center-page .cc-top-nav .nav-dropdown .nav-menu{min-width:225px;max-height:min(72vh,520px);overflow-y:auto}
+.command-center-page .cc-top-nav .nav-dropdown:last-of-type .nav-menu{min-width:235px}
+.command-center-page .cc-top-nav .nav-dropdown>summary{white-space:nowrap}
+.command-center-page .cc-top-nav [data-tab-link]{cursor:pointer}
+.command-center-page .cc-top-nav [data-tab-link].active{background:#edf4f3;color:#456d62;font-weight:700}
+.command-center-page .cc-tab-panel{scroll-margin-top:105px}
+.command-center-page #ops-back-to-top{
+ position:fixed;z-index:1200;left:22px;bottom:24px;width:46px;height:46px;
+ display:grid;place-items:center;padding:0;border:1px solid #d8dfd8;border-radius:13px;
+ background:rgba(255,255,255,.96);color:#667e72;box-shadow:0 5px 18px rgba(43,65,55,.13);
+ opacity:0;visibility:hidden;transform:translateY(9px);transition:opacity .2s,transform .2s,visibility .2s,border-color .2s,background .2s;
+ cursor:pointer;backdrop-filter:blur(8px)
+}
+.command-center-page #ops-back-to-top.is-visible{opacity:1;visibility:visible;transform:translateY(0)}
+.command-center-page #ops-back-to-top:hover{background:#f4f7f2;border-color:#b8c8ba;color:#426b59}
+.command-center-page #ops-back-to-top svg{width:21px;height:21px}
+@media(max-width:900px){.command-center-page .cc-layout{width:calc(100% - 24px);margin:15px auto 28px}}
+@media(max-width:760px){.command-center-page #ops-back-to-top{left:14px;bottom:calc(86px + env(safe-area-inset-bottom));width:42px;height:42px;border-radius:12px}}
+@media(prefers-reduced-motion:reduce){.command-center-page #ops-back-to-top{transition:none}}
