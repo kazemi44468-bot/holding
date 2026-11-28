@@ -88,3 +88,7 @@ button{cursor:pointer}
 .login-panel button[type=submit]{background:linear-gradient(135deg,#244e70,#173a59)!important;color:#fff!important;border:1px solid #173a59!important;font-weight:700}
 .login-panel .login-brand{border-color:#dbe4ea!important}
 @media(max-width:420px){.intro-logo-box{background:linear-gradient(145deg,rgba(255,255,255,.25),rgba(210,229,242,.10))!important;backdrop-filter:blur(14px) saturate(145%)!important}}
+
+
+/* لینک‌های درگاه معاونت بدون زیرخط در همه حالت‌ها */
+.company-gateway a,.company-gateway a:visited,.company-gateway a:hover,.company-gateway a:focus{text-decoration:none!important}
