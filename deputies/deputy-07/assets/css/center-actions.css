@@ -1,0 +1,16 @@
+
+/* چیدمان اختصاصی صفحه اقدامات مرکز */
+.center-actions-page .cc-layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:18px;width:min(1440px,calc(100% - 36px));margin:22px auto 35px;align-items:start}
+.center-actions-page .cc-sidebar{position:sticky;top:105px}
+.center-actions-page .cc-main{min-width:0}
+.center-actions-page .cc-tab-panel{scroll-margin-top:100px}
+@media(max-width:1000px){.center-actions-page .cc-layout{grid-template-columns:190px minmax(0,1fr);gap:12px}}
+@media(max-width:760px){
+ .center-actions-page .cc-layout{display:block;width:calc(100% - 20px);margin:14px auto 28px}
+ .center-actions-page .cc-sidebar{position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;margin-bottom:12px;padding:9px}
+ .center-actions-page .cc-side-brand,.center-actions-page .cc-side-foot{grid-column:1/-1}
+ .center-actions-page .cc-side-link{padding:8px 9px;font-size:9px}
+ .center-actions-page .cc-page-head{display:block}
+ .center-actions-page .cc-head-actions{margin-top:9px}
+}
+@media(max-width:430px){.center-actions-page .cc-sidebar{grid-template-columns:1fr 1fr}}
