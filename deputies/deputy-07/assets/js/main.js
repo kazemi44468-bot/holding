@@ -87,7 +87,7 @@ const inPages=location.pathname.includes('/pages/');
  const liveDepartments=(()=>{try{return JSON.parse(localStorage.getItem('deputy7.platform.config.v1'))?.departments||[]}catch{return[]}})();
  const deptMenu=liveDepartments.length?liveDepartments.filter(d=>d.status!=='inactive'):null;
  const urls={
-  departments:(deptMenu||[{id:'1'},{id:'2'},{id:'3'},{id:'4'},{id:'5'},{id:'6'},{id:'7'},{id:'8'}]).map(d=>prefix+(['1','2','3','4','5','6','7','8'].includes(String(d.id))?'department-'+d.id+'.html':'department.html?dept='+encodeURIComponent(d.id))),
+  departments:(preserveStructureNav?[{id:'1'},{id:'2'},{id:'3'},{id:'4'},{id:'5'},{id:'6'},{id:'7'},{id:'8'}]:(deptMenu||[{id:'1'},{id:'2'},{id:'3'},{id:'4'},{id:'5'},{id:'6'},{id:'7'},{id:'8'}])).map(d=>prefix+(['1','2','3','4','5','6','7','8'].includes(String(d.id))?'department-'+d.id+'.html':'department.html?dept='+encodeURIComponent(d.id))),
   finance:prefix+'finance-management.html',workforce:prefix+'workforce.html',profile:prefix+'personnel-profile.html',evaluation:prefix+'performance-evaluation.html',
   followups:prefix+'special-followups.html',notices:prefix+'notifications-center.html',calendar:prefix+'calendar.html',missions:prefix+'mission-bank.html',missionCreate:prefix+'mission-create.html',missionReports:prefix+'mission-reports.html',missionStorage:prefix+'mission-sync.html',
   catalog:prefix+'report-catalog.html',archive:prefix+'report-archive.html',reports:prefix+'department-reports.html',participation:prefix+'participation.html',
