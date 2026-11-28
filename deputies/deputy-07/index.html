@@ -1,77 +1,58 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#102c49">
-<meta name="description" content="درگاه سازمانی معاونت ۷">
-<title>معاونت ۷ | درگاه سازمانی</title>
-<link rel="icon" type="image/svg+xml" href="../../favicon.svg?v=holding-favicon-20261115">
-<link rel="icon" type="image/x-icon" href="../../favicon.ico?v=holding-favicon-20261115">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f6f7f4">
+<meta name="description" content="داشبورد مدیریتی و نمای کلان معاونت ۷ ویژه معاون">
+<title>معاونت ۷ | صفحه نخست و داشبورد مدیریتی</title>
 <link rel="preload" href="assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/company-intro.css?v=intro-glass-v9-20261128">
-
-
-<style>
-.company-gateway a,.company-gateway a:hover,.company-gateway a:focus{text-decoration:none!important}
-.intro{gap:clamp(9px,1.5vh,16px);padding:clamp(12px,2vh,22px)}
-.intro-main{gap:8px;padding:0}
-.intro-logo-box{width:clamp(100px,11vw,132px);height:clamp(100px,11vw,132px)}
-.intro-logo{width:100%;height:100%}
-.intro-department-gateway{width:min(100%,820px);padding:15px 17px;gap:12px;border-radius:18px}
-.intro-top-level .portal-card{min-height:62px;border-radius:11px}
-.intro-department-grid{gap:9px}
-.intro-department-grid .portal-card{min-height:65px;border-radius:11px;background:linear-gradient(145deg,rgba(255,255,255,.19),rgba(255,255,255,.08))!important}
-.intro-department-grid .portal-index{display:grid;place-items:center;min-width:28px;height:28px;border-radius:8px;background:rgba(231,197,133,.18);font-size:10px}
-.intro-department-heading{margin-top:2px;padding-top:9px}
-.intro-top-level .portal-card:first-child{background:linear-gradient(135deg,rgba(255,255,255,.25),rgba(255,255,255,.10))!important}
-.intro-top-level .portal-card:last-child{background:linear-gradient(135deg,rgba(215,183,123,.34),rgba(255,255,255,.12))!important}
-.intro-gateway-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;color:#fff}
-.intro-gateway-heading strong{font-size:15px}
-.intro-gateway-heading span{font-size:10px;color:#e7eaf0}
-.intro-top-level{width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
-.intro-top-level .portal-card{min-height:48px}
-.intro-department-heading{display:flex;align-items:center;justify-content:space-between;width:100%;padding:4px 2px 0;border-top:1px solid #ffffff38;color:#fff}
-.intro-department-heading b{font-size:12px}
-.intro-department-heading span{font-size:9px;color:#e3d0aa}
-.intro-department-grid{width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
-.intro-department-grid .portal-card{min-height:49px;padding:7px 10px}
-.intro-department-grid .portal-title{font-size:11px}
-.intro-department-grid .portal-state{font-size:9px}
-.intro-department-grid .portal-state b{font-size:13px}
-.intro-department-gateway .companies-link{font-size:10px;padding:6px 11px}
-@media(min-width:900px){.intro-department-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.intro-department-grid .portal-card{min-height:58px;flex-wrap:wrap;row-gap:2px}.intro-department-grid .portal-state{width:100%;padding-right:27px;justify-content:flex-start}}
-@media(max-width:600px){.intro{justify-content:flex-start;gap:10px;padding:12px 10px}.intro-main{flex:0 0 auto}.intro-department-gateway{padding:10px;gap:8px}.intro-gateway-heading strong{font-size:13px}.intro-department-grid .portal-card{min-height:54px;padding:7px 8px;gap:5px}.intro-department-grid .portal-title{font-size:10px}.intro-department-grid .portal-state{font-size:8px}.intro-top-level .portal-title{font-size:10px}}
-</style>
+<link rel="stylesheet" href="assets/css/style.css?v=executive-dashboard-20261128-1">
+<link rel="stylesheet" href="assets/css/deputy-structure.css?v=deputy7-structure-20261128-1">
+<link rel="stylesheet" href="assets/css/deputy-executive.css?v=executive-dashboard-20261128-1">
 </head>
-<body class="company-gateway">
-<main class="intro">
- <section class="intro-main">
-  <div class="intro-brand">
-   <div class="intro-logo-box"><img src="assets/images/logo.webp" alt="نشان معاونت ۷" class="intro-logo"></div>
-  </div>
- </section>
- <section class="intro-portal-box intro-department-gateway" aria-label="درگاه‌های معاونت و اداره‌ها">
- <div class="intro-gateway-heading"><strong>درگاه معاونت ۷</strong><span>برای ورود، اداره موردنظر را انتخاب کنید</span></div>
- <nav class="portal-grid intro-top-level" aria-label="دسترسی‌های مدیریتی معاونت">
-  <a class="portal-card portal-enabled" href="dashboard.html"><span class="portal-index">م</span><span class="portal-title">صفحه اصلی معاونت</span><span class="portal-state">ورود <b>←</b></span></a>
-  <a class="portal-card portal-enabled" href="pages/command-center.html"><span class="portal-index">ر</span><span class="portal-title">مرکز اشراف و بهبود عملکرد</span><span class="portal-state">ورود <b>←</b></span></a>
- </nav>
- <div class="intro-department-heading"><b>ورود به اداره‌ها</b><span>معاونت / اداره</span></div>
- <nav class="portal-grid intro-department-grid" aria-label="هشت اداره معاونت">
-  <a class="portal-card portal-enabled" href="pages/department-1.html"><span class="portal-index">۰۱</span><span class="portal-title">اداره یکم</span><span class="portal-state">اداری و پشتیبانی <b>←</b></span></a>
-  <a class="portal-card portal-enabled" href="pages/department-2.html"><span class="portal-index">۰۲</span><span class="portal-title">اداره دوم</span><span class="portal-state">تحقیق و توسعه <b>←</b></span></a>
-  <a class="portal-card portal-enabled" href="pages/department-3.html"><span class="portal-index">۰۳</span><span class="portal-title">اداره سوم</span><span class="portal-state">پارکبان و معبربانان <b>←</b></span></a>
-  <a class="portal-card portal-enabled" href="pages/department-4.html"><span class="portal-index">۰۴</span><span class="portal-title">اداره چهارم</span><span class="portal-state">تأسیسات فنی و نگهداری <b>←</b></span></a>
-  <a class="portal-card portal-enabled" href="pages/department-5.html"><span class="portal-index">۰۵</span><span class="portal-title">اداره پنجم</span><span class="portal-state">ورود مستقل <b>←</b></span></a>
-  <a class="portal-card portal-enabled" href="pages/department-6.html"><span class="portal-index">۰۶</span><span class="portal-title">اداره ششم</span><span class="portal-state">فاوا و خدمات فنی <b>←</b></span></a>
-  <a class="portal-card portal-enabled" href="pages/department-7.html"><span class="portal-index">۰۷</span><span class="portal-title">اداره هفتم</span><span class="portal-state">جمع‌آوری و بازیافت پسماند <b>←</b></span></a>
-  <a class="portal-card portal-enabled" href="pages/department-8.html"><span class="portal-index">۰۸</span><span class="portal-title">اداره هشتم</span><span class="portal-state">بازرسی و تحقیقات محلی <b>←</b></span></a>
- </nav>
- <a class="companies-link" href="companies.html">ورود به درگاه هلدینگ <span aria-hidden="true">←</span></a>
- </section>
+<body class="ops-page deputy-structure-page executive-home">
+<header class="ops-header"><div class="ops-header-inner">
+<a class="ops-brand" href="dashboard.html"><img class="ops-logo" src="assets/images/iran-flag.svg" alt="پرچم ایران"><span><b>معاونت ۷</b><small>داشبورد مدیریتی معاونت</small></span></a>
+<nav class="ops-nav" aria-label="ناوبری داشبورد معاونت">
+<a class="active" href="dashboard.html">صفحه نخست معاونت</a>
+<a href="#executive-overview">نمای مدیریتی</a>
+<a href="#executive-departments">وضعیت اداره‌ها</a>
+<a href="#executive-shortcuts">دسترسی سریع</a>
+<a href="pages/command-center.html">مرکز اشراف</a>
+<details class="nav-dropdown"><summary>اداره‌ها</summary><div class="nav-menu">
+<a href="pages/department-1.html">اداره یکم · اداری و پشتیبانی</a><a href="pages/department-2.html">اداره دوم · تحقیق و توسعه</a><a href="pages/department-3.html">اداره سوم · پارکبان و معبربانان</a><a href="pages/department-4.html">اداره چهارم · تأسیسات فنی و نگهداری</a><a href="pages/department-5.html">اداره پنجم</a><a href="pages/department-6.html">اداره ششم · فاوا و خدمات فنی</a><a href="pages/department-7.html">اداره هفتم · جمع‌آوری و بازیافت پسماند</a><a href="pages/department-8.html">اداره هشتم · بازرسی و تحقیقات محلی</a>
+</div></details>
+</nav>
+<div class="ops-clock"><span>جایگاه صفحه</span><b>ویژه معاون</b><small id="executive-date">—</small></div>
+</div></header>
+<main class="ops-main">
+<section class="executive-hero">
+<div class="executive-hero-copy"><span class="executive-eyebrow">معاونت ۷ · نمای کلان مدیریتی</span><h1>داشبورد مدیریتی معاونت</h1><p>نمای یکپارچه وضعیت اداره‌ها، داده‌های عملیاتی، اقدامات در جریان و موضوعات نیازمند توجه مدیریتی؛ با هدف دسترسی سریع معاون به تصویر کلان معاونت و مسیرهای تصمیم‌گیری.</p></div>
+<div class="executive-seal"><b>۰۷</b><span>معاونت</span></div>
+</section>
+<section class="executive-section" id="executive-overview">
+<div class="executive-section-head"><div><h2>خلاصه مدیریتی معاونت</h2><p>شاخص‌ها از اطلاعات محلی قابل شناسایی در این مرورگر استخراج می‌شوند؛ داده‌های متصل‌نشده به‌عنوان عملکرد صفر تلقی نمی‌شوند.</p></div><a href="pages/command-center.html">ورود به مرکز اشراف ←</a></div>
+<div class="executive-kpis" id="executive-kpis"></div>
+</section>
+<section class="executive-section executive-overview-grid">
+<article class="executive-panel"><h3>وضعیت اطلاعات و عملکرد اداره‌ها</h3><div class="executive-dept-summary" id="executive-dept-summary"></div></article>
+<article class="executive-panel"><h3>موارد قابل توجه مدیریتی</h3><div class="executive-attention" id="executive-attention"></div></article>
+</section>
+<section class="executive-section" id="executive-shortcuts">
+<div class="executive-section-head"><div><h2>دسترسی‌های مدیریتی</h2><p>ورود مستقیم به سامانه‌های راهبری و پشتیبانی معاونت</p></div></div>
+<div class="executive-shortcuts">
+<a class="executive-shortcut" href="pages/command-center.html"><span>ر</span><div><b>مرکز اشراف و بهبود عملکرد</b><small>پایش، تحلیل، برنامه‌ریزی و اقدامات بین‌اداره‌ای</small></div><i>←</i></a>
+<a class="executive-shortcut" href="local-data/index.html"><span>د</span><div><b>مرکز داده و پشتیبان‌گیری</b><small>مدیریت داده‌های محلی و نسخه‌های پشتیبان</small></div><i>←</i></a>
+<a class="executive-shortcut" href="pages/department-1.html"><span>ا</span><div><b>اداره اداری و پشتیبانی</b><small>دسترسی به اطلاعات اداری و پشتیبانی</small></div><i>←</i></a>
+</div>
+</section>
+<section class="executive-section" id="executive-departments">
+<div class="executive-section-head"><div><h2>ساختار اجرایی معاونت</h2><p>هشت اداره مستقل با حوزه مسئولیت و فضای اطلاعاتی اختصاصی</p></div><span>۸ اداره</span></div>
+<div class="executive-departments" id="executive-departments-grid"></div>
+</section>
+<footer class="ops-footer"><span>معاونت ۷ · داشبورد مدیریتی ویژه معاون</span><a href="local-data/index.html">مرکز داده و پشتیبان‌گیری</a><a href="pages/command-center.html">مرکز اشراف و بهبود عملکرد</a></footer>
 </main>
-
-</body>
-</html>
+<script src="assets/js/main.js?v=executive-dashboard-20261128-1"></script>
+<script src="assets/js/mobile-nav.js?v=internal-routing-20261110" defer></script>
+<script src="assets/js/deputy-executive.js?v=executive-dashboard-20261128-1"></script>
+</body></html>
