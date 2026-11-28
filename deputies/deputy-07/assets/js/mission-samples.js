@@ -86,6 +86,10 @@ export async function ensureMissionSamples(force=false){
     {id:id+"-m3",title:"تحویل و ارزیابی",weight:25,progress:finished?100:0,dueDate:plannedEnd}
    ]
   };
+  const demoDestinations=["کرج، محدوده مرکزی","قزوین، محدوده صنعتی","تهران، منطقه ۲۲","شهریار، محدوده خدماتی","رشت، محدوده مرکزی","هشتگرد، محدوده عملیاتی","تهران، منطقه ۵","ورامین، محدوده شهری","نظرآباد، محدوده پشتیبانی","پردیس، محدوده شرقی"],demoModes=["خودروی سازمانی","اتوبوس","خودروی سازمانی","قطار","خودروی شخصی","خودروی سازمانی","تاکسی / تاکسی اینترنتی","اتوبوس","موتورسیکلت سازمانی","خودروی سازمانی"],demoDays=Number(record.missionDaysCompleted||record.missionDaysApproved||record.missionDaysRequested||1),demoRate=650000+(i%4)*100000;
+  Object.assign(record,{destination:demoDestinations[i],destinationAddress:"نشانی نمونه مأموریت شماره "+String(i+1),travelMode:demoModes[i],vehiclePlate:demoModes[i].includes("خودروی")||demoModes[i].includes("موتورسیکلت")?"نمونه-"+String(i+1).padStart(3,"0"):"",departureAt:(record.actualStart||record.plannedStart)+"T08:00",returnAt:(record.actualEnd||record.plannedEnd)+"T18:00",participantCount:2+(i%4),transportDetails:"مسیر و جزئیات رفت‌وآمد نمونه؛ صرفاً برای آزمایش گزارش‌ها و فرم.",missionAllowanceRate:demoRate,missionAllowanceAmount:demoDays*demoRate,lodgingCost:i%3===0?1800000:0,mealCost:450000+(i%3)*150000,fuelCost:demoModes[i].includes("خودروی")?900000+(i*75000):0,tollCost:120000+(i*15000),otherMissionCost:100000,paymentStatus:record.actualEnd?"پرداخت کامل":"در انتظار پرداخت",paymentDate:record.actualEnd||"",paymentReference:"SAMPLE-PAY-"+String(i+1).padStart(3,"0")});
+  record.actualCost=Number(record.actualCost||0)||Number(record.lodgingCost)+Number(record.mealCost)+Number(record.fuelCost)+Number(record.tollCost)+Number(record.otherMissionCost);
+  record.totalPaid=record.actualEnd?Number(record.missionAllowanceAmount)+Number(record.actualCost):0;
   await MissionStore.save(record,id);added++;
  }
  await MissionStore.saveMeta(SAMPLE_META_KEY,{done:true,batch:SAMPLE_BATCH,records:added,completedAt:new Date().toISOString()});
