@@ -29,6 +29,11 @@ export async function ensureMissionSamples(force=false){
    if(record.missionDaysRequested==null)patch.missionDaysRequested=5+(i%5);
    if(record.missionDaysApproved==null)patch.missionDaysApproved=approved;
    if(record.missionDaysCompleted==null)patch.missionDaysCompleted=record.actualEnd?approved:Math.floor(approved*Number(record.progress||0)/100);
+   const destinations=["کرج، محدوده مرکزی","قزوین، محدوده صنعتی","تهران، منطقه ۲۲","شهریار، محدوده خدماتی","رشت، محدوده مرکزی","هشتگرد، محدوده عملیاتی","تهران، منطقه ۵","ورامین، محدوده شهری","نظرآباد، محدوده پشتیبانی","پردیس، محدوده شرقی"],modes=["خودروی سازمانی","اتوبوس","خودروی سازمانی","قطار","خودروی شخصی","خودروی سازمانی","تاکسی / تاکسی اینترنتی","اتوبوس","موتورسیکلت سازمانی","خودروی سازمانی"],days=Number(record.missionDaysCompleted||record.missionDaysApproved||record.missionDaysRequested||1),rate=650000+(i%4)*100000;
+   const demo={destination:destinations[i],destinationAddress:"نشانی نمونه مأموریت شماره "+String(i+1),travelMode:modes[i],transportDetails:"مسیر و جزئیات رفت‌وآمد نمونه؛ صرفاً برای آزمایش گزارش‌ها و فرم.",participantCount:2+(i%4),missionAllowanceRate:rate,missionAllowanceAmount:days*rate,lodgingCost:i%3===0?1800000:0,mealCost:450000+(i%3)*150000,fuelCost:modes[i].includes("خودروی")?900000+(i*75000):0,tollCost:120000+(i*15000),otherMissionCost:100000, paymentStatus:record.actualEnd?"پرداخت کامل":"در انتظار پرداخت",paymentReference:"SAMPLE-PAY-"+String(i+1).padStart(3,"0")};
+   for(const [key,value] of Object.entries(demo))if(record[key]===undefined||record[key]===null||record[key]==="")patch[key]=value;
+   if((record.actualCost===undefined||record.actualCost===null||record.actualCost==="")&&patch.actualCost===undefined)patch.actualCost=Number(patch.lodgingCost??record.lodgingCost??0)+Number(patch.mealCost??record.mealCost??0)+Number(patch.fuelCost??record.fuelCost??0)+Number(patch.tollCost??record.tollCost??0)+Number(patch.otherMissionCost??record.otherMissionCost??0);
+   if((record.totalPaid===undefined||record.totalPaid===null||record.totalPaid==="")&&patch.totalPaid===undefined)patch.totalPaid=record.actualEnd?Number(patch.missionAllowanceAmount??record.missionAllowanceAmount??0)+Number(patch.actualCost??record.actualCost??0):0;
    if(Object.keys(patch).length){await MissionStore.save({...record,...patch},id);migrated++;}
   }
   return 0;
