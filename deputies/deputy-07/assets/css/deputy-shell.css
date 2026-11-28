@@ -1,0 +1,28 @@
+/* پوسته مشترک سازمانی معاونت ۷؛ هویت واحد با محتوای اختصاصی هر اداره و مرکز */
+.ops-page{--shell-ink:#304651;--shell-muted:#75868b;--shell-gold:#b99a61;--shell-line:#e4e9e4;--shell-paper:#f7f8f5}
+.ops-page .ops-header{position:sticky;top:0;z-index:1200;background:rgba(255,255,255,.97);border-bottom:1px solid var(--shell-line);box-shadow:0 4px 16px rgba(35,55,49,.035);backdrop-filter:blur(12px)}
+.ops-page .ops-header-inner{width:min(1320px,calc(100% - 42px));min-height:76px;margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:22px}
+.ops-page .ops-brand{display:flex;align-items:center;gap:11px;min-width:190px;text-decoration:none!important;color:var(--shell-ink)}
+.ops-page .ops-logo{width:43px;height:43px;object-fit:cover;padding:3px;border:1px solid #d8c49c;border-radius:11px;background:#fff;box-shadow:0 2px 7px rgba(40,55,45,.06)}
+.ops-page .ops-brand span{display:grid;gap:1px}
+.ops-page .ops-brand b{font-size:14px;color:#304651;font-weight:800}
+.ops-page .ops-brand small{font-size:9px;color:#879398;white-space:nowrap}
+.ops-page .ops-nav{display:flex;align-items:center;justify-content:center;gap:clamp(10px,1.35vw,20px);min-width:0}
+.ops-page .ops-nav>a,.ops-page .ops-nav .nav-dropdown>summary{display:flex;align-items:center;min-height:38px;padding:7px 2px;color:#63767d;font-size:10px;font-weight:600;text-decoration:none!important;white-space:nowrap;cursor:pointer;list-style:none;border-bottom:2px solid transparent}
+.ops-page .ops-nav .nav-dropdown>summary::-webkit-details-marker{display:none}
+.ops-page .ops-nav>a:hover,.ops-page .ops-nav .nav-dropdown>summary:hover,.ops-page .ops-nav>a.active,.ops-page .ops-nav .nav-dropdown>summary.active{color:#344f5b;border-bottom-color:var(--shell-gold)}
+.ops-page .ops-nav .nav-dropdown{position:relative}
+.ops-page .ops-nav .nav-menu{position:absolute;top:calc(100% + 3px);right:0;z-index:1300;min-width:220px;max-height:70vh;overflow:auto;padding:7px;border:1px solid #e2e8e2;border-radius:10px;background:#fff;box-shadow:0 14px 32px rgba(30,50,45,.12)}
+.ops-page .ops-nav .nav-menu a{display:block;padding:8px 10px;border-radius:6px;color:#60747a;font-size:10px;line-height:1.8;text-decoration:none!important}
+.ops-page .ops-nav .nav-menu a:hover,.ops-page .ops-nav .nav-menu a.active{background:#f4f5ef;color:#344f5b}
+.ops-page .ops-clock{flex:0 0 auto;min-width:125px;padding-right:15px;border-right:1px solid #edf0eb;text-align:left}
+.ops-page .ops-clock span,.ops-page .ops-clock small{display:block;color:#8a9799;font-size:8px}
+.ops-page .ops-clock b{display:block;color:#536971;font-size:10px}
+.ops-page .ops-footer{width:100%;min-height:65px;margin-top:32px;padding:15px max(22px,calc((100% - 1320px)/2));display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid var(--shell-line);background:#fff;color:#829095;font-size:9px}
+.ops-page .ops-footer a{color:#596f76;text-decoration:none!important;font-size:9px}
+.ops-page .ops-footer a:hover{color:#9a8050}
+.ops-page a,.ops-page a:visited,.ops-page a:hover,.ops-page a:focus{text-decoration:none}
+.ops-page .ops-nav a:focus-visible,.ops-page .ops-nav summary:focus-visible,.ops-page .ops-footer a:focus-visible{outline:2px solid #b99a61;outline-offset:3px;border-radius:4px}
+@media(max-width:1100px){.ops-page .ops-header-inner{gap:12px}.ops-page .ops-brand{min-width:150px}.ops-page .ops-clock{min-width:100px}.ops-page .ops-nav{gap:9px}.ops-page .ops-nav>a,.ops-page .ops-nav .nav-dropdown>summary{font-size:9px}}
+@media(max-width:900px){.ops-page .ops-header{position:relative}.ops-page .ops-header-inner{width:calc(100% - 28px);min-height:67px}.ops-page .ops-brand{min-width:0}.ops-page .ops-clock{margin-right:auto}.ops-page .ops-footer{padding:14px 18px}}
+@media(max-width:560px){.ops-page .ops-brand small{max-width:180px;overflow:hidden;text-overflow:ellipsis}.ops-page .ops-logo{width:39px;height:39px}.ops-page .ops-clock{min-width:0;padding-right:10px}.ops-page .ops-footer{align-items:flex-start;flex-direction:column;gap:5px}}
