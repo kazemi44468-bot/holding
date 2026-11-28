@@ -42,7 +42,7 @@ function render(){
   ["پیگیری‌های مدیریتی",active?fa(active)+" موضوع باز در مرکز اشراف ثبت شده است.":"هنوز موضوع بازی در بانک مرکز اشراف ثبت نشده است."],
   ["مهلت‌های گذشته",overdue?fa(overdue)+" مورد از مهلت تعیین‌شده عبور کرده است.":"موردی با مهلت گذشته در داده‌های فعلی شناسایی نشد."]
  ].map(x=>'<article><b>'+x[0]+'</b><p>'+x[1]+'</p></article>').join("");
- $("#executive-departments").innerHTML=rows.map(d=>'<a class="executive-department" href="pages/department-'+d.id+'.html"><small>اداره '+fa(d.id)+'</small><b>'+d.name+'</b><p>'+depts.find(x=>x[0]===d.id)[2]+'</p><footer><span>'+(d.banks?fa(d.records)+" سابقه قابل مشاهده":"هنوز داده‌ای متصل نیست")+'</span><strong>ورود ←</strong></footer></a>').join("");
+ $("#executive-departments-grid").innerHTML=rows.map(d=>'<a class="executive-department" href="pages/department-'+d.id+'.html"><small>اداره '+fa(d.id)+'</small><b>'+d.name+'</b><p>'+depts.find(x=>x[0]===d.id)[2]+'</p><footer><span>'+(d.banks?fa(d.records)+" سابقه قابل مشاهده":"هنوز داده‌ای متصل نیست")+'</span><strong>ورود ←</strong></footer></a>').join("");
 }
 render();
 window.addEventListener("storage",render);
