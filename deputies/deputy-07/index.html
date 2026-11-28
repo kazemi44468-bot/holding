@@ -12,6 +12,30 @@
 <link rel="preload" href="assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/company-intro.css?v=intro-glass-v8-20261109">
 
+
+<style>
+.intro{gap:clamp(9px,1.5vh,16px);padding:clamp(12px,2vh,22px)}
+.intro-main{gap:8px;padding:0}
+.intro-logo-box{width:clamp(100px,11vw,132px);height:clamp(100px,11vw,132px)}
+.intro-logo{width:100%;height:100%}
+.intro-department-gateway{width:min(100%,760px);padding:12px 14px;gap:9px}
+.intro-gateway-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;color:#fff}
+.intro-gateway-heading strong{font-size:15px}
+.intro-gateway-heading span{font-size:10px;color:#e7eaf0}
+.intro-top-level{width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.intro-top-level .portal-card{min-height:48px}
+.intro-department-heading{display:flex;align-items:center;justify-content:space-between;width:100%;padding:4px 2px 0;border-top:1px solid #ffffff38;color:#fff}
+.intro-department-heading b{font-size:12px}
+.intro-department-heading span{font-size:9px;color:#e3d0aa}
+.intro-department-grid{width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.intro-department-grid .portal-card{min-height:49px;padding:7px 10px}
+.intro-department-grid .portal-title{font-size:11px}
+.intro-department-grid .portal-state{font-size:9px}
+.intro-department-grid .portal-state b{font-size:13px}
+.intro-department-gateway .companies-link{font-size:10px;padding:6px 11px}
+@media(min-width:900px){.intro-department-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.intro-department-grid .portal-card{min-height:58px;flex-wrap:wrap;row-gap:2px}.intro-department-grid .portal-state{width:100%;padding-right:27px;justify-content:flex-start}}
+@media(max-width:600px){.intro{justify-content:flex-start;gap:10px;padding:12px 10px}.intro-main{flex:0 0 auto}.intro-department-gateway{padding:10px;gap:8px}.intro-gateway-heading strong{font-size:13px}.intro-department-grid .portal-card{min-height:54px;padding:7px 8px;gap:5px}.intro-department-grid .portal-title{font-size:10px}.intro-department-grid .portal-state{font-size:8px}.intro-top-level .portal-title{font-size:10px}}
+</style>
 </head>
 <body class="company-gateway">
 <main class="intro">
@@ -20,18 +44,22 @@
    <div class="intro-logo-box"><img src="assets/images/logo.webp" alt="نشان معاونت ۷" class="intro-logo"></div>
   </div>
  </section>
- <section class="intro-portal-box" aria-label="درگاه‌های سازمانی">
- <nav class="portal-grid" aria-label="درگاه‌های سازمانی">
-  <a class="portal-card portal-enabled" href="dashboard.html"><span class="portal-index">۰۱</span><span class="portal-title">رصد و اشراف</span><span class="portal-state">ورود مستقیم <b>←</b></span></a>
-  <button class="portal-card" type="button" disabled>
-   <span class="portal-index">۰۲</span><span class="portal-title">بانک و سامانه‌ها</span><span class="portal-state">به‌زودی</span>
-  </button>
-  <button class="portal-card" type="button" disabled>
-   <span class="portal-index">۰۳</span><span class="portal-title">اقدامات</span><span class="portal-state">به‌زودی</span>
-  </button>
-  <button class="portal-card" type="button" disabled>
-   <span class="portal-index">۰۴</span><span class="portal-title">ابزارها و امکانات عمومی</span><span class="portal-state">به‌زودی</span>
-  </button>
+ <section class="intro-portal-box intro-department-gateway" aria-label="درگاه‌های معاونت و اداره‌ها">
+ <div class="intro-gateway-heading"><strong>درگاه معاونت ۷</strong><span>برای ورود، اداره موردنظر را انتخاب کنید</span></div>
+ <nav class="portal-grid intro-top-level" aria-label="دسترسی‌های مدیریتی معاونت">
+  <a class="portal-card portal-enabled" href="dashboard.html"><span class="portal-index">م</span><span class="portal-title">صفحه اصلی معاونت</span><span class="portal-state">ورود <b>←</b></span></a>
+  <a class="portal-card portal-enabled" href="pages/command-center.html"><span class="portal-index">ر</span><span class="portal-title">مرکز اشراف و بهبود عملکرد</span><span class="portal-state">ورود <b>←</b></span></a>
+ </nav>
+ <div class="intro-department-heading"><b>ورود به اداره‌ها</b><span>معاونت / اداره</span></div>
+ <nav class="portal-grid intro-department-grid" aria-label="هشت اداره معاونت">
+  <a class="portal-card portal-enabled" href="pages/department-1.html"><span class="portal-index">۰۱</span><span class="portal-title">اداره یکم</span><span class="portal-state">اداری و پشتیبانی <b>←</b></span></a>
+  <a class="portal-card portal-enabled" href="pages/department-2.html"><span class="portal-index">۰۲</span><span class="portal-title">اداره دوم</span><span class="portal-state">تحقیق و توسعه <b>←</b></span></a>
+  <a class="portal-card portal-enabled" href="pages/department-3.html"><span class="portal-index">۰۳</span><span class="portal-title">اداره سوم</span><span class="portal-state">پارکبان و معبربانان <b>←</b></span></a>
+  <a class="portal-card portal-enabled" href="pages/department-4.html"><span class="portal-index">۰۴</span><span class="portal-title">اداره چهارم</span><span class="portal-state">تأسیسات فنی و نگهداری <b>←</b></span></a>
+  <a class="portal-card portal-enabled" href="pages/department-5.html"><span class="portal-index">۰۵</span><span class="portal-title">اداره پنجم</span><span class="portal-state">ورود مستقل <b>←</b></span></a>
+  <a class="portal-card portal-enabled" href="pages/department-6.html"><span class="portal-index">۰۶</span><span class="portal-title">اداره ششم</span><span class="portal-state">فاوا و خدمات فنی <b>←</b></span></a>
+  <a class="portal-card portal-enabled" href="pages/department-7.html"><span class="portal-index">۰۷</span><span class="portal-title">اداره هفتم</span><span class="portal-state">جمع‌آوری و بازیافت پسماند <b>←</b></span></a>
+  <a class="portal-card portal-enabled" href="pages/department-8.html"><span class="portal-index">۰۸</span><span class="portal-title">اداره هشتم</span><span class="portal-state">بازرسی و تحقیقات محلی <b>←</b></span></a>
  </nav>
  <a class="companies-link" href="companies.html">ورود به درگاه هلدینگ <span aria-hidden="true">←</span></a>
  </section>
