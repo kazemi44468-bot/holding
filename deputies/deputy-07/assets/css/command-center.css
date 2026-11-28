@@ -117,3 +117,28 @@ body.command-center-page{background:#f3f7f8;color:#294657}
 @media(max-width:1000px){.cc-mission-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.cc-about-hero{padding:17px;gap:10px}.cc-about-copy h2{font-size:19px}.cc-about-seal{flex-basis:76px;min-height:76px}.cc-about-seal span{font-size:23px}.cc-about-seal small{font-size:7px;text-align:center}.cc-about-section-head{display:block}.cc-about-section-head>p{margin-top:5px}.cc-mission-grid{grid-template-columns:1fr;gap:8px}.cc-mission-card{min-height:0;padding:13px}.cc-about-operating{grid-template-columns:1fr;gap:12px}.cc-about-steps{grid-template-columns:1fr 1fr}}
 @media(max-width:420px){.cc-about-hero{align-items:flex-start}.cc-about-seal{margin-top:12px}.cc-about-steps{grid-template-columns:1fr}}
+
+/* منوی دسته‌بندی مأموریت‌های مرکز و تکمیل صفحه معرفی */
+.command-center-page .cc-top-nav{gap:clamp(8px,1.05vw,16px)}
+.command-center-page .cc-top-nav>a,.command-center-page .cc-top-nav .nav-dropdown>summary{font-size:9px}
+.command-center-page .cc-about{gap:18px}
+.command-center-page .cc-about-hero{padding:30px 32px;min-height:210px}
+.command-center-page .cc-about-copy h2{font-size:26px}
+.command-center-page .cc-about-copy>p{font-size:12px;max-width:900px}
+.command-center-page .cc-mission-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.command-center-page .cc-mission-card{min-height:130px;padding:18px}
+.command-center-page .cc-mission-card h4{font-size:12px}
+.command-center-page .cc-mission-card p{font-size:10px}
+.cc-about-extra{display:grid;gap:14px;margin-top:3px}
+.cc-output-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.cc-output-grid article,.cc-principle-grid article{padding:15px 16px;border:1px solid #e2e9e3;border-radius:11px;background:#fff}
+.cc-output-grid b,.cc-principle-grid b{display:block;color:#405d66;font-size:11px}
+.cc-output-grid p,.cc-principle-grid p{margin:5px 0 0;color:#7a8a8e;font-size:9px;line-height:2.05}
+.cc-principle-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.cc-about-extra [id],.cc-mission-card[id]{scroll-margin-top:100px}
+.command-center-page .cc-about-operating{padding:20px}
+.command-center-page .cc-about-boundary{padding:16px 19px}
+.command-center-page .cc-about-boundary p{font-size:10px;line-height:2.2}
+@media(max-width:1050px){.cc-output-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cc-principle-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.command-center-page .cc-mission-grid{grid-template-columns:1fr}.command-center-page .cc-about-hero{padding:19px;min-height:0}.command-center-page .cc-about-copy h2{font-size:21px}.cc-output-grid{grid-template-columns:1fr}.cc-principle-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:430px){.cc-principle-grid{grid-template-columns:1fr}}
