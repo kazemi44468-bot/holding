@@ -1,9 +1,9 @@
 (()=>{"use strict";
 const KEY="deputy7.commandCenter.v1",id=(location.pathname.match(/department-(\d+)\.html/)||[])[1];if(!id)return;
 const names={"1":"اداره اداری و پشتیبانی","2":"اداره تحقیق و توسعه","3":"اداره پارکبان و معبربانان","4":"اداره تأسیسات فنی و امور نگهداری","5":"اداره پنجم","6":"اداره فاوا و خدمات فنی","7":"اداره جمع‌آوری، نگهداری و بازیافت پسماند","8":"اداره بازرسی و تحقیقات محلی"};
-const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm=s=>String(s??"").replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const read=()=>{try{return JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){return {}}},write=db=>{try{localStorage.setItem(KEY,JSON.stringify(db));return true}catch(e){alert("ذخیره گزارش به مرکز اشراف ممکن نشد.");return false}};
-const matches=x=>String(x.department||"")===id||String(x.department||"").includes(names[id])||String(x.partners||"").split(/[،,;؛]/).some(p=>p.trim()===id||p.trim()===names[id]||p.trim().includes("اداره "+id));
+const matches=x=>String(x.department||"")===id||String(x.department||"").includes(names[id])||String(x.partners||"").split(/[،,;؛]/).some(p=>norm(p.trim())===id||p.trim()===names[id]||p.trim().includes(names[id])||new RegExp("اداره\\s*0*"+id+"(?:\\D|$)").test(norm(p.trim())));
 const open=x=>!["تکمیل‌شده","مختومه","پاسخ داده شد","بسته"].includes(x.status||"");
 const db=read(),items=[...(db.directives||[]).filter(x=>matches(x)&&open(x)).map(x=>({...x,_kind:"دستور اقدام"})),...(db.requests||[]).filter(x=>matches(x)&&open(x)).map(x=>({...x,_kind:"درخواست اطلاعات"}))];
 if(!items.length)return;
